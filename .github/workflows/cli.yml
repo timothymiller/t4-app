@@ -1,0 +1,33 @@
+name: Publish package to npmjs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/cli/**'
+
+jobs:
+  publish:
+    if: github.repository_owner == 'timothymiller'
+    name: Publish package to npmjs
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@timothyjmiller' # Defaults to the user or organization that owns the workflow file
+          
+      - name: Install dependencies
+        run: cd apps/cli && yarn
+        
+      - name: Publish to npm
+        run: cd apps/cli && yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,0 +1,31 @@
+{
+  "name": "t4-app-docs",
+  "version": "2.0.0",
+  "description": "T4 App Docs",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timothymiller/t4-app.git"
+  },
+  "author": "Timothy Miller <t4@timknowsbest.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/timothymiller/t4-app/issues"
+  },
+  "homepage": "https://github.com/timothymiller/t4-app#readme",
+  "dependencies": {
+    "next": "^13.4.4",
+    "nextra": "latest",
+    "nextra-theme-docs": "latest",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.11.10",
+    "typescript": "^4.9.4"
+  }
+}

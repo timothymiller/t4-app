@@ -1,0 +1,2 @@
+APP_URL=http://localhost:3000
+JWT_VERIFICATION_KEY=

@@ -1,0 +1,88 @@
+## 🚀 Setting up Production
+
+> Resizing images requires a paid Cloudflare Pro plan.
+
+### API (Prod)
+
+For deployed environments, you can use wrangler secrets to set `APP_URL` and `JWT_VERIFICATION_KEY` values.
+
+For example:
+
+Run `echo <VALUE> | wrangler secret put <NAME>` for each of these
+
+Or [use the Cloudflare web interface](https://developers.cloudflare.com/workers/platform/environment-variables/#environment-variables-via-the-dashboard).
+
+### 🤫 Setup CI/CD Secrets
+
+> Secrets are secure environment variables you provide GitHub so that you don't need to hard code the project-token in your workflow file.
+
+#### 🔗 Next.js
+
+1. Deploying to Cloudflare Pages requires the following secrets added to your GitHub repository:
+
+```bash
+CF_API_TOKEN=
+CF_ACCOUNT_ID=
+CF_PROJECT_NAME=
+```
+
+2. Disable `Enable automatic production branch deployments` in the Cloudflare Pages dashboard. This conflicts with our Github Actions.
+
+#### 📱 Expo
+
+```bash
+TODO=
+```
+
+## Configure Wrangler.toml
+
+> Wrangler is the official CLI tool for Cloudflare Workers.
+
+Replace the `account_id` and `database_id` with your own values.
+
+### API Wranger.toml
+
+```toml
+name = "t4-api"
+compatibility_date = "2023-01-01"
+send_metrics = false
+account_id = "your_account_id"
+
+[[ d1_databases ]]
+binding = "DB"
+database_name = "your_db_name"
+database_id = "your_db_id"
+```
+
+### Next.js Wranger.toml
+
+> Replace the `name` and `route` values with your own.
+
+```toml
+[env.preview]
+name = "t4-app-preview"
+workers_dev = true
+
+[env.production]
+name = "t4-app"
+route = "app.t4stack.com/*"
+workers_dev = false
+```
+
+## Environment Variables
+
+Configure environment variables within the Cloudflare Pages dashboard for production.
+
+> Your API server runs as a Cloudflare Worker. Cloudflare is working on combining the Workers and Pages dashboards, so you can configure your environment variables in one place.
+
+```bash
+# Change the name of this file to .env and add your own values
+
+# API
+NEXT_PUBLIC_API_ENDPOINT=http://api.t4stack.com/trpc
+
+# Authentication
+# @link https://dashboard.clerk.dev for your Clerk API keys
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+```

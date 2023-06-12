@@ -1,0 +1,54 @@
+name: 'Docs Deployment'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/docs/**'
+
+jobs:
+  publish:
+    name: Publish to Cloudflare Pages
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      deployments: write
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Install dependencies
+        uses: borales/actions-yarn@v4.2.0
+        with:
+          cmd: install
+          dir: apps/docs
+
+      - name: Build
+        run: |
+          cd apps/docs
+          npx @cloudflare/next-on-pages --experimental-minify
+
+      - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          projectName: ${{ secrets.CF_PROJECT_NAME_DOCS }}
+          directory: .vercel/output/static
+          branch: main
+          wranglerVersion: '3'
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          workingDirectory: apps/docs

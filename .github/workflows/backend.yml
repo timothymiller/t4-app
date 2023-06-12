@@ -1,0 +1,57 @@
+name: 'Backend Deployment'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/api/**'
+
+jobs:
+  deploy:
+    name: Deploy to Cloudflare Workers
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Install dependencies
+        uses: borales/actions-yarn@v4.2.0
+        with:
+          cmd: install
+          dir: packages/api
+
+      - name: Migrate database
+        run: |
+          cd packages/api
+          yarn migrate
+        env:
+          NO_D1_WARNING: true
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@2.0.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          workingDirectory: packages/api
+          command: deploy src/index.ts
+          secrets: |
+            APP_URL
+            JWT_VERIFICATION_KEY
+            CI
+        env:
+          APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+          JWT_VERIFICATION_KEY: ${{ secrets.JWT_VERIFICATION_KEY }}
+          CI: true

@@ -1,0 +1,57 @@
+**/node_modules
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# expo
+**/.expo/*
+
+# next.js
+**/.next/*
+/out/
+
+# tamagui
+**/.tamagui/*
+**/public/tamagui.css
+
+# production
+/build
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# local env files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+# os
+.DS_Store
+THUMBS_DB
+thumbs.db
+
+# ui
+
+dist/
+.DS_Store
+THUMBS_DB
+node_modules/
+types/
+
+# Cloudflare D1
+**/.wrangler/*
+**/.dev.vars
+.turbo

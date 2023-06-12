@@ -1,0 +1,15 @@
+{
+  "name": "create-t4-app",
+  "bin": "./bin/index.js",
+  "version": "2.0.1",
+  "license": "Apache-2.0",
+  "description": "Easily Create Type-Safe, Full-Stack Apps for React Native + Web using the t4 stack.",
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "ora": "^6.3.1"
+  },
+  "scripts": {
+    "publish": "npm publish --access public"
+  },
+  "type": "module"
+}
