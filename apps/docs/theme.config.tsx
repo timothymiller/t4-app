@@ -11,7 +11,7 @@ const config: DocsThemeConfig = {
   chat: {
     link: 'https://discord.gg/U7AsdbSS',
   },
-  docsRepositoryBase: 'https://github.com/timothymiller/t4-app',
+  docsRepositoryBase: 'https://github.com/timothymiller/t4-app/apps/docs',
   footer: {
     text: '©️ Copyright 2023 Timothy Miller',
   },
