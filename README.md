@@ -1,7 +1,7 @@
 <p align="center">
   <a href="https://t4stack.com" target="_blank" rel="noopener noreferrer">
     <picture>
-      <img src="https://github.com/timothymiller/tamagui-stack/blob/main/apps/next/public/t4-logo-large.png?raw=true" width="200" alt="Logo of Create T4 App">
+      <img src="https://github.com/timothymiller/t4-app/blob/main/apps/next/public/t4-logo-large.png?raw=true" width="200" alt="Logo of Create T4 App">
     </picture>
   </a>
 </p>
@@ -176,7 +176,7 @@ yarn create t4-app
 I would like to add the following features to `create-t4-app` in the future:
 
 - [ ] Github Action publishing for Expo apps
-- [✅] Database migration in CI/CD
+- ✅ Database migration in CI/CD
 - [ ] GraphQL (type-safe) data fetching
   - ⏲️ [GQty](https://gqty.dev) - A No-GraphQL client for TypeScript.
   - 🔄 [Garph](https://garph.dev) - Fullstack GraphQL Framework for TypeScript
