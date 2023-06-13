@@ -13,7 +13,7 @@ export function SignUpScreen() {
 
   const handleOAuthSignUpWithPress = async (strategy: OAuthStrategy) => {
     if (process.env.TAMAGUI_TARGET === 'web') {
-      push('/signup/sso-oauth/' + strategy)
+      push('/sign-up/sso-oauth/' + strategy)
     } else {
       push('/sso-oauth/' + strategy)
     }
@@ -27,7 +27,7 @@ export function SignUpScreen() {
 
     await signUp.prepareEmailAddressVerification()
     if (process.env.TAMAGUI_TARGET === 'web') {
-      push('/signup/email-verification')
+      push('/sign-up/email-verification')
     } else {
       push('/email-verification')
     }
