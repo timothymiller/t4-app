@@ -176,7 +176,7 @@ yarn create t4-app
 I would like to add the following features to `create-t4-app` in the future:
 
 - [ ] Github Action publishing for Expo apps
-- [ ] Database migration in CI/CD
+- [✅] Database migration in CI/CD
 - [ ] GraphQL (type-safe) data fetching
   - ⏲️ [GQty](https://gqty.dev) - A No-GraphQL client for TypeScript.
   - 🔄 [Garph](https://garph.dev) - Fullstack GraphQL Framework for TypeScript
@@ -194,7 +194,7 @@ For help, discussion about best practices, or any other conversation that would 
 
 ## 🫶 Contributors
 
-We welcome contributions from anyone and everyone. Please read our [contributing guidelines](https://github.com/timothymiller/universal-app/blob/main/CONTRIBUTING.md) for more information on how to get started.
+We welcome contributions from anyone and everyone. Please read our [contributing guidelines](https://github.com/timothymiller/t4-app/blob/main/CONTRIBUTING.md) for more information on how to get started.
 
 ## 👏 Special Thanks
 
@@ -213,4 +213,4 @@ We welcome contributions from anyone and everyone. Please read our [contributing
 
 ## ⚖️ License
 
-**Create T4 App** is licensed under the [Apache License](https://github.com/timothymiller/universal-app/blob/main/LICENSE).
+**Create T4 App** is licensed under the [Apache License](https://github.com/timothymiller/t4-app/blob/main/LICENSE).
