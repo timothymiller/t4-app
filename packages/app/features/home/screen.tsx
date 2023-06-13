@@ -58,11 +58,7 @@ export function HomeScreen() {
             Tim Miller
           </Anchor>
           , give it a star{' '}
-          <Anchor
-            href="https://github.com/timothymiller/tamagui-app"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <Anchor href="https://github.com/timothymiller/t4-app" target="_blank" rel="noreferrer">
             on Github.
           </Anchor>
         </Paragraph>
