@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  Get started with the <a rel="noopener noreferrer" target="_blank" href="https://t4stack.com">T4 Stack</a> by running <code>yarn create t4-app@latest</code>
+  Get started with the <a rel="noopener noreferrer" target="_blank" href="https://t4stack.com">T4 Stack</a> by running <code>yarn create t4-app</code>
 </p>
 
 <p align="center">
