@@ -77,9 +77,9 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 
 - 🔥 [Hono](https://hono.dev)
 - 💚 [Cloudflare Workers](https://workers.cloudflare.com)
-- 📁 [Cloudflare D1](http://d1.cloudflare.com)
-  - [SQLite](<(https://sqlite.org)>) database for the edge
-- 🗄️ [Drizzle](https://drizzle.dev)
+- 📁 [Cloudflare D1](https://developers.cloudflare.com/d1)
+  - [SQLite](https://sqlite.org) database for the edge
+- 🗄️ [Drizzle](https://orm.drizzle.team)
 
 ### 🔒 Authentication
 
@@ -209,7 +209,7 @@ We welcome contributions from anyone and everyone. Please read our [contributing
 - [Fernando Rojo](https://twitter.com/fernandotherojo) - Creator of Solito
 - [Daishi Kato](https://twitter.com/dai_shi) Creator of Jotai
 - [Jared Palmer](https://twitter.com/jaredpalmer) - Creator of Turborepo
-- [Evan Bacon](https://twitter.com/evanbacon) - Maintainer of Expo
+- [Evan Bacon](https://twitter.com/Baconbrix) - Maintainer of Expo
 
 ## ⚖️ License
 
