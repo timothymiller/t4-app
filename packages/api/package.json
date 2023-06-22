@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "dev": "wrangler dev src/index.ts",
-    "generate": "drizzle-kit generate:sqlite --schema=./src/schema.ts --out=./migrations",
+    "generate": "drizzle-kit generate:sqlite --schema=./src/db/schema.ts --out=./migrations",
     "migrate": "wrangler d1 migrations apply production",
     "migrate:local": "wrangler d1 migrations apply production --local",
     "seed": "NO_D1_WARNING=true wrangler d1 execute production --local --file=./seed/seed.sql",
