@@ -1,0 +1,21 @@
+# 🔒 Authentication
+
+T4 uses [networkless token verification](https://clerk.com/docs/reference/node/networkless-token-verification) to verify the identity of the user.
+
+## 🔭 Overview
+
+Networkless token verification is a method used to authenticate and verify
+the identity of a user without relying on network connectivity. This method was
+chosen because it enables near zero latency overhead for authentication checks on the server.
+
+## 🪜 Steps to authenticate a user
+
+1. **Token Generation**: The user initially generates an authentication token by talking with the authentication server, which is Clerk in this case. This token is a unique identifier associated with their identity. This token is typically generated using cryptographic algorithms and contains information that can be used to verify the user's identity.
+
+2. **Token Storage**: The generated token is securely stored on the user's device. This storage can be in a secure element or any other secure storage mechanism to protect the token from unauthorized access.
+
+3. **Token Verification**: When the user needs to authenticate with T4, the token is used to verify their identity. This verification process occurs on Cloudflare Workers by simply checking the JWT against the JWT verification key used to generate the JWT. If successful, Cloudflare Workers knows it can trust the information contained within the JWT.
+
+4. **Identity Verification**: Once the token is verified successfully, T4 can associate the user's identity with the token. This step ensures that the user is authenticated and authorized to access the desired resources or perform specific actions.
+
+By using networkless token verification, T4 can provide authentication capabilities even in situations where network connectivity is limited or unreliable. This approach enhances the user experience and enables seamless authentication without relying on constant network communication.
