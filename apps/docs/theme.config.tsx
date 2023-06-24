@@ -9,7 +9,7 @@ const config: DocsThemeConfig = {
     link: 'https://github.com/timothymiller/t4-app',
   },
   chat: {
-    link: 'https://discord.gg/U7AsdbSS',
+    link: 'https://discord.gg/wj2GV7AvQd',
   },
   docsRepositoryBase: 'https://github.com/timothymiller/t4-app/apps/docs',
   footer: {

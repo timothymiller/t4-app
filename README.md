@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <a href = "https://discord.gg/U7AsdbSS">
+  <a href = "https://discord.gg/wj2GV7AvQd">
     <img src="https://img.shields.io/discord/1117289587472081016?color=%235865F2&label=Discord&logo=discord&logoColor=%23fff" alt="Join the T4 discord community">
   </a>
   <a href = "https://www.npmjs.com/package/create-t4-app">
@@ -190,7 +190,7 @@ I would like to add the following features to `create-t4-app` in the future:
 
 For help, discussion about best practices, or any other conversation that would benefit `create-t4-app`:
 
-[Join the T4 Discord Server](https://discord.gg/U7AsdbSS)
+[Join the T4 Discord Server](https://discord.gg/wj2GV7AvQd)
 
 ## 🫶 Contributors
 
