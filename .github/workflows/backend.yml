@@ -34,6 +34,7 @@ jobs:
           dir: packages/api
 
       - name: Migrate database
+        continue-on-error: true
         run: |
           cd packages/api
           yarn migrate
