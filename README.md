@@ -65,11 +65,11 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 - 🔗 [Next.js](https://nextjs.org)
 - 📱 [Expo](https://expo.io)
 
-### Navigation
+### 🧭 Navigation
 
 - ☀️ [Solito](https://solito.dev)
 
-### Global State Management
+### 🏢 Global State Management
 
 - 🧩 [Jotai](https://jotai.org)
 
