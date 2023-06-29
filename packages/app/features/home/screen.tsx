@@ -62,6 +62,16 @@ export function HomeScreen() {
             on Github.
           </Anchor>
         </Paragraph>
+        <Paragraph textAlign="center" size={'$2'}>
+          Tamagui is made by{' '}
+          <Anchor href="https://twitter.com/natebirdman" target="_blank">
+            Nate Weinert
+          </Anchor>
+          , give it a star{' '}
+          <Anchor href="https://github.com/tamagui/tamagui" target="_blank" rel="noreferrer">
+            on Github.
+          </Anchor>
+        </Paragraph>
 
         <Button onPress={() => Linking.openURL('https://t4stack.com/')}>Learn More...</Button>
 
