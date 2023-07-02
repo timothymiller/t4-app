@@ -25,7 +25,7 @@ const config: DocsThemeConfig = {
       }
     }
     return {
-      titleTemplate: title,
+      titleTemplate: title + ' Docs',
     }
   },
   head: () => {
