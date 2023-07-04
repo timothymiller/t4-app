@@ -3,6 +3,7 @@ import { YStack } from '@t4/ui'
 // import { OAuthStrategy } from '@clerk/types'
 import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from '@t4/ui/src/SignUpSignIn'
+import { signUp } from 'app/utils/supabase'
 
 export function SignUpScreen() {
   const { push } = useRouter()
@@ -30,6 +31,15 @@ export function SignUpScreen() {
     // } else {
     //   push('/email-verification')
     // }
+
+    const res = await signUp(emailAddress, password)
+
+    if (res.error) {
+      console.log('Sign up failed', res.error)
+      return
+    }
+
+    push('/')
   }
 
   return (

@@ -18,7 +18,7 @@ export function SignInScreen() {
     // }
   }
 
-  const handleOAuthSignInWithPress = async (strategy: OAuthStrategy) => {
+  const handleOAuthSignInWithPress = async (strategy) => {
     // await handleOAuthSignIn(strategy, setSession, signIn)
     // await redirectIfSignedIn()
   }
@@ -34,13 +34,22 @@ export function SignInScreen() {
     // } else {
     //   console.log('sign in failed', result)
     // }
+
+    const res = await signIn(emailAddress, password)
+
+    if (res.error) {
+      console.log('Sign in failed', res.error)
+      return
+    }
+
+    push('/')
   }
 
   return (
     <YStack f={1} jc="center" ai="center" space>
       <SignUpSignInComponent
         type="sign-in"
-        handleOAuthWithPress={handleOAuthSignInWithPress}
+        // handleOAuthWithPress={handleOAuthSignInWithPress}
         handleEmailWithPress={handleEmailSignInWithPress}
       />
     </YStack>

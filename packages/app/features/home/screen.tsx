@@ -99,8 +99,9 @@ export function HomeScreen() {
         </YStack>
         {isSignedIn ? (
           <Button
-            onPress={() => {
-              signOut()
+            onPress={async () => {
+              await signOut()
+              setIsSignedIn(false)
             }}
             space="$2"
           >
