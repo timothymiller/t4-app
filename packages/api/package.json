@@ -2,7 +2,6 @@
   "name": "@t4/api",
   "version": "2.0.0",
   "main": "src/index.ts",
-  "packageManager": "yarn@3.5.0",
   "license": "Apache-2.0",
   "scripts": {
     "dev": "wrangler dev src/index.ts",
@@ -11,7 +10,7 @@
     "migrate:local": "wrangler d1 migrations apply production --local",
     "seed": "NO_D1_WARNING=true wrangler d1 execute production --local --file=./seed/seed.sql",
     "deploy": "NO_D1_WARNING=true wrangler deploy --minify src/index.ts",
-    "postinstall": "yarn generate",
+    "postinstall": "pnpm generate",
     "with-env": "dotenv -e ../../.env.local --"
   },
   "dependencies": {
