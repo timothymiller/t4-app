@@ -1,43 +1,42 @@
 import { YStack } from '@t4/ui'
-import { useSignUp } from 'app/utils/clerk'
-import { OAuthStrategy } from '@clerk/types'
+// import { useSignUp } from 'app/utils/clerk'
+// import { OAuthStrategy } from '@clerk/types'
 import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from '@t4/ui/src/SignUpSignIn'
 
 export function SignUpScreen() {
   const { push } = useRouter()
 
-  const { isLoaded, signUp, setSession } = useSignUp()
+  // const { isLoaded, signUp, setSession } = useSignUp()
 
-  if (!setSession || !isLoaded) return null
+  // if (!setSession || !isLoaded) return null
 
-  const handleOAuthSignUpWithPress = async (strategy: OAuthStrategy) => {
-    if (process.env.TAMAGUI_TARGET === 'web') {
-      push('/sign-up/sso-oauth/' + strategy)
-    } else {
-      push('/sso-oauth/' + strategy)
-    }
-  }
+  // const handleOAuthSignUpWithPress = async (strategy: OAuthStrategy) => {
+  //   if (process.env.TAMAGUI_TARGET === 'web') {
+  //     push('/sign-up/sso-oauth/' + strategy)
+  //   } else {
+  //     push('/sso-oauth/' + strategy)
+  //   }
+  // }
 
   const handleEmailSignUpWithPress = async (emailAddress, password) => {
-    await signUp.create({
-      emailAddress,
-      password,
-    })
-
-    await signUp.prepareEmailAddressVerification()
-    if (process.env.TAMAGUI_TARGET === 'web') {
-      push('/sign-up/email-verification')
-    } else {
-      push('/email-verification')
-    }
+    // await signUp.create({
+    //   emailAddress,
+    //   password,
+    // })
+    // await signUp.prepareEmailAddressVerification()
+    // if (process.env.TAMAGUI_TARGET === 'web') {
+    //   push('/sign-up/email-verification')
+    // } else {
+    //   push('/email-verification')
+    // }
   }
 
   return (
     <YStack f={1} jc="center" ai="center" space>
       <SignUpSignInComponent
         type="sign-up"
-        handleOAuthWithPress={handleOAuthSignUpWithPress}
+        // handleOAuthWithPress={handleOAuthSignUpWithPress}
         handleEmailWithPress={handleEmailSignUpWithPress}
       />
     </YStack>

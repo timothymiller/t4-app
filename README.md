@@ -83,7 +83,7 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 
 ### 🔒 Authentication
 
-- 🔑 [Clerk](https://clerk.dev)
+- 🔑 [Supabase](https://supabase.com)
 
 ## 📖 Background
 
@@ -121,7 +121,7 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
 - Universal across **React Native** & **React Web**
   - [Data fetching](https://tanstack.com/query/latest)
   - [Styling](https://tamagui.dev)
-  - [Authentication](https://clerk.dev)
+  - [Authentication](https://supabase.com)
   - [Navigation](https://solito.dev)
 - High code re-use
 - Low bundle size
