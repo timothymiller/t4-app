@@ -15,7 +15,7 @@
   "scripts": {
     "build": "tamagui-build",
     "watch": "tamagui-build --watch",
-    "clean": "rm -rf dist types node_modules"
+    "clean": "rm -rf dist types node_modules .turbo"
   },
   "dependencies": {
     "@shopify/flash-list": "^1.4.3",
