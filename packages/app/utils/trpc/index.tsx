@@ -28,9 +28,10 @@ export const TRPCProvider: React.FC<{
         httpBatchLink({
           async headers() {
             const { data } = await supabase.auth.getSession()
+            const token = data?.session?.access_token
 
             return {
-              Authorization: `Bearer ${data?.session?.access_token}`,
+              Authorization: token ? `Bearer ${token}` : undefined,
             }
           },
           url: `${getBaseUrl()}/trpc`,

@@ -2,12 +2,7 @@ import { createTRPCNext } from '@trpc/next'
 import { httpBatchLink, loggerLink } from '@trpc/client'
 import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import type { AppRouter } from '@t4/api/src/router'
-
-let token = ''
-
-export function setToken(newToken: string) {
-  token = newToken
-}
+import { supabase } from '../supabase'
 
 const getBaseUrl = () => {
   return `${process.env.NEXT_PUBLIC_API_URL}`
@@ -24,6 +19,9 @@ export const trpc = createTRPCNext<AppRouter>({
         }),
         httpBatchLink({
           async headers() {
+            const { data } = await supabase.auth.getSession()
+            const token = data?.session?.access_token
+
             return {
               Authorization: token ? `Bearer ${token}` : undefined,
             }
