@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
-import { useSignUp, useUser } from 'app/utils/clerk'
-import { handleOAuthSignUp } from 'app/utils/auth'
+import { useSignUp, useUser } from '../../../utils/clerk'
+import { handleOAuthSignUp } from '../../../utils/auth'
 import { createParam } from 'solito'
 import { OAuthStrategy } from '@clerk/types'
 import { useRouter } from 'solito/router'
-import { trpc } from 'app/utils/trpc'
+import { trpc } from '../../../utils/trpc'
 
 const { useParam } = createParam<{ strategy: OAuthStrategy }>()
 
