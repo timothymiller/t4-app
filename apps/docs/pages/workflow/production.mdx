@@ -81,8 +81,39 @@ Configure environment variables within the Cloudflare Pages dashboard for produc
 # API
 NEXT_PUBLIC_API_URL=http://api.t4stack.com/
 
-# Authentication
+# Authentication - Clerk
 # @link https://dashboard.clerk.dev for your Clerk API keys
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
 ```
+
+# Authentication - Supabase
+
+To set up authentication with Supabase in your application, you will need to configure certain environment
+variables and customize the email verification redirect link for production. Here's what you need to do:
+
+Set up Environment Variables: In your application, make sure to set the following environment variables:
+
+# @link https://supabase.com/dashboard for your Supabase API keys
+
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLIC_KEY=
+These variables will hold your Supabase API keys, which you can obtain from your Supabase project dashboard.
+Visit Supabase Dashboard to retrieve your API keys.
+
+Customize Email Verification Redirect Link: In Supabase, you need to configure the email verification
+redirect link for the production environment. This link determines where users will be redirected to
+after Supabase has confirmed their account through email verification. Make sure to set this link to
+your actual production website.
+
+To set up the email verification redirect link, follow these steps:
+
+Log in to your Supabase project dashboard.
+Go to the project settings or authentication settings.
+Look for the option to configure the email verification redirect link.
+Enter the URL of your production website that you want users to be redirected to.
+By customizing this redirect link, you ensure a seamless experience for your users during the email verification process.
+
+Please ensure that you properly set the environment variables and configure the email verification redirect
+link according to your specific application requirements. These steps will help you integrate
+authentication with Supabase effectively.
