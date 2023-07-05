@@ -5,11 +5,11 @@ module.exports = function (api) {
     plugins: [
       require.resolve('expo-router/babel'),
       [
-        "module:react-native-dotenv",
+        'module:react-native-dotenv',
         {
-          moduleName: "@env",
-          path: "../../.env",
-          allowlist: ["NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY"],
+          moduleName: '@env',
+          path: '../../.env',
+          allowlist: ['NEXT_PUBLIC_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_PUBLIC_KEY'],
           safe: false,
           allowUndefined: true,
         },
@@ -31,21 +31,21 @@ module.exports = function (api) {
       ...(process.env.EAS_BUILD_PLATFORM === 'android'
         ? []
         : [
-          [
-            '@tamagui/babel-plugin',
-            {
-              components: ['@t4/ui', 'tamagui'],
-              config: './tamagui.config.ts',
-            },
-          ],
-        ]),
+            [
+              '@tamagui/babel-plugin',
+              {
+                components: ['@t4/ui', 'tamagui'],
+                config: './tamagui.config.ts',
+              },
+            ],
+          ]),
       [
         'transform-inline-environment-variables',
         {
           include: 'TAMAGUI_TARGET',
         },
       ],
-      "jotai/babel/plugin-react-refresh"
+      'jotai/babel/plugin-react-refresh',
     ],
   }
 }

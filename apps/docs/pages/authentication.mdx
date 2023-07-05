@@ -1,21 +1,28 @@
 # 🔒 Authentication
 
-T4 uses [networkless token verification](https://clerk.com/docs/reference/node/networkless-token-verification) to verify the identity of the user.
+T4 uses [Supabase](https://supabase.com/docs/guides/auth) for authentication
 
 ## 🔭 Overview
 
-Networkless token verification is a method used to authenticate and verify
-the identity of a user without relying on network connectivity. This method was
-chosen because it enables near zero latency overhead for authentication checks on the server.
+The authentication flow in T4 involves the following steps:
 
-The Cloudflare Workers API server indeed uses the Clerk service for user authentication. However, it does not directly call the Clerk's API as you might expect. Instead, it uses the `@tsndr/cloudflare-worker-jwt` library to verify the JWT (JSON Web Token) that is issued by Clerk when a user logs in.
+1. User Registration: Users can register their accounts using Supabase's email authentication
+   or sign in directly through various third-party providers such as Google, Apple, and Discord.
+   This allows users to choose their preferred method for signing up.
 
-## 🌊 Here's a brief overview of the flow:
+2. Email Verification: After registering, users receive an email to verify their email address.
+   They need to click on the verification link to confirm their account.
 
-1. A user logs in using Clerk and receives a JWT.
+3. User Login: Once registered and verified, users can log in to T4 using Supabase's email authentication
+   or directly through third-party providers.
 
-2. When the user makes a request to the Cloudflare Workers server, this JWT is sent along in the Authorization header.
+JSON Web Tokens (JWT): Once a user is authenticated, T4 utilizes JSON Web Tokens (JWT)
+to manage and maintain user sessions. The JWT contains encoded information about the
+user's identity and authentication details. This token is securely stored on the
+client side (e.g., in secure storage or cookies) and sent with each request to
+authenticate and authorize the user's access to protected resources.
 
-3. The `@tsndr/cloudflare-worker-jwt` library on the server extracts and verifies the token, ensuring that it is correctly signed and hasn't expired.
-
-4. If the token is valid, the request proceeds; otherwise, it is rejected.
+Authorization and Access Control: Along with authentication, T4 implements authorization and
+access control mechanisms. This includes managing user roles, permissions, and restrictions
+to ensure appropriate access to specific resources or features based on the user's privileges.
+This is handled through [PostgreSQL's Row Level Security (RLS).](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)

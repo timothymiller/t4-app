@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { Image, YStack, Paragraph, XStack, Button, Input, Stack } from 'tamagui'
 import { Link } from 'solito/link'
-import { OAuthStrategy } from '@clerk/types'
+import { type Provider } from '@supabase/supabase-js'
 
 interface Props {
   type: 'sign-up' | 'sign-in'
-  handleOAuthWithPress: (strategy: OAuthStrategy) => void
+  handleOAuthWithPress: (provider: Provider) => void
   handleEmailWithPress: (emailAddress, password) => void
 }
 
@@ -37,7 +37,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
         {/* 3 buttons, for google, apple, discord */}
         <Button
           size="$5"
-          onPress={() => handleOAuthWithPress('oauth_google')}
+          onPress={() => handleOAuthWithPress('google')}
           hoverStyle={{ opacity: 0.8 }}
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
@@ -53,7 +53,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
         </Button>
         <Button
           size="$5"
-          onPress={() => handleOAuthWithPress('oauth_apple')}
+          onPress={() => handleOAuthWithPress('apple')}
           hoverStyle={{ opacity: 0.8 }}
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
@@ -69,7 +69,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
         </Button>
         <Button
           size="$5"
-          onPress={() => handleOAuthWithPress('oauth_discord')}
+          onPress={() => handleOAuthWithPress('discord')}
           hoverStyle={{ opacity: 0.8 }}
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
@@ -94,12 +94,14 @@ export const SignUpSignInComponent: React.FC<Props> = ({
 
       {/* email sign up option */}
       <Input
+        autoCapitalize="none"
         placeholder="Email"
         onChangeText={(text) => {
           setEmailAddress(text)
         }}
       />
       <Input
+        autoCapitalize="none"
         placeholder="Password"
         onChangeText={(text) => {
           setPassword(text)

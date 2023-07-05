@@ -9,12 +9,12 @@ The necessary secrets are:
 ```bash
 # For preventing CORS errors
 APP_URL=
-# For Clerk @link https://clerk.dev
+# For Supabase @link https://supabase.com
 JWT_VERIFICATION_KEY=
 ```
 
 - `APP_URL` is the URL of your Next.js app. For example, `http://localhost:3000`.
-- Get your `JWT_VERIFICATION_KEY` from [Clerk](https://clerk.dev).
+- Get your `JWT_VERIFICATION_KEY` from [Supabase](https://supabase.com).
 
 #### Configure Wrangler.toml
 
@@ -53,7 +53,7 @@ Rename `.env.example` to `.env.local` and add your own values.
 NEXT_PUBLIC_API_URL=http://localhost:8787/
 
 # Authentication
-# @link https://dashboard.clerk.dev for your Clerk API keys
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
+# @link https://supabase.com/dashboard for your Supabase API keys
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLIC_KEY=
 ```
