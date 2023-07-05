@@ -17,7 +17,7 @@ const folderArg = args.filter((arg) => !arg.includes('--'))[0]
 const withSupabase = args.includes('--supabase')
 let repoBranch = ''
 if (withSupabase) {
-  repoBranch = '-b supabase --single-branch'
+  repoBranch = '-b supabase-auth --single-branch'
   console.log(
     chalk.green.bold(
       '🚀 Setting up with Supabase! Make sure you have a Supabase account and have created a project.'
