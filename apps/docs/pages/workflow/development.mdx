@@ -52,8 +52,18 @@ Rename `.env.example` to `.env.local` and add your own values.
 # API
 NEXT_PUBLIC_API_URL=http://localhost:8787/
 
-# Authentication
+# Authentication - Clerk
 # @link https://dashboard.clerk.dev for your Clerk API keys
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
 ```
+
+# Authentication - Supabase
+
+# @link https://supabase.com/dashboard for your Supabase API keys
+
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLIC_KEY=
+
+Add the following to dev.vars in API folder, it can be found in as JWT Secret in API Settings in Supabase:
+JWT_VERIFICATION_KEY=
