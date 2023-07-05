@@ -1,6 +1,7 @@
 import { SignInWithOAuthCredentials } from '@supabase/supabase-js'
 import { Linking } from 'react-native'
 import { supabase } from './init'
+import { useLink } from 'solito/link'
 
 // Authentication methods
 const signIn = async (email, password) => {
