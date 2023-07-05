@@ -4,6 +4,8 @@ import { signIn } from 'app/utils/supabase'
 import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from '@t4/ui/src/SignUpSignIn'
 import { handleOAuthSignIn } from 'app/utils/auth'
+import { Provider, SignInWithOAuthCredentials } from '@supabase/supabase-js'
+import { signInWithOAuth } from 'app/utils/supabase/auth'
 
 export function SignInScreen() {
   const { push } = useRouter()
@@ -17,8 +19,38 @@ export function SignInScreen() {
     //   push('/')
     // }
   }
+  const OAUTH_CREDENTIALS: Record<Provider, SignInWithOAuthCredentials> = {
+    apple: { provider: 'apple' }, // Verified
+    google: {
+      provider: 'google',
+      options: { queryParams: { access_type: 'offline', prompt: 'consent' } },
+    }, // verified
+    discord: { provider: 'discord' }, // Verified
+    twitter: { provider: 'twitter' },
+    github: { provider: 'github' },
+    gitlab: { provider: 'gitlab' },
+    facebook: { provider: 'facebook' },
+    bitbucket: { provider: 'bitbucket' },
+    twitch: { provider: 'twitch' },
+    keycloak: { provider: 'keycloak' },
+    linkedin: { provider: 'linkedin' },
+    notion: { provider: 'notion' },
+    slack: { provider: 'slack' },
+    spotify: { provider: 'spotify' },
+    zoom: { provider: 'zoom' },
+    azure: { provider: 'azure' },
+    workos: { provider: 'workos' },
+  }
+  const handleOAuthSignInWithPress = async (provider: Provider) => {
+    const res = await signInWithOAuth({ provider: provider })
 
-  const handleOAuthSignInWithPress = async (strategy) => {
+    if (res.error) {
+      console.log('Sign in failed', res.error)
+      return
+    }
+
+    push('/')
+
     // await handleOAuthSignIn(strategy, setSession, signIn)
     // await redirectIfSignedIn()
   }
@@ -49,7 +81,7 @@ export function SignInScreen() {
     <YStack f={1} jc="center" ai="center" space>
       <SignUpSignInComponent
         type="sign-in"
-        // handleOAuthWithPress={handleOAuthSignInWithPress}
+        handleOAuthWithPress={handleOAuthSignInWithPress}
         handleEmailWithPress={handleEmailSignInWithPress}
       />
     </YStack>

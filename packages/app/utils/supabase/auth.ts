@@ -1,7 +1,7 @@
 // shared/auth.js
 
-import { createClient } from '@supabase/supabase-js'
-
+import { SignInWithOAuthCredentials, createClient } from '@supabase/supabase-js'
+import 'react-native-url-polyfill/auto'
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_KEY as string
 
@@ -20,6 +20,19 @@ const signIn = async (email, password) => {
   const refresh_token = session?.refresh_token
 
   return { user, error, access_token, refresh_token }
+}
+
+const signInWithOAuth = async (credentials: SignInWithOAuthCredentials) => {
+  const { data, error } = await supabase.auth.signInWithOAuth(credentials)
+
+  if (error) {
+    console.log('Sign in with OAuth failed', error)
+    return
+  }
+  if (data?.url) {
+    // redirect the user to the identity provider's authentication flow
+    window.location.href = data.url
+  }
 }
 
 const signUp = async (email, password) => {
@@ -58,4 +71,4 @@ const isUserSignedIn = async () => {
   return session !== null && session.user !== null
 }
 
-export { supabase, signIn, signUp, signOut, getUser, isUserSignedIn }
+export { supabase, signIn, signInWithOAuth, signUp, signOut, getUser, isUserSignedIn }
