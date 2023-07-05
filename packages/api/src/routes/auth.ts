@@ -5,7 +5,7 @@ export const authRouter = router({
   getSession: publicProcedure.query(({ ctx }) => {
     return ctx.user
   }),
-  secretMesage: protectedProcedure.input(z.string().nullish()).query(({ input }) => {
+  secretMessage: protectedProcedure.input(z.string().nullish()).query(({ input }) => {
     return `Hello ${input ?? '<Secret>'}!`
   }),
 })

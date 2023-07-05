@@ -4,7 +4,7 @@ import { trpc } from 'app/utils/trpc'
 
 export function DataFetchingScreen() {
   const helloWorld = trpc.hello.world.useQuery()
-  const protectedRoute = trpc.auth.secretMesage.useQuery()
+  const protectedRoute = trpc.auth.secretMessage.useQuery()
 
   return (
     <YStack f={1} jc="center" ai="center" p="$4" space="$4">
