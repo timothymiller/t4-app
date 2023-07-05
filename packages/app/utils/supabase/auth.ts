@@ -1,6 +1,4 @@
-// shared/auth.js
-
-import { SignInWithOAuthCredentials, createClient } from '@supabase/supabase-js'
+import { SignInWithOAuthCredentials } from '@supabase/supabase-js'
 import { Linking } from 'react-native'
 import { supabase } from './init'
 
@@ -22,14 +20,12 @@ const signIn = async (email, password) => {
 const signInWithOAuth = async (credentials: SignInWithOAuthCredentials) => {
   const { data, error } = await supabase.auth.signInWithOAuth(credentials)
 
-  if (error) {
-    console.log('Sign in with OAuth failed', error)
-    return
-  }
   if (data?.url) {
-    // redirect the user to the identity provider's authentication flow
+    // Redirect the user to the identity provider's authentication flow
     Linking.openURL(data.url)
   }
+
+  return { data, error }
 }
 
 const signUp = async (email, password) => {
@@ -44,7 +40,7 @@ const signUp = async (email, password) => {
   const access_token = session?.access_token
   const refresh_token = session?.refresh_token
 
-  return { user, error }
+  return { user, error, access_token, refresh_token }
 }
 
 const signOut = async () => {
