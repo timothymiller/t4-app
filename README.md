@@ -156,6 +156,15 @@ To scaffold an app using `create-t4-app`, run any of the following commands.
 yarn create t4-app
 ```
 
+### **Supabase**
+
+If you would like to use Supabase as your authentication provider instead of Clerk use:
+
+```bash
+yarn create t4-app --supabase
+```
+
+
 👉 Further documentation can be found on the [T4 Stack website](https://t4stack.com). 👈
 
 ## ✨ Features
