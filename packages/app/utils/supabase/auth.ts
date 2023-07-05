@@ -1,11 +1,8 @@
 // shared/auth.js
 
 import { SignInWithOAuthCredentials, createClient } from '@supabase/supabase-js'
-import 'react-native-url-polyfill/auto'
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_KEY as string
-
-const supabase = createClient(supabaseUrl, supabaseKey)
+import { Linking } from 'react-native'
+import { supabase } from './init'
 
 // Authentication methods
 const signIn = async (email, password) => {
@@ -31,7 +28,7 @@ const signInWithOAuth = async (credentials: SignInWithOAuthCredentials) => {
   }
   if (data?.url) {
     // redirect the user to the identity provider's authentication flow
-    window.location.href = data.url
+    Linking.openURL(data.url)
   }
 }
 
