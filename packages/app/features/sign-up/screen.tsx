@@ -8,14 +8,6 @@ import { signInWithOAuth } from 'app/utils/supabase/auth'
 export function SignUpScreen() {
   const { push } = useRouter()
 
-  // const handleOAuthSignUpWithPress = async (strategy: OAuthStrategy) => {
-  //   if (process.env.TAMAGUI_TARGET === 'web') {
-  //     push('/sign-up/sso-oauth/' + strategy)
-  //   } else {
-  //     push('/sso-oauth/' + strategy)
-  //   }
-  // }
-
   const handleOAuthSignInWithPress = async (provider: Provider) => {
     const { error } = await signInWithOAuth({ provider: provider })
 

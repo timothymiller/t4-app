@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Image, YStack, Paragraph, XStack, Button, Input, Stack } from 'tamagui'
 import { Link } from 'solito/link'
 import { type Provider } from '@supabase/supabase-js'
-// import { OAuthStrategy } from '@clerk/types'
 
 interface Props {
   type: 'sign-up' | 'sign-in'
@@ -95,12 +94,14 @@ export const SignUpSignInComponent: React.FC<Props> = ({
 
       {/* email sign up option */}
       <Input
+        autoCapitalize="none"
         placeholder="Email"
         onChangeText={(text) => {
           setEmailAddress(text)
         }}
       />
       <Input
+        autoCapitalize="none"
         placeholder="Password"
         onChangeText={(text) => {
           setPassword(text)

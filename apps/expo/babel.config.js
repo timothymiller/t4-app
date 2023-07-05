@@ -9,7 +9,6 @@ module.exports = function (api) {
         {
           moduleName: '@env',
           path: '../../.env',
-          // allowlist: ["NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY"],
           safe: false,
           allowUndefined: true,
         },
