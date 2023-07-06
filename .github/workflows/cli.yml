@@ -1,6 +1,7 @@
-name: Publish package to npmjs
+name: Publish to NPM & GitHub Package Registry
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -10,24 +11,52 @@ on:
 jobs:
   publish:
     if: github.repository_owner == 'timothymiller'
-    name: Publish package to npmjs
+    name: Publish to NPM & GitHub Package Registry
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        
-      - name: Setup Node.js
+
+      - name: Check version changes
+        uses: EndBug/version-check@v1
+        id: check
+
+      - name: Version update detected
+        if: steps.check.outputs.changed == 'true'
+        run: 'echo "Version change found! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
+
+      - name: Setup Node.js for NPM
+        if: steps.check.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
           scope: '@timothyjmiller' # Defaults to the user or organization that owns the workflow file
-          
+
       - name: Install dependencies
+        if: steps.check.outputs.changed == 'true'
         run: cd apps/cli && yarn
-        
-      - name: Publish to npm
+
+      - name: Publish package to NPM
+        if: steps.check.outputs.changed == 'true'
         run: cd apps/cli && yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Set up Node.js for GPR
+        if: steps.check.outputs.changed == 'true'
+        uses: actions/setup-node@v1
+        with:
+          registry-url: 'https://npm.pkg.github.com/'
+          scope: '@timothymiller'
+
+      - name: Set up package for GPR
+        if: steps.check.outputs.changed == 'true'
+        run: npm run gpr-setup
+
+      - name: Publish package to GPR
+        if: steps.check.outputs.changed == 'true'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
