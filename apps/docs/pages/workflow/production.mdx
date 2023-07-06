@@ -28,12 +28,6 @@ CF_PROJECT_NAME=
 
 2. Disable `Enable automatic production branch deployments` in the Cloudflare Pages dashboard. This conflicts with our Github Actions.
 
-#### 📱 Expo
-
-```bash
-TODO=
-```
-
 ## Configure Wrangler.toml
 
 > Wrangler is the official CLI tool for Cloudflare Workers.
@@ -69,6 +63,12 @@ route = "app.t4stack.com/*"
 workers_dev = false
 ```
 
+#### 📱 Expo
+
+1. Go in your [Expo settings](https://expo.dev/accounts/%5Baccount%5D/settings/access-tokens) to create a new access token.
+
+2. Add the `EXPO_TOKEN` secret to your repository with the token that you retrieved from Expo to allow GitHub Actions to publish your app.
+
 ## Environment Variables
 
 Configure environment variables within the Cloudflare Pages dashboard for production.
@@ -87,36 +87,25 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
 ```
 
-# Authentication - Supabase
+## Authentication - Supabase
 
 To set up authentication with Supabase in your application, you will need to configure certain environment
-variables and customize the email verification redirect link for production. Here's what you need to do:
+variables and customize the email verification redirect link for production.
+Head over to [](https://supabase.com/dashboard) for your Supabase API keys and set the following environment variables:
 
-Set up Environment Variables: In your application, make sure to set the following environment variables:
-
-# @link https://supabase.com/dashboard for your Supabase API keys
-
+```bash
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_PUBLIC_KEY=
-These variables will hold your Supabase API keys, which you can obtain from your Supabase project dashboard.
-Visit Supabase Dashboard to retrieve your API keys.
+```
 
-JWT_VERIFICATION_KEY can also be found in Supabase as JWT Secret in API Settings
-and you can wrangler secrets to set it.
+You should set the `JWT_VERIFICATION_KEY` with wrangler, also found in Supabase as **JWT Secret** in the API Settings.
 
-Customize Email Verification Redirect Link: In Supabase, you need to configure the email verification
-redirect link for the production environment. This link determines where users will be redirected to
-after Supabase has confirmed their account through email verification. Make sure to set this link to
-your actual production website.
+In Supabase, you need to configure the email verification redirect link for the production environment. This link determines where users will be redirected to after Supabase has confirmed their account through email verification. Make sure to set this link to your actual production website.
 
 To set up the email verification redirect link, follow these steps:
 
-Log in to your Supabase project dashboard.
-Go to the project settings or authentication settings.
-Look for the option to configure the email verification redirect link.
-Enter the URL of your production website that you want users to be redirected to.
-By customizing this redirect link, you ensure a seamless experience for your users during the email verification process.
+- Go to the project settings or authentication settings.
+- Look for the option to configure the email verification redirect link.
+- Enter the URL of your production website that you want users to be redirected to.
 
-Please ensure that you properly set the environment variables and configure the email verification redirect
-link according to your specific application requirements. These steps will help you integrate
-authentication with Supabase effectively.
+By customizing this redirect link, you ensure a seamless experience for your users during the email verification process.

@@ -1,0 +1,40 @@
+name: Expo EAS Build
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/expo/**'
+      - 'packages/ui/**'
+      - 'packages/app/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        uses: borales/actions-yarn@v4.2.0
+        with:
+          cmd: install
+          dir: apps/expo
+
+      - name: Build app
+        run: eas build --non-interactive
