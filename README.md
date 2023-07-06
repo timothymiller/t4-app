@@ -103,7 +103,7 @@ It provides a unified, opinionated, & minimalistic setup for quickly getting sta
 
 Build native apps for iOS, Android, macOS, Windows, and Linux using the same codebase.
 
-#### Never worry about using XCode or Android Studio again.
+#### Never worry about using XCode or Android Studio again
 
 <p align="center">
   <picture>
@@ -164,7 +164,6 @@ If you would like to use Supabase as your authentication provider instead of Cle
 yarn create t4-app --supabase
 ```
 
-
 👉 Further documentation can be found on the [T4 Stack website](https://t4stack.com). 👈
 
 ## ✨ Features
@@ -189,7 +188,7 @@ I would like to add the following features to `create-t4-app` in the future:
 - [ ] GraphQL (type-safe) data fetching
   - ⏲️ [GQty](https://gqty.dev) - A No-GraphQL client for TypeScript.
   - 🔄 [Garph](https://garph.dev) - Fullstack GraphQL Framework for TypeScript
-- [ ] Supabase Auth
+- ✅ Supabase Auth
 - [ ] Firebase Auth
 - [ ] PNPM support
 - [ ] 📚 [Storybook](https://storybook.js.org) support
