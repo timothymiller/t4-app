@@ -183,7 +183,7 @@ yarn create t4-app --supabase
 
 I would like to add the following features to `create-t4-app` in the future:
 
-- [ ] Github Action publishing for Expo apps
+- ✅ Github Action publishing for Expo apps
 - ✅ Database migration in CI/CD
 - [ ] GraphQL (type-safe) data fetching
   - ⏲️ [GQty](https://gqty.dev) - A No-GraphQL client for TypeScript.

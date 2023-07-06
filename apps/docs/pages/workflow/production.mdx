@@ -28,12 +28,6 @@ CF_PROJECT_NAME=
 
 2. Disable `Enable automatic production branch deployments` in the Cloudflare Pages dashboard. This conflicts with our Github Actions.
 
-#### 📱 Expo
-
-```bash
-TODO=
-```
-
 ## Configure Wrangler.toml
 
 > Wrangler is the official CLI tool for Cloudflare Workers.
@@ -69,6 +63,12 @@ route = "app.t4stack.com/*"
 workers_dev = false
 ```
 
+#### 📱 Expo
+
+1. Go in your [Expo settings](https://expo.dev/accounts/%5Baccount%5D/settings/access-tokens) to create a new access token.
+
+2. Add the `EXPO_TOKEN` secret to your repository with the token that you retrieved from Expo to allow GitHub Actions to publish your app.
+
 ## Environment Variables
 
 Configure environment variables within the Cloudflare Pages dashboard for production.
@@ -90,7 +90,7 @@ CLERK_SECRET_KEY=
 ## Authentication - Supabase
 
 To set up authentication with Supabase in your application, you will need to configure certain environment
-variables and customize the email verification redirect link for production. 
+variables and customize the email verification redirect link for production.
 Head over to [](https://supabase.com/dashboard) for your Supabase API keys and set the following environment variables:
 
 ```bash
@@ -109,4 +109,3 @@ To set up the email verification redirect link, follow these steps:
 - Enter the URL of your production website that you want users to be redirected to.
 
 By customizing this redirect link, you ensure a seamless experience for your users during the email verification process.
-
