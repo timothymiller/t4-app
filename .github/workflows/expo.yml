@@ -38,4 +38,4 @@ jobs:
           dir: apps/expo
 
       - name: Build app
-        run: "cd apps/expo && eas init && eas build --non-interactive --platform all --profile preview --no-wait"
+        run: 'cd apps/expo && eas init && eas build --non-interactive --platform all --profile production --no-wait'
