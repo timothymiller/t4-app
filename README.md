@@ -84,7 +84,7 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 ### 🔒 Authentication
 
 - 🔑 [Supabase](https://supabase.com/docs/guides/auth)
-or
+> or
 - 🔑 [Clerk](https://clerk.dev)
 
 
