@@ -29,7 +29,10 @@ jobs:
         run: cd apps/vscode && yarn install
 
       - name: Install vsce
-        run: cd apps/vscode && yarn global add vsce
+        run: cd apps/vscode && yarn global add @vscode/vsce
+
+      - name: Package
+        run: cd apps/vscode && vsce package
 
       - name: Publish
         run: cd apps/vscode && vsce publish -p ${{ secrets.VSCE_TOKEN }}
