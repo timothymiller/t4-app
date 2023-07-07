@@ -21,6 +21,7 @@ jobs:
       - name: Check version changes
         uses: EndBug/version-check@v1
         id: check
+        file-name: ./apps/cli/package.json
 
       - name: Version update detected
         if: steps.check.outputs.changed == 'true'
