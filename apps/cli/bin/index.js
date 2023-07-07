@@ -71,9 +71,9 @@ const setup = (folderName) => {
 
             console.log(
               chalk.yellow(
-                `\n🚧 Remember to set up your environment variables properly by:\n1. Duplicating the .env.local.example file, removing .example, and entering your variables\n2. Duplicating /packages/api/.dev.vars.example, removing .example, and entering your ${
+                `\n🚧 Remember to set up your environment variables properly by:\n1. Duplicating the .env.example file, renaming it to .env.local, and entering your variables.\n2. Duplicating /packages/api/.dev.vars.example, removing .example, and entering your ${
                   withSupabase ? 'Supabase' : 'Clerk'
-                } JWT_VERIFICATION_KEY\n3. Configure Cloudflare Wrangler configs inside /apps/next/wrangler.toml and /packages/api/wrangler.toml to match your deployment environment.`
+                } JWT_VERIFICATION_KEY.\n3. Configure Cloudflare Wrangler configs inside /apps/next/wrangler.toml and /packages/api/wrangler.toml to match your deployment environment.`
               )
             )
 
