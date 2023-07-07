@@ -28,6 +28,18 @@ CF_PROJECT_NAME=
 
 2. Disable `Enable automatic production branch deployments` in the Cloudflare Pages dashboard. This conflicts with our Github Actions.
 
+#### 📱 Expo
+
+1. Go in your [Expo settings](https://expo.dev/accounts/%5Baccount%5D/settings/access-tokens) to create a new access token.
+
+2. Add the `EXPO_TOKEN` secret to your repository with the token that you retrieved from Expo to allow GitHub Actions to publish your app.
+
+3. Create a new project in the [Expo projects](https://expo.dev/accounts/%5Baccount%5D/projects) and add the correct `projectId` to your `apps/expo/app.json`. Update the `slug` field to match your project name. Also update the `owner` field with your Expo username.
+
+4. Setup EAS credentials for your Android and IOS apps by running `eas credentials` in your terminal. Setup the correct `android.package` and `ios.bundleIdentifier` in `apps/expo/app.json`.
+
+5. Push your changes to GitHub and watch your app being built and published to Expo.
+
 ## Configure Wrangler.toml
 
 > Wrangler is the official CLI tool for Cloudflare Workers.
@@ -62,12 +74,6 @@ name = "t4-app"
 route = "app.t4stack.com/*"
 workers_dev = false
 ```
-
-#### 📱 Expo
-
-1. Go in your [Expo settings](https://expo.dev/accounts/%5Baccount%5D/settings/access-tokens) to create a new access token.
-
-2. Add the `EXPO_TOKEN` secret to your repository with the token that you retrieved from Expo to allow GitHub Actions to publish your app.
 
 ## Environment Variables
 
