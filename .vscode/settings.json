@@ -30,7 +30,11 @@
     "**/.eslintrc.js": false,
     "**/next-env.d.ts": false,
     "**/.vscode": false,
-    "**/.turbo": false
+    "**/.turbo": false,
+    "**/out": false
+  },
+  "search.exclude": {
+    "**/out": true
   },
   "explorerExclude.backup": {},
   "plugins": {
@@ -50,7 +54,8 @@
       "dbaeumer.vscode-eslint",
       "wilsonsio.color-vision",
       "bungcip.better-toml",
-      "formulahendry.auto-rename-tag"
+      "formulahendry.auto-rename-tag",
+      "dbaeumer.vscode-eslint"
     ]
   }
 }

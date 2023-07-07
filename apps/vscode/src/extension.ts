@@ -3,7 +3,7 @@ import * as vscode from 'vscode'
 import * as path from 'path'
 
 export function activate(context: vscode.ExtensionContext) {
-  const disposableScreen = vscode.commands.registerCommand('t3-cua-tools.newScreen', async () => {
+  const disposableScreen = vscode.commands.registerCommand('t4-app-tools.newScreen', async () => {
     const screenName = await vscode.window.showInputBox({
       placeHolder: 'NewScreen',
       prompt: 'Enter the name of the new screen',
@@ -134,7 +134,7 @@ export function activate(context: vscode.ExtensionContext) {
   })
 
   const disposableComponent = vscode.commands.registerCommand(
-    't3-cua-tools.newComponent',
+    't4-app-tools.newComponent',
     async () => {
       const componentName = await vscode.window.showInputBox({
         placeHolder: 'NewComponent',
@@ -178,7 +178,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
   )
 
-  const disposableRoute = vscode.commands.registerCommand('t3-cua-tools.newRoute', async () => {
+  const disposableRoute = vscode.commands.registerCommand('t4-app-tools.newRoute', async () => {
     const routeName = await vscode.window.showInputBox({
       placeHolder: 'newRoute',
       prompt: 'Enter the name of the new route',
