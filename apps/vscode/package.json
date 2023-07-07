@@ -1,6 +1,6 @@
 {
   "name": "t4-app-tools",
-  "displayName": "t4-app-tools",
+  "displayName": "T4 App Tools",
   "description": "A set of tools to help you create new screens, components and routes for your T4 App.",
   "icon": "icon.png",
   "version": "1.0.0",
