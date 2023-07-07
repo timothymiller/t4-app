@@ -45,20 +45,3 @@ jobs:
         run: cd apps/cli && yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Set up Node.js for GPR
-        if: steps.check.outputs.changed == 'true'
-        uses: actions/setup-node@v1
-        with:
-          registry-url: 'https://npm.pkg.github.com/'
-          scope: '@timothymiller'
-
-      - name: Set up package for GPR
-        if: steps.check.outputs.changed == 'true'
-        run: npm run gpr-setup
-
-      - name: Publish package to GPR
-        if: steps.check.outputs.changed == 'true'
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
