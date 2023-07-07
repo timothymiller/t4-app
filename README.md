@@ -36,6 +36,9 @@ The T4 Stack is a universal web and native stack made by [Tim Miller](https://tw
 
 Easy integration with **Cloudflare** services, such as R2 & D1 enable developers to build apps with **AI-powered features** at a **lower cost** compared to AWS.
 
+👉 Further documentation can be found on the [T4 Stack website](https://t4stack.com). 👈
+
+<br>
 <p align="center">
   <picture>
     <img src="https://img.shields.io/badge/Cloudflare%20Pages-F38020?style=for-the-badge&logo=Cloudflare%20Pages&logoColor=white" alt="T4 is compatible with Cloudflare Pages">
@@ -166,8 +169,6 @@ If you would like to use Supabase as your authentication provider instead of Cle
 ```bash
 yarn create t4-app --supabase
 ```
-
-👉 Further documentation can be found on the [T4 Stack website](https://t4stack.com). 👈
 
 ## ✨ Features
 
