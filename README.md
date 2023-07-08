@@ -189,12 +189,11 @@ I would like to add the following features to `create-t4-app` in the future:
 
 - ✅ Github Action publishing for Expo apps
 - ✅ Database migration in CI/CD
+- ✅ Supabase Auth
+- [ ] PNPM support
 - [ ] GraphQL (type-safe) data fetching
   - ⏲️ [GQty](https://gqty.dev) - A No-GraphQL client for TypeScript.
   - 🔄 [Garph](https://garph.dev) - Fullstack GraphQL Framework for TypeScript
-- ✅ Supabase Auth
-- [ ] Firebase Auth
-- [ ] PNPM support
 - [ ] 📚 [Storybook](https://storybook.js.org) support
 - [ ] 🖌️ [Chromatic](https://chromatic.com) support
 
