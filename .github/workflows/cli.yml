@@ -1,4 +1,4 @@
-name: Publish to NPM & GitHub Package Registry
+name: Publish CLI to NPM
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
 jobs:
   publish:
     if: github.repository_owner == 'timothymiller'
-    name: Publish to NPM & GitHub Package Registry
+    name: Publish CLI to NPM
     runs-on: ubuntu-latest
 
     steps:
