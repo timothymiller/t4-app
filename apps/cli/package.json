@@ -1,7 +1,7 @@
 {
   "name": "create-t4-app",
   "bin": "./bin/index.js",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "license": "Apache-2.0",
   "description": "Easily Create Type-Safe, Full-Stack Apps for React Native + Web using the t4 stack.",
   "dependencies": {
