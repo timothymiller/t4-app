@@ -26,8 +26,11 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           cache: 'yarn'
 
-      - name: Install the dependencies
-        run: cd apps/vscode && yarn install
+      - name: Install dependencies
+        uses: borales/actions-yarn@v4.2.0
+        with:
+          cmd: install
+          dir: apps/vscode
 
       - name: Publish
         run: cd apps/vscode && yarn dlx @vscode/vsce publish --no-dependencies -p ${{ secrets.VSCE_TOKEN }}
