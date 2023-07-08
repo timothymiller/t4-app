@@ -36,10 +36,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@timothyjmiller' # Defaults to the user or organization that owns the workflow file
 
-      - name: Install dependencies
-        if: steps.check.outputs.changed == 'true'
-        run: cd apps/cli && yarn
-
       - name: Publish package to NPM
         if: steps.check.outputs.changed == 'true'
         run: cd apps/cli && yarn publish
