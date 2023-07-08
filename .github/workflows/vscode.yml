@@ -18,6 +18,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Check version changes
+        uses: EndBug/version-check@v1
+        id: check
+        with:
+          file-name: ./apps/vscode/package.json
+
+      - name: Version update detected
+        if: steps.check.outputs.changed == 'true'
+        run: 'echo "Version change found! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
+
       - name: Setup Node.js for NPM
         if: steps.check.outputs.changed == 'true'
         uses: actions/setup-node@v3
@@ -27,10 +37,12 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
+        if: steps.check.outputs.changed == 'true'
         uses: borales/actions-yarn@v4.2.0
         with:
           cmd: install
           dir: apps/vscode
 
       - name: Publish
+        if: steps.check.outputs.changed == 'true'
         run: cd apps/vscode && yarn dlx @vscode/vsce publish --no-dependencies -p ${{ secrets.VSCE_TOKEN }}
