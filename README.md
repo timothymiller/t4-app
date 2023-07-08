@@ -87,9 +87,10 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 ### 🔒 Authentication
 
 - 🔑 [Supabase](https://supabase.com/docs/guides/auth)
-> or
-- 🔑 [Clerk](https://clerk.dev)
 
+> or
+
+- 🔑 [Clerk](https://clerk.dev)
 
 ## 📖 Background
 
@@ -169,6 +170,10 @@ If you would like to use Supabase as your authentication provider instead of Cle
 ```bash
 yarn create t4-app --supabase
 ```
+
+## 🧩 VSCode Extension
+
+The VSCode extension is optional but highly recommended. It provides a better developer experience by providing code actions to help you scaffold your app. You can find more info in the [docs](https://t4stack.com/extension) or install it from the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=albbus.t4-app-tools).
 
 ## ✨ Features
 
