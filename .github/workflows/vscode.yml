@@ -1,0 +1,36 @@
+name: Publish VsCode Extension to Marketplace
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/vscode/**'
+
+jobs:
+  publish:
+    if: github.repository_owner == 'timothymiller'
+    name: Publish VsCode Extension to Marketplace
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js for NPM
+        if: steps.check.outputs.changed == 'true'
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'yarn'
+
+      - name: Install the dependencies
+        run: cd apps/vscode && yarn install
+
+      - name: Package
+        run: cd apps/vscode && yarn dlx @vscode/vsce package --no-dependencies
+
+      - name: Publish
+        run: cd apps/vscode && yarn dlx @vscode/vsce publish -p ${{ secrets.VSCE_TOKEN }}
