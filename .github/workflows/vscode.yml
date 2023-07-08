@@ -29,8 +29,5 @@ jobs:
       - name: Install the dependencies
         run: cd apps/vscode && yarn install
 
-      - name: Package
-        run: cd apps/vscode && yarn dlx @vscode/vsce package --no-dependencies
-
       - name: Publish
-        run: cd apps/vscode && yarn dlx @vscode/vsce publish -p ${{ secrets.VSCE_TOKEN }}
+        run: cd apps/vscode && yarn dlx @vscode/vsce publish --no-dependencies -p ${{ secrets.VSCE_TOKEN }}
