@@ -191,6 +191,8 @@ I would like to add the following features to `create-t4-app` in the future:
 - ✅ Database migration in CI/CD
 - ✅ Supabase Auth
 - [ ] PNPM support
+- [ ] Legend State
+- [ ] Million.js example
 - [ ] GraphQL (type-safe) data fetching
   - ⏲️ [GQty](https://gqty.dev) - A No-GraphQL client for TypeScript.
   - 🔄 [Garph](https://garph.dev) - Fullstack GraphQL Framework for TypeScript
