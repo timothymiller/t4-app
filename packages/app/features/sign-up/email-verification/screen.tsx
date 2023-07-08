@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Button, Input, YStack } from '@t4/ui'
-import { useSignUp } from '../../../utils/clerk'
+import { useSignUp } from 'app/utils/clerk'
 import { useRouter } from 'solito/router'
-import { trpc } from '../../../utils/trpc'
+import { trpc } from 'app/utils/trpc'
 
 export function EmailVerificationScreen() {
   const { push } = useRouter()

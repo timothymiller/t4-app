@@ -1,6 +1,6 @@
 import { H1, H2, Paragraph, YStack } from '@t4/ui'
 import React from 'react'
-import { trpc } from '../../utils/trpc'
+import { trpc } from 'app/utils/trpc'
 
 export function DataFetchingScreen() {
   const helloWorld = trpc.hello.world.useQuery()
