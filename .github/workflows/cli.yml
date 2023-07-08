@@ -38,6 +38,6 @@ jobs:
 
       - name: Publish package to NPM
         if: steps.check.outputs.changed == 'true'
-        run: cd apps/cli && yarn npm publish
+        run: cd apps/cli && npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
