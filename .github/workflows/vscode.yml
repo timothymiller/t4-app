@@ -24,15 +24,13 @@ jobs:
         with:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
+          cache: 'yarn'
 
       - name: Install the dependencies
         run: cd apps/vscode && yarn install
 
-      - name: Install vsce
-        run: cd apps/vscode && yarn global add @vscode/vsce
-
       - name: Package
-        run: cd apps/vscode && vsce package
+        run: cd apps/vscode && yarn dlx @vscode/vsce package --no-dependencies
 
       - name: Publish
-        run: cd apps/vscode && vsce publish -p ${{ secrets.VSCE_TOKEN }}
+        run: cd apps/vscode && yarn dlx @vscode/vsce publish -p ${{ secrets.VSCE_TOKEN }}

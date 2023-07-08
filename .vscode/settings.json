@@ -1,4 +1,6 @@
 {
+  // Turn this on if you want to debug the T4 App Tools Extension
+  // "terminal.integrated.defaultProfile.windows": null,
   "files.exclude": {
     "**/.git": false,
     "**/.svn": false,
