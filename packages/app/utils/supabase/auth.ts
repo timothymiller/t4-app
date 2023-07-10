@@ -55,7 +55,7 @@ const signOut = async () => {
 
 const sendPasswordResetEmail = async (email) => {
   const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: 'http://localhost:3000/password-reset/update-password',
+    redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/password-reset/update-password`,
   })
   return { data, error }
 }
