@@ -20,13 +20,13 @@
 
 <p align="center">
   <a href = "https://discord.gg/wj2GV7AvQd">
-    <img src="https://img.shields.io/discord/1117289587472081016?color=%235865F2&label=Discord&logo=discord&logoColor=%23fff" alt="Join the T4 discord community">
-  </a>
+    <img src="https://img.shields.io/discord/1117289587472081016?color=%235865F2&label=Discord&logo=discord&logoColor=white&style=for-the-badge" alt="Join the T4 discord community">
+  </a>&nbsp;
   <a href = "https://www.npmjs.com/package/create-t4-app">
-    <img src="https://img.shields.io/npm/dw/create-t4-app" alt="Weekly downloads for create-t4-app on npmjs.org">
-  </a>
-  <a href = "https://www.npmjs.com/package/create-t4-app">
-    <img src="https://img.shields.io/npm/v/create-t4-app" alt="View create-t4-app on npmjs.org">
+    <img src="https://img.shields.io/npm/dw/create-t4-app?logo=npm&style=for-the-badge&color=CC3534" alt="Weekly downloads for create-t4-app on npmjs.org">
+  </a>&nbsp;
+  <a href="https://marketplace.visualstudio.com/items?itemName=albbus.t4-app-tools">
+    <img src="https://img.shields.io/visual-studio-marketplace/i/albbus.t4-app-tools?logo=visual-studio-code&style=for-the-badge&color=0078D7" alt="VSCode Extension Installs">
   </a>
 </p>
 
@@ -40,18 +40,18 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 
 <br>
 <p align="center">
-  <picture>
+  <a href="https://pages.cloudflare.com/">
     <img src="https://img.shields.io/badge/Cloudflare%20Pages-F38020?style=for-the-badge&logo=Cloudflare%20Pages&logoColor=white" alt="T4 is compatible with Cloudflare Pages">
-  </picture>
-  <picture>
+  </a>&nbsp;
+  <a href="https://nextjs.org/">
     <img src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="T4 uses Next.js">
-  </picture>
-  <picture>
+  </a>&nbsp;
+  <a href="https://expo.dev/">
     <img src="https://img.shields.io/badge/Expo-1B1F23?style=for-the-badge&logo=expo&logoColor=white" alt="T4 uses Expo">
-  </picture>
-  <picture>
+  </a>&nbsp;
+  <a href="https://www.typescriptlang.org/">
     <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="T4 is written in TypeScript">
-  </picture>
+  </a>
 </p>
 
 ### 📐 UI Kit
@@ -112,13 +112,13 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
 
 #### Never worry about using XCode or Android Studio again
 
-<p align="center">
-  <picture>
+<p align="left">
+  <a href="https://developer.android.com/studio">
     <img src="https://img.shields.io/badge/Android_Studio-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white" alt="Android Studio">
-  </picture>
-  <picture>
+  </a>&nbsp;
+  <a href="https://developer.apple.com/xcode/">
     <img src="https://img.shields.io/badge/Xcode-007ACC?style=for-the-badge&logo=Xcode&logoColor=white" alt="XCode">
-  </picture>
+  </a>
 </p>
 
 ## ❓ Why T4?
@@ -150,9 +150,9 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
 > Yarn v3 is required to use `create-t4-app`
 
 <p align="left">
-  <picture>
+  <a href="https://yarnpkg.com/">
     <img src="https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white" alt="Yarn is required to use `create-t4-app`">
-  </picture>
+  </a>
 </p>
 
 To scaffold an app using `create-t4-app`, run any of the following commands.
