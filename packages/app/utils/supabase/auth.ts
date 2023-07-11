@@ -53,6 +53,20 @@ const signOut = async () => {
   await supabase.auth.signOut()
 }
 
+const sendPasswordResetEmail = async (email) => {
+  const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/password-reset/update-password`,
+  })
+  return { data, error }
+}
+
+const updatePassword = async (newPassword) => {
+  const { data, error } = await supabase.auth.updateUser({
+    password: newPassword,
+  })
+  return { data, error }
+}
+
 const getUser = async () => {
   const {
     data: { user },
@@ -85,4 +99,14 @@ const isUserSignedIn = async () => {
   return session !== null && session.user !== null
 }
 
-export { supabase, signIn, signInWithOAuth, signUp, signOut, getUser, isUserSignedIn }
+export {
+  supabase,
+  signIn,
+  signInWithOAuth,
+  sendPasswordResetEmail,
+  updatePassword,
+  signUp,
+  signOut,
+  getUser,
+  isUserSignedIn,
+}

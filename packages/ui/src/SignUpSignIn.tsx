@@ -141,6 +141,26 @@ export const SignUpSignInComponent: React.FC<Props> = ({
           </Paragraph>
         </Link>
       </XStack>
+
+      {/* forgot password */}
+      {type === 'sign-in' && (
+        <XStack mt="$-2.5">
+          <Paragraph size="$2" mr="$2" opacity={0.4}>
+            Forgot your password?
+          </Paragraph>
+          <Link href="/password-reset">
+            <Paragraph
+              cursor={'pointer'}
+              size="$2"
+              fontWeight={'700'}
+              opacity={0.5}
+              hoverStyle={{ opacity: 0.4 }}
+            >
+              Reset it
+            </Paragraph>
+          </Link>
+        </XStack>
+      )}
     </YStack>
   )
 }
