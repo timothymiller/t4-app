@@ -38,7 +38,9 @@ CF_PROJECT_NAME=
 
 4. Setup EAS credentials for your Android and IOS apps by running `eas credentials` in your terminal. Setup the correct `android.package` and `ios.bundleIdentifier` in `apps/expo/app.json`.
 
-5. Push your changes to GitHub and watch your app being built and published to Expo.
+5. Over on your repository set the `Read and write permissions` in `Settings > Actions > General > Workflow Permissions`. This specific workflow includes only the `contents: write` permission that is needed to comment on your commits with the build download links.
+
+6. Push your changes to GitHub and watch your app being built in EAS.
 
 ## Configure Wrangler.toml
 
