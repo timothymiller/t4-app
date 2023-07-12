@@ -38,7 +38,7 @@ const setup = (folderName) => {
 
       gitSpinner.succeed();
 
-      exec(`rm -rf ${folderName}/cli && rm -rf ${folderName}/.git && rm ${folderName}/.github/workflows/cli.yml`, (rmErr) => {
+      exec(`rm -rf ${folderName}/cli && rm -rf ${folderName}/.git && rm -f ${folderName}/.github/workflows/cli.yml`, (rmErr) => {
         if (rmErr) {
           console.error(
             chalk.red.bold(`Failed to remove unnecessary files: ${rmErr.message}`)
