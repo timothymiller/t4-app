@@ -168,7 +168,7 @@ yarn create t4-app
 If you would like to use Supabase as your authentication provider instead of Clerk use:
 
 ```bash
-yarn create t4-app --supabase-auth
+yarn create t4-app --supabase
 ```
 
 ## 🧩 VSCode Extension
