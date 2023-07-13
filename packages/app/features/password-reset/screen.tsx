@@ -6,9 +6,9 @@ import { sendPasswordResetEmail } from 'app/utils/supabase/auth'
 export function PasswordResetScreen() {
   const { push } = useRouter()
 
-  const handleEmailWithPress = async (emailOrPassword) => {
-    // Email for the password reset
-    const { error } = await sendPasswordResetEmail(emailOrPassword)
+  const handleEmailWithPress = async (email) => {
+    // Send email with the password reset link
+    const { error } = await sendPasswordResetEmail(email)
     if (error) {
       console.log('Password reset request failed', error)
       return

@@ -3,7 +3,7 @@ import { YStack, Paragraph, Button, Input } from 'tamagui'
 
 interface Props {
   type: 'email' | 'password'
-  handleWithPress: (emailOrPassword) => void
+  handleWithPress: (emailOrPassword: string) => void
 }
 
 export const PasswordResetComponent: React.FC<Props> = ({ type, handleWithPress }) => {
@@ -26,7 +26,6 @@ export const PasswordResetComponent: React.FC<Props> = ({ type, handleWithPress 
       </Paragraph>
 
       {/* email or password input */}
-
       {type === 'email' ? (
         <Input
           autoCapitalize="none"

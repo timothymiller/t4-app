@@ -6,9 +6,9 @@ import { updatePassword } from 'app/utils/supabase/auth'
 export function UpdatePasswordScreen() {
   const { push } = useRouter()
 
-  const handlePasswordWithPress = async (emailOrPassword) => {
+  const handlePasswordWithPress = async (password) => {
     // Update the password
-    const { error } = await updatePassword(emailOrPassword)
+    const { error } = await updatePassword(password)
     if (error) {
       console.log('Password change failed', error)
       return
