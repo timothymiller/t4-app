@@ -31,7 +31,6 @@ jobs:
         uses: ./.github/actions/pnpm-install
 
       - name: Migrate database
-        continue-on-error: true
         run: pnpm --filter @t4/api migrate
         env:
           NO_D1_WARNING: true
@@ -51,3 +50,7 @@ jobs:
           APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
           JWT_VERIFICATION_KEY: ${{ secrets.JWT_VERIFICATION_KEY }}
           CI: true
+          NO_D1_WARNING: true
+
+      - name: Set permissions (workaround)
+        run: sudo chmod -R 777 .wrangler
