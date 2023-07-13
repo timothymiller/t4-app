@@ -30,19 +30,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
+
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/pnpm-install
 
       - name: Setup EAS
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
-
-      - name: Install dependencies
-        uses: borales/actions-yarn@v4.2.0
-        with:
-          cmd: install
-          dir: apps/expo
 
       - name: Build app
         id: build

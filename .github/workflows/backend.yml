@@ -26,19 +26,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
 
-      - name: Install dependencies
-        uses: borales/actions-yarn@v4.2.0
-        with:
-          cmd: install
-          dir: packages/api
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/pnpm-install
 
       - name: Migrate database
         continue-on-error: true
-        run: |
-          cd packages/api
-          yarn migrate
+        run: pnpm --filter @t4/api migrate
         env:
           NO_D1_WARNING: true
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
