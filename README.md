@@ -187,15 +187,15 @@ The VSCode extension is optional but highly recommended. It provides a better de
 - ✅ Authentication across all platforms.
 - ✅ Powered by TypeScript for type safety and better developer experience.
 - ✅ Comes with pre-configured ESLint and Prettier for code consistency.
-
-## ⭐ Wish List
-
-I would like to add the following features to `create-t4-app` in the future:
-
 - ✅ Github Action publishing for Expo apps
 - ✅ Database migration in CI/CD
 - ✅ Supabase Auth
 - ✅ PNPM support
+  
+## ⭐ Wish List
+
+I would like to add the following features to `create-t4-app` in the future:
+
 - [ ] Legend State
 - [ ] Million.js example
 - [ ] GraphQL (type-safe) data fetching
