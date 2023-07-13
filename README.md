@@ -195,7 +195,7 @@ I would like to add the following features to `create-t4-app` in the future:
 - ✅ Github Action publishing for Expo apps
 - ✅ Database migration in CI/CD
 - ✅ Supabase Auth
-- [ ] PNPM support
+- ✅ PNPM support
 - [ ] Legend State
 - [ ] Million.js example
 - [ ] GraphQL (type-safe) data fetching
