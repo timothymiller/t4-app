@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  Get started with the <a rel="noopener noreferrer" target="_blank" href="https://t4stack.com">T4 Stack</a> by running <code>yarn create t4-app</code>
+  Get started with the <a rel="noopener noreferrer" target="_blank" href="https://t4stack.com">T4 Stack</a> by running <code>pnpm create t4-app</code>
 </p>
 
 <p align="center">
@@ -147,20 +147,20 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
 
 ## 🚀 Quick Start
 
-> Yarn v3 is required to use `create-t4-app`
+> pnpm v8.6.5 is required to use `create-t4-app`
 
 <p align="left">
-  <a href="https://yarnpkg.com/">
-    <img src="https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white" alt="Yarn is required to use `create-t4-app`">
+  <a href="https://pnpm.io">
+    <img src="https://img.shields.io/badge/pnpm-%234a4a4a.svg?style=for-the-badge&logo=pnpm&logoColor=f69220" alt="pnpm is required to use `create-t4-app`">
   </a>
 </p>
 
 To scaffold an app using `create-t4-app`, run any of the following commands.
 
-### **yarn**
+### **pnpm**
 
 ```bash
-yarn create t4-app
+pnpm create t4-app
 ```
 
 ### **Supabase**
@@ -168,7 +168,7 @@ yarn create t4-app
 If you would like to use Supabase as your authentication provider instead of Clerk use:
 
 ```bash
-yarn create t4-app --supabase
+pnpm create t4-app --supabase
 ```
 
 ## 🧩 VSCode Extension

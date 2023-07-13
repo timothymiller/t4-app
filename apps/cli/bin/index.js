@@ -47,7 +47,7 @@ const setup = (folderName) => {
 
         const installSpinner = ora(chalk.green.bold(`Installing dependencies`)).start()
 
-        exec(`cd ${folderName} && yarn install`, (installErr) => {
+        exec(`pnpm install`, (installErr) => {
           if (installErr) {
             installSpinner.fail()
             console.error(chalk.red.bold(`Failed to install dependencies: ${installErr.message}`))
@@ -58,7 +58,7 @@ const setup = (folderName) => {
 
           const drizzleSpinner = ora(chalk.green.bold(`Generating Drizzle client`)).start()
 
-          exec(`cd ${folderName} && yarn generate`, (drizzleErr) => {
+          exec(`pnpm generate`, (drizzleErr) => {
             if (drizzleErr) {
               drizzleSpinner.fail()
               console.error(
@@ -79,7 +79,7 @@ const setup = (folderName) => {
 
             console.log(
               chalk.green.bold(
-                "🚀 Successfully created t4 project! After having filled out your .env, run 'cd packages/api && yarn migrate:local' to create your database tables. Run 'yarn api' and 'yarn web' in separate terminal tabs to start the api and web development servers."
+                "🚀 Successfully created t4 project! After having filled out your .env, run 'pnpm migrate:local' to create your database tables. Run 'pnpm api' and 'pnpm web' in separate terminal tabs to start the api and web development servers."
               )
             )
 
