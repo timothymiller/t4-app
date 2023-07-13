@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run T4 App Tools Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "sourceMaps": true,
+      "args": ["--extensionDevelopmentPath=${workspaceFolder}/apps/vscode"],
+      "outFiles": ["${workspaceFolder}/apps/vscode/out/**/*.js"],
+      "preLaunchTask": "${defaultBuildTask}"
+    }
+  ]
+}

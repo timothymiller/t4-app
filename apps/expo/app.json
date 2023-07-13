@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "t4",
-    "slug": "t4",
+    "name": "t4-app",
+    "slug": "t4-app",
     "scheme": "t4",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -32,8 +32,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "ade0e615-6a0b-42d8-a558-40e3fbcb53bf"
+        "projectId": "85fc6ccd-0ce1-4e4d-804c-b15df989f97e"
       }
-    }
+    },
+    "owner": "timothymiller"
   }
 }

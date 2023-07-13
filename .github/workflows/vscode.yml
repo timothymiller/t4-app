@@ -1,4 +1,4 @@
-name: Publish CLI to NPM
+name: Publish VS Code Extension
 
 on:
   workflow_dispatch:
@@ -6,12 +6,12 @@ on:
     branches:
       - main
     paths:
-      - 'apps/cli/**'
+      - 'apps/vscode/**'
 
 jobs:
   publish:
     if: github.repository_owner == 'timothymiller'
-    name: Publish CLI to NPM
+    name: Publish VS Code Extension
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +22,7 @@ jobs:
         uses: EndBug/version-check@v1
         id: check
         with:
-          file-name: ./apps/cli/package.json
+          file-name: ./apps/vscode/package.json
 
       - name: Version update detected
         if: steps.check.outputs.changed == 'true'
@@ -34,10 +34,15 @@ jobs:
         with:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
-          scope: '@timothyjmiller' # Defaults to the user or organization that owns the workflow file
+          cache: 'yarn'
 
-      - name: Publish package to NPM
+      - name: Install dependencies
         if: steps.check.outputs.changed == 'true'
-        run: cd apps/cli && npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: borales/actions-yarn@v4.2.0
+        with:
+          cmd: install
+          dir: apps/vscode
+
+      - name: Publish
+        if: steps.check.outputs.changed == 'true'
+        run: cd apps/vscode && yarn dlx @vscode/vsce publish --no-dependencies -p ${{ secrets.VSCE_TOKEN }}
