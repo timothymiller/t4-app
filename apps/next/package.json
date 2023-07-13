@@ -3,15 +3,17 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "dev": "yarn with-env next dev",
-    "build": "yarn with-env next build",
+    "dev": "pnpm with-env next dev",
+    "build": "pnpm with-env next build",
+    "start": "pnpm with-env start",
+    "lint": "next lint",
     "with-env": "dotenv -e ../../.env.local --",
-    "start": "next start",
-    "lint": "next lint"
+    "clean": "git clean -xdf .next node_modules .tamagui"
   },
   "dependencies": {
+    "@t4/ui": "^2.0.0",
     "@tamagui/next-theme": "latest",
-    "app": "*",
+    "app": "^2.0.0",
     "next": "13.4.7",
     "raf": "^3.4.1",
     "react": "^18.2.0",

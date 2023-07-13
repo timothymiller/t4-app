@@ -8,5 +8,8 @@
     "chalk": "^5.2.0",
     "ora": "^6.3.1"
   },
+  "scripts": {
+    "clean": "git clean -xdf node_modules"
+  },
   "type": "module"
 }

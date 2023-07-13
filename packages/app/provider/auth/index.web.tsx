@@ -1,5 +1,5 @@
 import { ClerkProvider, useAuth } from '@clerk/nextjs'
-import { setToken } from 'app/utils/trpc/index.web'
+import { setToken } from '../../utils/trpc/index.web'
 import { useEffect } from 'react'
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {

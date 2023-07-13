@@ -6,11 +6,14 @@
   "sideEffects": [
     "*.css"
   ],
+  "scripts": {
+    "clean": "rm -rf node_modules"
+  },
   "dependencies": {
     "@clerk/clerk-expo": "^0.18.7",
     "@clerk/nextjs": "^4.21.10",
     "@shopify/flash-list": "^1.4.3",
-    "@t4/ui": "*",
+    "@t4/ui": "^2.0.0",
     "@tamagui/animations-react-native": "latest",
     "@tamagui/colors": "latest",
     "@tamagui/font-inter": "latest",

@@ -38,10 +38,10 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "yarn compile",
+    "vscode:prepublish": "pnpm compile",
     "compile": "tsc -p ./ --skipLibCheck",
     "watch": "tsc -watch -p ./ --skipLibCheck",
-    "pretest": "yarn compile && yarn lint",
+    "pretest": "pnpm compile && pnpm lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js"
   },
