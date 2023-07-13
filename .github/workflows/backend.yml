@@ -57,3 +57,6 @@ jobs:
           APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
           JWT_VERIFICATION_KEY: ${{ secrets.JWT_VERIFICATION_KEY }}
           CI: true
+
+      - name: Set permissions (workaround)
+        run: sudo chmod -R 777 .wrangler
