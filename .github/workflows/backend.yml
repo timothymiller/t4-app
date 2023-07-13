@@ -51,3 +51,6 @@ jobs:
           JWT_VERIFICATION_KEY: ${{ secrets.JWT_VERIFICATION_KEY }}
           CI: true
           NO_D1_WARNING: true
+
+      - name: Set permissions (workaround)
+        run: sudo chmod -R 777 .wrangler
