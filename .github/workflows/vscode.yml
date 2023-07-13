@@ -34,15 +34,11 @@ jobs:
         with:
           node-version: '18.x'
           registry-url: 'https://registry.npmjs.org'
-          cache: 'yarn'
 
-      - name: Install dependencies
+      - name: 📥 Monorepo install
         if: steps.check.outputs.changed == 'true'
-        uses: borales/actions-yarn@v4.2.0
-        with:
-          cmd: install
-          dir: apps/vscode
+        uses: ./.github/actions/pnpm-install
 
       - name: Publish
         if: steps.check.outputs.changed == 'true'
-        run: cd apps/vscode && yarn dlx @vscode/vsce publish --no-dependencies -p ${{ secrets.VSCE_TOKEN }}
+        run: cd apps/vscode && pnpm dlx @vscode/vsce publish --no-dependencies -p ${{ secrets.VSCE_TOKEN }}
