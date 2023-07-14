@@ -237,9 +237,6 @@ importers:
       '@tamagui/next-theme':
         specifier: latest
         version: 1.39.8(react@18.2.0)
-      '@tauri-apps/api':
-        specifier: ^1.4.0
-        version: 1.4.0
       app:
         specifier: ^2.0.0
         version: link:../../packages/app
@@ -6014,11 +6011,6 @@ packages:
 
   /@tanstack/virtual-core@3.0.0-beta.54:
     resolution: {integrity: sha512-jtkwqdP2rY2iCCDVAFuaNBH3fiEi29aTn2RhtIoky8DTTiCdc48plpHHreLwmv1PICJ4AJUUESaq3xa8fZH8+g==}
-    dev: false
-
-  /@tauri-apps/api@1.4.0:
-    resolution: {integrity: sha512-Jd6HPoTM1PZSFIzq7FB8VmMu3qSSyo/3lSwLpoapW+lQ41CL5Dow2KryLg+gyazA/58DRWI9vu/XpEeHK4uMdw==}
-    engines: {node: '>= 14.6.0', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
     dev: false
 
   /@tootallnate/once@1.1.2:
