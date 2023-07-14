@@ -9,6 +9,9 @@ on:
       - 'packages/ui/**'
       - 'packages/app/**'
 
+env:
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}}
+
 jobs:
   publish-tauri:
     permissions:
