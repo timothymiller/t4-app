@@ -49,3 +49,4 @@ jobs:
           projectPath: ./apps/tauri/
           distPath: ./apps/tauri/out/
           iconPath: ./apps/tauri/public/t4-logo.png
+          args: --debug
