@@ -1,0 +1,31 @@
+.titlebar {
+  height: 30px;
+  background: rgb(23, 23, 23);
+  user-select: none;
+  display: flex;
+  justify-content: flex-end;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.titlebar-nav {
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.titlebar-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  color: white;
+}
+
+.titlebar-button:hover {
+  background: #cfcfcf;
+  color: black;
+}
