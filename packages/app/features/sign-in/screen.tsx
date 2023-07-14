@@ -5,7 +5,7 @@ import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from '@t4/ui/src/SignUpSignIn'
 import { handleOAuthSignIn } from 'app/utils/auth'
 
-export function SignInScreen() {
+export const SignInScreen = (): React.ReactNode => {
   const { push } = useRouter()
 
   const { isLoaded, signIn, setSession } = useSignIn()

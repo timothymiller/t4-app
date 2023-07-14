@@ -4,7 +4,7 @@ import { useSignUp } from 'app/utils/clerk'
 import { useRouter } from 'solito/router'
 import { trpc } from 'app/utils/trpc'
 
-export function EmailVerificationScreen() {
+export const EmailVerificationScreen = (): React.ReactNode => {
   const { push } = useRouter()
 
   const [verificationCode, setVerificationCode] = useState('')

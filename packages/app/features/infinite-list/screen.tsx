@@ -1,8 +1,7 @@
 import { Paragraph, VirtualList, YStack } from '@t4/ui'
-import React from 'react'
 import { SolitoImage } from 'solito/image'
 
-export function InfiniteListScreen() {
+export const InfiniteListScreen = (): React.ReactNode => {
   return <VirtualList data={data} renderItem={Item} itemHeight={80} />
 }
 
@@ -15,9 +14,9 @@ const data: Item[] = Array(100)
   .fill(0)
   .map((_, v) => ({ title: `Item ${v + 1}`, index: v }))
 
-function Item(item: Item) {
+const Item = (item: Item): React.ReactElement => {
   return (
-    <YStack flexDirection='row' paddingLeft='8'>
+    <YStack flexDirection='row' paddingLeft='$8'>
       <SolitoImage
         src="/t4-logo.png"
         width={56}
@@ -28,7 +27,7 @@ function Item(item: Item) {
         }}
       />
       <YStack>
-        <Paragraph paddingTop='8' paddingLeft='16' paddingBottom='4' fontSize={16}>
+        <Paragraph paddingTop="$8" paddingLeft='$16' paddingBottom='$4' fontSize={16}>
           {'Item ' + item.index}
         </Paragraph>
         <Paragraph paddingLeft='16' fontSize={16} opacity={0.6}>

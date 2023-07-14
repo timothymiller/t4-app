@@ -1,12 +1,11 @@
 import { Button, H2, Paragraph, YStack } from '@t4/ui'
 import { ChevronLeft } from '@tamagui/lucide-icons'
-import React from 'react'
 import { createParam } from 'solito'
 import { useLink } from 'solito/link'
 
 const { useParam } = createParam<{ id: string }>()
 
-export function ParamsScreen() {
+export const ParamsScreen = (): React.ReactNode => {
   const [id] = useParam('id')
   const link = useLink({
     href: '/',
