@@ -17,7 +17,7 @@ const data: Item[] = Array(100)
 
 function Item(item: Item) {
   return (
-    <YStack style={{ paddingLeft: 8, flexDirection: 'row' }}>
+    <YStack flexDirection='row' paddingLeft='8'>
       <SolitoImage
         src="/t4-logo.png"
         width={56}
@@ -28,24 +28,10 @@ function Item(item: Item) {
         }}
       />
       <YStack>
-        <Paragraph
-          style={{
-            paddingTop: 8,
-            paddingLeft: 16,
-            paddingBottom: 4,
-            fontSize: 16,
-            fontWeight: 'bold',
-          }}
-        >
+        <Paragraph paddingTop='8' paddingLeft='16' paddingBottom='4' fontSize={16}>
           {'Item ' + item.index}
         </Paragraph>
-        <Paragraph
-          style={{
-            paddingLeft: 16,
-            fontSize: 16,
-            opacity: 0.6,
-          }}
-        >
+        <Paragraph paddingLeft='16' fontSize={16} opacity={0.6}>
           Subtitle
         </Paragraph>
       </YStack>

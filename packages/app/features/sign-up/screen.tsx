@@ -34,7 +34,7 @@ export function SignUpScreen() {
   }
 
   return (
-    <YStack f={1} jc="center" ai="center" space>
+    <YStack flex={1} justifyContent="center" alignItems="center" space>
       <SignUpSignInComponent
         type="sign-up"
         handleOAuthWithPress={handleOAuthSignUpWithPress}

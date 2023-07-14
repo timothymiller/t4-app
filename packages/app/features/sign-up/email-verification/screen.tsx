@@ -31,7 +31,7 @@ export function EmailVerificationScreen() {
     } else alert('Invalid verification code')
   }
   return (
-    <YStack f={1} jc="center" ai="center" space>
+    <YStack flex={1} justifyContent="center" alignItems="center" space>
       <Input
         placeholder="Verification code"
         onChangeText={(text) => {

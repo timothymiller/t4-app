@@ -20,7 +20,8 @@
     "react-dom": "^18.2.0",
     "react-native": "^0.72.3",
     "react-native-web": "^0.19.6",
-    "react-native-web-lite": "latest"
+    "react-native-web-lite": "latest",
+    "webpack": "^5.88.1"
   },
   "devDependencies": {
     "@tamagui/next-plugin": "latest",
