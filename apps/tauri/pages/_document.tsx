@@ -71,6 +71,7 @@ export default class Document extends NextDocument {
               <Image src="https://api.iconify.design/mdi:close.svg" alt="close" />
             </div>
           </div>
+          <TauriTitlebar />
           <Main />
           <NextScript />
         </body>
