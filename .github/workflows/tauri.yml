@@ -1,11 +1,11 @@
 name: 'Tauri build'
 on:
+  workflow_dispatch:
   push:
-    workflow_dispatch:
     branches:
       - main
     paths:
-      - 'packages/api/**'
+      - 'packages/tauri/**'
 
 jobs:
   publish-tauri:
@@ -14,7 +14,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-20.04, windows-latest]
+        # macos-latest, ubuntu-20.04, windows-latest
+        platform: [windows-latest]
     runs-on: ${{ matrix.platform }}
 
     steps:
