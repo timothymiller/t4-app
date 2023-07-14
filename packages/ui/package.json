@@ -18,7 +18,7 @@
     "clean": "rm -rf dist types node_modules .turbo"
   },
   "dependencies": {
-    "@shopify/flash-list": "^1.4.3",
+    "@shopify/flash-list": "^1.5.0",
     "@tamagui/animations-react-native": "latest",
     "@tamagui/font-inter": "latest",
     "@tamagui/react-native-media-driver": "latest",
@@ -26,7 +26,7 @@
     "@tamagui/themes": "latest",
     "@tamagui/toast": "latest",
     "@tanstack/react-virtual": "^3.0.0-alpha.0",
-    "jotai": "^2.1.1",
+    "jotai": "^2.2.2",
     "tamagui": "latest"
   },
   "devDependencies": {
