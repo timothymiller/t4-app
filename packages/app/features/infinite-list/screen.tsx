@@ -16,7 +16,7 @@ const data: Item[] = Array(100)
 
 const Item = (item: Item): React.ReactElement => {
   return (
-    <YStack flexDirection='row' paddingLeft='$8'>
+    <YStack flexDirection='row' paddingLeft='$2'>
       <SolitoImage
         src="/t4-logo.png"
         width={56}
@@ -27,10 +27,10 @@ const Item = (item: Item): React.ReactElement => {
         }}
       />
       <YStack>
-        <Paragraph paddingTop="$8" paddingLeft='$16' paddingBottom='$4' fontSize={16}>
+        <Paragraph paddingTop="$2" paddingLeft='$3' paddingBottom='$1' fontSize={16}>
           {'Item ' + item.index}
         </Paragraph>
-        <Paragraph paddingLeft='16' fontSize={16} opacity={0.6}>
+        <Paragraph paddingLeft='$3' fontSize={16} opacity={0.6}>
           Subtitle
         </Paragraph>
       </YStack>
