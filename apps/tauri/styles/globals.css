@@ -22,7 +22,9 @@
   align-items: center;
   width: 30px;
   height: 30px;
-  color: white;
+  background: #cfcfcf;
+  border-radius: 5px;
+  padding: 1px;
 }
 
 .titlebar-button:hover {
