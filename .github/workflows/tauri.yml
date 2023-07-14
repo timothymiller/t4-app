@@ -71,7 +71,6 @@ jobs:
           prerelease: false
           projectPath: ./apps/tauri/
           distPath: ./apps/tauri/out/
-          iconPath: ./apps/tauri/public/t4-logo.png
           # You can change the following flags to include release and/or debug builds
           includeDebug: true
           includeRelease: false
