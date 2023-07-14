@@ -11,9 +11,9 @@
     "clean": "git clean -xdf .next node_modules .tamagui"
   },
   "dependencies": {
-    "@t4/ui": "workspace:*",
+    "@t4/ui": "*",
     "@tamagui/next-theme": "latest",
-    "app": "workspace:*",
+    "app": "*",
     "next": "13.4.9",
     "raf": "^3.4.1",
     "react": "^18.2.0",

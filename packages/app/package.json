@@ -13,7 +13,7 @@
     "@clerk/clerk-expo": "^0.18.12",
     "@clerk/nextjs": "^4.21.15",
     "@shopify/flash-list": "^1.5.0",
-    "@t4/ui": "workspace:*",
+    "@t4/ui": "*",
     "@tamagui/animations-react-native": "latest",
     "@tamagui/colors": "latest",
     "@tamagui/font-inter": "latest",
