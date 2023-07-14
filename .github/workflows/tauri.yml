@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - 'packages/tauri/**'
+      - 'packages/ui/**'
+      - 'packages/app/**'
 
 jobs:
   publish-tauri:
@@ -24,6 +26,23 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+
+      - name: Cargo cache rotation keys
+        id: rust-cache-rotation
+        shell: bash
+        run: |
+          echo "YEAR_MONTH=$(/bin/date -u "+%Y%m")" >> $GITHUB_OUTPUT
+
+      - name: Cargo Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ steps.rust-cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-${{ steps.rust-cache-rotation.outputs.YEAR_MONTH }}-
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
@@ -49,4 +68,5 @@ jobs:
           projectPath: ./apps/tauri/
           distPath: ./apps/tauri/out/
           iconPath: ./apps/tauri/public/t4-logo.png
-          args: --debug
+          includeDebug: true
+          includeRelease: false
