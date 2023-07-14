@@ -8,6 +8,8 @@ import NextDocument, {
 } from 'next/document'
 import { Children } from 'react'
 import { AppRegistry } from 'react-native'
+import Image from 'next/image'
+import { appWindow } from '@tauri-apps/api/window'
 
 import Tamagui from '../tamagui.config'
 import dynamic from 'next/dynamic'
@@ -50,7 +52,25 @@ export default class Document extends NextDocument {
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         </Head>
         <body>
-          <TauriTitlebar />
+          <div data-tauri-drag-region className="titlebar">
+            <div
+              className="titlebar-button"
+              id="titlebar-minimize"
+              onClick={() => appWindow.minimize()}
+            >
+              <Image src="https://api.iconify.design/mdi:window-minimize.svg" alt="minimize" />
+            </div>
+            <div
+              className="titlebar-button"
+              id="titlebar-maximize"
+              onClick={() => appWindow.toggleMaximize()}
+            >
+              <Image src="https://api.iconify.design/mdi:window-maximize.svg" alt="maximize" />
+            </div>
+            <div className="titlebar-button" id="titlebar-close" onClick={() => appWindow.close()}>
+              <Image src="https://api.iconify.design/mdi:close.svg" alt="close" />
+            </div>
+          </div>
           <Main />
           <NextScript />
         </body>
