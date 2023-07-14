@@ -1,6 +1,5 @@
 import { appWindow } from '@tauri-apps/api/window'
 import Image from 'next/image'
-import { useEffect } from 'react'
 
 const TauriTitlebar = () => {
   return (

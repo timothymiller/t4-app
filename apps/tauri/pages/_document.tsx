@@ -8,8 +8,6 @@ import NextDocument, {
 } from 'next/document'
 import { Children } from 'react'
 import { AppRegistry } from 'react-native'
-import Image from 'next/image'
-import { appWindow } from '@tauri-apps/api/window'
 
 import Tamagui from '../tamagui.config'
 
