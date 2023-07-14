@@ -11,34 +11,35 @@ import { AppRegistry } from 'react-native'
 import { appWindow } from '@tauri-apps/api/window'
 
 import Tamagui from '../tamagui.config'
+import Image from 'next/image'
 
 const TauriTitlebar = () => {
   return (
     <div data-tauri-drag-region className="titlebar">
       <div className="titlebar-nav">
         <div className="titlebar-button" id="titlebar-back" onClick={() => window.history.back()}>
-          <img src="https://api.iconify.design/mdi:arrow-left.svg" alt="back" />
+          <Image src="https://api.iconify.design/mdi:arrow-left.svg" alt="back" />
         </div>
         <div
           className="titlebar-button"
           id="titlebar-forward"
           onClick={() => window.history.forward()}
         >
-          <img src="https://api.iconify.design/mdi:arrow-right.svg" alt="forward" />
+          <Image src="https://api.iconify.design/mdi:arrow-right.svg" alt="forward" />
         </div>
       </div>
       <div className="titlebar-button" id="titlebar-minimize" onClick={() => appWindow.minimize()}>
-        <img src="https://api.iconify.design/mdi:window-minimize.svg" alt="minimize" />
+        <Image src="https://api.iconify.design/mdi:window-minimize.svg" alt="minimize" />
       </div>
       <div
         className="titlebar-button"
         id="titlebar-maximize"
         onClick={() => appWindow.toggleMaximize()}
       >
-        <img src="https://api.iconify.design/mdi:window-maximize.svg" alt="maximize" />
+        <Image src="https://api.iconify.design/mdi:window-maximize.svg" alt="maximize" />
       </div>
       <div className="titlebar-button" id="titlebar-close" onClick={() => appWindow.close()}>
-        <img src="https://api.iconify.design/mdi:close.svg" alt="close" />
+        <Image src="https://api.iconify.design/mdi:close.svg" alt="close" />
       </div>
     </div>
   )
