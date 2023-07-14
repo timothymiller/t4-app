@@ -8,6 +8,7 @@
   top: 0;
   left: 0;
   right: 0;
+  z-index: 1000;
 }
 
 .titlebar-nav {
@@ -23,11 +24,12 @@
   width: 30px;
   height: 30px;
   background: #cfcfcf;
-  border-radius: 5px;
-  padding: 1px;
 }
 
 .titlebar-button:hover {
-  background: #cfcfcf;
-  color: black;
+  background: #979797;
+}
+
+#__next span:first-child {
+  margin-top: 30px;
 }
