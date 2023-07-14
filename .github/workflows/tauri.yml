@@ -25,6 +25,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Setup node
         uses: actions/setup-node@v3
         with:
@@ -42,7 +43,7 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            target
+            ./apps/tauri/src-tauri/target
           key: ${{ runner.os }}-cargo-${{ steps.rust-cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             ${{ runner.os }}-cargo-${{ steps.rust-cache-rotation.outputs.YEAR_MONTH }}-
