@@ -86,13 +86,13 @@ importers:
         specifier: ^6.1.7
         version: 6.1.7(react-native@0.72.0)(react@18.2.0)
       '@t4/ui':
-        specifier: workspace:*
+        specifier: '*'
         version: link:../../packages/ui
       '@types/react-native':
         specifier: ^0.71.3
         version: 0.71.7
       app:
-        specifier: workspace:*
+        specifier: '*'
         version: link:../../packages/app
       babel-plugin-module-resolver:
         specifier: ^4.1.0
