@@ -11,12 +11,6 @@ import { AppRegistry } from 'react-native'
 
 import Tamagui from '../tamagui.config'
 
-import dynamic from 'next/dynamic'
-
-const TauriTitlebar = dynamic(() => import('../components/TauriTitlebar'), {
-  ssr: false,
-})
-
 export default class Document extends NextDocument {
   static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
     AppRegistry.registerComponent('Main', () => Main)
@@ -51,7 +45,6 @@ export default class Document extends NextDocument {
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         </Head>
         <body>
-          <TauriTitlebar />
           <Main />
           <NextScript />
         </body>

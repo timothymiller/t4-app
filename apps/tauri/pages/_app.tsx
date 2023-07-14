@@ -13,6 +13,11 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import type { AppProps } from 'next/app'
 import { SolitoImageProvider } from 'solito/image'
 
+import dynamic from 'next/dynamic'
+const TauriTitlebar = dynamic(() => import('../components/TauriTitlebar'), {
+  ssr: false,
+})
+
 if (process.env.NODE_ENV === 'production') {
   require('../public/tamagui.css')
 }
@@ -38,6 +43,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           }
         `}</style>
       </Head>
+      <TauriTitlebar />
       <ThemeProvider>{contents}</ThemeProvider>
     </>
   )
