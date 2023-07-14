@@ -12,11 +12,6 @@ import Image from 'next/image'
 import { appWindow } from '@tauri-apps/api/window'
 
 import Tamagui from '../tamagui.config'
-import dynamic from 'next/dynamic'
-
-const TauriTitlebar = dynamic(() => import('components/TauriTitlebar'), {
-  ssr: false,
-})
 
 export default class Document extends NextDocument {
   static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
@@ -71,7 +66,6 @@ export default class Document extends NextDocument {
               <Image src="https://api.iconify.design/mdi:close.svg" alt="close" />
             </div>
           </div>
-          <TauriTitlebar />
           <Main />
           <NextScript />
         </body>
