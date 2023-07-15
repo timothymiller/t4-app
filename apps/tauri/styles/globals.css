@@ -25,6 +25,11 @@
   height: 30px;
   background: #cfcfcf;
   cursor: pointer;
+  transition: 200ms ease-in-out;
+}
+
+#titlebar-close:hover {
+  background: #e74e5d;
 }
 
 .titlebar-button:hover {
