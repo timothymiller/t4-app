@@ -1,21 +1,26 @@
 import { appWindow } from '@tauri-apps/api/window'
 import Image from 'next/image'
+import { useEffect } from 'react'
 
 const TauriTitlebar = () => {
-  const canNavigate = window.history.length > 1
+  let canNavigate = window.history.length > 1
+
+  useEffect(() => {
+    canNavigate = window.history.length > 1
+  }, [window.history.length])
 
   return (
     <div data-tauri-drag-region className="titlebar">
       <div className="titlebar-nav">
         <div
-          className={'titlebar-button ' + !canNavigate && 'titlebar-button-disabled'}
+          className={'titlebar-button ' + (!canNavigate && 'titlebar-button-disabled')}
           id="titlebar-back"
           onClick={() => window.history.back()}
         >
           <Image src="https://api.iconify.design/mdi:arrow-left.svg" alt="back" />
         </div>
         <div
-          className={'titlebar-button ' + !canNavigate && 'titlebar-button-disabled'}
+          className={'titlebar-button ' + (!canNavigate && 'titlebar-button-disabled')}
           id="titlebar-forward"
           onClick={() => {
             window.history.forward()
