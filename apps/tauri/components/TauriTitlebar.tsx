@@ -4,6 +4,9 @@ import Image from 'next/image'
 const TauriTitlebar = () => {
   return (
     <div data-tauri-drag-region className="titlebar">
+      <div data-tauri-drag-region className="titlebar-title">
+        {appWindow.title()}
+      </div>
       <div className="titlebar-nav">
         <div className="titlebar-button" id="titlebar-back" onClick={() => window.history.back()}>
           <Image src="https://api.iconify.design/mdi:arrow-left.svg" alt="back" />

@@ -31,6 +31,17 @@
   background: #979797;
 }
 
+.titlebar-tile {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  font-family: 'Inter';
+  font-size: 0.8em;
+  background: none;
+  cursor: default;
+}
+
 html::-webkit-scrollbar {
   display: none;
 }
