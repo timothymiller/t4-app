@@ -1,11 +1,22 @@
 import { appWindow } from '@tauri-apps/api/window'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 const TauriTitlebar = () => {
+  const [title, setTitle] = useState('')
+
+  useEffect(() => {
+    const getTitle = async () => {
+      const title = await appWindow.title()
+      setTitle(title)
+    }
+    getTitle()
+  }, [])
+
   return (
     <div data-tauri-drag-region className="titlebar">
       <div data-tauri-drag-region className="titlebar-title">
-        {appWindow.title()}
+        {title}
       </div>
       <div className="titlebar-nav">
         <div className="titlebar-button" id="titlebar-back" onClick={() => window.history.back()}>
