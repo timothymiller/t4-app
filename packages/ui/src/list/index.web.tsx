@@ -1,20 +1,20 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useColorScheme } from 'react-native'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import React from 'react'
+import { useRef } from 'react'
 
-interface ListProps {
+interface Props {
   data: any[]
-  renderItem: (item: any) => JSX.Element
+  renderItem: (item: any) => React.ReactNode
   itemHeight: number
 }
 
-export function VirtualList({ data, renderItem, itemHeight }: ListProps) {
+export const VirtualList = ({ data, renderItem, itemHeight }: Props): React.ReactNode => {
   const { top, bottom } = useSafeAreaInsets()
   const scheme = useColorScheme()
   const isLight = scheme === 'light'
 
-  const parentRef = React.useRef()
+  const parentRef = useRef()
   const rowVirtualizer = useVirtualizer({
     count: data.length,
     getScrollElement: () => parentRef.current as any,

@@ -6,6 +6,9 @@
   "sideEffects": [
     "*.css"
   ],
+  "scripts": {
+    "clean": "rm -rf node_modules"
+  },
   "dependencies": {
     "@shopify/flash-list": "^1.4.3",
     "@t4/ui": "*",
@@ -15,10 +18,10 @@
     "@tamagui/lucide-icons": "latest",
     "@tamagui/shorthands": "latest",
     "@tamagui/themes": "latest",
-    "@tanstack/react-query": "^4.29.15",
-    "@trpc/client": "^10.32.0",
-    "@trpc/next": "^10.32.0",
-    "@trpc/react-query": "^10.32.0",
+    "@tanstack/react-query": "^4.29.19",
+    "@trpc/client": "^10.34.0",
+    "@trpc/next": "^10.34.0",
+    "@trpc/react-query": "^10.34.0",
     "burnt": "^0.11.7",
     "expo-auth-session": "^4.0.3",
     "expo-constants": "~14.2.1",

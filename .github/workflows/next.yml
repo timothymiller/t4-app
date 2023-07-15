@@ -1,6 +1,7 @@
 name: 'Next.js Deployment'
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -30,13 +31,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
 
-      - name: Install dependencies
-        uses: borales/actions-yarn@v4.2.0
-        with:
-          cmd: install
-          dir: apps/next
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/pnpm-install
 
       - name: Build
         run: |
@@ -45,7 +42,7 @@ jobs:
           export NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}
           export NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           export NEXT_PUBLIC_SUPABASE_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLIC_KEY }}
-          npx @cloudflare/next-on-pages --experimental-minify
+          pnpx @cloudflare/next-on-pages
 
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1

@@ -2,13 +2,13 @@ import { FlashList } from '@shopify/flash-list'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useColorScheme } from 'react-native'
 
-interface ListProps {
+interface Props {
   data: any[]
-  renderItem: (item: any) => JSX.Element
+  renderItem: (item: any) => React.ReactElement
   itemHeight: number
 }
 
-export function VirtualList({ data, renderItem, itemHeight }: ListProps) {
+export const VirtualList = ({ data, renderItem, itemHeight }: Props): React.ReactNode => {
   const { top, bottom } = useSafeAreaInsets()
   const scheme = useColorScheme()
   const isLight = scheme === 'light'
