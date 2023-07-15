@@ -24,12 +24,25 @@
   width: 30px;
   height: 30px;
   background: #cfcfcf;
+  cursor: pointer;
 }
 
 .titlebar-button:hover {
   background: #979797;
 }
 
+.titlebar-button-disabled {
+  background: #979797;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
 #__next span:first-child {
+  margin-top: 0px;
+}
+
+#__next {
   margin-top: 30px;
 }
