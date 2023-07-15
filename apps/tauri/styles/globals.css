@@ -31,7 +31,7 @@
   background: #979797;
 }
 
-.titlebar-tile {
+.titlebar-title {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
