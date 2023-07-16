@@ -6,7 +6,7 @@ import readline from 'readline'
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 })
 
 const repoUrl = 'https://github.com/timothymiller/t4-app'
