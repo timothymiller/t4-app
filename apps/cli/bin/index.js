@@ -6,7 +6,7 @@ import readline from 'readline'
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout,
+  output: process.stdout
 })
 
 const repoUrl = 'https://github.com/timothymiller/t4-app'
@@ -35,12 +35,20 @@ const setup = (folderName) => {
       return
     }
 
+
     gitSpinner.succeed()
 
+
+
+
     exec(
+
       `rm -rf ${folderName}/.git && rm -rf ${folderName}/apps/cli && rm -rf ${folderName}/apps/docs && rm -rf ${folderName}/apps/vscode && rm -f ${folderName}/.github/workflows/cli.yml && rm -f ${folderName}/.github/workflows/docs.yml && rm -f ${folderName}/.github/workflows/vscode.yml`,
+
       (rmErr) => {
+
         if (rmErr) {
+
           console.error(chalk.red.bold(`Failed to remove unnecessary files: ${rmErr.message}`))
           return
         }
@@ -77,7 +85,7 @@ const setup = (folderName) => {
 
             console.log(
               chalk.green.bold(
-                '🚀 Successfully created t4 project! Make sure you have a Supabase account and have created a new project. After having filled out your .env, run "pnpm migrate:local" to create your database tables. Run "pnpm api" and "pnpm web" in separate terminal tabs to start the api and web development servers.'
+                "🚀 Successfully created t4 project! Make sure you have a Supabase account and have created a new project. After having filled out your .env, run 'pnpm migrate:local' to create your database tables. Run 'pnpm api' and 'pnpm web' in separate terminal tabs to start the api and web development servers."
               )
             )
 
@@ -95,7 +103,7 @@ const logo =
 console.log(chalk.green.bold(logo))
 
 console.log(
-  chalk.magentaBright.bold('Type-Safe, Full-Stack Starter Kit for React Native + Web 💪')
+  chalk.magentaBright.bold('"Type-Safe, Full-Stack Starter Kit for React Native + Web" 💪')
 )
 console.log(chalk.magentaBright.bold('ft. Tamagui + TypeScript + tRPC + Turborepo'))
 
@@ -113,4 +121,3 @@ if (!folderArg) {
   })
 } else {
   setup(folderArg)
-}
