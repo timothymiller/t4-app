@@ -77,7 +77,7 @@ const setup = (folderName) => {
 
             console.log(
               chalk.green.bold(
-                "🚀 Successfully created t4 project! Make sure you have a Supabase account and have created a new project. After having filled out your .env, run 'pnpm migrate:local' to create your database tables. Run 'pnpm api' and 'pnpm web' in separate terminal tabs to start the api and web development servers."
+                '🚀 Successfully created t4 project! Make sure you have a Supabase account and have created a new project. After having filled out your .env, run "pnpm migrate:local" to create your database tables. Run "pnpm api" and "pnpm web" in separate terminal tabs to start the api and web development servers.'
               )
             )
 
@@ -95,7 +95,7 @@ const logo =
 console.log(chalk.green.bold(logo))
 
 console.log(
-  chalk.magentaBright.bold('"Type-Safe, Full-Stack Starter Kit for React Native + Web" 💪')
+  chalk.magentaBright.bold('Type-Safe, Full-Stack Starter Kit for React Native + Web 💪')
 )
 console.log(chalk.magentaBright.bold('ft. Tamagui + TypeScript + tRPC + Turborepo'))
 
