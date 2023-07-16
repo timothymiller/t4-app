@@ -159,12 +159,12 @@ To scaffold an app using `create-t4-app`, run any of the following commands.
 pnpm create t4-app
 ```
 
-### **Supabase**
+### **Tauri**
 
-If you would like to use Supabase as your authentication provider instead of Clerk use:
+If you would like to use Tauri use:
 
 ```bash
-pnpm create t4-app --supabase
+pnpm create t4-app --tauri
 ```
 
 ## 🧩 VSCode Extension
@@ -187,6 +187,7 @@ The VSCode extension is optional but highly recommended. It provides a better de
 - ✅ Database migration in CI/CD
 - ✅ Supabase Auth
 - ✅ PNPM support
+- ✅ Tauri Support
   
 ## ⭐ Wish List
 
