@@ -10,5 +10,9 @@
     "types": ["@cloudflare/workers-types", "node"],
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx"
-  }
+  },
+  {
+  "extends": "../../tsconfig.json",
+  "include": ["src", "*.ts"]
+}
 }
