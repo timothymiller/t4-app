@@ -38,7 +38,7 @@ const setup = (folderName) => {
     gitSpinner.succeed()
 
     exec(
-      `rm -rf ${folderName}/.git && rm -rf ${folderName}/apps/cli && rm -rf ${folderName}/apps/docs && rm -rf ${folderName}/apps/vscode && rm -f ${folderName}/.github/workflows/cli.yml && rm -f ${folderName}/.github/workflows/docs.yml && rm -f ${folderName}/.github/workflows/vscode.yml`,
+      `rm -rf ${folderName}/.git && rm -rf ${folderName}/apps/cli && rm -rf ${folderName}/apps/docs && rm -rf ${folderName}/apps/vscode && rm -f ${folderName}/.github/workflows/cli.yml && rm -f ${folderName}/.github/workflows/docs.yml && rm -f ${folderName}/.github/workflows/vscode.yml`
       (rmErr) => {
         if (rmErr) {
           console.error(chalk.red.bold(`Failed to remove unnecessary files: ${rmErr.message}`))
@@ -71,9 +71,7 @@ const setup = (folderName) => {
 
             console.log(
               chalk.yellow(
-                `\n🚧 Remember to set up your environment variables properly by:\n1. Duplicating the .env.example file, renaming it to .env.local, and entering your variables.\n2. Duplicating /packages/api/.dev.vars.example, removing .example, and entering your ${
-                  withSupabase ? 'Supabase' : 'Clerk'
-                } JWT_VERIFICATION_KEY.\n3. Configure Cloudflare Wrangler configs inside /apps/next/wrangler.toml and /packages/api/wrangler.toml to match your deployment environment.`
+                `\n🚧 Remember to set up your environment variables properly by:\n1. Duplicating the .env.example file, renaming it to .env.local, and entering your variables.\n2. Duplicating /packages/api/.dev.vars.example, removing .example, and entering your Supabase JWT_VERIFICATION_KEY.\n3. Configure Cloudflare Wrangler configs inside /apps/next/wrangler.toml and /packages/api/wrangler.toml to match your deployment environment.`
               )
             )
 
