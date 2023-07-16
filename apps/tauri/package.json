@@ -20,7 +20,8 @@
     "react-dom": "^18.2.0",
     "react-native": "^0.72.0",
     "react-native-web": "^0.19.5",
-    "react-native-web-lite": "latest"
+    "react-native-web-lite": "latest",
+    "@tauri-apps/api": "^1.4.0"
   },
   "devDependencies": {
     "@tamagui/next-plugin": "latest",
