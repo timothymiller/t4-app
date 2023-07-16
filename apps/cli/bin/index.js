@@ -14,13 +14,13 @@ const repoUrl = 'https://github.com/timothymiller/t4-app'
 const args = process.argv.slice(2)
 const folderArg = args.filter((arg) => !arg.includes('--'))[0]
 
-const withSupabase = args.includes('--supabase')
+const withTauri = args.includes('--tauri')
 let repoBranch = ''
-if (withSupabase) {
-  repoBranch = '-b supabase-auth --single-branch'
+if (withTauri) {
+  repoBranch = '-b tauri --single-branch'
   console.log(
     chalk.green.bold(
-      '🚀 Setting up with Supabase! Make sure you have a Supabase account and have created a new project.'
+      '🚀 Setting up with Tauri!'
     )
   )
 }
@@ -79,7 +79,7 @@ const setup = (folderName) => {
 
             console.log(
               chalk.green.bold(
-                "🚀 Successfully created t4 project! After having filled out your .env, run 'pnpm migrate:local' to create your database tables. Run 'pnpm api' and 'pnpm web' in separate terminal tabs to start the api and web development servers."
+                "🚀 Successfully created t4 project! Make sure you have a Supabase account and have created a new project. After having filled out your .env, run 'pnpm migrate:local' to create your database tables. Run 'pnpm api' and 'pnpm web' in separate terminal tabs to start the api and web development servers."
               )
             )
 
