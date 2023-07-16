@@ -24,7 +24,7 @@ module.exports = function (api) {
             '@t4/api': '../../packages/api',
             '@t4/ui': '../../packages/ui'
           },
-          extensions: ['.js', '.jsx', '.ts', '.tsx', '.ios.js', '.android.js']
+          extensions: ['.js', '.jsx', '.tsx', '.ios.js', '.android.js']
         }
       ],
       // if you want reanimated support
