@@ -144,8 +144,8 @@ export const SignUpSignInComponent= ({
 
       {/* forgot password */}
       {type === 'sign-in' && (
-        <XStack mt="$-2.5">
-          <Paragraph size="$2" mr="$2" opacity={0.4}>
+        <XStack marginTop="$-2.5">
+          <Paragraph size="$2" marginRight="$2" opacity={0.4}>
             Forgot your password?
           </Paragraph>
           <Link href="/password-reset">
