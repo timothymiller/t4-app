@@ -21,7 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
       })
       .then((result) => result === 'Static Route')
 
-    let parameterName = undefined
+    let parameterName: string | undefined = undefined
     if (!isStaticRoute) {
       parameterName = await vscode.window.showInputBox({
         placeHolder: 'id',
