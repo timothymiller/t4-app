@@ -21,7 +21,7 @@ export const PasswordResetComponent: React.FC<Props> = ({ type, handleWithPress 
       shadowOffset={{ width: 0, height: 4 }}
       backgroundColor="$background"
     >
-      <Paragraph size="$5" fontWeight={'700'} opacity={0.8} mb="$1">
+      <Paragraph size="$5" fontWeight={'700'} opacity={0.8} marginBottom="$1">
         {type == 'email' ? 'Reset your password' : 'Change your password'}
       </Paragraph>
 
