@@ -2,6 +2,6 @@ module.exports = {
   extends: 'next',
   root: true,
   parserOptions: {
-        project: './tsconfig.json',
-          }
-        }
+    project: './tsconfig.json'
+  }
+}
