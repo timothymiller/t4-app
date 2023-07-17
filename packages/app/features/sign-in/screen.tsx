@@ -17,6 +17,7 @@ export const SignInScreen = (): React.ReactNode => {
     },
     discord: { provider: 'discord' },
     // Unverified providers
+    kakao: { provider: 'kakao' },
     twitter: { provider: 'twitter' },
     github: { provider: 'github' },
     gitlab: { provider: 'gitlab' },

@@ -9,7 +9,7 @@ interface Props {
   handleEmailWithPress: (emailAddress, password) => void
 }
 
-export const SignUpSignInComponent= ({
+export const SignUpSignInComponent = ({
   type,
   handleOAuthWithPress,
   handleEmailWithPress,
@@ -37,7 +37,7 @@ export const SignUpSignInComponent= ({
         {/* 3 buttons, for google, apple, discord */}
         <Button
           size="$5"
-          onPress={() => handleOAuthWithPress('oauth_google')}
+          onPress={() => handleOAuthWithPress('google')}
           hoverStyle={{ opacity: 0.8 }}
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
@@ -53,7 +53,7 @@ export const SignUpSignInComponent= ({
         </Button>
         <Button
           size="$5"
-          onPress={() => handleOAuthWithPress('oauth_apple')}
+          onPress={() => handleOAuthWithPress('apple')}
           hoverStyle={{ opacity: 0.8 }}
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
@@ -69,7 +69,7 @@ export const SignUpSignInComponent= ({
         </Button>
         <Button
           size="$5"
-          onPress={() => handleOAuthWithPress('oauth_discord')}
+          onPress={() => handleOAuthWithPress('discord')}
           hoverStyle={{ opacity: 0.8 }}
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
