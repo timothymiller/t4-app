@@ -37,7 +37,7 @@ export const SignUpSignInComponent= ({
         {/* 3 buttons, for google, apple, discord */}
         <Button
           size="$5"
-          onPress={() => handleOAuthWithPress('google')}
+          onPress={() => handleOAuthWithPress('oauth_google')}
           hoverStyle={{ opacity: 0.8 }}
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
@@ -53,7 +53,7 @@ export const SignUpSignInComponent= ({
         </Button>
         <Button
           size="$5"
-          onPress={() => handleOAuthWithPress('apple')}
+          onPress={() => handleOAuthWithPress('oauth_apple')}
           hoverStyle={{ opacity: 0.8 }}
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
@@ -69,7 +69,7 @@ export const SignUpSignInComponent= ({
         </Button>
         <Button
           size="$5"
-          onPress={() => handleOAuthWithPress('discord')}
+          onPress={() => handleOAuthWithPress('oauth_discord')}
           hoverStyle={{ opacity: 0.8 }}
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
