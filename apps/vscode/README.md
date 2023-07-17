@@ -1,22 +1,64 @@
 # t4-app-tools
-
 ![Typescript](https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat-square)
 ![Code](https://shields.io/badge/VSCode-00495c?logo=visual-studio-code&logoColor=FFF&style=flat-square)
 
-This is a VSCode extension that consists of a set of tools for apps created with the [t4-app](https://github.com/timothymiller/t4-app) template.
-
 The public extension is live on the VSCode marketplace [here]().
 
-## Usage
+This Visual Studio Code extension provides a set of commands to create screens, components, and API routes for a T4 application. [t4-app](https://github.com/timothymiller/t4-app) template.
 
-### New Screen
+## Summary
 
-Input the new screen name in CapitalizedCamelCase (i.e. the name that you would have used for the screen component). Subsequently this command will generate a new `screen.tsx` file under the directory `packages/app/features/{ScreenName}`,  add a new `index.tsx` under `apps/expo/app/{ScreenName}.tsx` and add a new `index.tsx` under `apps/next/pages/{ScreenName}.tsx` importing your new screen in Nextjs. After that it will open the new `screen.tsx` file for you to modify.
+The `t4-app-tools` extension offers the following commands:
 
-### New Component
+- `t4-app-tools.newScreen`: Creates a new screen for the T4 application. It prompts for the screen name and type of route (static or dynamic). If it's a dynamic route, it will also ask for the parameter name.
 
-Input the new component name in CapitalizedCamelCase. Subsequently this command will generate a new component under the `packages/ui/src/components` folder. After that it will open the new `{ComponentName}.tsx` file for you to modify.
+- `t4-app-tools.newComponent`: Creates a new component for the UI library. It prompts for the component name.
 
-### New API Route
+- `t4-app-tools.newRoute`: Creates a new API route for the T4 application. It prompts for the route name.
 
-Input the new API route name in lowercaseCamelCase. Subsequently this command will generate a new router in the `packages/api/src/routes` folder and add that to the `index.ts` router. After that it will open the new `{routeName.ts}` file for you to modify.
+## Instructions
+
+### Creating a New Screen
+
+1. Open Visual Studio Code and navigate to a T4 application project.
+
+2. Open the Command Palette (`Ctrl + Shift + P` or `Cmd + Shift + P`).
+
+3. Search for the command `t4-app-tools: New Screen` and select it.
+
+4. Enter the name of the new screen when prompted. Make sure it is a valid name without any spaces.
+
+5. Choose the type of route the screen depends on: static or dynamic.
+
+6. If you selected a dynamic route, enter the name of the dynamic route parameter.
+
+7. The screen file will be created in the appropriate folders for the T4 application, Expo, and Next.js.
+
+### Creating a New Component
+
+1. Open Visual Studio Code and navigate to the UI library project.
+
+2. Open the Command Palette (`Ctrl + Shift + P` or `Cmd + Shift + P`).
+
+3. Search for the command `t4-app-tools: New Component` and select it.
+
+4. Enter the name of the new component when prompted. Make sure it is a valid name without any spaces.
+
+5. The component file will be created in the UI library project.
+
+### Creating a New API Route
+
+1. Open Visual Studio Code and navigate to the API project.
+
+2. Open the Command Palette (`Ctrl + Shift + P` or `Cmd + Shift + P`).
+
+3. Search for the command `t4-app-tools: New API Route` and select it.
+
+4. Enter the name of the new route when prompted. Make sure it is a valid name without any spaces.
+
+5. The route file will be created in the appropriate folder for the API project.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
