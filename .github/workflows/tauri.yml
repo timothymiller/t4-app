@@ -10,8 +10,8 @@ on:
       - 'packages/app/**'
 
 env:
-  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}}
-
+  NEXT_PUBLIC_SUPABASE_URL: ${{secrets.NEXT_PUBLIC_SUPABASE_URL}}
+  
 jobs:
   publish-tauri:
     permissions:
