@@ -5,7 +5,7 @@ import { signUp } from 'app/utils/supabase'
 import { Provider } from '@supabase/supabase-js'
 import { signInWithOAuth } from 'app/utils/supabase/auth'
 
-export function SignUpScreen() {
+export const SignUpScreen = (): React.ReactNode => {
   const { push } = useRouter()
 
   const handleOAuthSignInWithPress = async (provider: Provider) => {
@@ -31,7 +31,7 @@ export function SignUpScreen() {
   }
 
   return (
-    <YStack f={1} jc="center" ai="center" space>
+    <YStack flex={1} justifyContent="center" alignItems="center" space>
       <SignUpSignInComponent
         type="sign-up"
         handleOAuthWithPress={handleOAuthSignInWithPress}

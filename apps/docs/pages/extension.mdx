@@ -1,0 +1,35 @@
+# 🧩 VSCode Extension
+
+This is a VSCode extension that consists of a set of commands to use with a [T4 App](https://github.com/timothymiller/t4-app) template instance.
+
+## 📦 Install
+
+The T4 App Tools extension is available on the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=albbus.t4-app-tools).
+
+## 📖 Usage
+
+### 📱 New Screen
+
+Input the new screen name in CapitalizedCamelCase (i.e. the name that you would have used for the screen component). Subsequently this command will generate a new `screen.tsx` file under the directory `packages/app/features/{ScreenName}`, add a new `index.tsx` under `apps/expo/app/{ScreenName}.tsx` and add a new `index.tsx` under `apps/next/pages/{ScreenName}.tsx` importing your new screen in Nextjs. After that it will open the new `screen.tsx` file for you to modify.
+
+### 🖨 New Component
+
+Input the new component name in CapitalizedCamelCase. Subsequently this command will generate a new component under the `packages/ui/src/components` folder. After that it will open the new `{ComponentName}.tsx` file for you to modify.
+
+### ⚙ New API Route
+
+Input the new API route name in lowercaseCamelCase. Subsequently this command will generate a new router in the `packages/api/src/routes` folder and add that to the `index.ts` router. After that it will open the new `{routeName.ts}` file for you to modify.
+
+## 🔨 Building
+
+To build the extension follow theses steps:
+
+1. Head over to `.vscode/settings.json` and uncomment the first line:
+
+```json
+"terminal.integrated.defaultProfile.windows": null,
+```
+
+This will ensure that VSCode uses the correct terminal to run the build script.
+
+2. Execute the `Run T4 App Tools Extension` script from the `Run and Debug` tab in VSCode.

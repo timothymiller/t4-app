@@ -1,7 +1,7 @@
 import { Toast, useToastState } from '@tamagui/toast'
 import { YStack } from 'tamagui'
 
-export const NativeToast = () => {
+export const NativeToast = (): React.ReactNode => {
   const currentToast = useToastState()
 
   if (!currentToast || currentToast.isHandledNatively) {

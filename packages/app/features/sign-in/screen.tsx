@@ -5,7 +5,7 @@ import { SignUpSignInComponent } from '@t4/ui/src/SignUpSignIn'
 import { Provider, SignInWithOAuthCredentials } from '@supabase/supabase-js'
 import { signInWithOAuth } from 'app/utils/supabase/auth'
 
-export function SignInScreen() {
+export const SignInScreen = (): React.ReactNode => {
   const { push } = useRouter()
 
   const OAUTH_CREDENTIALS: Record<Provider, SignInWithOAuthCredentials> = {
@@ -56,7 +56,7 @@ export function SignInScreen() {
   }
 
   return (
-    <YStack f={1} jc="center" ai="center" space>
+    <YStack flex={1} justifyContent="center" alignItems="center" space>
       <SignUpSignInComponent
         type="sign-in"
         handleOAuthWithPress={handleOAuthSignInWithPress}

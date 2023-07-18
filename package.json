@@ -3,42 +3,51 @@
   "private": true,
   "license": "Apache-2.0",
   "version": "2.0.0",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
-    "api": "NO_D1_WARNING=true && cd packages/api && yarn dev",
-    "native": "cd apps/expo && yarn start",
-    "web": "cd apps/next && yarn dev",
-    "build": "cd packages/ui && yarn build",
-    "generate": "cd packages/api && yarn generate",
-    "upgrade:tamagui": "yarn up '*tamagui*'@latest '@tamagui/*'@latest react-native-web-lite@latest",
+    "dev": "turbo dev --parallel --filter=!t4-app-docs",
+    "api": "NO_D1_WARNING=true && turbo run dev --filter @t4/api",
+    "native": "turbo run dev --filter expo-app",
+    "web": "turbo run dev --filter next-app",
+    "notes": "turbo run dev --filter t4-app-docs",
+    "build": "turbo run build --filter=@t4/ui",
+    "generate": "pnpm --filter=@t4/api generate",
+    "migrate:local": "pnpm --filter=@t4/api migrate:local",
+    "upgrade:tamagui": "pnpm up '*tamagui*'@latest '@tamagui/*'@latest react-native-web-lite@latest",
     "check-deps": "check-dependency-version-consistency .",
     "check-types": "tsc --noEmit",
     "fix": "manypkg fix",
-    "preinstall": "yarn set version 3.5.0",
-    "postinstall": "yarn build"
-  },
-  "resolutions": {
-    "@types/react-native": "^0.71.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-refresh": "^0.14.0",
-    "react-native-svg": "13.4.0",
-    "react-native-web": "^0.18.12"
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "pnpm run build",
+    "clean": "git clean -xdf node_modules",
+    "clean:workspaces": "turbo clean"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.5",
+    "@babel/runtime": "^7.22.6",
     "@manypkg/cli": "^0.21.0",
     "@supabase/supabase-js": "^2.26.0",
     "check-dependency-version-consistency": "^4.1.0",
-    "eslint": "^8.43.0",
+    "eslint": "^8.44.0",
     "node-gyp": "^9.4.0",
-    "prettier": "^2.8.8",
+    "prettier": "^3.0.0",
     "react-native-url-polyfill": "^1.3.0",
-    "turbo": "^1.10.6",
-    "typescript": "^5.1.3"
+    "turbo": "^1.10.7",
+    "typescript": "^5.1.6"
   },
-  "packageManager": "yarn@3.5.0"
+  "engines": {
+    "node": ">=18.16.0",
+    "pnpm": ">=8.3.1"
+  },
+  "packageManager": "pnpm@8.6.5",
+  "pnpm": {
+    "overrides": {
+      "@types/react-native": "^0.71.3",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
+      "react-refresh": "^0.14.0",
+      "react-native-svg": "13.4.0",
+      "react-native-web": "^0.18.12",
+      "metro": "0.76.0",
+      "metro-resolver": "0.76.0"
+    }
+  }
 }

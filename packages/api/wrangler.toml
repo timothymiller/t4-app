@@ -20,4 +20,4 @@ migrations_dir = "migrations"
 # Run `echo <VALUE> | wrangler secret put <NAME>` for each of these
 # Or use the Cloudflare web interface.
 # @link https://developers.cloudflare.com/workers/platform/environment-variables/#environment-variables-via-the-dashboard
-# 
+#
