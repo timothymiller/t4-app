@@ -12,16 +12,25 @@ import {
   useToastController,
 } from '@t4/ui'
 import { ChevronDown } from '@tamagui/lucide-icons'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Linking } from 'react-native'
 import { useLink } from 'solito/link'
-import { SignedIn, SignedOut, useAuth } from 'app/utils/clerk'
+import { isUserSignedIn, signOut } from '../../utils/supabase'
 import Constants from 'expo-constants'
 import { useSheetOpen } from '@t4/ui/src/atoms/sheet'
 import { SolitoImage } from 'solito/image'
 
-export const HomeScreen = (): React.ReactNode => {
-  const { signOut } = useAuth()
+export function HomeScreen() {
+  const [isSignedIn, setIsSignedIn] = useState(false)
+
+  useEffect(() => {
+    const fetchSignedInStatus = async () => {
+      const signedInStatus = await isUserSignedIn()
+      setIsSignedIn(signedInStatus)
+    }
+
+    fetchSignedInStatus()
+  }, [])
 
   const signInLink = useLink({
     href: '/sign-in',
@@ -88,17 +97,17 @@ export const HomeScreen = (): React.ReactNode => {
           </Button>
           <SheetDemo />
         </YStack>
-        <SignedIn>
+        {isSignedIn ? (
           <Button
-            onPress={() => {
-              signOut()
+            onPress={async () => {
+              await signOut()
+              setIsSignedIn(false)
             }}
             space="$2"
           >
             Sign Out
           </Button>
-        </SignedIn>
-        <SignedOut>
+        ) : (
           <XStack space="$2">
             <Button {...signInLink} space="$2">
               Sign In
@@ -107,7 +116,7 @@ export const HomeScreen = (): React.ReactNode => {
               Sign Up
             </Button>
           </XStack>
-        </SignedOut>
+        )}
       </YStack>
     </ScrollView>
   )
