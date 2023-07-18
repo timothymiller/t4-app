@@ -31,6 +31,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>T4 App</title>
         <meta name="description" content="Tamagui, Solito, Expo & Next.js" />
         <link rel="icon" href="/favicon.ico" />
+        <style>{`
+          body, #root, #__next {
+            min-width: 100% !important;
+          }
+        `}</style>
       </Head>
       <ThemeProvider>{contents}</ThemeProvider>
     </>

@@ -13,15 +13,15 @@ export const PasswordResetComponent: React.FC<Props> = ({ type, handleWithPress 
     <YStack
       borderRadius="$10"
       space
-      px="$7"
-      py="$6"
-      w={350}
+      paddingHorizontal="$7"
+      paddingVertical="$6"
+      width={350}
       shadowColor={'#00000020'}
       shadowRadius={26}
       shadowOffset={{ width: 0, height: 4 }}
-      bg="$background"
+      backgroundColor="$background"
     >
-      <Paragraph size="$5" fontWeight={'700'} opacity={0.8} mb="$1">
+      <Paragraph size="$5" fontWeight={'700'} opacity={0.8} marginBottom="$1">
         {type == 'email' ? 'Reset your password' : 'Change your password'}
       </Paragraph>
 

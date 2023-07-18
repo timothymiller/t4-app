@@ -1,0 +1,26 @@
+# 🤔 Frequently Asked Questions
+
+## Why no Auth.js / NextAuth.js support?
+
+NextAuth.js is web only, unfortunately.
+
+[See this Github issue](https://github.com/timothymiller/t4-app/issues/16) for a discussion on the topic.
+
+## Why Cloudflare D1?
+
+In anticipation of D1 reaching a stable release soon, I've decided to use it as the default database for this project.
+
+D1 is a great option for a few reasons:
+
+- It's free, with the lowest costs for additional storage
+- It's fast (low latency)
+- It's serverless
+- It's easy to use
+
+Drizzle + D1 is a great combination for a serverless app.
+
+In the meantime, Cloudflare R2 integration is easier than ever. The bulk of your data storage usage will likely take place in R2.
+
+## Why no Prisma support?
+
+Prisma is not supported in Cloudflare Workers because it's a chunky boi in terms of bundle size.
