@@ -2,180 +2,211 @@ import { TextEncoder } from 'util';
 import * as vscode from 'vscode';
 import * as path from 'path';
 
-// Function to get valid user input
-async function getUserInput(prompt: string, placeHolder?: string): Promise<string | undefined> {
-  const userInput = await vscode.window.showInputBox({ prompt, placeHolder });
-  if (!userInput || userInput.includes(' ')) {
-    throw new Error(`Invalid input. Please enter a valid value for ${prompt.toLowerCase()}`);
+// Helper function to validate user input
+async function validateInput(prompt: string, placeholder: string): Promise<string | undefined> {
+  const input = await vscode.window.showInputBox({ prompt, placeHolder: placeholder });
+  if (!input || input.includes(' ')) {
+    vscode.window.showInformationMessage(`Enter a valid input. You entered: ${input}`);
+    return undefined;
   }
-  return userInput;
+  return input;
 }
 
-// Function to show error message
-async function showErrorMessage(message: string) {
-  vscode.window.showErrorMessage(message);
+async function createFile(uri: vscode.Uri, data: Uint8Array): Promise<void> {
+  await vscode.workspace.fs.writeFile(uri, data);
+  const document = await vscode.workspace.openTextDocument(uri);
+  vscode.window.showTextDocument(document);
 }
 
-// Function to create screen files
-async function createScreenFiles(screenName: string, isStaticRoute: boolean, parameterName?: string) {
-  const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
-  if (!workspaceFolder) {
-    await showErrorMessage('No workspace folder is open. Please open a workspace folder and try again.');
-    return;
-  }
-
-  // Create the folder and file URIs
-  const screenFolderUri = vscode.Uri.file(path.join(workspaceFolder.uri.fsPath, 'packages', 'app', 'features', screenName.toLowerCase()));
-  const screenFileUri = vscode.Uri.file(path.join(screenFolderUri.fsPath, 'screen.tsx'));
-
-  // Create the screen folder
-  await vscode.workspace.fs.createDirectory(screenFolderUri);
-
-  // Generate the screen file contents
-  const screenFileContents = getScreenFileContents(screenName, isStaticRoute, parameterName);
-
-  // Write the screen file
-  const screenFileData = new TextEncoder().encode(screenFileContents);
-  await vscode.workspace.fs.writeFile(screenFileUri, screenFileData);
-
-  // Open the screen file in the editor
-  const newScreenDocument = await vscode.workspace.openTextDocument(screenFileUri);
-  vscode.window.showTextDocument(newScreenDocument);
-}
-
-// Function to generate screen file contents
-function getScreenFileContents(screenName: string, isStaticRoute: boolean, parameterName?: string): string {
-  let screenFileContents = `
-    import { Paragraph, YStack } from "@my/ui";
-    import React from "react";
-  `;
-
-  if (!isStaticRoute) {
-    if (!parameterName) {
-      throw new Error('Dynamic route parameter name is missing.');
-    }
-
-    screenFileContents += `
-      import { createParam } from "solito";
-
-      const { useParam } = createParam<{ ${parameterName.toLowerCase()}: string }>();
-
-      export function ${screenName}Screen() {
-        const [${parameterName.toLowerCase()}] = useParam('${parameterName.toLowerCase()}');
-
-        return (
-          <YStack f={1} jc="center" ai="center" space>
-            <Paragraph ta="center" fow="800">
-              { \`${parameterName.toLowerCase()}: \${${parameterName.toLowerCase()}}\` }
-            </Paragraph>
-          </YStack>
-        );
-      }
-    `;
-  } else {
-    screenFileContents += `
-      export function ${screenName}Screen() {
-        return (
-          <YStack f={1} jc="center" ai="center" space>
-            <Paragraph ta="center" fow="800">
-              ${screenName.toLowerCase()}
-            </Paragraph>
-          </YStack>
-        );
-      }
-    `;
-  }
-
-  return screenFileContents;
-}
-
-// Function to create Expo screen files
-async function createExpoScreenFiles(screenName: string, isStaticRoute: boolean, parameterName?: string) {
-  const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
-  if (!workspaceFolder) {
-    await showErrorMessage('No workspace folder is open. Please open a workspace folder and try again.');
-    return;
-  }
-
-  let expoScreenFolderUri: vscode.Uri;
-  let expoScreenFileUri: vscode.Uri;
-
-  if (!isStaticRoute) {
-    if (!parameterName) {
-      throw new Error('Dynamic route parameter name is missing.');
-    }
-
-    expoScreenFolderUri = vscode.Uri.file(path.join(workspaceFolder.uri.fsPath, 'apps', 'expo', 'app', screenName.toLowerCase()));
-    expoScreenFileUri = vscode.Uri.file(path.join(expoScreenFolderUri.fsPath, `[${parameterName.toLowerCase()}].tsx`));
-  } else {
-    expoScreenFolderUri = vscode.Uri.file(path.join(workspaceFolder.uri.fsPath, 'apps', 'expo', 'app'));
-    expoScreenFileUri = vscode.Uri.file(path.join(expoScreenFolderUri.fsPath, `${screenName.toLowerCase()}.tsx`));
-  }
-
-  // Create the Expo screen folder
-  await vscode.workspace.fs.createDirectory(expoScreenFolderUri);
-
-  // Generate the Expo screen file contents
-  const expoScreenFileContents = getExpoScreenFileContents(screenName);
-
-  // Write the Expo screen file
-  const expoScreenFileData = new TextEncoder().encode(expoScreenFileContents);
-  await vscode.workspace.fs.writeFile(expoScreenFileUri, expoScreenFileData);
-}
-
-// Function to generate Expo screen file contents
-function getExpoScreenFileContents(screenName: string): string {
-  return `
-    import { ${screenName}Screen } from "app/features/${screenName.toLowerCase()}/screen";
-
-    export default function() {
-      return <${screenName}Screen />;
-    }
-  `;
-}
-
-// Function to create Next.js screen files
-async function createNextScreenFiles(screenName: string, isStaticRoute: boolean, parameterName?: string) {
-  const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
-  if (!workspaceFolder) {
-    await showErrorMessage('No workspace folder is open. Please open a workspace folder and try again.');
-    return;
-  }
-
-  // Create the Next.js screen folder
-  const nextScreenFolderUri = vscode.Uri.file(path.join(workspaceFolder.uri.fsPath, 'apps', 'next', 'pages', screenName.toLowerCase()));
-  await vscode.workspace.fs.createDirectory(nextScreenFolderUri);
-
-  let nextScreenFileUri: vscode.Uri;
-  if (!isStaticRoute) {
-    if (!parameterName) {
-      throw new Error('Dynamic route parameter name is missing.');
-    }
-
-    nextScreenFileUri = vscode.Uri.file(path.join(nextScreenFolderUri.fsPath, `[${parameterName.toLowerCase()}].tsx`));
-  } else {
-    nextScreenFileUri = vscode.Uri.file(path.join(nextScreenFolderUri.fsPath, 'index.tsx'));
-  }
-
-  // Generate the Next.js screen file contents
-  const nextScreenFileContents = getNextScreenFileContents(screenName);
-
-  // Write the Next.js screen file
-  const nextScreenFileData = new TextEncoder().encode(nextScreenFileContents);
-  await vscode.workspace.fs.writeFile(nextScreenFileUri, nextScreenFileData);
-}
-
-// Function to generate Next.js screen file contents
-function getNextScreenFileContents(screenName: string): string {
-  return `
-    import { ${screenName}Screen } from 'app/features/${screenName.toLowerCase()}/screen';
-
-    export default ${screenName}Screen;
-  `;
-}
-
-export async function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext) {
   const disposableScreen = vscode.commands.registerCommand('t4-app-tools.newScreen', async () => {
-    try {
-      // Get the screen name from the user
-      const screenName = await getUserInput('Enter the name of the new screen', 'New
+    const screenName = await validateInput('Enter the name of the new screen', 'NewScreen');
+    if (!screenName) {
+      return;
+    }
+
+    const routeType = await vscode.window.showQuickPick(['Static Route', 'Dynamic Route'], {
+      placeHolder: 'What type of route does this screen depend on?',
+    });
+    if (!routeType) {
+      return;
+    }
+    const isStaticRoute = routeType === 'Static Route';
+
+    let parameterName: string | undefined;
+    if (!isStaticRoute) {
+      parameterName = await validateInput('Enter the name of the dynamic route parameter', 'id');
+      if (!parameterName) {
+        return;
+      }
+    }
+
+    const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+    if (!workspaceFolder) {
+      vscode.window.showInformationMessage(
+        'No workspace folder is open. Please open a workspace folder and try again.'
+      );
+      return;
+    }
+
+    const screenFolderUri = vscode.Uri.file(path.join(workspaceFolder.uri.fsPath, 'packages', 'app', 'features', screenName.toLowerCase()));
+    const screenFileUri = vscode.Uri.file(path.join(screenFolderUri.fsPath, 'screen.tsx'));
+
+    await vscode.workspace.fs.createDirectory(screenFolderUri);
+
+    let screenFileData = new TextEncoder().encode(`import { Paragraph, YStack } from "@my/ui";
+import React from "react";
+
+export function ${screenName}Screen() {
+  return (
+    <YStack f={1} jc="center" ai="center" space>
+      <Paragraph ta="center" fow="800">
+        ${screenName.toLowerCase()}
+      </Paragraph>
+    </YStack>
+  );
+}`);
+
+    if (!isStaticRoute) {
+      screenFileData = new TextEncoder().encode(`import { Paragraph, YStack } from "@my/ui";
+import React from "react";
+import { createParam } from "solito";
+
+const { useParam } = createParam<{ ${parameterName.toLowerCase()}: string }>();
+
+export function ${screenName}Screen() {
+  const [${parameterName.toLowerCase()}] = useParam('${parameterName.toLowerCase()}');
+
+  return (
+    <YStack f={1} jc="center" ai="center" space>
+      <Paragraph ta="center" fow="800">
+        {${parameterName.toLowerCase()}: ${parameterName.toLowerCase()}}
+      </Paragraph>
+    </YStack>
+  );
+}`);
+    }
+
+    await createFile(screenFileUri, screenFileData);
+
+    let expoFolderUri = vscode.Uri.file(path.join(workspaceFolder.uri.fsPath, 'apps', 'expo', 'app'));
+    let expoFileUri = vscode.Uri.file(path.join(expoFolderUri.fsPath, `${screenName.toLowerCase()}.tsx`));
+
+    if (!isStaticRoute) {
+      expoFolderUri = vscode.Uri.file(path.join(workspaceFolder.uri.fsPath, 'apps', 'expo', 'app', screenName.toLowerCase()));
+      expoFileUri = vscode.Uri.file(path.join(expoFolderUri.fsPath, `[${parameterName.toLowerCase()}].tsx`));
+    }
+
+    await vscode.workspace.fs.createDirectory(expoFolderUri);
+
+    const expoScreenFileData = new TextEncoder().encode(`import { ${screenName}Screen } from "app/features/${screenName.toLowerCase()}/screen";
+
+export default function () {
+  return <${screenName}Screen />;
+}`);
+    await createFile(expoFileUri, expoScreenFileData);
+
+    const nextFolderUri = vscode.Uri.file(
+      path.join(workspaceFolder.uri.fsPath, 'apps', 'next', 'pages', screenName.toLowerCase())
+    );
+    let nextFileUri = vscode.Uri.file(path.join(nextFolderUri.fsPath, 'index.tsx'));
+
+    if (!isStaticRoute) {
+      nextFileUri = vscode.Uri.file(
+        path.join(nextFolderUri.fsPath, `[${parameterName!.toLowerCase()}].tsx`)
+      );
+    }
+
+    await vscode.workspace.fs.createDirectory(nextFolderUri);
+
+    const nextFileData = new TextEncoder().encode(`import { ${screenName}Screen } from 'app/features/${screenName.toLowerCase()}/screen';
+
+export default ${screenName}Screen;
+`);
+    await createFile(nextFileUri, nextFileData);
+  });
+
+  const disposableComponent = vscode.commands.registerCommand('t4-app-tools.newComponent', async () => {
+    const componentName = await validateInput('Enter the name of the new component', 'NewComponent');
+    if (!componentName) {
+      return;
+    }
+
+    const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+    if (!workspaceFolder) {
+      vscode.window.showInformationMessage(
+        'No workspace folder is open. Please open a workspace folder and try again.'
+      );
+      return;
+    }
+
+    const newFileUri = vscode.Uri.file(path.join(workspaceFolder.uri.fsPath, 'packages', 'ui', 'src', `${componentName}.tsx`));
+
+    const componentFileData = new TextEncoder().encode(`import { Paragraph, YStack } from "@my/ui";
+import React from "react";
+
+export function ${componentName}() {
+  return (
+    <YStack f={1} jc="center" ai="center" space>
+      <Paragraph ta="center" fow="800">
+        ${componentName}
+      </Paragraph>
+    </YStack>
+  );
+}`);
+    await createFile(newFileUri, componentFileData);
+  });
+
+  const disposableRoute = vscode.commands.registerCommand('t4-app-tools.newRoute', async () => {
+    const routeName = await validateInput('Enter the name of the new route', 'newRoute');
+    if (!routeName) {
+      return;
+    }
+
+    const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+    if (!workspaceFolder) {
+      vscode.window.showInformationMessage(
+        'No workspace folder is open. Please open a workspace folder and try again.'
+      );
+      return;
+    }
+
+    const newFileUri = vscode.Uri.file(
+      path.join(workspaceFolder.uri.fsPath, 'packages', 'api', 'src', 'routes', `${routeName}.ts`)
+    );
+
+    const routeFileData = new TextEncoder().encode(`import { protectedProcedure, publicProcedure, router } from "../trpc";
+
+export const ${routeName}Router = router({
+
+});`);
+
+    await vscode.workspace.fs.writeFile(newFileUri, routeFileData);
+
+    const routerIndexFileUri = vscode.Uri.file(path.join(workspaceFolder.uri.fsPath, 'packages', 'api', 'src', 'router.ts'));
+    const routerIndexDocument = await vscode.workspace.openTextDocument(routerIndexFileUri);
+    const routerIndexContents = routerIndexDocument.getText();
+
+    const newImport = `import { ${routeName}Router } from "./${routeName}";\n`;
+    const lastImportIndex = routerIndexContents.lastIndexOf('import');
+    const newRoute = `  ${routeName}: ${routeName}Router,\n`;
+    const closingRouterObject = routerIndexContents.indexOf('});');
+
+    const newRouterContents =
+      routerIndexContents.substring(0, lastImportIndex) +
+      newImport +
+      routerIndexContents.substring(lastImportIndex, closingRouterObject) +
+      newRoute +
+      routerIndexContents.substring(closingRouterObject);
+
+    const newRouterFileData = new TextEncoder().encode(newRouterContents);
+    await vscode.workspace.fs.writeFile(routerIndexFileUri, newRouterFileData);
+
+    const newRouteDocument = await vscode.workspace.openTextDocument(newFileUri);
+    vscode.window.showTextDocument(newRouteDocument);
+  });
+
+  context.subscriptions.push(disposableScreen, disposableComponent, disposableRoute);
+}
+
+export function deactivate() {}
