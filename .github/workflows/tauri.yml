@@ -71,6 +71,7 @@ jobs:
           prerelease: false
           projectPath: ./apps/tauri/
           distPath: ./apps/tauri/out/
+          tauriScript: pnpm
           # You can change the following flags to include release and/or debug builds
           includeDebug: true
           includeRelease: false
