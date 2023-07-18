@@ -5,7 +5,7 @@ import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from '@t4/ui/src/SignUpSignIn'
 import { handleOAuthSignIn } from 'app/utils/auth'
 
-export function SignInScreen() {
+export const SignInScreen = (): React.ReactNode => {
   const { push } = useRouter()
 
   const { isLoaded, signIn, setSession } = useSignIn()
@@ -37,7 +37,7 @@ export function SignInScreen() {
   }
 
   return (
-    <YStack f={1} jc="center" ai="center" space>
+    <YStack flex={1} justifyContent="center" alignItems="center" space>
       <SignUpSignInComponent
         type="sign-in"
         handleOAuthWithPress={handleOAuthSignInWithPress}

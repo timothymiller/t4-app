@@ -67,5 +67,5 @@ jobs:
             | :------------: | :--------: |
             | **Android QR** | **IOS QR** |
 
-            ${{ steps.build.outputs.android != '' && format('[1]: {0}', steps.build.outputs.android) }}
-            ${{ steps.build.outputs.ios != '' && format('[2]: {0}', steps.build.outputs.ios) }}
+            ${{ steps.build.outputs.android != '' && format('[1]: {0}', steps.build.outputs.android) || '' }}
+            ${{ steps.build.outputs.ios != '' && format('[2]: {0}', steps.build.outputs.ios) || '' }}

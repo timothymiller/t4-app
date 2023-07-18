@@ -4,7 +4,7 @@ import { OAuthStrategy } from '@clerk/types'
 import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from '@t4/ui/src/SignUpSignIn'
 
-export function SignUpScreen() {
+export const SignUpScreen = (): React.ReactNode => {
   const { push } = useRouter()
 
   const { isLoaded, signUp, setSession } = useSignUp()
@@ -34,7 +34,7 @@ export function SignUpScreen() {
   }
 
   return (
-    <YStack f={1} jc="center" ai="center" space>
+    <YStack flex={1} justifyContent="center" alignItems="center" space>
       <SignUpSignInComponent
         type="sign-up"
         handleOAuthWithPress={handleOAuthSignUpWithPress}

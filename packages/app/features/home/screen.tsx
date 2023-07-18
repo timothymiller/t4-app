@@ -12,7 +12,7 @@ import {
   useToastController,
 } from '@t4/ui'
 import { ChevronDown } from '@tamagui/lucide-icons'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Linking } from 'react-native'
 import { useLink } from 'solito/link'
 import { SignedIn, SignedOut, useAuth } from 'app/utils/clerk'
@@ -20,7 +20,7 @@ import Constants from 'expo-constants'
 import { useSheetOpen } from '@t4/ui/src/atoms/sheet'
 import { SolitoImage } from 'solito/image'
 
-export function HomeScreen() {
+export const HomeScreen = (): React.ReactNode => {
   const { signOut } = useAuth()
 
   const signInLink = useLink({
@@ -45,7 +45,7 @@ export function HomeScreen() {
 
   return (
     <ScrollView>
-      <YStack f={1} jc="center" ai="center" p="$4" space="$4">
+      <YStack flex={1} justifyContent="center" alignItems="center" padding="$4" space="$4">
         <SolitoImage src="/t4-logo.png" width={128} height={128} alt="T4 Logo" />
         <H1 textAlign="center">👋 Hello, T4 App</H1>
         <Separator />
@@ -113,7 +113,7 @@ export function HomeScreen() {
   )
 }
 
-function SheetDemo() {
+const SheetDemo = (): React.ReactNode => {
   const [open, setOpen] = useSheetOpen()
   const [position, setPosition] = useState(0)
   const toast = useToastController()
@@ -133,7 +133,7 @@ function SheetDemo() {
         dismissOnSnapToBottom
       >
         <Sheet.Overlay />
-        <Sheet.Frame ai="center" jc="center">
+        <Sheet.Frame alignItems="center" justifyContent="center">
           <Sheet.Handle />
           <Button
             size="$6"

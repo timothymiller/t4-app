@@ -4,7 +4,7 @@ import { useSignUp } from 'app/utils/clerk'
 import { useRouter } from 'solito/router'
 import { trpc } from 'app/utils/trpc'
 
-export function EmailVerificationScreen() {
+export const EmailVerificationScreen = (): React.ReactNode => {
   const { push } = useRouter()
 
   const [verificationCode, setVerificationCode] = useState('')
@@ -31,7 +31,7 @@ export function EmailVerificationScreen() {
     } else alert('Invalid verification code')
   }
   return (
-    <YStack f={1} jc="center" ai="center" space>
+    <YStack flex={1} justifyContent="center" alignItems="center" space>
       <Input
         placeholder="Verification code"
         onChangeText={(text) => {

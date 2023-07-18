@@ -8,7 +8,7 @@ import { trpc } from 'app/utils/trpc'
 
 const { useParam } = createParam<{ strategy: OAuthStrategy }>()
 
-export function SSOOAuthScreen() {
+export const SSOOAuthScreen = (): React.ReactNode => {
   const { push } = useRouter()
   const { isLoaded, signUp, setSession } = useSignUp()
   const [strategy] = useParam('strategy')
