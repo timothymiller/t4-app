@@ -86,11 +86,7 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 
 ### 🔒 Authentication
 
-- 🔑 [Supabase](https://supabase.com/docs/guides/auth)
-
-> or
-
-- 🔑 [Clerk](https://clerk.dev)
+- 🔑 [Supabase](https://supabase.com)
 
 ## 📖 Background
 
@@ -128,7 +124,7 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
 - Universal across **React Native** & **React Web**
   - [Data fetching](https://tanstack.com/query/latest)
   - [Styling](https://tamagui.dev)
-  - [Authentication](https://clerk.dev)
+  - [Authentication](https://supabase.com)
   - [Navigation](https://solito.dev)
 - High code re-use
 - Low bundle size
@@ -163,12 +159,12 @@ To scaffold an app using `create-t4-app`, run any of the following commands.
 pnpm create t4-app
 ```
 
-### **Supabase**
+### **Tauri**
 
-If you would like to use Supabase as your authentication provider instead of Clerk use:
+If you would like to use Tauri use:
 
 ```bash
-pnpm create t4-app --supabase
+pnpm create t4-app --tauri
 ```
 
 ## 🧩 VSCode Extension
@@ -191,6 +187,7 @@ The VSCode extension is optional but highly recommended. It provides a better de
 - ✅ Database migration in CI/CD
 - ✅ Supabase Auth
 - ✅ PNPM support
+- ✅ Tauri Support
   
 ## ⭐ Wish List
 

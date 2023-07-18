@@ -4,7 +4,6 @@ import { Metrics, SafeAreaProvider } from 'react-native-safe-area-context'
 import { ToastViewport } from './toast/ToastViewport'
 import config from '../tamagui.config'
 import { TRPCProvider } from './trpc'
-import { AuthProvider } from './auth'
 
 export const initialWindowMetrics: Metrics | null = {
   frame: { x: 0, y: 0, width: 0, height: 0 },
@@ -23,9 +22,7 @@ export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'conf
     >
       <SafeAreaProvider>
         <ToastProvider swipeDirection="horizontal" duration={6000} native={['mobile']}>
-          <AuthProvider>
-            <TRPCProvider>{children}</TRPCProvider>
-          </AuthProvider>
+          <TRPCProvider>{children}</TRPCProvider>
           <CustomToast />
           <ToastViewport />
         </ToastProvider>
