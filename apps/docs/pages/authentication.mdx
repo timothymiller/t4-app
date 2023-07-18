@@ -20,6 +20,19 @@ The authentication flow in T4 involves the following steps:
    password recovery process. Supabase will send them an email with
    instructions on how to reset their password. (Note: to be implemented)
 
+## Setup
+
+### Frontend
+
+The frontend needs the `Supabase URL` and `Supabase Key` to initialize the Supabase client. This is your `Project URL` and public `Project API key` from the Supabase dashboard.
+
+### Backend
+
+The API server needs the `JWT Secret` from Supabase to verify the JWTs sent by the client.
+This is placed inside `.dev.vars` as `JWT_VERIFICATION_KEY`.
+
+## Concepts Explained
+
 ### JSON Web Tokens (JWT)
 
 Once a user is authenticated, T4 utilizes JSON Web Tokens (JWT)
