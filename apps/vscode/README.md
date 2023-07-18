@@ -58,7 +58,15 @@ The `t4-app-tools` extension offers the following commands:
 
 5. The route file will be created in the appropriate folder for the API project.
 
-## License
+## Command Details
+Here are the details of each command provided by the t4-app-tools extension:
 
-This project is licensed under the [MIT License](LICENSE).
+### New Screen
+This command allows you to create a new screen for your T4 application. Enter the name of the new screen using capitalized camel case (e.g., MyNewScreen). The command will generate a new screen.tsx file in the packages/app/features/{ScreenName} directory, add a new index.tsx file in apps/expo/app/{ScreenName}.tsx, and create a new index.tsx file in apps/next/pages/{ScreenName}.tsx that imports your new screen in Next.js. Finally, it will open the new screen.tsx file for you to modify.
+
+### New Component
+Use this command to create a new component for your UI library. Enter the name of the new component using capitalized camel case (e.g., MyNewComponent). The command will generate a new component file in the packages/ui/src/components folder. After creation, it will open the new {ComponentName}.tsx file for you to modify.
+
+### New API Route
+This command allows you to create a new API route for your T4 application. Enter the name of the new route using lowercase camel case (e.g., myNewRoute). The command will generate a new router in the packages/api/src/routes folder and add it to the index.ts router. Afterward, it will open the new {routeName.ts} file for you to modify.
 
