@@ -19,13 +19,21 @@ async function validateInput(prompt: string, placeholder: string): Promise<strin
 }
 
 /**
+ * Helper function to create a directory.
+ * @param directoryUri The URI of the directory to create.
+ */
+async function createDirectory(directoryUri: vscode.Uri): Promise<void> {
+  await vscode.workspace.fs.createDirectory(directoryUri);
+}
+
+/**
  * Helper function to create a file and open it in the editor.
- * @param uri The URI of the file to create.
+ * @param fileUri The URI of the file to create.
  * @param data The content of the file as a Uint8Array.
  */
-async function createFile(uri: vscode.Uri, data: Uint8Array): Promise<void> {
-  await vscode.workspace.fs.writeFile(uri, data);
-  const document = await vscode.workspace.openTextDocument(uri);
+async function createFile(fileUri: vscode.Uri, data: Uint8Array): Promise<void> {
+  await vscode.workspace.fs.writeFile(fileUri, data);
+  const document = await vscode.workspace.openTextDocument(fileUri);
   vscode.window.showTextDocument(document);
 }
 
@@ -59,7 +67,7 @@ async function createScreen(screenName: string, isStaticRoute: boolean, paramete
   const screenFileUri = vscode.Uri.joinPath(screenFolderUri, 'screen.tsx');
 
   // Create the new screen folder
-  await vscode.workspace.fs.createDirectory(screenFolderUri);
+  await createDirectory(screenFolderUri);
 
   // Generate the screen file content based on the route type
   let screenFileData: Uint8Array;
@@ -160,7 +168,7 @@ export const ${routeName}Router = router({
   const routerIndexDocument = await vscode.workspace.openTextDocument(routerIndexFileUri);
   const routerIndexContents = routerIndexDocument.getText();
 
-  const newImport = `import { ${routeName}Router } from "./${routeName}`;
+  const newImport = `import { ${routeName}Router } from "./${routeName}";\n`;
   const lastImportIndex = routerIndexContents.lastIndexOf('import');
   const newRoute = `  ${routeName}: ${routeName}Router,\n`;
   const closingRouterObject = routerIndexContents.indexOf('});');
