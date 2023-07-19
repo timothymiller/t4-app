@@ -13,6 +13,39 @@ interface ApiContextProps {
   db: DrizzleD1Database
 }
 
+interface Amr {
+  method: string;
+  timestamp: number;
+}
+
+interface AppMetadata {
+  provider: string;
+  providers: string[];
+}
+
+interface JWT {
+  header: {
+    alg: string;
+    kid: string;
+    typ: string;
+  };
+  payload: {
+    aud: string;
+    exp: number;
+    iat: number;
+    iss: string;
+    sub: string;
+    email: string;
+    phone: string;
+    app_metadata: AppMetadata;
+    user_metadata: Record<string, unknown>;
+    role: string;
+    aal: string;
+    amr: Amr[];
+    session_id: string;
+  };
+}
+
 export const createContext = async (
   d1: D1Database,
   JWT_VERIFICATION_KEY: string,
@@ -37,7 +70,7 @@ export const createContext = async (
           return null
         }
 
-        const decodedToken = jwt.decode(sessionToken)
+        const decodedToken = jwt.decode(sessionToken) as JWT
 
         // Check if token is expired
         const expirationTimestamp = decodedToken.payload.exp
