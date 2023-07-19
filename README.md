@@ -86,11 +86,7 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 
 ### 🔒 Authentication
 
-- 🔑 [Supabase](https://supabase.com/docs/guides/auth)
-
-> or
-
-- 🔑 [Clerk](https://clerk.dev)
+- 🔑 [Supabase](https://supabase.com/auth)
 
 ## 📖 Background
 
@@ -107,6 +103,7 @@ It provides a unified, opinionated, & minimalistic setup for quickly getting sta
   - 💻 macOS
   - 🪟 Windows
   - 🐧 Linux
+- 🧪 (Experimental) Desktop support via Tauri
 
 Build native apps for iOS, Android, macOS, Windows, and Linux using the same codebase.
 
@@ -128,7 +125,7 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
 - Universal across **React Native** & **React Web**
   - [Data fetching](https://tanstack.com/query/latest)
   - [Styling](https://tamagui.dev)
-  - [Authentication](https://clerk.dev)
+  - [Authentication](https://supabase.com)
   - [Navigation](https://solito.dev)
 - High code re-use
 - Low bundle size
@@ -163,12 +160,12 @@ To scaffold an app using `create-t4-app`, run any of the following commands.
 pnpm create t4-app
 ```
 
-### **Supabase**
+### **Tauri**
 
-If you would like to use Supabase as your authentication provider instead of Clerk use:
+If you would like to use Tauri use:
 
 ```bash
-pnpm create t4-app --supabase
+pnpm create t4-app --tauri
 ```
 
 ## 🧩 VSCode Extension
@@ -177,10 +174,12 @@ The VSCode extension is optional but highly recommended. It provides a better de
 
 ## ✨ Features
 
+- ✅ Tamagui UI kit across all platforms.
+- ✅ Supabase Auth
+- ✅ PNPM support
 - ✅ Uses Next.js for building web apps.
 - ✅ Uses Expo for building native mobile apps.
 - ✅ PWA by default for native desktop support. No Electron required.
-- ✅ Tamagui UI kit across all platforms.
 - ✅ Uses Cloudflare Workers for serverless functions.
 - ✅ No Docker containers required.
 - ✅ Uses tRPC & Tanstack Query for fetching & caching across all platforms.
@@ -189,20 +188,19 @@ The VSCode extension is optional but highly recommended. It provides a better de
 - ✅ Comes with pre-configured ESLint and Prettier for code consistency.
 - ✅ Github Action publishing for Expo apps
 - ✅ Database migration in CI/CD
-- ✅ Supabase Auth
-- ✅ PNPM support
-  
+- ✅ Tauri Support
+
 ## ⭐ Wish List
 
 I would like to add the following features to `create-t4-app` in the future:
 
 - [ ] Legend State
-- [ ] Million.js example
 - [ ] GraphQL (type-safe) data fetching
   - ⏲️ [GQty](https://gqty.dev) - A No-GraphQL client for TypeScript.
   - 🔄 [Garph](https://garph.dev) - Fullstack GraphQL Framework for TypeScript
 - [ ] 📚 [Storybook](https://storybook.js.org) support
 - [ ] 🖌️ [Chromatic](https://chromatic.com) support
+- [ ] Million.js example - once React Native support is added
 
 ## 💬 Community
 

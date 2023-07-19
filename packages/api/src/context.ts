@@ -21,20 +21,17 @@ export const createContext = async (
   const db = createDb(d1)
 
   async function getUser() {
-    const sessionToken = opts.req.headers.get('authorization')
+    const sessionToken = opts.req.headers.get('authorization')?.split(' ')[1]
+
     if (sessionToken) {
       if (!JWT_VERIFICATION_KEY) {
         console.error('JWT_VERIFICATION_KEY is not set')
         return null
       }
 
-      // Check if token is valid
-      const splitPem = JWT_VERIFICATION_KEY.match(/.{1,64}/g) as string[]
-      const publicKey =
-        '-----BEGIN PUBLIC KEY-----\n' + splitPem.join('\n') + '\n-----END PUBLIC KEY-----'
       try {
-        const authorized = await jwt.verify(sessionToken, publicKey, {
-          algorithm: 'RS256',
+        const authorized = await jwt.verify(sessionToken, JWT_VERIFICATION_KEY, {
+          algorithm: 'HS256',
         })
         if (!authorized) {
           return null
