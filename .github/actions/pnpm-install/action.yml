@@ -49,7 +49,7 @@ runs:
       with:
         run_install: false
         # If you're not setting the packageManager field in package.json, add the version here
-        # version: 8.6.7
+        # version: 8.6.0
 
     - name: Expose pnpm config(s) through "$GITHUB_OUTPUT"
       id: pnpm-config
