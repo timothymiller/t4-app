@@ -44,6 +44,7 @@ jobs:
         id: build
         continue-on-error: true
         run: |
+          export TAMAGUI_TARGET=native
           cd apps/expo && build_json=$(eas build --profile $BUILD_PROFILE --platform all --non-interactive --json)
           android_link=$(echo $build_json | jq -r '.[] | select(.platform=="ANDROID") | .artifacts.applicationArchiveUrl')
           ios_link=$(echo $build_json | jq -r '.[] | select(.platform=="IOS") | .artifacts.applicationArchiveUrl')
