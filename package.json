@@ -5,8 +5,8 @@
   "version": "2.0.0",
   "scripts": {
     "dev": "turbo dev --parallel --filter=!t4-app-docs",
-    "api": "NO_D1_WARNING=true && turbo run dev --filter @t4/api",
-    "native": "turbo run dev --filter expo-app",
+    "api": "NO_D1_WARNING=true turbo run dev --filter @t4/api",
+    "native": "cd apps/expo && pnpm dev",
     "web": "turbo run dev --filter next-app",
     "notes": "turbo run dev --filter t4-app-docs",
     "build": "turbo run build --filter=@t4/ui",
