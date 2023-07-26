@@ -15,7 +15,7 @@
     "url": "https://github.com/timothymiller/t4-app"
   },
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.80.0"
   },
   "categories": [
     "Other"
