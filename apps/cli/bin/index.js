@@ -66,10 +66,10 @@ const installDependencies = async (folderName) => {
   }
 }
 
-const generateDrizzleClient = async () => {
+const generateDrizzleClient = async (folderName) => {
   const drizzleSpinner = ora(chalk.green.bold('Generating Drizzle client')).start()
   try {
-    await exec('pnpm generate')
+    await exec(`cd ${folderName} && pnpm generate`)
     drizzleSpinner.succeed()
   } catch (error) {
     drizzleSpinner.fail()
@@ -97,7 +97,7 @@ Follow the steps below to create your project:
     await installDependencies(folderName)
     console.log(chalk.green.bold('✅ Dependencies installed.\n'))
 
-    await generateDrizzleClient()
+    await generateDrizzleClient(folderName)
     console.log(chalk.green.bold('✅ Drizzle client generated.\n'))
 
     console.log(chalk.yellow(`
