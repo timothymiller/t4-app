@@ -4,7 +4,7 @@ import chalk from 'chalk'
 import { promisify } from 'util'
 import { exec as execCb } from 'child_process'
 import readline from 'readline'
-import rimraf from 'rimraf'
+import { rimraf } from 'rimraf'
 
 const exec = promisify(execCb)
 const rl = readline.createInterface({
@@ -152,7 +152,7 @@ if (!projectFolder) {
   setupProject(projectFolder)
 }
 
-function promptQuestion (question) {
+function promptQuestion(question) {
   return new Promise((resolve) => {
     rl.question(question, (answer) => {
       resolve(answer)
@@ -160,7 +160,7 @@ function promptQuestion (question) {
   })
 }
 
-function promisifiedRimraf (path) {
+function promisifiedRimraf(path) {
   return new Promise((resolve, reject) => {
     rimraf(path, (error) => {
       if (error) {
