@@ -1,4 +1,4 @@
-name: Expo Build
+name: Expo Deployment
 
 on:
   workflow_dispatch:
