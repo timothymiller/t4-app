@@ -11,7 +11,7 @@
     "clean": "git clean -xdf .expo node_modules"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.5",
+    "@babel/runtime": "^7.22.6",
     "@t4/ui": "*",
     "@types/react-native": "^0.72.2",
     "app": "*",
@@ -24,24 +24,24 @@
     "expo-image": "~1.3.2",
     "expo-linear-gradient": "~12.3.0",
     "expo-linking": "~5.0.2",
-    "expo-router": "^2.0.0",
+    "expo-router": "^2.0.1",
     "expo-splash-screen": "^0.20.4",
     "expo-status-bar": "~1.6.0",
-    "expo-updates": "^0.18.10",
+    "expo-updates": "^0.18.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "^0.72.3",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-screens": "^3.22.1",
-    "react-native-svg": "13.9.0",
-    "react-native-web": "^0.19.6"
+    "react-native-svg": "13.10.0",
+    "react-native-web": "^0.19.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.5",
-    "@expo/metro-config": "^0.10.6",
+    "@babel/core": "^7.22.9",
+    "@expo/metro-config": "^0.10.7",
     "@tamagui/babel-plugin": "latest",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
-    "metro-minify-terser": "^0.76.7",
+    "metro-minify-terser": "^0.77.0",
     "react-native-dotenv": "^3.4.9",
     "typescript": "^5.1.6"
   }
