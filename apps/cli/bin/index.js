@@ -55,10 +55,10 @@ const removeUnnecessaryFiles = async (folderName) => {
   }
 }
 
-const installDependencies = async () => {
+const installDependencies = async (folderName) => {
   const installSpinner = ora(chalk.green.bold('Installing dependencies')).start()
   try {
-    await exec('pnpm install')
+    await exec(`cd ${folderName} && pnpm install`)
     installSpinner.succeed()
   } catch (error) {
     installSpinner.fail()
@@ -80,13 +80,13 @@ const generateDrizzleClient = async () => {
 const setupProject = async (folderName) => {
   try {
     console.log(chalk.yellow(`
-      👉 Setting up a new t4 project.
-      Follow the steps below to create your project:
-      1. Cloning the t4-app repository into the specified folder.
-      2. Removing unnecessary files.
-      3. Installing dependencies.
-      4. Generating the Drizzle client.
-    `))
+👉 Setting up a new t4 project.
+Follow the steps below to create your project:
+1. Cloning the t4-app repository into the specified folder.
+2. Removing unnecessary files.
+3. Installing dependencies.
+4. Generating the Drizzle client.
+`))
 
     await cloneRepository(folderName)
     console.log(chalk.green.bold('\n✅ Repository cloned successfully.\n'))
@@ -94,25 +94,25 @@ const setupProject = async (folderName) => {
     await removeUnnecessaryFiles(folderName)
     console.log(chalk.green.bold('✅ Unnecessary files removed.\n'))
 
-    await installDependencies()
+    await installDependencies(folderName)
     console.log(chalk.green.bold('✅ Dependencies installed.\n'))
 
     await generateDrizzleClient()
     console.log(chalk.green.bold('✅ Drizzle client generated.\n'))
 
     console.log(chalk.yellow(`
-      💭 Remember to set up your environment variables properly:
-      1. Duplicate the .env.example file, rename it to .env.local, and enter your variables.
-      2. Duplicate /packages/api/.dev.vars.example, remove .example, and enter your Supabase JWT_VERIFICATION_KEY.
-      3. Configure Cloudflare Wrangler configs inside /apps/next/wrangler.toml and /packages/api/wrangler.toml to match your deployment environment.
-    `))
+💭 Remember to set up your environment variables properly:
+1. Duplicate the .env.example file, rename it to .env.local, and enter your variables.
+2. Duplicate /packages/api/.dev.vars.example, remove .example, and enter your Supabase JWT_VERIFICATION_KEY.
+3. Configure Cloudflare Wrangler configs inside /apps/next/wrangler.toml and /packages/api/wrangler.toml to match your deployment environment.
+`))
 
     console.log(chalk.green.bold(`
-      ✅ Successfully created t4 project!
-      Make sure you have a Supabase account and have created a new project.
-      After filling out your .env file, run 'pnpm migrate:local' to create your database tables.
-      To start the API and web development servers, run 'pnpm api' and 'pnpm web' in separate terminal tabs.
-    `))
+✅ Successfully created t4 project!
+Make sure you have a Supabase account and have created a new project.
+After filling out your .env file, run 'pnpm migrate:local' to create your database tables.
+To start the API and web development servers, run 'pnpm api' and 'pnpm web' in separate terminal tabs.
+`))
   } catch (error) {
     console.error(chalk.red.bold(`🚫 Error: ${error.message}`))
   } finally {
