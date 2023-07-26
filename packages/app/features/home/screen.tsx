@@ -21,7 +21,7 @@ import { SolitoImage } from 'solito/image'
 import { useObservable, reactive } from '@legendapp/state/react'
 
 export function HomeScreen() {
-  const state = useObservable({ count: 0, isSignedIn: false })
+  const state = useObservable({ isSignedIn: false })
 
   useEffect(() => {
     const fetchSignedInStatus = async () => {
@@ -52,19 +52,10 @@ export function HomeScreen() {
     href: '/params/tim',
   })
 
-  // TODO: delete count example before merging legend state PR
-  const renderCount = ++useRef(0).current
-
-  setInterval(() => {
-    state.count.set((v) => v + 1)
-  }, 2000)
-
   return (
     <ScrollView>
       <YStack flex={1} justifyContent="center" alignItems="center" padding="$4" space="$4">
         <SolitoImage src="/t4-logo.png" width={128} height={128} alt="T4 Logo" />
-        <H1>Renders: {renderCount}</H1>
-        <H1>Count: {state.count}</H1>
         <H1 textAlign="center">👋 Hello, T4 App</H1>
         <Separator />
         <Paragraph textAlign="center" size={'$2'}>
