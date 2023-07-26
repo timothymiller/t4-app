@@ -24,13 +24,13 @@
   "dependencies": {
     "@babel/runtime": "^7.22.6",
     "@manypkg/cli": "^0.21.0",
-    "@supabase/supabase-js": "^2.29.0",
+    "@supabase/supabase-js": "^2.31.0",
     "check-dependency-version-consistency": "^4.1.0",
     "eslint": "^8.45.0",
     "node-gyp": "^9.4.0",
     "prettier": "^3.0.0",
     "react-native-url-polyfill": "^2.0.0",
-    "turbo": "^1.10.11",
+    "turbo": "^1.10.12",
     "typescript": "^5.1.6"
   },
   "engines": {
