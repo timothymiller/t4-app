@@ -16,7 +16,11 @@
     "production": {
       "distribution": "store",
       "android": {
-        "buildType": "app-bundle"
+        "buildType": "app-bundle",
+        "node": "18.17.0"
+      },
+      "ios": {
+        "node": "18.17.0"
       },
       "env": {
         "TAMAGUI_TARGET": "native"

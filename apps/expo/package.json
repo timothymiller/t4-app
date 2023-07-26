@@ -8,7 +8,8 @@
     "android": "TAMAGUI_TARGET=native expo run:android",
     "ios": "TAMAGUI_TARGET=native expo run:ios",
     "eject": "expo eject",
-    "clean": "git clean -xdf .expo node_modules"
+    "clean": "git clean -xdf .expo node_modules",
+    "eas-build-pre-install": "npm install -g pnpm@8.6.10"
   },
   "dependencies": {
     "@babel/runtime": "^7.22.6",
