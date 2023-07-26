@@ -11,7 +11,8 @@ import React, { useMemo } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import type { AppProps } from 'next/app'
 import { SolitoImageProvider } from 'solito/image'
-
+import { enableLegendStateReact } from '@legendapp/state/react'
+enableLegendStateReact()
 if (process.env.NODE_ENV === 'production') {
   require('../public/tamagui.css')
 }
