@@ -1,43 +1,40 @@
 import { YStack } from '@t4/ui'
-import { useSignUp } from 'app/utils/clerk'
-import { OAuthStrategy } from '@clerk/types'
 import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from '@t4/ui/src/SignUpSignIn'
+import { signUp } from 'app/utils/supabase'
+import { Provider } from '@supabase/supabase-js'
+import { signInWithOAuth } from 'app/utils/supabase/auth'
 
-export function SignUpScreen() {
+export const SignUpScreen = (): React.ReactNode => {
   const { push } = useRouter()
 
-  const { isLoaded, signUp, setSession } = useSignUp()
+  const handleOAuthSignInWithPress = async (provider: Provider) => {
+    const { error } = await signInWithOAuth({ provider: provider })
 
-  if (!setSession || !isLoaded) return null
-
-  const handleOAuthSignUpWithPress = async (strategy: OAuthStrategy) => {
-    if (process.env.TAMAGUI_TARGET === 'web') {
-      push('/sign-up/sso-oauth/' + strategy)
-    } else {
-      push('/sso-oauth/' + strategy)
+    if (error) {
+      console.log('OAuth Sign in failed', error)
+      return
     }
+
+    push('/')
   }
 
   const handleEmailSignUpWithPress = async (emailAddress, password) => {
-    await signUp.create({
-      emailAddress,
-      password,
-    })
+    const res = await signUp(emailAddress, password)
 
-    await signUp.prepareEmailAddressVerification()
-    if (process.env.TAMAGUI_TARGET === 'web') {
-      push('/sign-up/email-verification')
-    } else {
-      push('/email-verification')
+    if (res.error) {
+      console.log('Sign up failed', res.error)
+      return
     }
+
+    push('/')
   }
 
   return (
-    <YStack f={1} jc="center" ai="center" space>
+    <YStack flex={1} justifyContent="center" alignItems="center" space>
       <SignUpSignInComponent
         type="sign-up"
-        handleOAuthWithPress={handleOAuthSignUpWithPress}
+        handleOAuthWithPress={handleOAuthSignInWithPress}
         handleEmailWithPress={handleEmailSignUpWithPress}
       />
     </YStack>

@@ -15,18 +15,18 @@
 </p>
 
 <p align="center">
-  Get started with the <a rel="noopener noreferrer" target="_blank" href="https://t4stack.com">T4 Stack</a> by running <code>yarn create t4-app</code>
+  Get started with the <a rel="noopener noreferrer" target="_blank" href="https://t4stack.com">T4 Stack</a> by running <code>pnpm create t4-app</code>
 </p>
 
 <p align="center">
   <a href = "https://discord.gg/wj2GV7AvQd">
-    <img src="https://img.shields.io/discord/1117289587472081016?color=%235865F2&label=Discord&logo=discord&logoColor=%23fff" alt="Join the T4 discord community">
-  </a>
+    <img src="https://img.shields.io/discord/1117289587472081016?color=%235865F2&label=Discord&logo=discord&logoColor=white&style=for-the-badge" alt="Join the T4 discord community">
+  </a>&nbsp;
   <a href = "https://www.npmjs.com/package/create-t4-app">
-    <img src="https://img.shields.io/npm/dw/create-t4-app" alt="Weekly downloads for create-t4-app on npmjs.org">
-  </a>
-  <a href = "https://www.npmjs.com/package/create-t4-app">
-    <img src="https://img.shields.io/npm/v/create-t4-app" alt="View create-t4-app on npmjs.org">
+    <img src="https://img.shields.io/npm/dw/create-t4-app?logo=npm&style=for-the-badge&color=CC3534" alt="Weekly downloads for create-t4-app on npmjs.org">
+  </a>&nbsp;
+  <a href="https://marketplace.visualstudio.com/items?itemName=albbus.t4-app-tools">
+    <img src="https://img.shields.io/visual-studio-marketplace/i/albbus.t4-app-tools?logo=visual-studio-code&style=for-the-badge&color=0078D7" alt="VSCode Extension Installs">
   </a>
 </p>
 
@@ -40,18 +40,18 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 
 <br>
 <p align="center">
-  <picture>
+  <a href="https://pages.cloudflare.com/">
     <img src="https://img.shields.io/badge/Cloudflare%20Pages-F38020?style=for-the-badge&logo=Cloudflare%20Pages&logoColor=white" alt="T4 is compatible with Cloudflare Pages">
-  </picture>
-  <picture>
+  </a>&nbsp;
+  <a href="https://nextjs.org/">
     <img src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="T4 uses Next.js">
-  </picture>
-  <picture>
+  </a>&nbsp;
+  <a href="https://expo.dev/">
     <img src="https://img.shields.io/badge/Expo-1B1F23?style=for-the-badge&logo=expo&logoColor=white" alt="T4 uses Expo">
-  </picture>
-  <picture>
+  </a>&nbsp;
+  <a href="https://www.typescriptlang.org/">
     <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="T4 is written in TypeScript">
-  </picture>
+  </a>
 </p>
 
 ### 📐 UI Kit
@@ -74,7 +74,7 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 
 ### 🏢 Global State Management
 
-- 🧩 [Jotai](https://jotai.org)
+- 🧩 [Legend State](https://legendapp.com/open-source/state/)
 
 ### ⚙️ Backend
 
@@ -86,11 +86,7 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 
 ### 🔒 Authentication
 
-- 🔑 [Supabase](https://supabase.com/docs/guides/auth)
-
-> or
-
-- 🔑 [Clerk](https://clerk.dev)
+- 🔑 [Supabase](https://supabase.com/auth)
 
 ## 📖 Background
 
@@ -107,18 +103,19 @@ It provides a unified, opinionated, & minimalistic setup for quickly getting sta
   - 💻 macOS
   - 🪟 Windows
   - 🐧 Linux
+- 🧪 (Experimental) Desktop support via Tauri
 
 Build native apps for iOS, Android, macOS, Windows, and Linux using the same codebase.
 
 #### Never worry about using XCode or Android Studio again
 
-<p align="center">
-  <picture>
+<p align="left">
+  <a href="https://developer.android.com/studio">
     <img src="https://img.shields.io/badge/Android_Studio-3DDC84?style=for-the-badge&logo=android-studio&logoColor=white" alt="Android Studio">
-  </picture>
-  <picture>
+  </a>&nbsp;
+  <a href="https://developer.apple.com/xcode/">
     <img src="https://img.shields.io/badge/Xcode-007ACC?style=for-the-badge&logo=Xcode&logoColor=white" alt="XCode">
-  </picture>
+  </a>
 </p>
 
 ## ❓ Why T4?
@@ -128,7 +125,7 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
 - Universal across **React Native** & **React Web**
   - [Data fetching](https://tanstack.com/query/latest)
   - [Styling](https://tamagui.dev)
-  - [Authentication](https://clerk.dev)
+  - [Authentication](https://supabase.com)
   - [Navigation](https://solito.dev)
 - High code re-use
 - Low bundle size
@@ -147,28 +144,28 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
 
 ## 🚀 Quick Start
 
-> Yarn v3 is required to use `create-t4-app`
+> pnpm v8.6 is required to use `create-t4-app`
 
 <p align="left">
-  <picture>
-    <img src="https://img.shields.io/badge/Yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white" alt="Yarn is required to use `create-t4-app`">
-  </picture>
+  <a href="https://pnpm.io">
+    <img src="https://img.shields.io/badge/pnpm-%234a4a4a.svg?style=for-the-badge&logo=pnpm&logoColor=f69220" alt="pnpm is required to use `create-t4-app`">
+  </a>
 </p>
 
 To scaffold an app using `create-t4-app`, run any of the following commands.
 
-### **yarn**
+### **pnpm**
 
 ```bash
-yarn create t4-app
+pnpm create t4-app
 ```
 
-### **Supabase**
+### **Tauri**
 
-If you would like to use Supabase as your authentication provider instead of Clerk use:
+If you would like to use Tauri use:
 
 ```bash
-yarn create t4-app --supabase
+pnpm create t4-app --tauri
 ```
 
 ## 🧩 VSCode Extension
@@ -177,32 +174,33 @@ The VSCode extension is optional but highly recommended. It provides a better de
 
 ## ✨ Features
 
+- ✅ Tamagui UI kit across all platforms.
+- ✅ Supabase Auth
+- ✅ PNPM support
 - ✅ Uses Next.js for building web apps.
 - ✅ Uses Expo for building native mobile apps.
 - ✅ PWA by default for native desktop support. No Electron required.
-- ✅ Tamagui UI kit across all platforms.
 - ✅ Uses Cloudflare Workers for serverless functions.
 - ✅ No Docker containers required.
 - ✅ Uses tRPC & Tanstack Query for fetching & caching across all platforms.
 - ✅ Authentication across all platforms.
 - ✅ Powered by TypeScript for type safety and better developer experience.
 - ✅ Comes with pre-configured ESLint and Prettier for code consistency.
+- ✅ Github Action publishing for Expo apps
+- ✅ Database migration in CI/CD
+- ✅ Tauri Support
 
 ## ⭐ Wish List
 
 I would like to add the following features to `create-t4-app` in the future:
 
-- ✅ Github Action publishing for Expo apps
-- ✅ Database migration in CI/CD
-- ✅ Supabase Auth
-- [ ] PNPM support
 - [ ] Legend State
-- [ ] Million.js example
 - [ ] GraphQL (type-safe) data fetching
   - ⏲️ [GQty](https://gqty.dev) - A No-GraphQL client for TypeScript.
   - 🔄 [Garph](https://garph.dev) - Fullstack GraphQL Framework for TypeScript
 - [ ] 📚 [Storybook](https://storybook.js.org) support
 - [ ] 🖌️ [Chromatic](https://chromatic.com) support
+- [ ] Million.js example - once React Native support is added
 
 ## 💬 Community
 
@@ -225,7 +223,6 @@ We welcome contributions from anyone and everyone. Please read our [contributing
 - [Tim Neutkens](https://twitter.com/timneutkens) - Co-author of Next.js
 - [Guillermo Rauch](https://twitter.com/rauchg) - Co-author of Next.js
 - [Fernando Rojo](https://twitter.com/fernandotherojo) - Creator of Solito
-- [Daishi Kato](https://twitter.com/dai_shi) Creator of Jotai
 - [Jared Palmer](https://twitter.com/jaredpalmer) - Creator of Turborepo
 - [Evan Bacon](https://twitter.com/Baconbrix) - Maintainer of Expo
 

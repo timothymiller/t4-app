@@ -1,43 +1,42 @@
-import { useState } from 'react'
 import { Image, YStack, Paragraph, XStack, Button, Input, Stack } from 'tamagui'
 import { Link } from 'solito/link'
-import { OAuthStrategy } from '@clerk/types'
+import { type Provider } from '@supabase/supabase-js'
+import { useObservable } from '@legendapp/state/react'
 
 interface Props {
   type: 'sign-up' | 'sign-in'
-  handleOAuthWithPress: (strategy: OAuthStrategy) => void
+  handleOAuthWithPress: (provider: Provider) => void
   handleEmailWithPress: (emailAddress, password) => void
 }
 
-export const SignUpSignInComponent: React.FC<Props> = ({
+export const SignUpSignInComponent = ({
   type,
   handleOAuthWithPress,
   handleEmailWithPress,
-}) => {
-  const [emailAddress, setEmailAddress] = useState('')
-  const [password, setPassword] = useState('')
+}: Props): React.ReactNode => {
+  const state = useObservable({ emailAddress: '', password: '' })
 
   return (
     <YStack
       borderRadius="$10"
       space
-      px="$7"
-      py="$6"
-      w={350}
+      paddingHorizontal="$7"
+      paddingVertical="$6"
+      width={350}
       shadowColor={'#00000020'}
       shadowRadius={26}
       shadowOffset={{ width: 0, height: 4 }}
-      bg="$background"
+      backgroundColor="$background"
     >
-      <Paragraph size="$5" fontWeight={'700'} opacity={0.8} mb="$1">
+      <Paragraph size="$5" fontWeight={'700'} opacity={0.8} marginBottom="$1">
         {type === 'sign-up' ? 'Create your account' : 'Log in to your account'}
       </Paragraph>
       {/* all the oauth sign up options */}
-      <XStack space jc={'space-evenly'} theme="light">
+      <XStack space justifyContent={'space-evenly'} theme="light">
         {/* 3 buttons, for google, apple, discord */}
         <Button
           size="$5"
-          onPress={() => handleOAuthWithPress('oauth_google')}
+          onPress={() => handleOAuthWithPress('google')}
           hoverStyle={{ opacity: 0.8 }}
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
@@ -53,7 +52,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
         </Button>
         <Button
           size="$5"
-          onPress={() => handleOAuthWithPress('oauth_apple')}
+          onPress={() => handleOAuthWithPress('apple')}
           hoverStyle={{ opacity: 0.8 }}
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
@@ -69,7 +68,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
         </Button>
         <Button
           size="$5"
-          onPress={() => handleOAuthWithPress('oauth_discord')}
+          onPress={() => handleOAuthWithPress('discord')}
           hoverStyle={{ opacity: 0.8 }}
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
@@ -84,25 +83,27 @@ export const SignUpSignInComponent: React.FC<Props> = ({
           />
         </Button>
       </XStack>
-      <XStack ai="center" width="100%" jc="space-between">
-        <Stack h="$0.25" bg="black" w="$10" opacity={0.1} />
+      <XStack alignItems="center" width="100%" justifyContent="space-between">
+        <Stack height="$0.25" backgroundColor="black" width="$10" opacity={0.1} />
         <Paragraph size="$3" opacity={0.5}>
           or
         </Paragraph>
-        <Stack h="$0.25" bg="black" w="$10" opacity={0.1} />
+        <Stack height="$0.25" backgroundColor="black" width="$10" opacity={0.1} />
       </XStack>
 
       {/* email sign up option */}
       <Input
+        autoCapitalize="none"
         placeholder="Email"
         onChangeText={(text) => {
-          setEmailAddress(text)
+          state.emailAddress.set(text)
         }}
       />
       <Input
+        autoCapitalize="none"
         placeholder="Password"
         onChangeText={(text) => {
-          setPassword(text)
+          state.password.set(text)
         }}
         textContentType="password"
         secureTextEntry
@@ -112,7 +113,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
       <Button
         themeInverse
         onPress={() => {
-          handleEmailWithPress(emailAddress, password)
+          handleEmailWithPress(state.emailAddress.get(), state.password.get())
         }}
         hoverStyle={{ opacity: 0.8 }}
         onHoverIn={() => {}}
@@ -124,7 +125,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
 
       {/* or sign in, in small and less opaque font */}
       <XStack>
-        <Paragraph size="$2" mr="$2" opacity={0.4}>
+        <Paragraph size="$2" marginRight="$2" opacity={0.4}>
           {type === 'sign-up' ? 'Already have an account?' : 'Don’t have an account?'}
         </Paragraph>
         <Link href={type === 'sign-up' ? '/sign-in' : '/sign-up'}>
@@ -139,6 +140,26 @@ export const SignUpSignInComponent: React.FC<Props> = ({
           </Paragraph>
         </Link>
       </XStack>
+
+      {/* forgot password */}
+      {type === 'sign-in' && (
+        <XStack marginTop="$-2.5">
+          <Paragraph size="$2" marginRight="$2" opacity={0.4}>
+            Forgot your password?
+          </Paragraph>
+          <Link href="/password-reset">
+            <Paragraph
+              cursor={'pointer'}
+              size="$2"
+              fontWeight={'700'}
+              opacity={0.5}
+              hoverStyle={{ opacity: 0.4 }}
+            >
+              Reset it
+            </Paragraph>
+          </Link>
+        </XStack>
+      )}
     </YStack>
   )
 }

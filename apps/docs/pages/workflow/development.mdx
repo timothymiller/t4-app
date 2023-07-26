@@ -9,12 +9,12 @@ The necessary secrets are:
 ```bash
 # For preventing CORS errors
 APP_URL=
-# For Clerk @link https://clerk.dev
+# For Supabase @link https://supabase.com
 JWT_VERIFICATION_KEY=
 ```
 
 - `APP_URL` is the URL of your Next.js app. For example, `http://localhost:3000`.
-- Get your `JWT_VERIFICATION_KEY` from [Clerk](https://clerk.dev).
+- Get your `JWT_VERIFICATION_KEY` from [Supabase](https://supabase.com).
 
 #### Configure Wrangler.toml
 
@@ -26,6 +26,8 @@ Replace the `account_id` and `database_id` with your own values.
 2. Go to "Workers & Pages Overview" and create a new project.
 3. Configure GitHub integration.
 4. Configure D1 database bindings with your project.
+    -do not select the '--experimental-backend' option while in Alpha
+    -currently this option does not support backups & migrate command fails
 5. Enter your project details in `wrangler.toml`.
 
 #### API Wranger.toml
@@ -52,23 +54,8 @@ Rename `.env.example` to `.env.local` and add your own values.
 # API
 NEXT_PUBLIC_API_URL=http://localhost:8787/
 
-# Authentication - Clerk
-# @link https://dashboard.clerk.dev for your Clerk API keys
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
-```
-
-#### Authentication - Supabase
-
-Head over to [](https://supabase.com/dashboard) for your Supabase API keys:
-
-```bash
+# Authentication
+# @link https://supabase.com/dashboard for your Supabase API keys
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_PUBLIC_KEY=
-```
-
-Add the following to dev.vars in the API folder, it can be found as **JWT Secret** in API Settings in Supabase:
-
-```bash
-JWT_VERIFICATION_KEY=
 ```

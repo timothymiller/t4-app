@@ -11,7 +11,8 @@ import React, { useMemo } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import type { AppProps } from 'next/app'
 import { SolitoImageProvider } from 'solito/image'
-
+import { enableLegendStateReact } from '@legendapp/state/react'
+enableLegendStateReact()
 if (process.env.NODE_ENV === 'production') {
   require('../public/tamagui.css')
 }
@@ -31,6 +32,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>T4 App</title>
         <meta name="description" content="Tamagui, Solito, Expo & Next.js" />
         <link rel="icon" href="/favicon.ico" />
+        <style>{`
+          body, #root, #__next {
+            min-width: 100% !important;
+          }
+        `}</style>
       </Head>
       <ThemeProvider>{contents}</ThemeProvider>
     </>

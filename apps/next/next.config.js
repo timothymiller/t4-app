@@ -4,13 +4,14 @@ const { join } = require('path')
 
 const boolVals = {
   true: true,
-  false: false,
+  false: false
 }
 
 const disableExtraction =
   boolVals[process.env.DISABLE_EXTRACTION] ?? process.env.NODE_ENV === 'development'
 
-const optimizeCss = boolVals[process.env.OPTIMIZE_CSS] ?? process.env.NODE_ENV === 'production'
+// Enabling causes FOUC on page refreshes
+const optimizeCss = false // boolVals[process.env.OPTIMIZE_CSS] ?? process.env.NODE_ENV === 'production'
 
 const plugins = [
   withTamagui({
@@ -25,10 +26,9 @@ const plugins = [
       if (path.includes(join('packages', 'app'))) {
         return true
       }
-    },
-  }),
+    }
+  })
 ]
-
 
 module.exports = function () {
   /** @type {import('next').NextConfig} */
@@ -41,13 +41,13 @@ module.exports = function () {
     // Using Solito image loader without Cloudflare's Paid Image Resizing
     images: {},
     typescript: {
-      ignoreBuildErrors: true,
+      ignoreBuildErrors: true
     },
     modularizeImports: {
       '@tamagui/lucide-icons': {
-        transform: `@tamagui/lucide-icons/dist/esm/icons/{{kebabCase member}}`,
-        skipDefaultConversion: true,
-      },
+        transform: '@tamagui/lucide-icons/dist/esm/icons/{{kebabCase member}}',
+        skipDefaultConversion: true
+      }
     },
     transpilePackages: [
       'solito',
@@ -72,14 +72,14 @@ module.exports = function () {
       optimizeCss,
       forceSwcTransforms: true,
       scrollRestoration: true,
-      legacyBrowsers: false,
-    },
+      legacyBrowsers: false
+    }
   }
 
   for (const plugin of plugins) {
     config = {
       ...config,
-      ...plugin(config),
+      ...plugin(config)
     }
   }
 

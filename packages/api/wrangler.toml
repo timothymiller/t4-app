@@ -11,7 +11,7 @@ migrations_dir = "migrations"
 
 # The necessary secrets are:
 # - APP_URL - for preventing CORS errors
-# - JWT_VERIFICATION_KEY - for Clerk @link https://clerk.dev
+# - JWT_VERIFICATION_KEY - for Supabase @link https://supabase.com
 #
 # For local development, you can create a file called .dev.vars and use dotenv syntax.
 #

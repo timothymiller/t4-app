@@ -1,4 +1,8 @@
 import 'expo-router/entry'
-console.disableYellowBox = true;
-import { LogBox } from 'react-native';
-LogBox.ignoreAllLogs();
+import { LogBox } from 'react-native'
+import { LogBox } from 'react-native'
+import { enableLegendStateReact } from '@legendapp/state/react'
+console.disableYellowBox = true
+
+LogBox.ignoreAllLogs()
+enableLegendStateReact()

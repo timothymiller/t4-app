@@ -23,24 +23,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 2
+          fetch-depth: 1
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
 
-      - name: Install dependencies
-        uses: borales/actions-yarn@v4.2.0
-        with:
-          cmd: install
-          dir: apps/docs
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/pnpm-install
 
       - name: Build
         run: |
           cd apps/docs
-          npx @cloudflare/next-on-pages --experimental-minify
+          pnpx @cloudflare/next-on-pages
 
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1

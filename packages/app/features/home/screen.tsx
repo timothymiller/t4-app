@@ -12,16 +12,25 @@ import {
   useToastController,
 } from '@t4/ui'
 import { ChevronDown } from '@tamagui/lucide-icons'
-import React, { useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { Linking } from 'react-native'
 import { useLink } from 'solito/link'
-import { SignedIn, SignedOut, useAuth } from '../../utils/clerk'
+import { isUserSignedIn, signOut } from 'app/utils/supabase'
 import Constants from 'expo-constants'
-import { useSheetOpen } from '@t4/ui/src/atoms/sheet'
 import { SolitoImage } from 'solito/image'
+import { useObservable, reactive } from '@legendapp/state/react'
 
 export function HomeScreen() {
-  const { signOut } = useAuth()
+  const state = useObservable({ isSignedIn: false })
+
+  useEffect(() => {
+    const fetchSignedInStatus = async () => {
+      const signedInStatus = await isUserSignedIn()
+      state.isSignedIn.set(signedInStatus)
+    }
+
+    fetchSignedInStatus()
+  }, [])
 
   const signInLink = useLink({
     href: '/sign-in',
@@ -45,7 +54,7 @@ export function HomeScreen() {
 
   return (
     <ScrollView>
-      <YStack f={1} jc="center" ai="center" p="$4" space="$4">
+      <YStack flex={1} justifyContent="center" alignItems="center" padding="$4" space="$4">
         <SolitoImage src="/t4-logo.png" width={128} height={128} alt="T4 Logo" />
         <H1 textAlign="center">👋 Hello, T4 App</H1>
         <Separator />
@@ -72,9 +81,7 @@ export function HomeScreen() {
             on Github.
           </Anchor>
         </Paragraph>
-
         <Button onPress={() => Linking.openURL('https://t4stack.com/')}>Learn More...</Button>
-
         <H3>🦮🐴 App Demos</H3>
         <YStack space="$2">
           <Button {...infiniteListLink} space="$2">
@@ -88,17 +95,17 @@ export function HomeScreen() {
           </Button>
           <SheetDemo />
         </YStack>
-        <SignedIn>
+        {state.isSignedIn.get() ? (
           <Button
-            onPress={() => {
-              signOut()
+            onPress={async () => {
+              state.isSignedIn.set(false)
+              await signOut()
             }}
             space="$2"
           >
             Sign Out
           </Button>
-        </SignedIn>
-        <SignedOut>
+        ) : (
           <XStack space="$2">
             <Button {...signInLink} space="$2">
               Sign In
@@ -107,40 +114,48 @@ export function HomeScreen() {
               Sign Up
             </Button>
           </XStack>
-        </SignedOut>
+        )}
       </YStack>
     </ScrollView>
   )
 }
 
+const ReactiveSheet = reactive(Sheet)
+const ReactiveSheetOverlay = reactive(Sheet.Overlay)
+const ReactiveSheetFrame = reactive(Sheet.Frame)
 function SheetDemo() {
-  const [open, setOpen] = useSheetOpen()
-  const [position, setPosition] = useState(0)
+  const state = useObservable({ sheetOpen: false, position: 0 })
+
+  const { sheetOpen, position } = state
+
   const toast = useToastController()
 
+  const handlePress = () => {
+    sheetOpen.set(true)
+  }
   return (
     <>
-      <Button onPress={() => setOpen((x) => !x)} space="$2">
+      <Button onPress={() => handlePress()} space="$2">
         Bottom Sheet
       </Button>
-      <Sheet
+      <ReactiveSheet
         modal
-        open={open}
-        onOpenChange={setOpen}
+        $open={sheetOpen.get}
+        onOpenChange={sheetOpen.set}
         snapPoints={[80]}
-        position={position}
-        onPositionChange={setPosition}
+        position={position.get()}
+        onPositionChange={position.set}
         dismissOnSnapToBottom
       >
-        <Sheet.Overlay />
-        <Sheet.Frame ai="center" jc="center">
+        <ReactiveSheetOverlay />
+        <ReactiveSheetFrame alignItems="center" justifyContent="center">
           <Sheet.Handle />
           <Button
             size="$6"
             circular
             icon={ChevronDown}
             onPress={() => {
-              setOpen(false)
+              sheetOpen.set(false)
               const isExpoGo = Constants.appOwnership === 'expo'
               if (!isExpoGo) {
                 toast.show('Sheet closed!', {
@@ -149,8 +164,8 @@ function SheetDemo() {
               }
             }}
           />
-        </Sheet.Frame>
-      </Sheet>
+        </ReactiveSheetFrame>
+      </ReactiveSheet>
     </>
   )
 }

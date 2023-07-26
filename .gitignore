@@ -8,6 +8,7 @@
 
 # expo
 **/.expo/*
+**/expo-env.d.ts
 
 # next.js
 **/.next/*
@@ -27,6 +28,7 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
+**.env
 .env.local
 .env.development.local
 .env.test.local

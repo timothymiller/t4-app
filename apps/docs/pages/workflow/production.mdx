@@ -38,7 +38,9 @@ CF_PROJECT_NAME=
 
 4. Setup EAS credentials for your Android and IOS apps by running `eas credentials` in your terminal. Setup the correct `android.package` and `ios.bundleIdentifier` in `apps/expo/app.json`.
 
-5. Push your changes to GitHub and watch your app being built and published to Expo.
+5. Over on your repository set the `Read and write permissions` in `Settings > Actions > General > Workflow Permissions`. This specific workflow includes only the `contents: write` permission that is needed to comment on your commits with the build download links.
+
+6. Push your changes to GitHub and watch your app being built in EAS.
 
 ## Configure Wrangler.toml
 
@@ -87,10 +89,10 @@ Configure environment variables within the Cloudflare Pages dashboard for produc
 # API
 NEXT_PUBLIC_API_URL=http://api.t4stack.com/
 
-# Authentication - Clerk
-# @link https://dashboard.clerk.dev for your Clerk API keys
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
+# Authentication
+# @link https://supabase.com/dashboard for your Supabase API keys
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLIC_KEY=
 ```
 
 ## Authentication - Supabase
