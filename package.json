@@ -1,40 +1,46 @@
 {
-  "name": "app",
-  "version": "2.0.0",
-  "main": "index.ts",
+  "name": "t4-app-monorepo",
   "private": true,
-  "sideEffects": [
-    "*.css"
-  ],
+  "license": "Apache-2.0",
+  "version": "2.0.0",
   "scripts": {
-    "clean": "rm -rf node_modules"
+    "dev": "turbo dev --parallel --filter=!t4-app-docs",
+    "api": "NO_D1_WARNING=true turbo run dev --filter @t4/api",
+    "native": "cd apps/expo && pnpm dev",
+    "web": "turbo run dev --filter next-app",
+    "notes": "turbo run dev --filter t4-app-docs",
+    "build": "turbo run build --filter=@t4/ui",
+    "generate": "pnpm --filter=@t4/api generate",
+    "migrate:local": "pnpm --filter=@t4/api migrate:local",
+    "upgrade:tamagui": "pnpm up '*tamagui*'@latest '@tamagui/*'@latest react-native-web-lite@latest",
+    "check-deps": "check-dependency-version-consistency .",
+    "check-types": "tsc --noEmit",
+    "fix": "manypkg fix",
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "pnpm run build",
+    "clean": "git clean -xdf node_modules",
+    "clean:workspaces": "turbo clean"
   },
   "dependencies": {
-    "@shopify/flash-list": "^1.5.0",
-    "@clerk/clerk-expo": "^0.18.7",
-    "@clerk/nextjs": "^4.21.10",
-    "@legendapp/state": "^1.6.3",
-    "@t4/ui": "*",
-    "@tamagui/animations-react-native": "latest",
-    "@tamagui/colors": "latest",
-    "@tamagui/font-inter": "latest",
-    "@tamagui/lucide-icons": "latest",
-    "@tamagui/shorthands": "latest",
-    "@tamagui/themes": "latest",
-    "@tanstack/react-query": "^4.32.0",
-    "@trpc/client": "^10.35.0",
-    "@trpc/next": "^10.35.0",
-    "@trpc/react-query": "^10.35.0",
-    "burnt": "^0.11.7",
-    "expo-constants": "~14.4.2",
-    "expo-linking": "~5.0.2",
-    "expo-secure-store": "^12.3.1",
-    "js-cookie": "^3.0.5",
-    "react-native-safe-area-context": "4.7.1",
-    "solito": "^4.0.1"
+    "@babel/runtime": "^7.22.6",
+    "@manypkg/cli": "^0.21.0",
+    "@supabase/supabase-js": "^2.31.0",
+    "check-dependency-version-consistency": "^4.1.0",
+    "eslint": "^8.45.0",
+    "node-gyp": "^9.4.0",
+    "prettier": "^3.0.0",
+    "react-native-url-polyfill": "^2.0.0",
+    "turbo": "^1.10.12",
+    "typescript": "^5.1.6"
   },
-  "devDependencies": {
-    "@types/react": "^18.2.16",
-    "@types/react-native": "^0.72.2"
+  "engines": {
+    "node": ">=18.17.0",
+    "pnpm": ">=8.6.10"
+  },
+  "packageManager": "pnpm@8.6.10",
+  "pnpm": {
+    "overrides": {
+      "react-refresh": "~0.14.0"
+    }
   }
 }
