@@ -5,10 +5,10 @@
   "private": true,
   "scripts": {
     "dev": "TAMAGUI_TARGET=native expo start --dev-client",
-    "dev:prod": "expo start --no-dev --minify",
+    "dev:prod": "TAMAGUI_TARGET=native expo start --no-dev --minify",
     "android": "TAMAGUI_TARGET=native expo run:android",
     "ios": "TAMAGUI_TARGET=native expo run:ios",
-    "prebuild": "expo prebuild",
+    "prebuild": "TAMAGUI_TARGET=native expo prebuild",
     "clean": "git clean -xdf .expo node_modules",
     "eas-build-pre-install": "npm install -g pnpm@8.6.10"
   },
