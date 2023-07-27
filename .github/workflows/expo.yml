@@ -1,4 +1,4 @@
-name: Expo Build
+name: Expo Deployment
 
 on:
   workflow_dispatch:
@@ -44,6 +44,9 @@ jobs:
         id: build
         continue-on-error: true
         run: |
+          export TAMAGUI_TARGET=native
+          export EAS_OWNER=${{ secrets.EAS_OWNER }}
+          export EAS_PROJECT_ID=${{ secrets.EAS_PROJECT_ID }}
           cd apps/expo && build_json=$(eas build --profile $BUILD_PROFILE --platform all --non-interactive --json)
           android_link=$(echo $build_json | jq -r '.[] | select(.platform=="ANDROID") | .artifacts.applicationArchiveUrl')
           ios_link=$(echo $build_json | jq -r '.[] | select(.platform=="IOS") | .artifacts.applicationArchiveUrl')

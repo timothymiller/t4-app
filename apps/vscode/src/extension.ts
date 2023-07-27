@@ -72,7 +72,7 @@ async function createScreen(screenName: string, isStaticRoute: boolean, paramete
   // Generate the screen file content based on the route type
   let screenFileData: Uint8Array;
   if (isStaticRoute) {
-    screenFileData = new TextEncoder().encode(`import { Paragraph, YStack } from "@my/ui";
+    screenFileData = new TextEncoder().encode(`import { Paragraph, YStack } from "@t4/ui";
 import React from "react";
 
 export function ${screenName}Screen() {
@@ -85,7 +85,7 @@ export function ${screenName}Screen() {
   );
 }`);
   } else {
-    screenFileData = new TextEncoder().encode(`import { Paragraph, YStack } from "@my/ui";
+    screenFileData = new TextEncoder().encode(`import { Paragraph, YStack } from "@t4/ui";
 import React from "react";
 import { createParam } from "solito";
 
@@ -123,7 +123,7 @@ async function createComponent(componentName: string): Promise<void> {
   const newFileUri = vscode.Uri.joinPath(workspaceFolder.uri, 'packages', 'ui', 'src', `${componentName}.tsx`);
 
   // Generate the component file content
-  const componentFileData = new TextEncoder().encode(`import { Paragraph, YStack } from "@my/ui";
+  const componentFileData = new TextEncoder().encode(`import { Paragraph, YStack } from "@t4/ui";
 import React from "react";
 
 export function ${componentName}() {

@@ -25,7 +25,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 2
+          fetch-depth: 1
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
@@ -38,6 +38,7 @@ jobs:
       - name: Build
         run: |
           cd apps/next
+          export TAMAGUI_TARGET=web
           export NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
           export NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}
           export NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}

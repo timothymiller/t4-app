@@ -144,7 +144,7 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
 
 ## 🚀 Quick Start
 
-> pnpm v8.6.5 is required to use `create-t4-app`
+> pnpm v8.6 is required to use `create-t4-app`
 
 <p align="left">
   <a href="https://pnpm.io">

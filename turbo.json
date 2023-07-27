@@ -10,6 +10,10 @@
       "cache": false,
       "persistent": true
     },
+    "generate": {
+      "dependsOn": ["^generate"],
+      "outputs": ["migrations/**"]
+    },
     "clean": {
       "cache": false
     },
