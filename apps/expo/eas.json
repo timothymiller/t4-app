@@ -26,5 +26,8 @@
         "TAMAGUI_TARGET": "native"
       }
     }
+  },
+  "cli": {
+    "promptToConfigurePushNotifications": false
   }
 }
