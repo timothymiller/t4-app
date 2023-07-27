@@ -8,7 +8,7 @@
     "dev:prod": "expo start --no-dev --minify",
     "android": "TAMAGUI_TARGET=native expo run:android",
     "ios": "TAMAGUI_TARGET=native expo run:ios",
-    "eject": "expo eject",
+    "eject": "expo prebuild",
     "clean": "git clean -xdf .expo node_modules",
     "eas-build-pre-install": "npm install -g pnpm@8.6.10"
   },
@@ -28,6 +28,7 @@
     "expo-router": "^2.0.1",
     "expo-splash-screen": "^0.20.4",
     "expo-status-bar": "~1.6.0",
+    "expo-system-ui": "^2.4.0",
     "expo-updates": "^0.18.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
