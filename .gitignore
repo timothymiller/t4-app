@@ -57,3 +57,7 @@ types/
 **/.wrangler/*
 **/.dev.vars
 .turbo
+
+# Expo
+expo/apps/ios/**
+expo/apps/android/**
