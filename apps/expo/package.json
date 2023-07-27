@@ -4,16 +4,17 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "dev": "TAMAGUI_TARGET=native expo start --clean",
+    "dev": "TAMAGUI_TARGET=native expo start --dev-client",
     "dev:prod": "expo start --no-dev --minify",
     "android": "TAMAGUI_TARGET=native expo run:android",
     "ios": "TAMAGUI_TARGET=native expo run:ios",
-    "eject": "expo prebuild",
+    "prebuild": "expo prebuild",
     "clean": "git clean -xdf .expo node_modules",
     "eas-build-pre-install": "npm install -g pnpm@8.6.10"
   },
   "dependencies": {
     "@babel/runtime": "^7.22.6",
+    "@shopify/flash-list": "1.4.3",
     "@t4/ui": "*",
     "app": "*",
     "babel-plugin-module-resolver": "^4.1.0",
