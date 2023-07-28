@@ -13,7 +13,7 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "enabled": false
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -33,7 +33,7 @@
       }
     },
     "owner": "timothymiller",
-    "plugins": ["expo-router", "expo-updates"],
+    "plugins": ["expo-router"],
     "experiments": {
       "tsconfigPaths": true,
       "typedRoutes": true
