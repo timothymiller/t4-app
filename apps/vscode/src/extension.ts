@@ -58,13 +58,13 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Create the new screen file
     let screenFileData = new TextEncoder().encode(
-      `import { Paragraph, YStack } from "@my/ui";\nimport React from "react";\n\nexport function ${
+      `import { Paragraph, YStack } from "@t4/ui";\nimport React from "react";\n\nexport function ${
         screenName + 'Screen'
       }() {\n  return (\n    <YStack f={1} jc="center" ai="center" space>\n      <Paragraph ta="center" fow="800">\n        ${screenName.toLowerCase()}\n      </Paragraph>\n    </YStack>\n  );\n} `
     )
     if (!isStaticRoute) {
       screenFileData = new TextEncoder().encode(
-        `import { Paragraph, YStack } from "@my/ui";\nimport React from "react";\nimport { createParam } from "solito";\n\nconst { useParam } = createParam<{ ${parameterName!.toLowerCase()}: string }>()\n\nexport function ${
+        `import { Paragraph, YStack } from "@t4/ui";\nimport React from "react";\nimport { createParam } from "solito";\n\nconst { useParam } = createParam<{ ${parameterName!.toLowerCase()}: string }>()\n\nexport function ${
           screenName + 'Screen'
         }() {\n  const [${parameterName!.toLowerCase()}] = useParam('${parameterName!.toLowerCase()}')\n\n  return (\n    <YStack f={1} jc="center" ai="center" space>\n      <Paragraph ta="center" fow="800">\n        {\`${parameterName!.toLowerCase()}: \${${parameterName!.toLowerCase()}}\`}\n      </Paragraph>\n    </YStack>\n  );\n} `
       )
@@ -166,7 +166,7 @@ export function activate(context: vscode.ExtensionContext) {
 
       // Create the new component file
       const componentFileData = new TextEncoder().encode(
-        `import { Paragraph, YStack } from "@my/ui";\nimport React from "react";\n\nexport function ${componentName}() {\n  return (\n    <YStack f={1} jc="center" ai="center" space>\n      <Paragraph ta="center" fow="800">\n        ${componentName}\n      </Paragraph>\n    </YStack>\n  );\n} `
+        `import { Paragraph, YStack } from "@t4/ui";\nimport React from "react";\n\nexport function ${componentName}() {\n  return (\n    <YStack f={1} jc="center" ai="center" space>\n      <Paragraph ta="center" fow="800">\n        ${componentName}\n      </Paragraph>\n    </YStack>\n  );\n} `
       )
       await vscode.workspace.fs.writeFile(newFileUri, componentFileData)
 
