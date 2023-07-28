@@ -61,3 +61,8 @@ types/
 # Expo
 apps/expo/ios/**
 apps/expo/android/**
+
+# Expo Builds
+**/*.apk
+**/*.aab
+**/*.ipa

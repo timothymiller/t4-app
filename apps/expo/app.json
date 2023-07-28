@@ -33,7 +33,7 @@
       }
     },
     "owner": "timothymiller",
-    "plugins": ["expo-router"],
+    "plugins": ["expo-router", "expo-updates"],
     "experiments": {
       "tsconfigPaths": true,
       "typedRoutes": true

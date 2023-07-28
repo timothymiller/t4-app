@@ -13,6 +13,8 @@
     "web": "turbo run dev --filter next-app",
     "notes": "turbo run dev --filter t4-app-docs",
     "build": "turbo run build --filter=@t4/ui",
+    "build:ios": "cd apps/expo && pnpm build:ios",
+    "build:android": "cd apps/expo && pnpm build:android",
     "generate": "pnpm --filter=@t4/api generate",
     "migrate:local": "pnpm --filter=@t4/api migrate:local",
     "upgrade:tamagui": "pnpm up '*tamagui*'@latest '@tamagui/*'@latest react-native-web-lite@latest",
