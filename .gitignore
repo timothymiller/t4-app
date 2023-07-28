@@ -8,6 +8,7 @@
 
 # expo
 **/.expo/*
+**/expo-env.d.ts
 
 # next.js
 **/.next/*

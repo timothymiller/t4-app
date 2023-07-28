@@ -42,6 +42,7 @@ const config: DocsThemeConfig = {
             frontMatter.description || 'Type-Safe, Full-Stack Starter Kit for React Native + Web.'
           }
         />
+        <link rel="icon" href="/favicon.ico" />
       </>
     )
   },
