@@ -82,8 +82,8 @@ importers:
         specifier: ^7.22.6
         version: 7.22.6
       '@shopify/flash-list':
-        specifier: 1.4.3
-        version: 1.4.3(@babel/runtime@7.22.6)(react-native@0.72.3)(react@18.2.0)
+        specifier: ^1.5.0
+        version: 1.5.0(@babel/runtime@7.22.6)(react-native@0.72.3)(react@18.2.0)
       '@t4/ui':
         specifier: '*'
         version: link:../../packages/ui
@@ -4051,20 +4051,6 @@ packages:
       join-component: 1.1.0
     dev: false
 
-  /@shopify/flash-list@1.4.3(@babel/runtime@7.22.6)(react-native@0.72.3)(react@18.2.0):
-    resolution: {integrity: sha512-jtIReAbwWzYBV0dQ6Io9wBX+pD0C4qQFMrb5/fkEvX8PYDgBl5KRYvpfr9WLLj8CV2Jsn1X0mYOsB+ysWrI/8g==}
-    peerDependencies:
-      '@babel/runtime': '*'
-      react: '*'
-      react-native: '*'
-    dependencies:
-      '@babel/runtime': 7.22.6
-      react: 18.2.0
-      react-native: 0.72.3(@babel/core@7.22.9)(@babel/preset-env@7.22.9)(react@18.2.0)
-      recyclerlistview: 4.2.0(react-native@0.72.3)(react@18.2.0)
-      tslib: 2.4.0
-    dev: false
-
   /@shopify/flash-list@1.5.0(@babel/runtime@7.22.6)(react-native@0.72.3)(react@18.2.0):
     resolution: {integrity: sha512-XeocevDIXastr6jh3TPo1MzV5XkdqTyWtw/j8kUhz9EOBc2SzNWbpJWyzrAsYKlqYNrnxxs0P9C0amlX2jaQnw==}
     peerDependencies:
@@ -6125,7 +6111,7 @@ packages:
       node-fetch: 2.6.9
       path-to-regexp: 6.2.1
       ts-morph: 12.0.0
-      ts-node: 10.9.1
+      ts-node: 10.9.1(@types/node@14.18.33)(typescript@4.9.5)
       typescript: 4.9.5
     transitivePeerDependencies:
       - '@swc/core'
@@ -16962,12 +16948,14 @@ packages:
       code-block-writer: 10.1.1
     dev: true
 
-  /ts-node@10.9.1:
+  /ts-node@10.9.1(@types/node@14.18.33)(typescript@4.9.5):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
-      '@swc/core': '*'
-      '@swc/wasm': '*'
+      '@swc/core': '>=1.2.50'
+      '@swc/wasm': '>=1.2.50'
+      '@types/node': '*'
+      typescript: '>=2.7'
     peerDependenciesMeta:
       '@swc/core':
         optional: true
@@ -16979,12 +16967,14 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
+      '@types/node': 14.18.33
       acorn: 8.10.0
       acorn-walk: 8.2.0
       arg: 4.1.3
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
+      typescript: 4.9.5
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     dev: true
