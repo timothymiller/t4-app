@@ -5,7 +5,7 @@
   "version": "2.0.0",
   "scripts": {
     "dev": "turbo dev --parallel --filter=!t4-app-docs",
-    "api": "NO_D1_WARNING=true turbo run dev --filter @t4/api",
+    "api": "cross-env NO_D1_WARNING=true turbo run dev --filter @t4/api",
     "native": "cd apps/expo && pnpm dev",
     "native:prod": "cd apps/expo && pnpm dev:prod",
     "ios": "cd apps/expo && pnpm ios",
@@ -31,6 +31,7 @@
     "@manypkg/cli": "^0.21.0",
     "@supabase/supabase-js": "^2.31.0",
     "check-dependency-version-consistency": "^4.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.45.0",
     "node-gyp": "^9.4.0",
     "prettier": "^3.0.0",
