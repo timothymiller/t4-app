@@ -194,6 +194,8 @@ The VSCode extension is optional but highly recommended. It provides a better de
 
 I would like to add the following features to `create-t4-app` in the future:
 
+- [ ] Single dependency version policy check
+- [ ] Self-hosting docs for building with Expo CI/CD & Expo updates
 - [ ] Legend State
 - [ ] GraphQL (type-safe) data fetching
   - ⏲️ [GQty](https://gqty.dev) - A No-GraphQL client for TypeScript.

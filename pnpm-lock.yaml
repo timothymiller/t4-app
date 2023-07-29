@@ -85,8 +85,8 @@ importers:
         specifier: ^7.22.6
         version: 7.22.6
       '@shopify/flash-list':
-        specifier: 1.4.3
-        version: 1.4.3(@babel/runtime@7.22.6)(react-native@0.72.3)(react@18.2.0)
+        specifier: ^1.5.0
+        version: 1.5.0(@babel/runtime@7.22.6)(react-native@0.72.3)(react@18.2.0)
       '@t4/ui':
         specifier: '*'
         version: link:../../packages/ui
@@ -167,7 +167,7 @@ importers:
         specifier: ^0.10.7
         version: 0.10.7
       '@tamagui/babel-plugin':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2(react-dom@18.2.0)(react@18.2.0)
       babel-plugin-transform-inline-environment-variables:
         specifier: ^0.4.4
@@ -212,7 +212,7 @@ importers:
         specifier: ^0.19.7
         version: 0.19.7(react-dom@18.2.0)(react@18.2.0)
       react-native-web-lite:
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2(react-dom@18.2.0)(react@18.2.0)
       webpack:
         specifier: ^5.88.2
@@ -231,7 +231,7 @@ importers:
         specifier: ^13.4.12
         version: 13.4.12(eslint@8.45.0)(typescript@5.1.6)
       vercel:
-        specifier: latest
+        specifier: ^31.1.1
         version: 31.1.1(@types/node@18.16.19)
 
   apps/vscode:
@@ -334,7 +334,7 @@ importers:
         specifier: latest
         version: 1.46.2(react-native-svg@13.10.0)(react@18.2.0)
       '@tamagui/shorthands':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2
       '@tamagui/themes':
         specifier: latest
@@ -398,7 +398,7 @@ importers:
         specifier: latest
         version: 1.46.2(react-native@0.72.3)(react@18.2.0)
       '@tamagui/shorthands':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2
       '@tamagui/themes':
         specifier: latest
@@ -417,7 +417,7 @@ importers:
         version: 1.46.2(react-dom@18.2.0)(react-native-web@0.19.7)(react-native@0.72.3)(react@18.2.0)
     devDependencies:
       '@tamagui/build':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2
 
 packages:
@@ -4057,20 +4057,6 @@ packages:
       join-component: 1.1.0
     dev: false
 
-  /@shopify/flash-list@1.4.3(@babel/runtime@7.22.6)(react-native@0.72.3)(react@18.2.0):
-    resolution: {integrity: sha512-jtIReAbwWzYBV0dQ6Io9wBX+pD0C4qQFMrb5/fkEvX8PYDgBl5KRYvpfr9WLLj8CV2Jsn1X0mYOsB+ysWrI/8g==}
-    peerDependencies:
-      '@babel/runtime': '*'
-      react: '*'
-      react-native: '*'
-    dependencies:
-      '@babel/runtime': 7.22.6
-      react: 18.2.0
-      react-native: 0.72.3(@babel/core@7.22.9)(@babel/preset-env@7.22.9)(react@18.2.0)
-      recyclerlistview: 4.2.0(react-native@0.72.3)(react@18.2.0)
-      tslib: 2.4.0
-    dev: false
-
   /@shopify/flash-list@1.5.0(@babel/runtime@7.22.6)(react-native@0.72.3)(react@18.2.0):
     resolution: {integrity: sha512-XeocevDIXastr6jh3TPo1MzV5XkdqTyWtw/j8kUhz9EOBc2SzNWbpJWyzrAsYKlqYNrnxxs0P9C0amlX2jaQnw==}
     peerDependencies:
@@ -5537,6 +5523,20 @@ packages:
   /@types/cookie@0.4.1:
     resolution: {integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==}
     dev: true
+
+  /@types/d3-scale-chromatic@3.0.0:
+    resolution: {integrity: sha512-dsoJGEIShosKVRBZB0Vo3C8nqSDqVGujJU6tPznsBJxNJNwMF8utmS83nvCBKQYPpjCzaaHcrf66iTRpZosLPw==}
+    dev: false
+
+  /@types/d3-scale@4.0.3:
+    resolution: {integrity: sha512-PATBiMCpvHJSMtZAMEhc2WyL+hnzarKzI6wAHYjhsonjWJYGq5BXTzQjv4l8m2jO183/4wZ90rKvSeT7o72xNQ==}
+    dependencies:
+      '@types/d3-time': 3.0.0
+    dev: false
+
+  /@types/d3-time@3.0.0:
+    resolution: {integrity: sha512-sZLCdHvBUcNby1cB6Fd3ZBrABbjz3v1Vm90nysCQ6Vt7vd6e/h9Lt7SiJUoEX0l4Dzc7P5llKyhqSi1ycSf1Hg==}
+    dev: false
 
   /@types/d3-scale-chromatic@3.0.0:
     resolution: {integrity: sha512-dsoJGEIShosKVRBZB0Vo3C8nqSDqVGujJU6tPznsBJxNJNwMF8utmS83nvCBKQYPpjCzaaHcrf66iTRpZosLPw==}
