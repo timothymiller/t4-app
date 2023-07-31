@@ -60,10 +60,10 @@ importers:
         specifier: ^13.4.12
         version: 13.4.12(@babel/core@7.22.9)(react-dom@18.2.0)(react@18.2.0)
       nextra:
-        specifier: latest
+        specifier: ^2.10.0
         version: 2.10.0(next@13.4.12)(react-dom@18.2.0)(react@18.2.0)
       nextra-theme-docs:
-        specifier: latest
+        specifier: ^2.10.0
         version: 2.10.0(next@13.4.12)(nextra@2.10.0)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: ^18.2.0
@@ -188,7 +188,7 @@ importers:
         specifier: '*'
         version: link:../../packages/ui
       '@tamagui/next-theme':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2(react@18.2.0)
       app:
         specifier: '*'
@@ -219,7 +219,7 @@ importers:
         version: 5.88.2(esbuild@0.17.6)
     devDependencies:
       '@tamagui/next-plugin':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2(@babel/core@7.22.9)(next@13.4.12)(react-dom@18.2.0)(react@18.2.0)(webpack@5.88.2)
       '@types/node':
         specifier: ^18.16.19
@@ -322,22 +322,22 @@ importers:
         specifier: '*'
         version: link:../ui
       '@tamagui/animations-react-native':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2(react-native@0.72.3)(react@18.2.0)
       '@tamagui/colors':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2
       '@tamagui/font-inter':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2(react@18.2.0)
       '@tamagui/lucide-icons':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2(react-native-svg@13.10.0)(react@18.2.0)
       '@tamagui/shorthands':
         specifier: ^1.46.2
         version: 1.46.2
       '@tamagui/themes':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2(react@18.2.0)
       '@tanstack/react-query':
         specifier: ^4.32.0
@@ -386,25 +386,22 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0(@babel/runtime@7.22.6)(react-native@0.72.3)(react@18.2.0)
       '@tamagui/animations-react-native':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2(react-native@0.72.3)(react@18.2.0)
-      '@tamagui/collection':
-        specifier: latest
-        version: 1.46.2(react@18.2.0)
       '@tamagui/font-inter':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2(react@18.2.0)
       '@tamagui/react-native-media-driver':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2(react-native@0.72.3)(react@18.2.0)
       '@tamagui/shorthands':
         specifier: ^1.46.2
         version: 1.46.2
       '@tamagui/themes':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2(react@18.2.0)
       '@tamagui/toast':
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2(burnt@0.10.0)(react-native@0.72.3)(react@18.2.0)
       '@tanstack/react-virtual':
         specifier: ^3.0.0-beta.54
@@ -413,7 +410,7 @@ importers:
         specifier: ^2.2.2
         version: 2.2.2(react@18.2.0)
       tamagui:
-        specifier: latest
+        specifier: ^1.46.2
         version: 1.46.2(react-dom@18.2.0)(react-native-web@0.19.7)(react-native@0.72.3)(react@18.2.0)
     devDependencies:
       '@tamagui/build':
@@ -5538,20 +5535,6 @@ packages:
     resolution: {integrity: sha512-sZLCdHvBUcNby1cB6Fd3ZBrABbjz3v1Vm90nysCQ6Vt7vd6e/h9Lt7SiJUoEX0l4Dzc7P5llKyhqSi1ycSf1Hg==}
     dev: false
 
-  /@types/d3-scale-chromatic@3.0.0:
-    resolution: {integrity: sha512-dsoJGEIShosKVRBZB0Vo3C8nqSDqVGujJU6tPznsBJxNJNwMF8utmS83nvCBKQYPpjCzaaHcrf66iTRpZosLPw==}
-    dev: false
-
-  /@types/d3-scale@4.0.3:
-    resolution: {integrity: sha512-PATBiMCpvHJSMtZAMEhc2WyL+hnzarKzI6wAHYjhsonjWJYGq5BXTzQjv4l8m2jO183/4wZ90rKvSeT7o72xNQ==}
-    dependencies:
-      '@types/d3-time': 3.0.0
-    dev: false
-
-  /@types/d3-time@3.0.0:
-    resolution: {integrity: sha512-sZLCdHvBUcNby1cB6Fd3ZBrABbjz3v1Vm90nysCQ6Vt7vd6e/h9Lt7SiJUoEX0l4Dzc7P5llKyhqSi1ycSf1Hg==}
-    dev: false
-
   /@types/debug@4.1.8:
     resolution: {integrity: sha512-/vPO1EPOs306Cvhwv7KfVfYvOJqA/S/AXjaHQiJboCZzcNDb+TIJFN9/2C9DZ//ijSKWioNyUxD792QmDJ+HKQ==}
     dependencies:
@@ -7750,7 +7733,7 @@ packages:
     resolution: {integrity: sha512-ASFBup0Mz1uyiIjANan1jzLQami9z1PoYSZCiiYW2FczPbenXc45FZdBZLzOT+r6+iciuEModtmCti+hjaAk0A==}
 
   /cookie-signature@1.0.6:
-    resolution: {integrity: sha512-QADzlaHc8icV8I7vbaJXJwod9HWYp8uCqf1xa4OfNu1T7JVxQIrUgOWtHdNDtPiywmFbiS12VjotIXLrKM3orQ==}
+    resolution: {integrity: sha1-4wOogrNCzD7oylE6eZmXNNqzriw=}
     dev: true
 
   /cookie@0.4.2:
@@ -12785,7 +12768,7 @@ packages:
     dev: false
 
   /merge-descriptors@1.0.1:
-    resolution: {integrity: sha512-cCi6g3/Zr1iqQi6ySbseM1Xvooa98N0w31jzUYrXPX2xqObmFGHJ0tQ5u74H3mVh7wLouTseZyYIq39g8cNp1w==}
+    resolution: {integrity: sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=}
     dev: true
 
   /merge-stream@2.0.0:
@@ -18128,7 +18111,7 @@ packages:
     engines: {node: '>=8.0'}
 
   /xregexp@2.0.0:
-    resolution: {integrity: sha512-xl/50/Cf32VsGq/1R8jJE5ajH1yMCQkpmoS10QbFZWl2Oor4H0Me64Pu2yxvsRWK3m6soJbmGfzSR7BYmDcWAA==}
+    resolution: {integrity: sha1-UqY+VsoLhKfzpfPWGHLxJq16WUM=}
     dev: true
 
   /xtend@4.0.2:
