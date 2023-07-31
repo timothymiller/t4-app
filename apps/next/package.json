@@ -3,9 +3,9 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "dev": "TAMAGUI_TARGET=web pnpm with-env next dev",
-    "build": "TAMAGUI_TARGET=web pnpm with-env next build",
-    "start": "TAMAGUI_TARGET=web pnpm with-env next start",
+    "dev": "cross-env TAMAGUI_TARGET=web pnpm with-env next dev",
+    "build": "cross-env TAMAGUI_TARGET=web pnpm with-env next build",
+    "start": "cross-env TAMAGUI_TARGET=web pnpm with-env next start",
     "lint": "next lint",
     "with-env": "dotenv -e ../../.env.local --",
     "clean": "git clean -xdf .next node_modules .tamagui"
