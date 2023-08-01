@@ -2,7 +2,7 @@ import { YStack } from '@t4/ui'
 import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from '@t4/ui/src/SignUpSignIn'
 import { signUp } from 'app/utils/supabase'
-import { Provider } from '@supabase/supabase-js'
+import type { Provider } from '@supabase/supabase-js'
 import { signInWithOAuth } from 'app/utils/supabase/auth'
 
 export const SignUpScreen = (): React.ReactNode => {
@@ -19,7 +19,7 @@ export const SignUpScreen = (): React.ReactNode => {
     push('/')
   }
 
-  const handleEmailSignUpWithPress = async (emailAddress, password) => {
+  const handleEmailSignUpWithPress = async (emailAddress: string, password: string) => {
     const res = await signUp(emailAddress, password)
 
     if (res.error) {

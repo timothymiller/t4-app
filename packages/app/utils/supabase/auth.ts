@@ -1,4 +1,4 @@
-import { SignInWithOAuthCredentials } from '@supabase/supabase-js'
+import type { SignInWithOAuthCredentials } from '@supabase/supabase-js'
 import { Linking } from 'react-native'
 import { getToken, saveToken } from './cache'
 import { supabase } from './init'
