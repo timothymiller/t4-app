@@ -84,6 +84,9 @@ importers:
       '@babel/runtime':
         specifier: ^7.22.6
         version: 7.22.6
+      '@react-native-async-storage/async-storage':
+        specifier: ^1.19.1
+        version: 1.19.1(react-native@0.72.3)
       '@shopify/flash-list':
         specifier: ^1.5.0
         version: 1.5.0(@babel/runtime@7.22.6)(react-native@0.72.3)(react@18.2.0)
