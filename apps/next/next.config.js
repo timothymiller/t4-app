@@ -83,5 +83,5 @@ module.exports = function () {
     }
   }
 
-  return config
+  return config;
 }

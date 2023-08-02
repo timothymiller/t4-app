@@ -34,7 +34,7 @@ CF_PROJECT_NAME=
 
 2. Add the `EXPO_TOKEN` secret to your repository with the token that you retrieved from Expo to allow GitHub Actions to publish your app.
 
-3. Create a new project in the [Expo projects](https://expo.dev/accounts/%5Baccount%5D/projects) 
+3. Create a new project in the [Expo projects](https://expo.dev/accounts/%5Baccount%5D/projects)
 
 4. Add the correct `projectId` to your `apps/expo/app.json`. Update the `slug` field to match your project name. Also update the `owner` field with your Expo username.
 
@@ -96,7 +96,7 @@ NEXT_PUBLIC_API_URL=http://api.t4stack.com/
 # Authentication
 # @link https://supabase.com/dashboard for your Supabase API keys
 NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_PUBLIC_KEY=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
 ```
 
 ## Authentication - Supabase
@@ -107,7 +107,7 @@ Head over to [](https://supabase.com/dashboard) for your Supabase API keys and s
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_PUBLIC_KEY=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
 ```
 
 You should set the `JWT_VERIFICATION_KEY` with wrangler, also found in Supabase as **JWT Secret** in the API Settings.

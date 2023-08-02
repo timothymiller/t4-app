@@ -26,8 +26,8 @@ Replace the `account_id` and `database_id` with your own values.
 2. Go to "Workers & Pages Overview" and create a new project.
 3. Configure GitHub integration.
 4. Configure D1 database bindings with your project.
-    -do not select the '--experimental-backend' option while in Alpha
-    -currently this option does not support backups & migrate command fails
+   - do not select the '--experimental-backend' option while in Alpha
+   - currently this option does not support backups & migrate command fails
 5. Enter your project details in `wrangler.toml`.
 
 #### API Wranger.toml
@@ -57,9 +57,8 @@ NEXT_PUBLIC_API_URL=http://localhost:8787/
 # Authentication
 # @link https://supabase.com/dashboard for your Supabase API keys
 NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_PUBLIC_KEY=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
 ```
-
 
 #### Expo
 
@@ -67,7 +66,7 @@ NEXT_PUBLIC_SUPABASE_PUBLIC_KEY=
 
 2. Add the `EXPO_TOKEN` secret to your repository with the token that you retrieved from Expo to allow GitHub Actions to publish your app.
 
-3. Create a new project in the [Expo projects](https://expo.dev/accounts/%5Baccount%5D/projects) 
+3. Create a new project in the [Expo projects](https://expo.dev/accounts/%5Baccount%5D/projects)
 
 4. Add the correct `projectId` to your `apps/expo/app.json`. Update the `slug` field to match your project name. Also update the `owner` field with your Expo username.
 

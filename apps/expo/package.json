@@ -45,7 +45,7 @@
   "devDependencies": {
     "@babel/core": "^7.22.9",
     "@expo/metro-config": "^0.10.7",
-    "@tamagui/babel-plugin": "^1.46.2",
+    "@tamagui/babel-plugin": "^1.48.11",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "metro-minify-terser": "^0.77.0",
     "react-native-dotenv": "^3.4.9",

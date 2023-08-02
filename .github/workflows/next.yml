@@ -42,7 +42,7 @@ jobs:
           export NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
           export NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}
           export NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          export NEXT_PUBLIC_SUPABASE_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLIC_KEY }}
+          export NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
           pnpx @cloudflare/next-on-pages
 
       - name: Publish to Cloudflare Pages
