@@ -9,8 +9,8 @@
     "dev": "cross-env TAMAGUI_TARGET=native expo start --dev-client",
     "dev:prod": "cross-env TAMAGUI_TARGET=native expo start --no-dev --minify",
     "prebuild": "cross-env TAMAGUI_TARGET=native expo prebuild",
-    "build:ios": " eas build --platform ios --local",
-    "build:android": " eas build --platform android --local",
+    "build:ios": " eas build --platform ios --profile preview --local",
+    "build:android": "eas build --platform android --profile preview --local",
     "clean": "git clean -xdf .expo node_modules",
     "eas-build-pre-install": "npm install -g pnpm@8.6.10"
   },
