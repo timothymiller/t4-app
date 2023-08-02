@@ -4,10 +4,10 @@
   "main": "index.js",
   "private": true,
   "scripts": {
+    "ios": "cross-env TAMAGUI_TARGET=native expo run:ios",
+    "android": "cross-env TAMAGUI_TARGET=native expo run:android",
     "dev": "cross-env TAMAGUI_TARGET=native expo start --dev-client",
     "dev:prod": "cross-env TAMAGUI_TARGET=native expo start --no-dev --minify",
-    "android": "cross-env TAMAGUI_TARGET=native expo run:android",
-    "ios": "cross-env TAMAGUI_TARGET=native expo run:ios",
     "prebuild": "cross-env TAMAGUI_TARGET=native expo prebuild",
     "build:ios": " eas build --platform ios --local",
     "build:android": " eas build --platform android --local",
