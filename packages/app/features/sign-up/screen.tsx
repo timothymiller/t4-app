@@ -1,19 +1,25 @@
-import { YStack } from '@t4/ui'
+import { YStack, useToastController } from '@t4/ui'
 import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from '@t4/ui/src/SignUpSignIn'
 import { signUp } from 'app/utils/supabase'
 import type { Provider } from '@supabase/supabase-js'
 import { signInWithOAuth } from 'app/utils/supabase/auth'
+import { capitalizeWord } from 'app/utils/string'
+import { isExpoGo } from 'app/utils/flags'
 
 export const SignUpScreen = (): React.ReactNode => {
   const { push } = useRouter()
+  const toast = useToastController()
 
   const handleOAuthSignInWithPress = async (provider: Provider) => {
     const { error } = await signInWithOAuth({ provider: provider })
 
     if (error) {
-      // TODO: Tamagui Toast
-      console.log('OAuth Sign in failed', error)
+      if (!isExpoGo) {
+        toast.show(capitalizeWord(provider) + ' sign up failed', {
+          description: error.message,
+        })
+      }
       return
     }
 
@@ -23,12 +29,17 @@ export const SignUpScreen = (): React.ReactNode => {
   const handleEmailSignUpWithPress = async (emailAddress: string, password: string) => {
     const { user, error } = await signUp(emailAddress, password)
     if (error) {
-      // TODO: Handle error state Tamagui Toast
-      console.log('Sign up failed', error)
-      alert('Sign up failed')
+      if (!isExpoGo) {
+        toast.show('Sign up failed', {
+          description: error.message,
+        })
+      }
     } else if (user) {
-      // TODO: Make own page for this
-      alert('Check your email for a confirmation link.')
+      if (!isExpoGo) {
+        toast.show('Email Confirmation Link', {
+          description: 'Check your email for a confirmation link.',
+        })
+      }
       push('/')
     }
   }
