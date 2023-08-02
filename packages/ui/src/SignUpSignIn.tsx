@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Image, YStack, Paragraph, XStack, Button, Input, Stack } from 'tamagui'
+import { YStack, Paragraph, XStack, Button, Input, Stack } from 'tamagui'
 import { Link } from 'solito/link'
+import { SolitoImage } from 'solito/image'
 import { type Provider } from '@supabase/supabase-js'
 
 interface Props {
@@ -42,12 +43,11 @@ export const SignUpSignInComponent = ({
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
         >
-          <Image
-            style={{ width: 20, height: 20 }}
-            source={{ width: 20, height: 20, uri: 'auth/google-logo.png' }}
-            width="100%"
-            height="100%"
-            resizeMode="contain"
+          <SolitoImage
+            src={require('/apps/next/public/auth/google-logo.png')}
+            width={30}
+            height={30}
+            contentFit="contain"
             alt="Google Logo"
           />
         </Button>
@@ -58,12 +58,11 @@ export const SignUpSignInComponent = ({
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
         >
-          <Image
-            style={{ width: 22, height: 22 }}
-            source={{ width: 22, height: 22, uri: 'auth/apple-logo.png' }}
-            width="100%"
-            height="100%"
-            resizeMode="contain"
+          <SolitoImage
+            src={require('/apps/next/public/auth/apple-logo.png')}
+            width={30}
+            height={30}
+            contentFit="contain"
             alt="Apple Logo"
           />
         </Button>
@@ -74,12 +73,11 @@ export const SignUpSignInComponent = ({
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
         >
-          <Image
-            style={{ width: 25, height: 22 }}
-            source={{ width: 25, height: 22, uri: 'auth/discord-logo.png' }}
-            width="100%"
-            height="100%"
-            resizeMode="contain"
+          <SolitoImage
+            src={require('/apps/next/public/auth/discord-logo.png')}
+            width={30}
+            height={30}
+            contentFit="contain"
             alt="Discord Logo"
           />
         </Button>
