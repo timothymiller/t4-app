@@ -28,7 +28,8 @@
     "expo-secure-store": "^12.3.1",
     "js-cookie": "^3.0.5",
     "react-native-safe-area-context": "4.7.1",
-    "solito": "^4.0.1"
+    "solito": "^4.0.1",
+    "@react-native-async-storage/async-storage": "^1.19.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.16",
