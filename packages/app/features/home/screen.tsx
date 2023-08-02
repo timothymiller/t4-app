@@ -96,7 +96,10 @@ export function HomeScreen() {
         </YStack>
         {isSignedIn ? (
           <Button
-            onPress={async () => await signOut()}
+            onPress={async () => {
+              // TODO: clear tanstack query cache of authenticated routes
+              await signOut()
+            }}
             space="$2"
           >
             Sign Out
