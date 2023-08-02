@@ -12,6 +12,7 @@ export const SignUpScreen = (): React.ReactNode => {
     const { error } = await signInWithOAuth({ provider: provider })
 
     if (error) {
+      // TODO: Tamagui Toast
       console.log('OAuth Sign in failed', error)
       return
     }
@@ -20,14 +21,16 @@ export const SignUpScreen = (): React.ReactNode => {
   }
 
   const handleEmailSignUpWithPress = async (emailAddress: string, password: string) => {
-    const res = await signUp(emailAddress, password)
-
-    if (res.error) {
-      console.log('Sign up failed', res.error)
-      return
+    const { user, error } = await signUp(emailAddress, password)
+    if (error) {
+      // TODO: Handle error state Tamagui Toast
+      console.log('Sign up failed', error)
+      alert('Sign up failed')
+    } else if (user) {
+      // TODO: Make own page for this
+      alert('Check your email for a confirmation link.')
+      push('/')
     }
-
-    push('/')
   }
 
   return (

@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Image, YStack, Paragraph, XStack, Button, Input, Stack } from 'tamagui'
+import { YStack, Paragraph, XStack, Button, Input, Stack } from 'tamagui'
 import { Link } from 'solito/link'
 import { type Provider } from '@supabase/supabase-js'
+import { SolitoImage } from 'solito/image'
 
 interface Props {
   type: 'sign-up' | 'sign-in'
@@ -30,7 +31,7 @@ export const SignUpSignInComponent = ({
       backgroundColor="$background"
     >
       <Paragraph size="$5" fontWeight={'700'} opacity={0.8} marginBottom="$1">
-        {type === 'sign-up' ? 'Create your account' : 'Log in to your account'}
+        {type === 'sign-up' ? 'Create your account' : 'Sign in to your account'}
       </Paragraph>
       {/* all the oauth sign up options */}
       <XStack space justifyContent={'space-evenly'} theme="light">
@@ -42,11 +43,11 @@ export const SignUpSignInComponent = ({
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
         >
-          <Image
+          <SolitoImage
             style={{ width: 20, height: 20 }}
-            source={{ width: 20, height: 20, uri: 'auth/google-logo.png' }}
-            width="100%"
-            height="100%"
+            src={'/auth/google-logo.png'}
+            width={20}
+            height={20}
             resizeMode="contain"
             alt="Google Logo"
           />
@@ -58,11 +59,11 @@ export const SignUpSignInComponent = ({
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
         >
-          <Image
+          <SolitoImage
             style={{ width: 22, height: 22 }}
-            source={{ width: 22, height: 22, uri: 'auth/apple-logo.png' }}
-            width="100%"
-            height="100%"
+            src={'/auth/apple-logo.png'}
+            width={22}
+            height={22}
             resizeMode="contain"
             alt="Apple Logo"
           />
@@ -74,11 +75,11 @@ export const SignUpSignInComponent = ({
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
         >
-          <Image
+          <SolitoImage
             style={{ width: 25, height: 22 }}
-            source={{ width: 25, height: 22, uri: 'auth/discord-logo.png' }}
-            width="100%"
-            height="100%"
+            src={'/auth/discord-logo.png'}
+            width={20}
+            height={20}
             resizeMode="contain"
             alt="Discord Logo"
           />

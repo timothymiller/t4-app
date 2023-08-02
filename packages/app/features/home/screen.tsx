@@ -12,25 +12,22 @@ import {
   useToastController,
 } from '@t4/ui'
 import { ChevronDown } from '@tamagui/lucide-icons'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Linking } from 'react-native'
 import { useLink } from 'solito/link'
-import { isUserSignedIn, signOut } from 'app/utils/supabase'
+import { signOut } from 'app/utils/supabase'
 import Constants from 'expo-constants'
 import { useSheetOpen } from '@t4/ui/src/atoms/sheet'
 import { SolitoImage } from 'solito/image'
+import { useUser, useSession } from '@supabase/auth-helpers-react'
 
 export function HomeScreen() {
-  const [isSignedIn, setIsSignedIn] = useState(false)
+  const user = useUser()
+  const session = useSession()
+  const isSignedIn = !!user || !!session
 
-  useEffect(() => {
-    const fetchSignedInStatus = async () => {
-      const signedInStatus = await isUserSignedIn()
-      setIsSignedIn(signedInStatus)
-    }
-
-    fetchSignedInStatus()
-  }, [])
+  console.log('user', user)
+  console.log('session', session)
 
   const signInLink = useLink({
     href: '/sign-in',
@@ -99,10 +96,7 @@ export function HomeScreen() {
         </YStack>
         {isSignedIn ? (
           <Button
-            onPress={async () => {
-              await signOut()
-              setIsSignedIn(false)
-            }}
+            onPress={async () => await signOut()}
             space="$2"
           >
             Sign Out
