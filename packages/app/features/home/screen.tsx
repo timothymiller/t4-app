@@ -19,11 +19,12 @@ import { signOut } from 'app/utils/supabase'
 import Constants from 'expo-constants'
 import { useSheetOpen } from '@t4/ui/src/atoms/sheet'
 import { SolitoImage } from 'solito/image'
-import { useUser } from '@supabase/auth-helpers-react'
+import { useUser, useSession } from '@supabase/auth-helpers-react'
 
 export function HomeScreen() {
   const user = useUser()
-  const isSignedIn = !!user
+  const session = useSession()
+  const isSignedIn = user !== null || session !== null
 
   const signInLink = useLink({
     href: '/sign-in',
@@ -93,7 +94,7 @@ export function HomeScreen() {
         {isSignedIn ? (
           <Button
             onPress={async () => {
-              // TODO: clear tanstack query cache of authenticated routes
+              // TODO: Clear tanstack query cache of authenticated routes
               await signOut()
             }}
             space="$2"
