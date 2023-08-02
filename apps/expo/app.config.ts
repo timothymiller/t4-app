@@ -17,4 +17,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     typedRoutes: true,
   },
   platforms: ['ios', 'android'],
+  name: 'T4 App',
+  slug: 't4-app',
 })
