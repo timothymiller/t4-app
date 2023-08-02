@@ -34,7 +34,11 @@ CF_PROJECT_NAME=
 
 2. Add the `EXPO_TOKEN` secret to your repository with the token that you retrieved from Expo to allow GitHub Actions to publish your app.
 
-3. Create a new project in the [Expo projects](https://expo.dev/accounts/%5Baccount%5D/projects) and add the correct `projectId` to your `apps/expo/app.json`. Update the `slug` field to match your project name. Also update the `owner` field with your Expo username.
+3. Create a new project in the [Expo projects](https://expo.dev/accounts/%5Baccount%5D/projects) 
+
+4. Add the correct `projectId` to your `apps/expo/app.json`. Update the `slug` field to match your project name. Also update the `owner` field with your Expo username.
+
+5. Update `projectId`, `slug` and `owner` fallback field inside of `apps/expo/app.config.ts`.
 
 4. Setup EAS credentials for your Android and IOS apps by running `eas credentials` in your terminal. Setup the correct `android.package` and `ios.bundleIdentifier` in `apps/expo/app.json`.
 
