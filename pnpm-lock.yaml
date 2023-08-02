@@ -84,9 +84,6 @@ importers:
       '@babel/runtime':
         specifier: ^7.22.6
         version: 7.22.6
-      '@react-native-async-storage/async-storage':
-        specifier: ^1.19.1
-        version: 1.19.1(react-native@0.72.3)
       '@shopify/flash-list':
         specifier: ^1.5.0
         version: 1.5.0(@babel/runtime@7.22.6)(react-native@0.72.3)(react@18.2.0)
@@ -188,11 +185,11 @@ importers:
   apps/next:
     dependencies:
       '@supabase/auth-helpers-nextjs':
-        specifier: ^0.7.3
-        version: 0.7.3(@supabase/supabase-js@2.31.0)
+        specifier: ^0.7.4
+        version: 0.7.4(@supabase/supabase-js@2.31.0)
       '@supabase/auth-helpers-react':
-        specifier: ^0.4.1
-        version: 0.4.1(@supabase/supabase-js@2.31.0)
+        specifier: ^0.4.2
+        version: 0.4.2(@supabase/supabase-js@2.31.0)
       '@t4/ui':
         specifier: '*'
         version: link:../../packages/ui
@@ -324,9 +321,6 @@ importers:
 
   packages/app:
     dependencies:
-      '@react-native-async-storage/async-storage':
-        specifier: ^1.19.1
-        version: 1.19.1(react-native@0.72.3)
       '@shopify/flash-list':
         specifier: ^1.5.0
         version: 1.5.0(@babel/runtime@7.22.6)(react-native@0.72.3)(react@18.2.0)
@@ -3733,15 +3727,6 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@react-native-async-storage/async-storage@1.19.1(react-native@0.72.3):
-    resolution: {integrity: sha512-5QXuGCtB+HL3VtKL2JN3+6t4qh8VXizK+aGDAv6Dqiq3MLrzgZHb4tjVgtEWMd8CcDtD/JqaAI1b6/EaYGtFIA==}
-    peerDependencies:
-      react-native: ^0.0.0-0 || 0.60 - 0.72 || 1000.0.0
-    dependencies:
-      merge-options: 3.0.4
-      react-native: 0.72.3(@babel/core@7.22.9)(@babel/preset-env@7.22.9)(react@18.2.0)
-    dev: false
-
   /@react-native-community/cli-clean@11.3.5:
     resolution: {integrity: sha512-1+7BU962wKkIkHRp/uW3jYbQKKGtU7L+R3g59D8K6uLccuxJYUBJv18753ojMa6SD3SAq5Xh31bAre+YwVcOTA==}
     dependencies:
@@ -4127,8 +4112,8 @@ packages:
     dependencies:
       '@sinonjs/commons': 3.0.0
 
-  /@supabase/auth-helpers-nextjs@0.7.3(@supabase/supabase-js@2.31.0):
-    resolution: {integrity: sha512-ikuBGHFnvyfneToj0Y2EfiqUnEr1bdqR6JZiFydPnzACQ2Q7TkcOhkoUSc9/sMEeG7EKX5PhH8riAz42oPdKRg==}
+  /@supabase/auth-helpers-nextjs@0.7.4(@supabase/supabase-js@2.31.0):
+    resolution: {integrity: sha512-MyGCkB7LEDcGrKmesKGjyG54Jlbiss8VGTegrNde/ywXujQyRFnzycijoASDBc6i9SmE7eE1qWBsMr2URb07nw==}
     peerDependencies:
       '@supabase/supabase-js': ^2.19.0
     dependencies:
@@ -4137,8 +4122,8 @@ packages:
       set-cookie-parser: 2.6.0
     dev: false
 
-  /@supabase/auth-helpers-react@0.4.1(@supabase/supabase-js@2.31.0):
-    resolution: {integrity: sha512-Y9ZWzhpsOX93rokmywDdclzTDPbHjybU7o4/FmXlAqta75msFxHV9WVTR6//SZf2Bca2Cf65Oa/j+fYtMWraDQ==}
+  /@supabase/auth-helpers-react@0.4.2(@supabase/supabase-js@2.31.0):
+    resolution: {integrity: sha512-zRj1leYMKJVYQeHFvZiUzlmHM+ATWFR/V7Q9F0yXSWEnMcNHL0CKnIBqhkjtSQ2trE+YaoCvFEHjxISppxIZXQ==}
     peerDependencies:
       '@supabase/supabase-js': ^2.19.0
     dependencies:
@@ -11668,6 +11653,7 @@ packages:
   /is-plain-obj@2.1.0:
     resolution: {integrity: sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA==}
     engines: {node: '>=8'}
+    dev: true
 
   /is-plain-obj@3.0.0:
     resolution: {integrity: sha512-gwsOE28k+23GP1B6vFl1oVh/WOzmawBrKwo5Ev6wMKzPkaXaCDIQKzLnvsA42DRlbVTWorkgTKIviAKCWkfUwA==}
@@ -12821,13 +12807,6 @@ packages:
   /merge-descriptors@1.0.1:
     resolution: {integrity: sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=}
     dev: true
-
-  /merge-options@3.0.4:
-    resolution: {integrity: sha512-2Sug1+knBjkaMsMgf1ctR1Ujx+Ayku4EdJN4Z+C2+JzoeF7A3OZ9KM2GY0CpQS51NR61LTurMJrRKPhSs3ZRTQ==}
-    engines: {node: '>=10'}
-    dependencies:
-      is-plain-obj: 2.1.0
-    dev: false
 
   /merge-stream@2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
