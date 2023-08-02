@@ -19,15 +19,11 @@ import { signOut } from 'app/utils/supabase'
 import Constants from 'expo-constants'
 import { useSheetOpen } from '@t4/ui/src/atoms/sheet'
 import { SolitoImage } from 'solito/image'
-import { useUser, useSession } from '@supabase/auth-helpers-react'
+import { useUser } from '@supabase/auth-helpers-react'
 
 export function HomeScreen() {
   const user = useUser()
-  const session = useSession()
-  const isSignedIn = !!user || !!session
-
-  console.log('user', user)
-  console.log('session', session)
+  const isSignedIn = !!user
 
   const signInLink = useLink({
     href: '/sign-in',
