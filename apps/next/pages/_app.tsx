@@ -39,12 +39,15 @@ function MyApp({ Component, pageProps }: AppProps<{ initialSession: Session | nu
           }
         `}</style>
       </Head>
-      <SessionContextProvider
-        supabaseClient={supabaseClient}
-        initialSession={pageProps.initialSession}
-      >
-        <ThemeProvider>{contents}</ThemeProvider>
-      </SessionContextProvider>
+
+      <ThemeProvider>
+        <SessionContextProvider
+          supabaseClient={supabaseClient}
+          initialSession={pageProps.initialSession}
+        >
+          {contents}
+        </SessionContextProvider>
+      </ThemeProvider>
     </>
   )
 }

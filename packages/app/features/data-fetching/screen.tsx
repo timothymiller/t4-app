@@ -5,7 +5,9 @@ import { trpc } from 'app/utils/trpc'
 export function DataFetchingScreen() {
   const helloWorld = trpc.hello.world.useQuery()
   const protectedRoute = trpc.auth.secretMessage.useQuery()
-  const isError = protectedRoute?.failureReason?.data?.httpStatus !== 200
+  const isError =
+    protectedRoute?.failureReason?.data?.httpStatus !== 200 &&
+    protectedRoute?.failureReason?.data?.httpStatus !== undefined
 
   return (
     <YStack f={1} jc="center" ai="center" p="$4" space="$4">

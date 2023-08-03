@@ -1,6 +1,8 @@
-import type { SignInWithOAuthCredentials } from '@supabase/supabase-js'
+import type { SignInWithOAuthCredentials, User, UserResponse } from '@supabase/supabase-js'
 import { Linking } from 'react-native'
 import { supabase } from './init'
+import { useEffect } from 'react'
+import { useSupabaseUser, useUserLoading } from '@t4/ui/src/atoms/auth'
 
 const signIn = async (email, password) => {
   const {
@@ -64,6 +66,30 @@ const getUser = async () => {
   return { user, error }
 }
 
+// @link https://t4stack.com/hooks
+const useUser = () => {
+  const [user, setUser] = useSupabaseUser()
+  const [loading, setLoading] = useUserLoading()
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response: UserResponse = await supabase.auth.getUser()
+        const user = response?.data?.user
+        setUser(user)
+      } catch (error) {
+        console.error('Error fetching user:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchUser()
+  }, [])
+
+  return { user, loading, setUser }
+}
+
 export {
   supabase,
   signIn,
@@ -73,4 +99,5 @@ export {
   signUp,
   signOut,
   getUser,
+  useUser,
 }

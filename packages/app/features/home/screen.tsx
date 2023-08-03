@@ -12,19 +12,23 @@ import {
   useToastController,
 } from '@t4/ui'
 import { ChevronDown } from '@tamagui/lucide-icons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Linking } from 'react-native'
 import { useLink } from 'solito/link'
 import { signOut } from 'app/utils/supabase'
 import Constants from 'expo-constants'
 import { useSheetOpen } from '@t4/ui/src/atoms/sheet'
 import { SolitoImage } from 'solito/image'
-import { useUser, useSession } from '@supabase/auth-helpers-react'
+import { useUser } from 'app/utils/supabase/auth'
 
 export function HomeScreen() {
-  const user = useUser()
-  const session = useSession()
-  const isSignedIn = user !== null || session !== null
+  const { loading, user, setUser } = useUser()
+  const isSignedIn = user !== null
+
+  useEffect(() => {
+    console.log('loading', loading)
+    console.log('user', user)
+  }, [loading, user])
 
   const signInLink = useLink({
     href: '/sign-in',
@@ -95,6 +99,7 @@ export function HomeScreen() {
           <Button
             onPress={async () => {
               // TODO: Clear tanstack query cache of authenticated routes
+              setUser(null)
               await signOut()
             }}
             space="$2"

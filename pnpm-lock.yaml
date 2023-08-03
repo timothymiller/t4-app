@@ -391,6 +391,9 @@ importers:
       '@shopify/flash-list':
         specifier: ^1.5.0
         version: 1.5.0(@babel/runtime@7.22.6)(react-native@0.72.3)(react@18.2.0)
+      '@supabase/supabase-js':
+        specifier: ^2.31.0
+        version: 2.31.0
       '@tamagui/animations-react-native':
         specifier: ^1.48.11
         version: 1.48.11(react-native@0.72.3)(react@18.2.0)
