@@ -20,8 +20,10 @@ import Constants from 'expo-constants'
 import { useSheetOpen } from '@t4/ui/src/atoms/sheet'
 import { SolitoImage } from 'solito/image'
 import { useUser } from 'app/utils/supabase/auth'
+import { trpc } from 'app/utils/trpc'
 
 export function HomeScreen() {
+  const utils = trpc.useContext()
   const { loading, user, setUser } = useUser()
   const isSignedIn = user !== null
 
@@ -98,8 +100,9 @@ export function HomeScreen() {
         {isSignedIn ? (
           <Button
             onPress={async () => {
-              // TODO: Clear tanstack query cache of authenticated routes
               setUser(null)
+              // Clear tanstack query cache of authenticated routes
+              utils.auth.secretMessage.setData(undefined, undefined)
               await signOut()
             }}
             space="$2"
