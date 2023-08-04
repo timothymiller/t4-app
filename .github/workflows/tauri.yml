@@ -1,0 +1,77 @@
+name: 'Tauri build'
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/tauri/**'
+      - 'packages/ui/**'
+      - 'packages/app/**'
+
+env:
+  NEXT_PUBLIC_SUPABASE_URL: ${{secrets.NEXT_PUBLIC_SUPABASE_URL}}
+  
+jobs:
+  publish-tauri:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        # macos-latest, ubuntu-20.04, windows-latest
+        platform: [windows-latest]
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Cargo cache rotation keys
+        id: rust-cache-rotation
+        shell: bash
+        run: |
+          echo "YEAR_MONTH=$(/bin/date -u "+%Y%m")" >> $GITHUB_OUTPUT
+
+      - name: Cargo Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            ./apps/tauri/src-tauri/target
+          key: ${{ runner.os }}-cargo-${{ steps.rust-cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-${{ steps.rust-cache-rotation.outputs.YEAR_MONTH }}-
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies (Ubuntu only)
+        if: matrix.platform == 'ubuntu-20.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/pnpm-install
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: app-v__VERSION__
+          releaseName: 'App v__VERSION__'
+          releaseBody: 'See the assets to download this version and install it.'
+          releaseDraft: true
+          prerelease: false
+          projectPath: ./apps/tauri/
+          distPath: ./apps/tauri/out/
+          tauriScript: pnpm
+          # You can change the following flags to include release and/or debug builds
+          includeDebug: true
+          includeRelease: false

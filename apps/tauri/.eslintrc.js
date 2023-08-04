@@ -1,4 +1,4 @@
 module.exports = {
   extends: 'next',
-  root: true
+  root: true,
 }
