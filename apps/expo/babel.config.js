@@ -9,7 +9,7 @@ module.exports = function (api) {
         {
           moduleName: '@env',
           path: '../../.env',
-          allowlist: ['NEXT_PUBLIC_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_PUBLIC_KEY'],
+          allowlist: ['NEXT_PUBLIC_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_ANON_KEY'],
           safe: false,
           allowUndefined: true,
         },
@@ -32,14 +32,14 @@ module.exports = function (api) {
       ...(process.env.EAS_BUILD_PLATFORM === 'android'
         ? []
         : [
-            [
-              '@tamagui/babel-plugin',
-              {
-                components: ['@t4/ui', 'tamagui'],
-                config: './tamagui.config.ts',
-              },
-            ],
-          ]),
+          [
+            '@tamagui/babel-plugin',
+            {
+              components: ['@t4/ui', 'tamagui'],
+              config: './tamagui.config.ts'
+            }
+          ]
+        ]),
       [
         'transform-inline-environment-variables',
         {

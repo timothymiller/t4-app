@@ -1,23 +1,19 @@
-import { SignInWithOAuthCredentials } from '@supabase/supabase-js'
+import type { SignInWithOAuthCredentials, User, UserResponse } from '@supabase/supabase-js'
 import { Linking } from 'react-native'
-import { getToken, saveToken } from './cache'
 import { supabase } from './init'
+import { useEffect } from 'react'
+import { useSupabaseUser, useUserLoading } from '@t4/ui/src/atoms/auth'
 
-// Authentication methods
 const signIn = async (email, password) => {
   const {
-    data: { user, session },
+    data: { user },
     error,
   } = await supabase.auth.signInWithPassword({
     email: email,
     password: password,
   })
-  const access_token = session?.access_token
-  const refresh_token = session?.refresh_token
 
-  await saveToken('refresh_token', refresh_token || '')
-
-  return { user, error, access_token, refresh_token }
+  return { user, error }
 }
 
 const signInWithOAuth = async (credentials: SignInWithOAuthCredentials) => {
@@ -33,23 +29,17 @@ const signInWithOAuth = async (credentials: SignInWithOAuthCredentials) => {
 
 const signUp = async (email, password) => {
   const {
-    data: { user, session },
+    data: { user },
     error,
   } = await supabase.auth.signUp({
     email: email,
     password: password,
   })
 
-  const access_token = session?.access_token
-  const refresh_token = session?.refresh_token
-
-  await saveToken('refresh_token', refresh_token || '')
-
-  return { user, error, access_token, refresh_token }
+  return { user, error }
 }
 
 const signOut = async () => {
-  await saveToken('refresh_token', '')
   await supabase.auth.signOut()
 }
 
@@ -76,27 +66,28 @@ const getUser = async () => {
   return { user, error }
 }
 
-const isUserSignedIn = async () => {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+// @link https://t4stack.com/hooks
+const useUser = () => {
+  const [user, setUser] = useSupabaseUser()
+  const [loading, setLoading] = useUserLoading()
 
-  if (session === null || session.user === null) {
-    const refresh_token = await getToken('refresh_token')
-
-    if (refresh_token && refresh_token !== '') {
-      const { data, error } = await supabase.auth.refreshSession({ refresh_token })
-
-      if (error) {
-        console.error('Error refreshing session:', error)
-        return false
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response: UserResponse = await supabase.auth.getUser()
+        const user = response?.data?.user
+        setUser(user)
+      } catch (error) {
+        console.error('Error fetching user:', error)
+      } finally {
+        setLoading(false)
       }
-
-      return data.session !== null && data.user !== null
     }
-  }
 
-  return session !== null && session.user !== null
+    fetchUser()
+  }, [])
+
+  return { user, loading, setUser }
 }
 
 export {
@@ -108,5 +99,5 @@ export {
   signUp,
   signOut,
   getUser,
-  isUserSignedIn,
+  useUser,
 }

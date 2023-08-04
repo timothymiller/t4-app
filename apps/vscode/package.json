@@ -3,7 +3,7 @@
   "displayName": "T4 App Tools",
   "description": "A set of tools to help you create new screens, components and routes for your T4 App.",
   "icon": "icon.png",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "license": "Apache-2.0",
   "publisher": "albbus",
   "author": {

@@ -194,13 +194,16 @@ The VSCode extension is optional but highly recommended. It provides a better de
 
 I would like to add the following features to `create-t4-app` in the future:
 
-- [ ] Legend State
+- [ ] R2 Image upload example
+- [ ] Legend State example
+- [ ] Self-hosting docs for building with Expo CI/CD & Expo updates
+- [ ] Single dependency version policy check
+- [ ] Million.js example - once React Native support is added
 - [ ] GraphQL (type-safe) data fetching
   - ⏲️ [GQty](https://gqty.dev) - A No-GraphQL client for TypeScript.
   - 🔄 [Garph](https://garph.dev) - Fullstack GraphQL Framework for TypeScript
 - [ ] 📚 [Storybook](https://storybook.js.org) support
 - [ ] 🖌️ [Chromatic](https://chromatic.com) support
-- [ ] Million.js example - once React Native support is added
 
 ## 💬 Community
 

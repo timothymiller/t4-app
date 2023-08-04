@@ -15,22 +15,29 @@ import { ChevronDown } from '@tamagui/lucide-icons'
 import React, { useRef, useEffect } from 'react'
 import { Linking } from 'react-native'
 import { useLink } from 'solito/link'
-import { isUserSignedIn, signOut } from 'app/utils/supabase'
+import { signOut } from 'app/utils/supabase'
 import Constants from 'expo-constants'
 import { SolitoImage } from 'solito/image'
+import { useUser } from 'app/utils/supabase/auth'
+import { trpc } from 'app/utils/trpc'
 import { useObservable, reactive } from '@legendapp/state/react'
 
 export function HomeScreen() {
+  const utils = trpc.useContext()
+  const { loading, user, setUser } = useUser()
+  const isSignedIn = user !== null
   const state = useObservable({ isSignedIn: false })
-
+  
   useEffect(() => {
+    console.log('loading', loading)
+    console.log('user', user)
     const fetchSignedInStatus = async () => {
       const signedInStatus = await isUserSignedIn()
       state.isSignedIn.set(signedInStatus)
     }
 
     fetchSignedInStatus()
-  }, [])
+  }, [loading, user])
 
   const signInLink = useLink({
     href: '/sign-in',
@@ -98,6 +105,9 @@ export function HomeScreen() {
         {state.isSignedIn.get() ? (
           <Button
             onPress={async () => {
+              setUser(null)
+              // Clear tanstack query cache of authenticated routes
+              utils.auth.secretMessage.setData(undefined, undefined)
               state.isSignedIn.set(false)
               await signOut()
             }}

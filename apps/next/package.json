@@ -3,16 +3,18 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "dev": "TAMAGUI_TARGET=web pnpm with-env next dev",
-    "build": "TAMAGUI_TARGET=web pnpm with-env next build",
-    "start": "TAMAGUI_TARGET=web pnpm with-env next start",
+    "dev": "cross-env TAMAGUI_TARGET=web pnpm with-env next dev",
+    "build": "cross-env TAMAGUI_TARGET=web pnpm with-env next build",
+    "start": "cross-env TAMAGUI_TARGET=web pnpm with-env next start",
     "lint": "next lint",
     "with-env": "dotenv -e ../../.env.local --",
     "clean": "git clean -xdf .next node_modules .tamagui"
   },
   "dependencies": {
+    "@supabase/auth-helpers-nextjs": "^0.7.4",
+    "@supabase/auth-helpers-react": "^0.4.2",
     "@t4/ui": "*",
-    "@tamagui/next-theme": "latest",
+    "@tamagui/next-theme": "^1.49.2",
     "app": "*",
     "next": "^13.4.12",
     "raf": "^3.4.1",
@@ -20,14 +22,14 @@
     "react-dom": "^18.2.0",
     "react-native": "^0.72.3",
     "react-native-web": "^0.19.7",
-    "react-native-web-lite": "latest",
+    "react-native-web-lite": "^1.49.2",
     "webpack": "^5.88.2"
   },
   "devDependencies": {
-    "@tamagui/next-plugin": "latest",
+    "@tamagui/next-plugin": "^1.49.2",
     "@types/node": "^18.16.19",
     "dotenv-cli": "^7.2.1",
     "eslint-config-next": "^13.4.12",
-    "vercel": "latest"
+    "vercel": "^31.2.2"
   }
 }
