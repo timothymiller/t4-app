@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "clean": "git clean -xdf .next node_modules"
   },
   "repository": {
     "type": "git",
@@ -18,14 +19,14 @@
   },
   "homepage": "https://github.com/timothymiller/t4-app#readme",
   "dependencies": {
-    "next": "^13.4.7",
-    "nextra": "latest",
-    "nextra-theme-docs": "latest",
+    "next": "^13.4.12",
+    "nextra": "^2.10.0",
+    "nextra-theme-docs": "^2.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "18.11.10",
-    "typescript": "^5.1.3"
+    "@types/node": "^18.16.19",
+    "typescript": "^5.1.6"
   }
 }

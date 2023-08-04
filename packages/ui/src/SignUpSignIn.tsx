@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Image, YStack, Paragraph, XStack, Button, Input, Stack } from 'tamagui'
+import { YStack, Paragraph, XStack, Button, Input, Stack } from 'tamagui'
 import { Link } from 'solito/link'
 import { type Provider } from '@supabase/supabase-js'
+import { SolitoImage } from 'solito/image'
 
 interface Props {
   type: 'sign-up' | 'sign-in'
@@ -9,11 +10,11 @@ interface Props {
   handleEmailWithPress: (emailAddress, password) => void
 }
 
-export const SignUpSignInComponent: React.FC<Props> = ({
+export const SignUpSignInComponent = ({
   type,
   handleOAuthWithPress,
   handleEmailWithPress,
-}) => {
+}: Props): React.ReactNode => {
   const [emailAddress, setEmailAddress] = useState('')
   const [password, setPassword] = useState('')
 
@@ -21,19 +22,19 @@ export const SignUpSignInComponent: React.FC<Props> = ({
     <YStack
       borderRadius="$10"
       space
-      px="$7"
-      py="$6"
-      w={350}
+      paddingHorizontal="$7"
+      paddingVertical="$6"
+      width={350}
       shadowColor={'#00000020'}
       shadowRadius={26}
       shadowOffset={{ width: 0, height: 4 }}
-      bg="$background"
+      backgroundColor="$background"
     >
-      <Paragraph size="$5" fontWeight={'700'} opacity={0.8} mb="$1">
-        {type === 'sign-up' ? 'Create your account' : 'Log in to your account'}
+      <Paragraph size="$5" fontWeight={'700'} opacity={0.8} marginBottom="$1">
+        {type === 'sign-up' ? 'Create your account' : 'Sign in to your account'}
       </Paragraph>
       {/* all the oauth sign up options */}
-      <XStack space jc={'space-evenly'} theme="light">
+      <XStack space justifyContent={'space-evenly'} theme="light">
         {/* 3 buttons, for google, apple, discord */}
         <Button
           size="$5"
@@ -42,11 +43,11 @@ export const SignUpSignInComponent: React.FC<Props> = ({
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
         >
-          <Image
+          <SolitoImage
             style={{ width: 20, height: 20 }}
-            source={{ width: 20, height: 20, uri: 'auth/google-logo.png' }}
-            width="100%"
-            height="100%"
+            src={'/auth/google-logo.png'}
+            width={20}
+            height={20}
             resizeMode="contain"
             alt="Google Logo"
           />
@@ -58,11 +59,11 @@ export const SignUpSignInComponent: React.FC<Props> = ({
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
         >
-          <Image
+          <SolitoImage
             style={{ width: 22, height: 22 }}
-            source={{ width: 22, height: 22, uri: 'auth/apple-logo.png' }}
-            width="100%"
-            height="100%"
+            src={'/auth/apple-logo.png'}
+            width={22}
+            height={22}
             resizeMode="contain"
             alt="Apple Logo"
           />
@@ -74,22 +75,22 @@ export const SignUpSignInComponent: React.FC<Props> = ({
           focusStyle={{ scale: 0.95 }}
           borderColor="$gray8Light"
         >
-          <Image
+          <SolitoImage
             style={{ width: 25, height: 22 }}
-            source={{ width: 25, height: 22, uri: 'auth/discord-logo.png' }}
-            width="100%"
-            height="100%"
+            src={'/auth/discord-logo.png'}
+            width={20}
+            height={20}
             resizeMode="contain"
             alt="Discord Logo"
           />
         </Button>
       </XStack>
-      <XStack ai="center" width="100%" jc="space-between">
-        <Stack h="$0.25" bg="black" w="$10" opacity={0.1} />
+      <XStack alignItems="center" width="100%" justifyContent="space-between">
+        <Stack height="$0.25" backgroundColor="black" width="$10" opacity={0.1} />
         <Paragraph size="$3" opacity={0.5}>
           or
         </Paragraph>
-        <Stack h="$0.25" bg="black" w="$10" opacity={0.1} />
+        <Stack height="$0.25" backgroundColor="black" width="$10" opacity={0.1} />
       </XStack>
 
       {/* email sign up option */}
@@ -126,7 +127,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
 
       {/* or sign in, in small and less opaque font */}
       <XStack>
-        <Paragraph size="$2" mr="$2" opacity={0.4}>
+        <Paragraph size="$2" marginRight="$2" opacity={0.4}>
           {type === 'sign-up' ? 'Already have an account?' : 'Don’t have an account?'}
         </Paragraph>
         <Link href={type === 'sign-up' ? '/sign-in' : '/sign-up'}>
@@ -144,8 +145,8 @@ export const SignUpSignInComponent: React.FC<Props> = ({
 
       {/* forgot password */}
       {type === 'sign-in' && (
-        <XStack mt="$-2.5">
-          <Paragraph size="$2" mr="$2" opacity={0.4}>
+        <XStack marginTop="$-2.5">
+          <Paragraph size="$2" marginRight="$2" opacity={0.4}>
             Forgot your password?
           </Paragraph>
           <Link href="/password-reset">

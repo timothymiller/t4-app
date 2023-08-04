@@ -1,4 +1,4 @@
 import 'expo-router/entry'
-console.disableYellowBox = true;
-import { LogBox } from 'react-native';
-LogBox.ignoreAllLogs();
+import { LogBox } from 'react-native'
+console.disableYellowBox = true
+LogBox.ignoreAllLogs()

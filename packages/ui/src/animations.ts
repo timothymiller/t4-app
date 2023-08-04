@@ -1,6 +1,7 @@
 import { createAnimations } from '@tamagui/animations-react-native'
+import type { AnimationDriver } from '@tamagui/web'
 
-export const animations = createAnimations({
+export const animations: AnimationDriver = createAnimations({
   bouncy: {
     type: 'spring',
     damping: 10,

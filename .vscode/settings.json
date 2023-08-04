@@ -1,4 +1,6 @@
 {
+  // Turn this on if you want to debug the T4 App Tools Extension
+  // "terminal.integrated.defaultProfile.windows": null,
   "files.exclude": {
     "**/.git": false,
     "**/.svn": false,
@@ -13,7 +15,6 @@
     "**/wrangler.toml": false,
     "**/.prettierrc": false,
     "**/.watchmanconfig": false,
-    "**/.yarnrc.yml": false,
     "**/tsconfig.base.json": false,
     "**/.gitignore": false,
     "**/types": false,
@@ -23,14 +24,17 @@
     "**/eas.json": false,
     "**/tamagui.config.ts": false,
     "**/babel.config.js": false,
-    "**/.yarn": false,
     "**/.expo": false,
     "**/.next": false,
     "**/.tamagui": false,
     "**/.eslintrc.js": false,
     "**/next-env.d.ts": false,
     "**/.vscode": false,
-    "**/.turbo": false
+    "**/.turbo": false,
+    "**/out": false
+  },
+  "search.exclude": {
+    "**/out": true
   },
   "explorerExclude.backup": {}
 }

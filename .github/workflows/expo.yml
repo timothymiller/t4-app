@@ -1,0 +1,74 @@
+name: Expo Deployment
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/expo/**'
+      - 'packages/ui/**'
+      - 'packages/app/**'
+
+permissions:
+  contents: write
+
+env:
+  BUILD_PROFILE: development
+  # BUILD_PROFILE: production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/pnpm-install
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build app
+        id: build
+        continue-on-error: true
+        run: |
+          export TAMAGUI_TARGET=native
+          export EAS_OWNER=${{ secrets.EAS_OWNER }}
+          export EAS_PROJECT_ID=${{ secrets.EAS_PROJECT_ID }}
+          cd apps/expo && build_json=$(eas build --profile $BUILD_PROFILE --platform all --non-interactive --json)
+          android_link=$(echo $build_json | jq -r '.[] | select(.platform=="ANDROID") | .artifacts.applicationArchiveUrl')
+          ios_link=$(echo $build_json | jq -r '.[] | select(.platform=="IOS") | .artifacts.applicationArchiveUrl')
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "build_json<<$EOF" >> $GITHUB_OUTPUT
+          echo "$build_json" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
+          echo "android=$android_link" >> $GITHUB_OUTPUT
+          echo "ios=$ios_link" >> $GITHUB_OUTPUT
+
+      - name: Comment commit
+        if: github.event_name == 'push'
+        uses: peter-evans/commit-comment@v2
+        with:
+          body: |
+            ✔ EAS ${{ env.BUILD_PROFILE }} build completed
+            - 🤖 Android ${{ steps.build.outputs.android != '' && '[build download][1]' || 'build failed ❌' }}
+            - 🍏 IOS ${{ steps.build.outputs.ios != '' && '[build download][2]' || 'build failed ❌' }}
+
+            ${{ steps.build.outputs.android != '' && format('| [![Android QR](https://api.qrserver.com/v1/create-qr-code/?data={0}&bgcolor=CAFFE1&margin=10)](#void)', steps.build.outputs.android) || '| ❌' }} ${{ steps.build.outputs.ios != '' && format('| [![IOS QR](https://api.qrserver.com/v1/create-qr-code/?data={0}&bgcolor=CFE6FF&margin=10)](#void) |', steps.build.outputs.ios) || '| ❌ |' }}
+            | :------------: | :--------: |
+            | **Android QR** | **IOS QR** |
+
+            ${{ steps.build.outputs.android != '' && format('[1]: {0}', steps.build.outputs.android) || '' }}
+            ${{ steps.build.outputs.ios != '' && format('[2]: {0}', steps.build.outputs.ios) || '' }}

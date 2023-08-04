@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "albbus.t4-app-tools",
     "esbenp.prettier-vscode",
     "yawarjamal.cf-d1",
     "wix.vscode-import-cost",
@@ -14,7 +15,9 @@
     "PeterSchmalfeldt.explorer-exclude",
     "dbaeumer.vscode-eslint",
     "wilsonsio.color-vision",
-    "bungcip.better-toml",
-    "formulahendry.auto-rename-tag"
+    "tamasfe.even-better-toml",
+    "formulahendry.auto-rename-tag",
+    "dbaeumer.vscode-eslint",
+    "expo.vscode-expo-tools"
   ]
 }

@@ -15,22 +15,22 @@ import { ChevronDown } from '@tamagui/lucide-icons'
 import React, { useEffect, useState } from 'react'
 import { Linking } from 'react-native'
 import { useLink } from 'solito/link'
-import { isUserSignedIn, signOut } from '../../utils/supabase'
+import { signOut } from 'app/utils/supabase'
 import Constants from 'expo-constants'
 import { useSheetOpen } from '@t4/ui/src/atoms/sheet'
 import { SolitoImage } from 'solito/image'
+import { useUser } from 'app/utils/supabase/auth'
+import { trpc } from 'app/utils/trpc'
 
 export function HomeScreen() {
-  const [isSignedIn, setIsSignedIn] = useState(false)
+  const utils = trpc.useContext()
+  const { loading, user, setUser } = useUser()
+  const isSignedIn = user !== null
 
   useEffect(() => {
-    const fetchSignedInStatus = async () => {
-      const signedInStatus = await isUserSignedIn()
-      setIsSignedIn(signedInStatus)
-    }
-
-    fetchSignedInStatus()
-  }, [])
+    console.log('loading', loading)
+    console.log('user', user)
+  }, [loading, user])
 
   const signInLink = useLink({
     href: '/sign-in',
@@ -54,7 +54,7 @@ export function HomeScreen() {
 
   return (
     <ScrollView>
-      <YStack f={1} jc="center" ai="center" p="$4" space="$4">
+      <YStack flex={1} justifyContent="center" alignItems="center" padding="$4" space="$4">
         <SolitoImage src="/t4-logo.png" width={128} height={128} alt="T4 Logo" />
         <H1 textAlign="center">👋 Hello, T4 App</H1>
         <Separator />
@@ -100,8 +100,10 @@ export function HomeScreen() {
         {isSignedIn ? (
           <Button
             onPress={async () => {
+              setUser(null)
+              // Clear tanstack query cache of authenticated routes
+              utils.auth.secretMessage.setData(undefined, undefined)
               await signOut()
-              setIsSignedIn(false)
             }}
             space="$2"
           >
@@ -122,7 +124,7 @@ export function HomeScreen() {
   )
 }
 
-function SheetDemo() {
+const SheetDemo = (): React.ReactNode => {
   const [open, setOpen] = useSheetOpen()
   const [position, setPosition] = useState(0)
   const toast = useToastController()
@@ -142,7 +144,7 @@ function SheetDemo() {
         dismissOnSnapToBottom
       >
         <Sheet.Overlay />
-        <Sheet.Frame ai="center" jc="center">
+        <Sheet.Frame alignItems="center" justifyContent="center">
           <Sheet.Handle />
           <Button
             size="$6"

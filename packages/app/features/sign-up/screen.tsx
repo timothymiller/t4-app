@@ -1,37 +1,51 @@
-import { YStack } from '@t4/ui'
+import { YStack, useToastController } from '@t4/ui'
 import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from '@t4/ui/src/SignUpSignIn'
 import { signUp } from 'app/utils/supabase'
-import { Provider } from '@supabase/supabase-js'
+import type { Provider } from '@supabase/supabase-js'
 import { signInWithOAuth } from 'app/utils/supabase/auth'
+import { capitalizeWord } from 'app/utils/string'
+import { isExpoGo } from 'app/utils/flags'
 
-export function SignUpScreen() {
+export const SignUpScreen = (): React.ReactNode => {
   const { push } = useRouter()
+  const toast = useToastController()
 
   const handleOAuthSignInWithPress = async (provider: Provider) => {
     const { error } = await signInWithOAuth({ provider: provider })
 
     if (error) {
-      console.log('OAuth Sign in failed', error)
+      if (!isExpoGo) {
+        toast.show(capitalizeWord(provider) + ' sign up failed', {
+          description: error.message,
+        })
+      }
       return
     }
 
     push('/')
   }
 
-  const handleEmailSignUpWithPress = async (emailAddress, password) => {
-    const res = await signUp(emailAddress, password)
-
-    if (res.error) {
-      console.log('Sign up failed', res.error)
-      return
+  const handleEmailSignUpWithPress = async (emailAddress: string, password: string) => {
+    const { user, error } = await signUp(emailAddress, password)
+    if (error) {
+      if (!isExpoGo) {
+        toast.show('Sign up failed', {
+          description: error.message,
+        })
+      }
+    } else if (user) {
+      if (!isExpoGo) {
+        toast.show('Email Confirmation Link', {
+          description: 'Check your email for a confirmation link.',
+        })
+      }
+      push('/')
     }
-
-    push('/')
   }
 
   return (
-    <YStack f={1} jc="center" ai="center" space>
+    <YStack flex={1} justifyContent="center" alignItems="center" space>
       <SignUpSignInComponent
         type="sign-up"
         handleOAuthWithPress={handleOAuthSignInWithPress}

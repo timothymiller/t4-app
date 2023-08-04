@@ -1,42 +1,29 @@
-import { YStack } from '@t4/ui'
+import { YStack, useToastController } from '@t4/ui'
 import { signIn } from 'app/utils/supabase'
 import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from '@t4/ui/src/SignUpSignIn'
-import { Provider, SignInWithOAuthCredentials } from '@supabase/supabase-js'
+import { Provider } from '@supabase/supabase-js'
 import { signInWithOAuth } from 'app/utils/supabase/auth'
+import Constants from 'expo-constants'
+import { capitalizeWord } from 'app/utils/string'
+import { isExpoGo } from 'app/utils/flags'
 
-export function SignInScreen() {
+export const SignInScreen = (): React.ReactNode => {
+  const toast = useToastController()
   const { push } = useRouter()
 
-  const OAUTH_CREDENTIALS: Record<Provider, SignInWithOAuthCredentials> = {
-    // Verified providers
-    apple: { provider: 'apple' },
-    google: {
-      provider: 'google',
-      options: { queryParams: { access_type: 'offline', prompt: 'consent' } },
-    },
-    discord: { provider: 'discord' },
-    // Unverified providers
-    twitter: { provider: 'twitter' },
-    github: { provider: 'github' },
-    gitlab: { provider: 'gitlab' },
-    facebook: { provider: 'facebook' },
-    bitbucket: { provider: 'bitbucket' },
-    twitch: { provider: 'twitch' },
-    keycloak: { provider: 'keycloak' },
-    linkedin: { provider: 'linkedin' },
-    notion: { provider: 'notion' },
-    slack: { provider: 'slack' },
-    spotify: { provider: 'spotify' },
-    zoom: { provider: 'zoom' },
-    azure: { provider: 'azure' },
-    workos: { provider: 'workos' },
-  }
-
   const handleOAuthSignInWithPress = async (provider: Provider) => {
-    const { error } = await signInWithOAuth({ provider: provider })
+    const { error } = await signInWithOAuth({
+      provider: provider,
+      options: { scopes: 'read:user user:email' },
+    })
 
     if (error) {
+      if (!isExpoGo) {
+        toast.show(capitalizeWord(provider) + ' sign in failed', {
+          description: error.message,
+        })
+      }
       console.log('OAuth Sign in failed', error)
       return
     }
@@ -44,11 +31,16 @@ export function SignInScreen() {
     push('/')
   }
 
-  const handleEmailSignInWithPress = async (emailAddress, password) => {
-    const res = await signIn(emailAddress, password)
+  const handleEmailSignInWithPress = async (emailAddress: string, password: string) => {
+    const { error } = await signIn(emailAddress, password)
 
-    if (res.error) {
-      console.log('Sign in failed', res.error)
+    if (error) {
+      const isExpoGo = Constants.appOwnership === 'expo'
+      if (!isExpoGo) {
+        toast.show('Sign in failed', {
+          description: error.message,
+        })
+      }
       return
     }
 
@@ -56,7 +48,7 @@ export function SignInScreen() {
   }
 
   return (
-    <YStack f={1} jc="center" ai="center" space>
+    <YStack flex={1} justifyContent="center" alignItems="center" space>
       <SignUpSignInComponent
         type="sign-in"
         handleOAuthWithPress={handleOAuthSignInWithPress}

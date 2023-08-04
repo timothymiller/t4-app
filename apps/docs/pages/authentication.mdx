@@ -1,6 +1,6 @@
 # 🔒 Authentication
 
-T4 uses [Supabase](https://supabase.com/docs/guides/auth) for authentication
+T4 uses [Supabase](https://supabase.com/docs/guides/auth) for authentication.
 
 ## 🔭 Overview
 
@@ -16,13 +16,38 @@ The authentication flow in T4 involves the following steps:
 3. User Login: Once registered and verified, users can log in to T4 using Supabase's email authentication
    or directly through third-party providers.
 
-JSON Web Tokens (JWT): Once a user is authenticated, T4 utilizes JSON Web Tokens (JWT)
+4. Password Recovery: If users forget their password, they can initiate a
+   password recovery process. Supabase will send them an email with
+   instructions on how to reset their password. (Note: to be implemented)
+
+## Setup
+
+### Frontend
+
+The frontend needs the `Supabase URL` and `Supabase Key` to initialize the Supabase client. This is your `Project URL` and public `Project API key` from the Supabase dashboard.
+
+### Backend
+
+The API server needs the `JWT Secret` from Supabase to verify the JWTs sent by the client.
+This is placed inside `.dev.vars` as `JWT_VERIFICATION_KEY`.
+
+## Concepts Explained
+
+### JSON Web Tokens (JWT)
+
+Once a user is authenticated, T4 utilizes JSON Web Tokens (JWT)
 to manage and maintain user sessions. The JWT contains encoded information about the
 user's identity and authentication details. This token is securely stored on the
 client side (e.g., in secure storage or cookies) and sent with each request to
 authenticate and authorize the user's access to protected resources.
 
-Authorization and Access Control: Along with authentication, T4 implements authorization and
-access control mechanisms. This includes managing user roles, permissions, and restrictions
-to ensure appropriate access to specific resources or features based on the user's privileges.
-This is handled through [PostgreSQL's Row Level Security (RLS).](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
+### Authorization and Access Control
+
+You can use a JWT to implement authorization and access control mechanisms within D1.
+
+When creating user data, you can associate the data with the user's ID. This allows you
+to restrict access to the data based on the user's privileges. For example, you can
+restrict access to a user's data to only the user who created it. This is similar to
+[PostgreSQL's Row Level Security (RLS).](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
+
+The user's ID is stored in the JWT. You can create separate tables in your D1 database to track user roles and permissions.

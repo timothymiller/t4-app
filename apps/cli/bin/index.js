@@ -1,128 +1,197 @@
 #! /usr/bin/env node
-import ora from "ora";
-import chalk from "chalk";
-import { exec } from "child_process";
-import readline from "readline";
+import ora from 'ora'
+import chalk from 'chalk'
+import { promisify } from 'util'
+import { exec as execCb } from 'child_process'
+import readline from 'readline'
+import { promises as fs } from 'fs';
+import path from 'path';
 
+const exec = promisify(execCb)
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout,
-});
+  output: process.stdout
+})
 
-const repoUrl = "https://github.com/timothymiller/t4-app";
+const repositoryUrl = 'https://github.com/timothymiller/t4-app'
 
-const args = process.argv.slice(2);
-const folderArg = args.filter((arg) => !arg.includes("--"))[0];
+const [projectFolder, ...commandLineArgs] = process.argv.slice(2)
+const useTauri = commandLineArgs.includes('--tauri')
 
-const withSupabase = args.includes("--with-supabase");
-let repoBranch = "";
-if (withSupabase) {
-  chalk.red.bold("The Supabase Authentication is not implementation yet")
+const generateRepositoryBranch = () => {
+  if (useTauri) {
+    return '-b tauri --single-branch'
+  }
+  // Add more branch options if needed
+  return ''
 }
 
-const setup = (folderName) => {
-  const gitSpinner = ora(
-    chalk.green.bold(`Cloning t4-app into ${folderName}`)
-  ).start();
+const repositoryBranch = generateRepositoryBranch()
 
-  exec(
-    `git clone ${repoBranch} ${repoUrl} ${folderName}`,
-    (gitErr) => {
-      if (gitErr) {
-        gitSpinner.fail();
-        console.error(
-          chalk.red.bold(`Failed to clone repository: ${gitErr.message}`)
-        );
-        return;
+const cloneRepository = async (folderName) => {
+  const gitSpinner = ora(chalk.green.bold(`Cloning t4-app into ${folderName}`)).start()
+  try {
+    await exec(`git clone ${repositoryBranch} ${repositoryUrl} ${folderName}`)
+    gitSpinner.succeed()
+  } catch (error) {
+    gitSpinner.fail()
+    throw new Error(`Failed to clone repository: ${error.message}`)
+  }
+}
+
+const removeUnnecessaryFiles = async (folderName) => {
+  const filesToRemove = [
+    `${folderName}/.git`,
+    `${folderName}/apps/cli`,
+    `${folderName}/apps/vscode`,
+    `${folderName}/.github/workflows/cli.yml`,
+    `${folderName}/.github/workflows/vscode.yml`
+  ]
+
+  try {
+    await removePaths(filesToRemove);
+  } catch (error) {
+    throw new Error(`Failed to remove unnecessary files: ${error.message}`)
+  }
+}
+
+const installDependencies = async (folderName) => {
+  const installSpinner = ora(chalk.green.bold('Installing dependencies')).start()
+  try {
+    await exec(`cd ${folderName} && pnpm install`)
+    installSpinner.succeed()
+  } catch (error) {
+    installSpinner.fail()
+    throw new Error(`Failed to install dependencies: ${error.message}`)
+  }
+}
+
+const generateDrizzleClient = async (folderName) => {
+  const drizzleSpinner = ora(chalk.green.bold('Generating Drizzle client')).start()
+  try {
+    await exec(`cd ${folderName} && pnpm generate`)
+    drizzleSpinner.succeed()
+  } catch (error) {
+    drizzleSpinner.fail()
+    throw new Error(`Failed to generate Drizzle client: ${error.message}`)
+  }
+}
+
+const setupProject = async (folderName) => {
+  try {
+    console.log(chalk.yellow(`
+👉 Setting up a new t4 project.
+Follow the steps below to create your project:
+1. Cloning the t4-app repository into the specified folder.
+2. Removing unnecessary files.
+3. Installing dependencies.
+4. Generating the Drizzle client.
+`))
+
+    await cloneRepository(folderName)
+    console.log(chalk.green.bold('\n✅ Repository cloned successfully.\n'))
+
+    await removeUnnecessaryFiles(folderName)
+    console.log(chalk.green.bold('✅ Unnecessary files removed.\n'))
+
+    await installDependencies(folderName)
+    console.log(chalk.green.bold('✅ Dependencies installed.\n'))
+
+    await generateDrizzleClient(folderName)
+    console.log(chalk.green.bold('✅ Drizzle client generated.\n'))
+
+    console.log(chalk.yellow(`
+💭 Remember to set up your environment variables properly:
+1. Duplicate the .env.example file, rename it to .env.local, and enter your variables.
+2. Duplicate /packages/api/.dev.vars.example, remove .example, and enter your Supabase JWT_VERIFICATION_KEY.
+3. Configure Cloudflare Wrangler configs inside /apps/next/wrangler.toml and /packages/api/wrangler.toml to match your deployment environment.
+`))
+
+    console.log(chalk.green.bold(`
+✅ Successfully created t4 project!
+Make sure you have a Supabase account and have created a new project.
+After filling out your .env file, run 'pnpm migrate:local' to create your database tables.
+To start the API and web development servers, run 'pnpm api' and 'pnpm web' in separate terminal tabs.
+`))
+  } catch (error) {
+    console.error(chalk.red.bold(`🚫 Error: ${error.message}`))
+  } finally {
+    rl.close()
+  }
+}
+
+const logo = `
+ _________  __   __        ________   ______   ______    
+/________/\\/__/\\/__/\\     /_______/\\ /_____/\\ /_____/\\   
+\\__.::.__\\/\\  \\ \\: \\ \\__  \\::: _  \\ \\\\:::_ \\ \\\\:::_ \\ \\  
+   \\::\\ \\   \\::\\_\\::\\/_/\\  \\::(_)  \\ \\\\:(_) \\ \\\\:(_) \\ \\ 
+    \\::\\ \\   \\_:::   __\\/   \\:: __  \\ \\\\: ___\\/ \\: ___\\/ 
+     \\::\\ \\       \\::\\ \\     \\:.\\ \\  \\ \\\\ \\ \\    \\ \\ \\   
+      \\__\\/        \\__\\/      \\__\\/\\__\\/ \\_\\/     \\`
+
+console.log(chalk.green.bold(logo))
+console.log(chalk.magentaBright.bold('"Type-Safe, Full-Stack Starter Kit for React Native + Web" 🚀'))
+console.log(chalk.magentaBright.bold('ft. Tamagui + TypeScript + tRPC + Turborepo'))
+
+if (!projectFolder) {
+  console.log(chalk.green.bold('Enter the name of the project:'))
+
+  try {
+    const folderName = await promptQuestion('> ')
+    if (!folderName || folderName.includes(' ')) {
+      console.log(chalk.red.bold('🚫 Please enter a valid folder name!'))
+    } else {
+      console.log(' ')
+      setupProject(folderName)
+    }
+  } catch (error) {
+    console.error(chalk.red.bold(`🚫 Error: ${error.message}`))
+  }
+} else {
+  setupProject(projectFolder)
+}
+
+function promptQuestion(question) {
+  return new Promise((resolve) => {
+    rl.question(question, (answer) => {
+      resolve(answer)
+    })
+  })
+}
+
+const removePaths = async (paths) => {
+  try {
+    for (const pathToRemove of paths) {
+      const stats = await fs.stat(pathToRemove);
+
+      if (stats.isDirectory()) {
+        await removeFolder(pathToRemove);
+      } else {
+        await fs.unlink(pathToRemove);
       }
 
-      gitSpinner.succeed();
-
-      exec(`rm -rf ${folderName}/cli && rm -rf ${folderName}/.git && rm ${folderName}/.github/workflows/cli.yml`, (rmErr) => {
-        if (rmErr) {
-          console.error(
-            chalk.red.bold(`Failed to remove unnecessary files: ${rmErr.message}`)
-          );
-          return;
-        }
-
-
-        const installSpinner = ora(
-          chalk.green.bold(`Installing dependencies`)
-        ).start();
-
-        exec(`cd ${folderName} && yarn install`, (installErr) => {
-          if (installErr) {
-            installSpinner.fail();
-            console.error(
-              chalk.red.bold(
-                `Failed to install dependencies: ${installErr.message}`
-              )
-            );
-            return;
-          }
-
-          installSpinner.succeed();
-
-          const drizzleSpinner = ora(
-            chalk.green.bold(`Generating Drizzle client`)
-          ).start();
-
-          exec(`cd ${folderName} && yarn generate`, (drizzleErr) => {
-            if (drizzleErr) {
-              drizzleSpinner.fail();
-              console.error(
-                chalk.red.bold(
-                  `Failed to generate Drizzle client: ${drizzleErr.message}`
-                )
-              );
-              return;
-            }
-
-            drizzleSpinner.succeed();
-
-            console.log(
-              chalk.yellow(
-                "\n🚧 Remember to set up your environment variables properly by:\n1. Duplicating the .env.local.example file, removing .example, and entering your variables\n2. Duplicating /packages/api/.dev.vars.example, removing .example, and entering your Clerk JWT_VERIFICATION_KEY\n3. Configure Cloudflare Wrangler configs inside /apps/next/wrangler.toml and /packages/api/wrangler.toml to match your deployment environment."
-              )
-            );
-
-            console.log(
-              chalk.green.bold(
-                "🚀 Successfully created t4 project! After having filled out your .env, run 'cd packages/api && yarn migrate:local' to create your database tables. Run 'yarn api' and 'yarn web' in separate terminal tabs to start the api and web development servers."
-              )
-            );
-
-            rl.close();
-          });
-        });
-      });
+      console.log(`Removed: ${pathToRemove}`);
     }
-  );
+
+    console.log('All paths removed successfully!');
+  } catch (error) {
+    console.error('Error removing paths:', error);
+  }
 };
 
-const logo = ' _________  __   __        ________   ______   ______    \n\/________\/\\\/__\/\\\/__\/\\     \/_______\/\\ \/_____\/\\ \/_____\/\\   \n\\__.::.__\\\/\\  \\ \\: \\ \\__  \\::: _  \\ \\\\:::_ \\ \\\\:::_ \\ \\  \n   \\::\\ \\   \\::\\_\\::\\\/_\/\\  \\::(_)  \\ \\\\:(_) \\ \\\\:(_) \\ \\ \n    \\::\\ \\   \\_:::   __\\\/   \\:: __  \\ \\\\: ___\\\/ \\: ___\\\/ \n     \\::\\ \\       \\::\\ \\     \\:.\\ \\  \\ \\\\ \\ \\    \\ \\ \\   \n      \\__\\\/        \\__\\\/      \\__\\\/\\__\\\/ \\_\\\/     \\_\\\/   \n                                                         '
+const removeFolder = async (folderPath) => {
+  const folderContents = await fs.readdir(folderPath);
 
-console.log(chalk.green.bold(
-  logo
-)
-);
+  for (const content of folderContents) {
+    const contentPath = path.join(folderPath, content);
+    const stats = await fs.stat(contentPath);
 
-console.log(chalk.magentaBright.bold('"Type-Safe, Full-Stack Starter Kit for React Native + Web" 💪'));
-console.log(chalk.magentaBright.bold('ft. Tamagui + TypeScript + tRPC + Turborepo'));
-
-if (!folderArg) {
-  console.log(chalk.green.bold("Enter the name of the project:"));
-
-  rl.question("> ", (folderName) => {
-    if (folderName === "" || folderName.includes(" ")) {
-      console.log(chalk.red.bold("Please enter a valid folder name!"));
+    if (stats.isDirectory()) {
+      await removeFolder(contentPath);
     } else {
-      console.log(" ");
-      setup(folderName);
+      await fs.unlink(contentPath);
     }
-    rl.close();
-  });
-} else {
-  setup(folderArg);
-}
+  }
+
+  await fs.rmdir(folderPath);
+};

@@ -3,7 +3,7 @@ import { NativeToast as Toast } from './NativeToast'
 
 const isExpo = Constants.executionEnvironment === ExecutionEnvironment.StoreClient
 
-export const CustomToast = () => {
+export const CustomToast = (): React.ReactNode => {
   if (isExpo) {
     return null
   } else {

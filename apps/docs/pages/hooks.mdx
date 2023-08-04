@@ -1,0 +1,56 @@
+## 🪝 React Hooks for T4
+
+## useUser Hook
+
+The `useUser` hook is a custom React hook that provides the current user and loading state for the Supabase authentication.
+
+### Usage
+
+```jsx
+const { user, loading, setUser } = useUser()
+```
+
+### Parameters
+
+This hook does not take any parameters.
+
+### Return Value
+
+The `useUser` hook returns an object with the following properties:
+
+- `user` (object): The current user object returned by Supabase authentication.
+- `loading` (boolean): A flag indicating whether the user data is still being fetched.
+- `setUser` (function): A function to set the current user object.
+
+### Example
+
+```jsx
+import { useUser } from './useUser'
+
+const UserProfile = () => {
+  const { user, loading, setUser } = useUser()
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  if (!user) {
+    return <div>No user found</div>
+  }
+
+  return (
+    <div>
+      <h1>Welcome, {user.name}</h1>
+      <button onClick={() => setUser(null)}>Log Out</button>
+    </div>
+  )
+}
+```
+
+In the example above, the `useUser` hook is used to fetch the current user and loading state. If the loading state is true, a loading message is displayed. If no user is found, a message is displayed. Otherwise, the user's name is displayed along with a log out button.
+
+### Implementation Details
+
+The `useUser` hook internally uses the `useSupabaseUser` and `useUserLoading` hooks to get the user and loading state, respectively. It also uses the `useEffect` hook to fetch the user data when the component mounts. The user data is fetched using the `supabase.auth.getUser()` method. Once the user data is fetched, the `setUser` function is called to update the user state. Finally, the loading state is set to false. The effect runs only once when the component mounts, as indicated by the empty dependency array `[]`.
+
+Note: The `UserResponse` type is not provided in the code snippet, but it should be defined to match the response structure returned by the `supabase.auth.getUser()` method.

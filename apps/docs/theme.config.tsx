@@ -13,7 +13,7 @@ const config: DocsThemeConfig = {
   chat: {
     link: 'https://discord.gg/wj2GV7AvQd',
   },
-  docsRepositoryBase: 'https://github.com/timothymiller/t4-app/apps/docs',
+  docsRepositoryBase: 'https://github.com/timothymiller/t4-app/blob/main/apps/docs',
   footer: {
     text: '©️ Copyright 2023 Timothy Miller',
   },
@@ -42,6 +42,7 @@ const config: DocsThemeConfig = {
             frontMatter.description || 'Type-Safe, Full-Stack Starter Kit for React Native + Web.'
           }
         />
+        <link rel="icon" href="/favicon.ico" />
       </>
     )
   },
