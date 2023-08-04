@@ -19,18 +19,18 @@
   },
   "dependencies": {
     "@shopify/flash-list": "^1.5.0",
-    "@tamagui/animations-react-native": "latest",
-    "@tamagui/collection": "^1.39.8",
-    "@tamagui/font-inter": "latest",
-    "@tamagui/react-native-media-driver": "latest",
-    "@tamagui/shorthands": "latest",
-    "@tamagui/themes": "latest",
-    "@tamagui/toast": "latest",
-    "@tanstack/react-virtual": "^3.0.0-alpha.0",
-    "jotai": "^2.2.2",
-    "tamagui": "latest"
+    "@supabase/supabase-js": "^2.31.0",
+    "@tamagui/animations-react-native": "^1.49.2",
+    "@tamagui/font-inter": "^1.49.2",
+    "@tamagui/react-native-media-driver": "^1.49.2",
+    "@tamagui/shorthands": "^1.49.2",
+    "@tamagui/themes": "^1.49.2",
+    "@tamagui/toast": "^1.49.2",
+    "@tanstack/react-virtual": "^3.0.0-beta.54",
+    "jotai": "^2.2.3",
+    "tamagui": "^1.49.2"
   },
   "devDependencies": {
-    "@tamagui/build": "latest"
+    "@tamagui/build": "^1.49.2"
   }
 }

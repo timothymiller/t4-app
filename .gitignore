@@ -8,6 +8,7 @@
 
 # expo
 **/.expo/*
+**/expo-env.d.ts
 
 # next.js
 **/.next/*
@@ -56,3 +57,12 @@ types/
 **/.wrangler/*
 **/.dev.vars
 .turbo
+
+# Expo
+apps/expo/ios/**
+apps/expo/android/**
+
+# Expo Builds
+**/*.apk
+**/*.aab
+**/*.ipa

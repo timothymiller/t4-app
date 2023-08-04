@@ -34,13 +34,17 @@ CF_PROJECT_NAME=
 
 2. Add the `EXPO_TOKEN` secret to your repository with the token that you retrieved from Expo to allow GitHub Actions to publish your app.
 
-3. Create a new project in the [Expo projects](https://expo.dev/accounts/%5Baccount%5D/projects) and add the correct `projectId` to your `apps/expo/app.json`. Update the `slug` field to match your project name. Also update the `owner` field with your Expo username.
+3. Create a new project in the [Expo projects](https://expo.dev/accounts/%5Baccount%5D/projects)
 
-4. Setup EAS credentials for your Android and IOS apps by running `eas credentials` in your terminal. Setup the correct `android.package` and `ios.bundleIdentifier` in `apps/expo/app.json`.
+4. Add the correct `projectId` to your `apps/expo/app.json`. Update the `slug` field to match your project name. Also update the `owner` field with your Expo username.
 
-5. Over on your repository set the `Read and write permissions` in `Settings > Actions > General > Workflow Permissions`. This specific workflow includes only the `contents: write` permission that is needed to comment on your commits with the build download links.
+5. Update `projectId`, `slug` and `owner` fallback field inside of `apps/expo/app.config.ts`.
 
-6. Push your changes to GitHub and watch your app being built in EAS.
+6. Setup EAS credentials for your Android and IOS apps by running `eas credentials` in your terminal. Setup the correct `android.package` and `ios.bundleIdentifier` in `apps/expo/app.json`.
+
+7. Over on your repository set the `Read and write permissions` in `Settings > Actions > General > Workflow Permissions`. This specific workflow includes only the `contents: write` permission that is needed to comment on your commits with the build download links.
+
+8. Push your changes to GitHub and watch your app being built in EAS.
 
 ## Configure Wrangler.toml
 
@@ -92,7 +96,7 @@ NEXT_PUBLIC_API_URL=http://api.t4stack.com/
 # Authentication
 # @link https://supabase.com/dashboard for your Supabase API keys
 NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_PUBLIC_KEY=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
 ```
 
 ## Authentication - Supabase
@@ -103,7 +107,7 @@ Head over to [](https://supabase.com/dashboard) for your Supabase API keys and s
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_PUBLIC_KEY=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
 ```
 
 You should set the `JWT_VERIFICATION_KEY` with wrangler, also found in Supabase as **JWT Secret** in the API Settings.

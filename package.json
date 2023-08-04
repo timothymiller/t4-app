@@ -4,12 +4,20 @@
   "license": "Apache-2.0",
   "version": "2.0.0",
   "scripts": {
-    "dev": "turbo dev --parallel --filter=!t4-app-docs",
-    "api": "NO_D1_WARNING=true && turbo run dev --filter @t4/api",
-    "native": "turbo run dev --filter expo-app",
+    "dev": "turbo dev --parallel --filter={next-app,@t4/api}",
+    "ios": "cd apps/expo && pnpm ios",
+    "android": "cd apps/expo && pnpm android",
     "web": "turbo run dev --filter next-app",
+    "api": "cross-env NO_D1_WARNING=true turbo run dev --filter @t4/api",
     "notes": "turbo run dev --filter t4-app-docs",
+    "native": "cd apps/expo && pnpm dev",
+    "native:prod": "cd apps/expo && pnpm dev:prod",
     "build": "turbo run build --filter=@t4/ui",
+    "build:web": "turbo run build --filter=next-app",
+    "build:ios": "cd apps/expo && pnpm build:ios",
+    "build:android": "cd apps/expo && pnpm build:android",
+    "build:ios:preview": "cd apps/expo && pnpm build:ios:preview",
+    "build:android:preview": "cd apps/expo && pnpm build:android:preview",
     "generate": "pnpm --filter=@t4/api generate",
     "migrate:local": "pnpm --filter=@t4/api migrate:local",
     "upgrade:tamagui": "pnpm up '*tamagui*'@latest '@tamagui/*'@latest react-native-web-lite@latest",
@@ -24,30 +32,24 @@
   "dependencies": {
     "@babel/runtime": "^7.22.6",
     "@manypkg/cli": "^0.21.0",
-    "@supabase/supabase-js": "^2.26.0",
+    "@supabase/supabase-js": "^2.31.0",
     "check-dependency-version-consistency": "^4.1.0",
-    "eslint": "^8.44.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.45.0",
     "node-gyp": "^9.4.0",
     "prettier": "^3.0.0",
-    "react-native-url-polyfill": "^1.3.0",
-    "turbo": "^1.10.7",
+    "react-native-url-polyfill": "^2.0.0",
+    "turbo": "^1.10.12",
     "typescript": "^5.1.6"
   },
   "engines": {
-    "node": ">=18.16.0",
-    "pnpm": ">=8.3.1"
+    "node": ">=18.17.0",
+    "pnpm": ">=8.6.10"
   },
-  "packageManager": "pnpm@8.6.5",
+  "packageManager": "pnpm@8.6.10",
   "pnpm": {
     "overrides": {
-      "@types/react-native": "^0.71.3",
-      "react": "^18.2.0",
-      "react-dom": "^18.2.0",
-      "react-refresh": "^0.14.0",
-      "react-native-svg": "13.4.0",
-      "react-native-web": "^0.18.12",
-      "metro": "0.76.0",
-      "metro-resolver": "0.76.0"
+      "react-refresh": "~0.14.0"
     }
   }
 }

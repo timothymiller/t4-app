@@ -19,9 +19,9 @@
   },
   "homepage": "https://github.com/timothymiller/t4-app#readme",
   "dependencies": {
-    "next": "^13.4.9",
-    "nextra": "latest",
-    "nextra-theme-docs": "latest",
+    "next": "^13.4.12",
+    "nextra": "^2.10.0",
+    "nextra-theme-docs": "^2.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
