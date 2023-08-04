@@ -15,22 +15,22 @@ import { ChevronDown } from '@tamagui/lucide-icons'
 import React, { useEffect, useState } from 'react'
 import { Linking } from 'react-native'
 import { useLink } from 'solito/link'
-import { isUserSignedIn, signOut } from 'app/utils/supabase'
+import { signOut } from 'app/utils/supabase'
 import Constants from 'expo-constants'
 import { useSheetOpen } from '@t4/ui/src/atoms/sheet'
 import { SolitoImage } from 'solito/image'
+import { useUser } from 'app/utils/supabase/auth'
+import { trpc } from 'app/utils/trpc'
 
 export function HomeScreen() {
-  const [isSignedIn, setIsSignedIn] = useState(false)
+  const utils = trpc.useContext()
+  const { loading, user, setUser } = useUser()
+  const isSignedIn = user !== null
 
   useEffect(() => {
-    const fetchSignedInStatus = async () => {
-      const signedInStatus = await isUserSignedIn()
-      setIsSignedIn(signedInStatus)
-    }
-
-    fetchSignedInStatus()
-  }, [])
+    console.log('loading', loading)
+    console.log('user', user)
+  }, [loading, user])
 
   const signInLink = useLink({
     href: '/sign-in',
@@ -100,8 +100,10 @@ export function HomeScreen() {
         {isSignedIn ? (
           <Button
             onPress={async () => {
+              setUser(null)
+              // Clear tanstack query cache of authenticated routes
+              utils.auth.secretMessage.setData(undefined, undefined)
               await signOut()
-              setIsSignedIn(false)
             }}
             space="$2"
           >
