@@ -12,24 +12,31 @@ import {
   useToastController,
 } from '@t4/ui'
 import { ChevronDown } from '@tamagui/lucide-icons'
-import React, { useEffect, useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { Linking } from 'react-native'
 import { useLink } from 'solito/link'
 import { signOut } from 'app/utils/supabase'
 import Constants from 'expo-constants'
-import { useSheetOpen } from '@t4/ui/src/atoms/sheet'
 import { SolitoImage } from 'solito/image'
 import { useUser } from 'app/utils/supabase/auth'
 import { trpc } from 'app/utils/trpc'
+import { useObservable, reactive } from '@legendapp/state/react'
 
 export function HomeScreen() {
   const utils = trpc.useContext()
   const { loading, user, setUser } = useUser()
   const isSignedIn = user !== null
-
+  const state = useObservable({ isSignedIn: false })
+  
   useEffect(() => {
     console.log('loading', loading)
     console.log('user', user)
+    const fetchSignedInStatus = async () => {
+      const signedInStatus = await isUserSignedIn()
+      state.isSignedIn.set(signedInStatus)
+    }
+
+    fetchSignedInStatus()
   }, [loading, user])
 
   const signInLink = useLink({
@@ -81,9 +88,7 @@ export function HomeScreen() {
             on Github.
           </Anchor>
         </Paragraph>
-
         <Button onPress={() => Linking.openURL('https://t4stack.com/')}>Learn More...</Button>
-
         <H3>🦮🐴 App Demos</H3>
         <YStack space="$2">
           <Button {...infiniteListLink} space="$2">
@@ -97,12 +102,13 @@ export function HomeScreen() {
           </Button>
           <SheetDemo />
         </YStack>
-        {isSignedIn ? (
+        {state.isSignedIn.get() ? (
           <Button
             onPress={async () => {
               setUser(null)
               // Clear tanstack query cache of authenticated routes
               utils.auth.secretMessage.setData(undefined, undefined)
+              state.isSignedIn.set(false)
               await signOut()
             }}
             space="$2"
@@ -124,34 +130,42 @@ export function HomeScreen() {
   )
 }
 
-const SheetDemo = (): React.ReactNode => {
-  const [open, setOpen] = useSheetOpen()
-  const [position, setPosition] = useState(0)
+const ReactiveSheet = reactive(Sheet)
+const ReactiveSheetOverlay = reactive(Sheet.Overlay)
+const ReactiveSheetFrame = reactive(Sheet.Frame)
+function SheetDemo() {
+  const state = useObservable({ sheetOpen: false, position: 0 })
+
+  const { sheetOpen, position } = state
+
   const toast = useToastController()
 
+  const handlePress = () => {
+    sheetOpen.set(true)
+  }
   return (
     <>
-      <Button onPress={() => setOpen((x) => !x)} space="$2">
+      <Button onPress={() => handlePress()} space="$2">
         Bottom Sheet
       </Button>
-      <Sheet
+      <ReactiveSheet
         modal
-        open={open}
-        onOpenChange={setOpen}
+        $open={sheetOpen.get}
+        onOpenChange={sheetOpen.set}
         snapPoints={[80]}
-        position={position}
-        onPositionChange={setPosition}
+        position={position.get()}
+        onPositionChange={position.set}
         dismissOnSnapToBottom
       >
-        <Sheet.Overlay />
-        <Sheet.Frame alignItems="center" justifyContent="center">
+        <ReactiveSheetOverlay />
+        <ReactiveSheetFrame alignItems="center" justifyContent="center">
           <Sheet.Handle />
           <Button
             size="$6"
             circular
             icon={ChevronDown}
             onPress={() => {
-              setOpen(false)
+              sheetOpen.set(false)
               const isExpoGo = Constants.appOwnership === 'expo'
               if (!isExpoGo) {
                 toast.show('Sheet closed!', {
@@ -160,8 +174,8 @@ const SheetDemo = (): React.ReactNode => {
               }
             }}
           />
-        </Sheet.Frame>
-      </Sheet>
+        </ReactiveSheetFrame>
+      </ReactiveSheet>
     </>
   )
 }

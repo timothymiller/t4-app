@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { YStack, Paragraph, XStack, Button, Input, Stack } from 'tamagui'
+import { Image, YStack, Paragraph, XStack, Button, Input, Stack } from 'tamagui'
 import { Link } from 'solito/link'
 import { type Provider } from '@supabase/supabase-js'
 import { SolitoImage } from 'solito/image'
+import { useObservable } from '@legendapp/state/react'
 
 interface Props {
   type: 'sign-up' | 'sign-in'
@@ -15,8 +16,7 @@ export const SignUpSignInComponent = ({
   handleOAuthWithPress,
   handleEmailWithPress,
 }: Props): React.ReactNode => {
-  const [emailAddress, setEmailAddress] = useState('')
-  const [password, setPassword] = useState('')
+  const state = useObservable({ emailAddress: '', password: '' })
 
   return (
     <YStack
@@ -98,14 +98,14 @@ export const SignUpSignInComponent = ({
         autoCapitalize="none"
         placeholder="Email"
         onChangeText={(text) => {
-          setEmailAddress(text)
+          state.emailAddress.set(text)
         }}
       />
       <Input
         autoCapitalize="none"
         placeholder="Password"
         onChangeText={(text) => {
-          setPassword(text)
+          state.password.set(text)
         }}
         textContentType="password"
         secureTextEntry
@@ -115,7 +115,7 @@ export const SignUpSignInComponent = ({
       <Button
         themeInverse
         onPress={() => {
-          handleEmailWithPress(emailAddress, password)
+          handleEmailWithPress(state.emailAddress.get(), state.password.get())
         }}
         hoverStyle={{ opacity: 0.8 }}
         onHoverIn={() => {}}

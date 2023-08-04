@@ -13,7 +13,9 @@ import type { AppProps } from 'next/app'
 import { SolitoImageProvider } from 'solito/image'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import { createPagesBrowserClient, type Session } from '@supabase/auth-helpers-nextjs'
-
+import { enableLegendStateReact } from '@legendapp/state/react'
+enableLegendStateReact()
+        
 if (process.env.NODE_ENV === 'production') {
   require('../public/tamagui.css')
 }

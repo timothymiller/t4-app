@@ -74,7 +74,7 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 
 ### 🏢 Global State Management
 
-- 🧩 [Jotai](https://jotai.org)
+- 🧩 [Legend State](https://legendapp.com/open-source/state/)
 
 ### ⚙️ Backend
 
@@ -226,7 +226,6 @@ We welcome contributions from anyone and everyone. Please read our [contributing
 - [Tim Neutkens](https://twitter.com/timneutkens) - Co-author of Next.js
 - [Guillermo Rauch](https://twitter.com/rauchg) - Co-author of Next.js
 - [Fernando Rojo](https://twitter.com/fernandotherojo) - Creator of Solito
-- [Daishi Kato](https://twitter.com/dai_shi) Creator of Jotai
 - [Jared Palmer](https://twitter.com/jaredpalmer) - Creator of Turborepo
 - [Evan Bacon](https://twitter.com/Baconbrix) - Maintainer of Expo
 

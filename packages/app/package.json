@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@shopify/flash-list": "^1.5.0",
+    "@clerk/clerk-expo": "^0.18.7",
+    "@clerk/nextjs": "^4.21.10",
+    "@legendapp/state": "^1.6.3",
     "@t4/ui": "*",
     "@tamagui/animations-react-native": "^1.49.2",
     "@tamagui/colors": "^1.49.2",

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { YStack, Paragraph, Button, Input } from 'tamagui'
+import { useObservable } from '@legendapp/state/react'
 
 interface Props {
   type: 'email' | 'password'
@@ -7,7 +8,7 @@ interface Props {
 }
 
 export const PasswordResetComponent: React.FC<Props> = ({ type, handleWithPress }) => {
-  const [emailOrPassword, setEmailOrPassword] = useState('')
+  const emailOrPassword = useObservable('')
 
   return (
     <YStack
@@ -31,7 +32,7 @@ export const PasswordResetComponent: React.FC<Props> = ({ type, handleWithPress 
           autoCapitalize="none"
           placeholder="Email"
           onChangeText={(text) => {
-            setEmailOrPassword(text)
+            emailOrPassword.set(text)
           }}
         />
       ) : (
@@ -39,7 +40,7 @@ export const PasswordResetComponent: React.FC<Props> = ({ type, handleWithPress 
           autoCapitalize="none"
           placeholder="New Password"
           onChangeText={(text) => {
-            setEmailOrPassword(text)
+            emailOrPassword.set(text)
           }}
           textContentType="password"
           secureTextEntry
@@ -50,7 +51,7 @@ export const PasswordResetComponent: React.FC<Props> = ({ type, handleWithPress 
       <Button
         themeInverse
         onPress={() => {
-          handleWithPress(emailOrPassword)
+          handleWithPress(emailOrPassword.get())
         }}
         hoverStyle={{ opacity: 0.8 }}
         onHoverIn={() => {}}
