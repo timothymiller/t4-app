@@ -20,7 +20,7 @@
     "build:android:preview": "cd apps/expo && pnpm build:android:preview",
     "generate": "pnpm --filter=@t4/api generate",
     "migrate:local": "pnpm --filter=@t4/api migrate:local",
-    "upgrade:tamagui": "pnpm up '*tamagui*'@latest '@tamagui/*'@latest react-native-web-lite@latest",
+    "upgrade:tamagui": "pnpm up -r '*tamagui*'@latest '@tamagui/*'@latest react-native-web-lite@latest",
     "check-deps": "check-dependency-version-consistency .",
     "check-types": "tsc --noEmit",
     "fix": "manypkg fix",
