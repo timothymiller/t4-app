@@ -59,7 +59,7 @@ export function activate(context: vscode.ExtensionContext) {
       placeHolder: 'NewScreen',
       prompt: 'Enter the name of the new screen',
     })
-    if (isInputError(screenName, 'screen')) return
+    if (!screenName || isInputError(screenName, 'screen')) return
 
     // Ask if the screen is a dynamic route
     const isDynamicRoute = await vscode.window
@@ -79,6 +79,7 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     const workspaceFolder = getActiveWorkspaceFolder()
+    if (!workspaceFolder) return
 
     // Create the new features screen folder
     const folderUri = vscode.Uri.file(
@@ -174,6 +175,7 @@ export function activate(context: vscode.ExtensionContext) {
       if (isInputError(componentName, 'component')) return
 
       const workspaceFolder = getActiveWorkspaceFolder()
+      if (!workspaceFolder) return
 
       // Create the new component file
       const newFileUri = vscode.Uri.file(
@@ -199,6 +201,7 @@ export function activate(context: vscode.ExtensionContext) {
     if (isInputError(routeName, 'route')) return
 
     const workspaceFolder = getActiveWorkspaceFolder()
+    if (!workspaceFolder) return
 
     // Create the new route file
     const newFileUri = vscode.Uri.file(
