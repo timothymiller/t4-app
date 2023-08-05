@@ -198,7 +198,7 @@ export function activate(context: vscode.ExtensionContext) {
       placeHolder: 'newRoute',
       prompt: 'Enter the name of the new route',
     })
-    if (isInputError(routeName, 'route')) return
+    if (!routeName || isInputError(routeName, 'route')) return
 
     const workspaceFolder = getActiveWorkspaceFolder()
     if (!workspaceFolder) return
