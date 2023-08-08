@@ -5,6 +5,8 @@ import { SplashScreen, Stack } from 'expo-router'
 import { useColorScheme } from 'react-native'
 import { SolitoImageProvider } from 'solito/image'
 import { useEffect } from 'react'
+import { SessionContextProvider } from '@supabase/auth-helpers-react'
+import { supabase } from 'app/utils/supabase'
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -40,13 +42,14 @@ export default function RootLayout() {
   }
 
   return (
-    <Provider>
-      {/* Uncomment if you want to use server optimized images */}
-      <SolitoImageProvider nextJsURL={imageURL}>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <Stack />
-        </ThemeProvider>
-      </SolitoImageProvider>
-    </Provider>
+    <SessionContextProvider supabaseClient={supabase}>
+      <Provider>
+        <SolitoImageProvider nextJsURL={imageURL}>
+          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <Stack />
+          </ThemeProvider>
+        </SolitoImageProvider>
+      </Provider>
+    </SessionContextProvider>
   )
 }

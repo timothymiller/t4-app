@@ -1,6 +1,7 @@
 {
   "build": {
     "development": {
+      "developmentClient": true,
       "distribution": "internal",
       "android": {
         "buildType": "apk"
@@ -13,7 +14,12 @@
         "TAMAGUI_TARGET": "native"
       }
     },
+    "preview": {
+      "distribution": "internal",
+      "channel": "preview"
+    },
     "production": {
+      "channel": "production",
       "distribution": "store",
       "android": {
         "buildType": "app-bundle",
@@ -26,5 +32,8 @@
         "TAMAGUI_TARGET": "native"
       }
     }
+  },
+  "cli": {
+    "promptToConfigurePushNotifications": false
   }
 }
