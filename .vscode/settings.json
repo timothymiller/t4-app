@@ -1,6 +1,4 @@
 {
-  // Turn this on if you want to debug the T4 App Tools Extension
-  // "terminal.integrated.defaultProfile.windows": null,
   "files.exclude": {
     "**/.git": false,
     "**/.svn": false,
@@ -36,5 +34,32 @@
   "search.exclude": {
     "**/out": true
   },
-  "explorerExclude.backup": {}
+  "explorerExclude.backup": {},
+  "apc.activityBar": {
+    "position": "bottom",
+    "hideSettings": true,
+    "size": 20
+  },
+  "apc.statusBar": {
+    "position": "editor-bottom",
+    "height": 22,
+    "fontSize": 12
+  },
+  "apc.electron": {
+    "titleBarStyle": "hiddenInset",
+    "trafficLightPosition": {
+      "x": 8,
+      "y": 10
+    }
+  },
+  "apc.header": {
+    "height": 34,
+    "fontSize": 14
+  },
+  "apc.listRow": {
+    "height": 21,
+    "fontSize": 13
+  }
+  // Turn this on if you want to debug the T4 App Tools Extension
+  // "terminal.integrated.defaultProfile.windows": null,
 }

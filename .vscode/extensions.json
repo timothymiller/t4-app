@@ -18,6 +18,8 @@
     "tamasfe.even-better-toml",
     "formulahendry.auto-rename-tag",
     "dbaeumer.vscode-eslint",
-    "expo.vscode-expo-tools"
+    "expo.vscode-expo-tools",
+    "FernandoTheRojo.nandorojo-tamagui",
+    "drcika.apc-extension"
   ]
 }
