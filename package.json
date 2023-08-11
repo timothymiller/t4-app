@@ -18,6 +18,7 @@
     "build:android": "cd apps/expo && pnpm build:android",
     "build:ios:preview": "cd apps/expo && pnpm build:ios:preview",
     "build:android:preview": "cd apps/expo && pnpm build:android:preview",
+    "submit:android": "cd apps/expo && eas submit --platform android --path ./app-release.aab",
     "generate": "pnpm --filter=@t4/api generate",
     "migrate:local": "pnpm --filter=@t4/api migrate:local",
     "upgrade:tamagui": "pnpm up -r '*tamagui*'@latest '@tamagui/*'@latest react-native-web-lite@latest",
@@ -30,14 +31,14 @@
     "clean:workspaces": "turbo clean"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.6",
+    "@babel/runtime": "^7.22.10",
     "@manypkg/cli": "^0.21.0",
-    "@supabase/supabase-js": "^2.31.0",
+    "@supabase/supabase-js": "^2.32.0",
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
-    "eslint": "^8.45.0",
+    "eslint": "^8.46.0",
     "node-gyp": "^9.4.0",
-    "prettier": "^3.0.0",
+    "prettier": "^3.0.1",
     "react-native-url-polyfill": "^2.0.0",
     "turbo": "^1.10.12",
     "typescript": "^5.1.6"

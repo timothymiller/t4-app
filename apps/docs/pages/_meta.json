@@ -4,17 +4,21 @@
   "workflow": "🔨 Workflow",
   "tech-stack": "🍔 Tech Stack",
   "authentication": "🔒 Authentication",
+  "hooks": "🪝 React Hooks",
   "faq": "❓ FAQ",
   "extension": "🧩 VSCode Extension",
   "wish-list": "✨ Wish List",
+  "privacy-policy": {
+    "display": "hidden"
+  },
   "demo": {
     "title": "📱 View Demo",
     "type": "page",
     "href": "https://app.t4stack.com",
     "newWindow": true
   },
-  "contact": {
-    "title": "✉️ Contact ↗",
+  "twitter": {
+    "title": "🐦 Twitter ↗",
     "type": "page",
     "href": "https://twitter.com/ogtimothymiller",
     "newWindow": true

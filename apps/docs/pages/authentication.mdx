@@ -1,3 +1,5 @@
+import { Steps } from 'nextra/components'
+
 # 🔒 Authentication
 
 T4 uses [Supabase](https://supabase.com/docs/guides/auth) for authentication.
@@ -6,21 +8,26 @@ T4 uses [Supabase](https://supabase.com/docs/guides/auth) for authentication.
 
 The authentication flow in T4 involves the following steps:
 
-1. User Registration: Users can register their accounts using Supabase's email authentication
-   or sign in directly through various third-party providers such as Google, Apple, and Discord.
-   This allows users to choose their preferred method for signing up.
+<Steps>
+### User Registration
 
-2. Email Verification: After registering, users receive an email to verify their email address.
-   They need to click on the verification link to confirm their account.
+Users can register their accounts using Supabase's email authentication or sign in directly through various third-party providers such as Google, Apple, and Discord. This allows users to choose their preferred method for signing up.
 
-3. User Login: Once registered and verified, users can log in to T4 using Supabase's email authentication
-   or directly through third-party providers.
+### Email Verification
 
-4. Password Recovery: If users forget their password, they can initiate a
-   password recovery process. Supabase will send them an email with
-   instructions on how to reset their password. (Note: to be implemented)
+After registering, users receive an email to verify their email address.
+They need to click on the verification link to confirm their account.
 
-## Setup
+### User Login
+
+Once registered and verified, users can log in to T4 using Supabase's email authentication or directly through third-party providers.
+
+### Password Recovery
+
+If users forget their password, they can initiate a password recovery process. Supabase will send them an email with instructions on how to reset their password. (Note: to be implemented)
+</Steps>
+
+## 🔩 Setup
 
 ### Frontend
 
@@ -31,7 +38,7 @@ The frontend needs the `Supabase URL` and `Supabase Key` to initialize the Supab
 The API server needs the `JWT Secret` from Supabase to verify the JWTs sent by the client.
 This is placed inside `.dev.vars` as `JWT_VERIFICATION_KEY`.
 
-## Concepts Explained
+## 📚 Concepts Explained
 
 ### JSON Web Tokens (JWT)
 
