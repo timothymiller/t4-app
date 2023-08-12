@@ -19,12 +19,13 @@
   },
   "homepage": "https://github.com/timothymiller/t4-app#readme",
   "dependencies": {
+    "@ducanh2912/next-pwa": "^9.4.0",
+    "@t4/ui": "*",
     "next": "^13.4.13",
     "nextra": "^2.10.0",
     "nextra-theme-docs": "^2.10.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@t4/ui": "*"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/node": "^18.16.19",

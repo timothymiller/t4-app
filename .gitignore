@@ -66,3 +66,7 @@ apps/expo/android/**
 **/*.apk
 **/*.aab
 **/*.ipa
+
+# PWA
+**/sw.js
+**/workbox-*.js

@@ -47,10 +47,5 @@
     "node": ">=18.16.1",
     "pnpm": ">=8.6.6"
   },
-  "packageManager": "pnpm@8.6.10",
-  "pnpm": {
-    "overrides": {
-      "react-refresh": "~0.14.0"
-    }
-  }
+  "packageManager": "pnpm@8.6.10"
 }
