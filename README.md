@@ -175,8 +175,9 @@ The VSCode extension is optional but highly recommended. It provides a better de
 ## ✨ Features
 
 - ✅ Tamagui UI kit across all platforms.
-- ✅ Supabase Auth
 - ✅ PNPM support
+- ✅ Million.js Support
+- ✅ Supabase Auth
 - ✅ Uses Next.js for building web apps.
 - ✅ Uses Expo for building native mobile apps.
 - ✅ PWA by default for native desktop support. No Electron required.
