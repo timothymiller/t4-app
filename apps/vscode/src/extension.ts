@@ -18,11 +18,35 @@ function getActiveWorkspaceFolder() {
 
 // Handles errors for the input boxes
 function isInputError(input: string | undefined, inputName: string) {
-  if (!input || input.includes(' ')) {
+  if (!input) {
     vscode.window.showInformationMessage(`Enter a valid ${inputName} name. You entered: ${input}`)
     return true
   }
   return false
+}
+
+function convertToPascalCase(input: string) {
+  let pascalCase = input
+  let string = input
+
+  // Convert any spaces from the input to dashes, this is the convention for file names
+  if (string.includes(' ')) {
+    string = string.replace(/\s+/g, '-')
+  }
+  string = string.toLowerCase()
+
+  // Convert the input to PascalCase if it contains dashes or underscores, this is the convention for component names
+  if (string.includes('-') || string.includes('_')) {
+    pascalCase = string
+      .split(/\W+/)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('')
+  }
+
+  return {
+    pascalCase,
+    string,
+  }
 }
 
 // Inserts the new router import into the router file
@@ -55,7 +79,7 @@ export function activate(context: vscode.ExtensionContext) {
   // The command for creating a new screen
   const disposableScreen = vscode.commands.registerCommand('t4-app-tools.newScreen', async () => {
     // Ask for the name of the new screen
-    const screenName = await vscode.window.showInputBox({
+    let screenName = await vscode.window.showInputBox({
       placeHolder: 'NewScreen',
       prompt: 'Enter the name of the new screen',
     })
@@ -78,26 +102,30 @@ export function activate(context: vscode.ExtensionContext) {
       if (isInputError(parameterName, 'parameter')) return
     }
 
+    const { pascalCase: screenNamePascalCase, string: screenNameString } =
+      convertToPascalCase(screenName)
+    screenName = screenNameString
+
     const workspaceFolder = getActiveWorkspaceFolder()
     if (!workspaceFolder) return
 
     // Create the new features screen folder
     const folderUri = vscode.Uri.file(
-      path.join(workspaceFolder.uri.fsPath, 'packages', 'app', 'features', screenName.toLowerCase())
+      path.join(workspaceFolder.uri.fsPath, 'packages', 'app', 'features', screenName)
     )
     vscode.workspace.fs.createDirectory(folderUri)
 
     // Create the new features screen file
     const featuresFileUri = vscode.Uri.file(path.join(folderUri.fsPath, 'screen.tsx'))
     let screenFileData = new TextEncoder().encode(
-      `import { Paragraph, YStack } from "@t4/ui";\nimport React from "react";\n\nexport function ${
-        screenName + 'Screen'
-      }() {\n  return (\n    <YStack f={1} jc="center" ai="center" space>\n      <Paragraph ta="center" fow="800">\n        ${screenName.toLowerCase()}\n      </Paragraph>\n    </YStack>\n  );\n} `
+      `import { Paragraph, YStack } from "@t4/ui";\nimport React from \"react";\n\nexport function ${
+        screenNamePascalCase + 'Screen'
+      }() {\n  return (\n    <YStack f={1} jc="center" ai="center" space>\n      <Paragraph ta="center" fow="800">\n        ${screenNamePascalCase}\n      </Paragraph>\n    </YStack>\n  );\n} `
     )
     if (isDynamicRoute) {
       screenFileData = new TextEncoder().encode(
         `import { Paragraph, YStack } from "@t4/ui";\nimport React from "react";\nimport { createParam } from "solito";\n\nconst { useParam } = createParam<{ ${parameterName!.toLowerCase()}: string }>()\n\nexport function ${
-          screenName + 'Screen'
+          screenNamePascalCase + 'Screen'
         }() {\n  const [${parameterName!.toLowerCase()}] = useParam('${parameterName!.toLowerCase()}')\n\n  return (\n    <YStack f={1} jc="center" ai="center" space>\n      <Paragraph ta="center" fow="800">\n        {\`${parameterName!.toLowerCase()}: \${${parameterName!.toLowerCase()}}\`}\n      </Paragraph>\n    </YStack>\n  );\n} `
       )
     }
@@ -107,13 +135,11 @@ export function activate(context: vscode.ExtensionContext) {
     let expoFolderUri = vscode.Uri.file(
       path.join(workspaceFolder.uri.fsPath, 'apps', 'expo', 'app')
     )
-    let expoFileUri = vscode.Uri.file(
-      path.join(expoFolderUri.fsPath, `${screenName.toLowerCase()}.tsx`)
-    )
+    let expoFileUri = vscode.Uri.file(path.join(expoFolderUri.fsPath, `${screenName}.tsx`))
 
     if (isDynamicRoute) {
       expoFolderUri = vscode.Uri.file(
-        path.join(workspaceFolder.uri.fsPath, 'apps', 'expo', 'app', screenName.toLowerCase())
+        path.join(workspaceFolder.uri.fsPath, 'apps', 'expo', 'app', screenName)
       )
 
       expoFileUri = vscode.Uri.file(
@@ -127,16 +153,16 @@ export function activate(context: vscode.ExtensionContext) {
     // Create the new Expo screen file
     const expoScreenFileData = new TextEncoder().encode(
       `import { ${
-        screenName + 'Screen'
-      } } from "app/features/${screenName.toLowerCase()}/screen";\n\nexport default function () {\n    return <${
-        screenName + 'Screen'
+        screenNamePascalCase + 'Screen'
+      } } from "app/features/${screenName}/screen";\n\nexport default function () {\n    return <${
+        screenNamePascalCase + 'Screen'
       }/>\n}\n`
     )
     await vscode.workspace.fs.writeFile(expoFileUri, expoScreenFileData)
 
     // Setup the correct path for the new Next screen
     const nextFolderUri = vscode.Uri.file(
-      path.join(workspaceFolder.uri.fsPath, 'apps', 'next', 'pages', screenName.toLowerCase())
+      path.join(workspaceFolder.uri.fsPath, 'apps', 'next', 'pages', screenName)
     )
     let nextFileUri = vscode.Uri.file(path.join(nextFolderUri.fsPath, 'index.tsx'))
 
@@ -152,9 +178,9 @@ export function activate(context: vscode.ExtensionContext) {
     // Create the new Next screen file
     const nextFileData = new TextEncoder().encode(
       `import { ${
-        screenName + 'Screen'
-      } } from 'app/features/${screenName.toLowerCase()}/screen'\n\nexport default ${
-        screenName + 'Screen'
+        screenNamePascalCase + 'Screen'
+      } } from 'app/features/${screenName}/screen'\n\nexport default ${
+        screenNamePascalCase + 'Screen'
       }\n`
     )
     await vscode.workspace.fs.writeFile(nextFileUri, nextFileData)
@@ -172,17 +198,25 @@ export function activate(context: vscode.ExtensionContext) {
         placeHolder: 'NewComponent',
         prompt: 'Enter the name of the new component',
       })
-      if (isInputError(componentName, 'component')) return
+      if (!componentName || isInputError(componentName, 'component')) return
+
+      const { pascalCase: componentNamePascalCase } = convertToPascalCase(componentName)
 
       const workspaceFolder = getActiveWorkspaceFolder()
       if (!workspaceFolder) return
 
       // Create the new component file
       const newFileUri = vscode.Uri.file(
-        path.join(workspaceFolder.uri.fsPath, 'packages', 'ui', 'src', componentName + '.tsx')
+        path.join(
+          workspaceFolder.uri.fsPath,
+          'packages',
+          'ui',
+          'src',
+          componentNamePascalCase + '.tsx'
+        )
       )
       const componentFileData = new TextEncoder().encode(
-        `import { Paragraph, YStack } from "@t4/ui";\nimport React from "react";\n\nexport function ${componentName}() {\n  return (\n    <YStack f={1} jc="center" ai="center" space>\n      <Paragraph ta="center" fow="800">\n        ${componentName}\n      </Paragraph>\n    </YStack>\n  );\n} `
+        `import { Paragraph, YStack } from "@t4/ui";\nimport React from "react";\n\nexport function ${componentNamePascalCase}() {\n  return (\n    <YStack f={1} jc="center" ai="center" space>\n      <Paragraph ta="center" fow="800">\n        ${componentNamePascalCase}\n      </Paragraph>\n    </YStack>\n  );\n} `
       )
       await vscode.workspace.fs.writeFile(newFileUri, componentFileData)
 
@@ -200,20 +234,31 @@ export function activate(context: vscode.ExtensionContext) {
     })
     if (!routeName || isInputError(routeName, 'route')) return
 
+    const { pascalCase: routeNamePascalCase } = convertToPascalCase(routeName)
+    const routeNameCamelCase =
+      routeNamePascalCase.charAt(0).toLowerCase() + routeNamePascalCase.slice(1)
+
     const workspaceFolder = getActiveWorkspaceFolder()
     if (!workspaceFolder) return
 
     // Create the new route file
     const newFileUri = vscode.Uri.file(
-      path.join(workspaceFolder.uri.fsPath, 'packages', 'api', 'src', 'routes', routeName + '.ts')
+      path.join(
+        workspaceFolder.uri.fsPath,
+        'packages',
+        'api',
+        'src',
+        'routes',
+        routeNameCamelCase + '.ts'
+      )
     )
     const routeFileData = new TextEncoder().encode(
-      `import { protectedProcedure, publicProcedure, router } from "../trpc";\n\nexport const ${routeName}Router = router({\n\n});\n`
+      `import { protectedProcedure, publicProcedure, router } from "../trpc";\n\nexport const ${routeNameCamelCase}Router = router({\n\n});\n`
     )
     await vscode.workspace.fs.writeFile(newFileUri, routeFileData)
 
     // Insert the new route import in the api/src/router.ts file
-    await insertRouterImport(workspaceFolder, routeName)
+    await insertRouterImport(workspaceFolder, routeNameCamelCase)
 
     // Open the routes/{routeName}.tsx file
     const newRouteDocument = await vscode.workspace.openTextDocument(newFileUri)
