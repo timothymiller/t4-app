@@ -26,9 +26,11 @@
     "@tamagui/shorthands": "^1.52.2",
     "@tamagui/themes": "^1.52.2",
     "@tamagui/toast": "^1.52.2",
+    "@tanstack/react-table": "^8.9.3",
     "@tanstack/react-virtual": "^3.0.0-beta.54",
     "jotai": "^2.3.1",
-    "tamagui": "^1.52.2"
+    "tamagui": "^1.52.2",
+    "@t4/api": "*"
   },
   "devDependencies": {
     "@tamagui/build": "^1.52.2"

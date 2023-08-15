@@ -19,6 +19,7 @@
     "@tamagui/shorthands": "^1.52.2",
     "@tamagui/themes": "^1.52.2",
     "@tanstack/react-query": "^4.32.1",
+    "@tanstack/react-table": "^8.9.3",
     "@trpc/client": "^10.37.1",
     "@trpc/next": "^10.37.1",
     "@trpc/react-query": "^10.37.1",

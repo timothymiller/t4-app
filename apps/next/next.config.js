@@ -14,6 +14,9 @@ const disableExtraction =
 const disableBrowserLogs =
   boolVals[process.env.DISABLE_BROWSER_LOGS] ?? process.env.NODE_ENV === 'production'
 
+const enableMillionJS =
+  boolVals[process.env.ENABLE_MILLION_JS] ?? process.env.NODE_ENV === 'production'
+
 // Enabling causes FOUC on page refreshes
 const optimizeCss = false // boolVals[process.env.OPTIMIZE_CSS] ?? process.env.NODE_ENV === 'production'
 
@@ -92,7 +95,11 @@ module.exports = function () {
 
   const millionConfig = {
     auto: true,
+    mute: true
   }
 
-  return million.next(config, millionConfig);
+  if (enableMillionJS) {
+    return million.next(config, millionConfig);
+  }
+  return config;
 }

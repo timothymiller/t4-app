@@ -12,7 +12,7 @@ import {
   useToastController,
 } from '@t4/ui'
 import { ChevronDown } from '@tamagui/lucide-icons'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Linking } from 'react-native'
 import { useLink } from 'solito/link'
 import { signOut } from 'app/utils/supabase'
@@ -24,13 +24,12 @@ import { trpc } from 'app/utils/trpc'
 
 export function HomeScreen() {
   const utils = trpc.useContext()
-  const { loading, user, setUser } = useUser()
+  const { user, setUser } = useUser()
   const isSignedIn = user !== null
 
-  useEffect(() => {
-    console.log('loading', loading)
-    console.log('user', user)
-  }, [loading, user])
+  const tableLink = useLink({
+    href: '/table',
+  })
 
   const signInLink = useLink({
     href: '/sign-in',
@@ -87,7 +86,10 @@ export function HomeScreen() {
         <H3>🦮🐴 App Demos</H3>
         <YStack space="$2">
           <Button {...infiniteListLink} space="$2">
-            Infinite List
+            Virtualized List
+          </Button>
+          <Button {...tableLink} space="$2">
+            TanStack Table
           </Button>
           <Button {...dataFetchingLink} space="$2">
             Fetching Data
