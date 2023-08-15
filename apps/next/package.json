@@ -28,9 +28,9 @@
   },
   "devDependencies": {
     "@tamagui/next-plugin": "^1.52.4",
-    "@types/node": "^18.16.19",
+    "@types/node": "^18.17.5",
     "dotenv-cli": "^7.2.1",
     "eslint-config-next": "^13.4.16",
-    "vercel": "^31.2.3"
+    "vercel": "^31.3.1"
   }
 }
