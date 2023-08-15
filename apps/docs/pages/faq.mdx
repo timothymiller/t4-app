@@ -24,3 +24,12 @@ In the meantime, Cloudflare R2 integration is easier than ever. The bulk of your
 ## Why no Prisma support?
 
 Prisma is not supported in Cloudflare Workers because it's a chunky boi in terms of bundle size.
+
+## Supabase warning logged in local dev
+
+If you see this warning in your console when running `pnpm web`. You can safely ignore it.
+
+```bash
+No storage option exists to persist the session, which may result in unexpected behavior when using auth.
+If you want to set persistSession to true, please provide a storage option or you may set persistSession to false to disable this warning.
+```
