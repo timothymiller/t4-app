@@ -53,6 +53,11 @@
     "fontSize": 12
   },
   "apc.electron": {
+    "frame": false,
+    "transparent": true,
+    "vibrancy": "ultra-dark",
+    "opacity": 0.9, // Range: 0-1 (0 means full transparency). If set, you won't see the element.
+    "visualEffectState": "active",
     "titleBarStyle": "hiddenInset",
     "trafficLightPosition": {
       "x": 8,
