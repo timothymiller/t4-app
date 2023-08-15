@@ -14,6 +14,9 @@ importers:
       '@manypkg/cli':
         specifier: ^0.21.0
         version: 0.21.0
+      '@nderscore/tamagui-typescript-plugin':
+        specifier: ^0.2.0
+        version: 0.2.0(@tamagui/core@1.52.4)(@tamagui/helpers@1.52.4)(typescript@5.1.6)
       '@supabase/supabase-js':
         specifier: ^2.32.0
         version: 2.32.0
@@ -93,6 +96,9 @@ importers:
       '@t4/ui':
         specifier: '*'
         version: link:../../packages/ui
+      '@tamagui/static':
+        specifier: ^1.52.4
+        version: 1.52.4(react-dom@18.2.0)(react@18.2.0)
       app:
         specifier: '*'
         version: link:../../packages/app
@@ -3593,6 +3599,19 @@ packages:
       '@napi-rs/simple-git-win32-x64-msvc': 0.1.8
     dev: false
 
+  /@nderscore/tamagui-typescript-plugin@0.2.0(@tamagui/core@1.52.4)(@tamagui/helpers@1.52.4)(typescript@5.1.6):
+    resolution: {integrity: sha512-2WtwiAEYCc/WocNOHsgmUfZ/YM+3lM9Q3vgnVV5fgOv7bI3OVxskAVARzPbCFSqyXObwe8/whtCcPPD1T6+A3Q==}
+    peerDependencies:
+      '@tamagui/core': '*'
+      '@tamagui/helpers': '*'
+      typescript: '>=4.8'
+    dependencies:
+      '@tamagui/core': 1.52.4(react@18.2.0)
+      '@tamagui/helpers': 1.52.4(react@18.2.0)
+      color: 4.2.3
+      typescript: 5.1.6
+    dev: false
+
   /@next/env@13.4.16:
     resolution: {integrity: sha512-pCU0sJBqdfKP9mwDadxvZd+eLz3fZrTlmmDHY12Hdpl3DD0vy8ou5HWKVfG0zZS6tqhL4wnQqRbspdY5nqa7MA==}
 
@@ -4399,7 +4418,6 @@ packages:
       get-tsconfig: 4.7.0
       lodash.debounce: 4.0.8
       typescript: 5.1.6
-    dev: true
 
   /@tamagui/button@1.52.4(react-native@0.72.4)(react@18.2.0):
     resolution: {integrity: sha512-SxVLYnlaN0swFjVkqxDihGCLcFwHRVXm8O7aRM9Q6tA/y7C6UAG74mHboohhYXRZURx/abwF054hZrNLyKN3FQ==}
@@ -4451,7 +4469,6 @@ packages:
 
   /@tamagui/cli-color@1.52.4:
     resolution: {integrity: sha512-H9OmxCEWAfWsb0aZM/ehwErQMsB7vwodcMt6s8I8FhQ8gBnqRyMxFV5wA5VSXYOz2C9NdPd9l0skP7theu8bZA==}
-    dev: true
 
   /@tamagui/collapsible@1.52.4(react@18.2.0):
     resolution: {integrity: sha512-nuY9Urb7waUjYafCYacgYxtmnQaCh0Z3WJFLqduY2xn5e3BToWWBD2jA9L0wCRa/eSCw+jkIBcKUlA75yGF9zg==}
@@ -4500,7 +4517,6 @@ packages:
       '@tamagui/shorthands': 1.52.4
     transitivePeerDependencies:
       - react
-    dev: true
 
   /@tamagui/constants@1.52.4(react@18.2.0):
     resolution: {integrity: sha512-nJ7H5QTaYJ/zv/A2TmmhTH2++jXbaR2DZlVS4p2tbPCuavAEu7hnjIHhnF7sEZ/DtEZ0bxuHpzQB5H5Bo+YfVQ==}
@@ -4517,7 +4533,6 @@ packages:
       '@tamagui/helpers': 1.52.4(react@18.2.0)
     transitivePeerDependencies:
       - react
-    dev: true
 
   /@tamagui/core@1.52.4(react@18.2.0):
     resolution: {integrity: sha512-1VXnIuU8eTW5jCaTbLbyLnCSICOKA6dOPhP8XZg0OcwIRl+T06viQ9bcmqlS6hPBmg+oJ5rMvNfd9xegrmiC+A==}
@@ -4667,7 +4682,6 @@ packages:
       - esbuild
       - react
       - supports-color
-    dev: true
 
   /@tamagui/get-button-sized@1.52.4(react-native@0.72.4)(react@18.2.0):
     resolution: {integrity: sha512-0c1uGLnsJA8udNVHmlhOJ+q2+GLPNZE8RR3V5pFu4iWjoCE3+7VkRLbNRFhC0VoTrIXI3is0uQUjmbkvD8IKiQ==}
@@ -4732,7 +4746,6 @@ packages:
     resolution: {integrity: sha512-lYRCSRnS9/vg1XSCuD5wj7Y1sdTVNvGu1cvpJp0IYodvnv3AgsFjv2UqyOmvy+BiqL57jahawvwmt4hmrVyTpQ==}
     dependencies:
       '@tamagui/types': 1.52.4
-    dev: true
 
   /@tamagui/helpers-tamagui@1.52.4(react-native@0.72.4)(react@18.2.0):
     resolution: {integrity: sha512-PPWT2Ad3QEiha1ajo2oE9VivF/DdXo4gD6GIdCDpC5hMKbzV2Dwoj7Dqd4ww+RVYiVz4cS2uc527D3qSAGPSBA==}
@@ -4946,7 +4959,6 @@ packages:
 
   /@tamagui/proxy-worm@1.52.4:
     resolution: {integrity: sha512-ADF1jltijJ7LuiaJpdpjk84MaWhmkhP8jJgdiuyQW9RfvAiUhkOi04uxsvucVO3jERU0887ju0B2G/YPHxECAw==}
-    dev: true
 
   /@tamagui/radio-group@1.52.4(react-native@0.72.4)(react@18.2.0):
     resolution: {integrity: sha512-P5ra4tvgDGWefK/0/JYLykFeBylHYl/YzQd9XvXr5C/LYbk22de9izwz4Qs1tKO3MlYK0ndeoa3nLhvUp5L67w==}
@@ -5181,7 +5193,6 @@ packages:
       - react
       - react-dom
       - supports-color
-    dev: true
 
   /@tamagui/switch@1.52.4(react-native@0.72.4)(react@18.2.0):
     resolution: {integrity: sha512-PTyY3BxHgjUIyuPV9XbD6A8Vtp/bIA36+Viu4MRUTDhxfWLAclUMsCeUxBUJ4sNNoDWPViQjvOj4RvlGW/MAuA==}
@@ -5333,7 +5344,6 @@ packages:
 
   /@tamagui/types@1.52.4:
     resolution: {integrity: sha512-/utotY0Hj3pT1JIdy5xVu//U6k8SwJVQ30ZHVOZMghj0CvFkNO9KCkLyRHm/47UNT8UC24Zt5wfbaSEZ6gdqwg==}
-    dev: true
 
   /@tamagui/use-callback-ref@1.52.4:
     resolution: {integrity: sha512-iOPkZ7XwuiEV1Of+7vPTHLm1LN4oCg96EZI7uQKlC4/QmX7k8iwPNYoU5lXijM9ULZoYc+vyZB5E8yvueN4cOA==}
@@ -5673,7 +5683,6 @@ packages:
     resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
     dependencies:
       '@types/node': 18.17.5
-    dev: true
 
   /@types/glob@7.2.0:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
@@ -6104,7 +6113,7 @@ packages:
       node-fetch: 2.6.9
       path-to-regexp: 6.2.1
       ts-morph: 12.0.0
-      ts-node: 10.9.1
+      ts-node: 10.9.1(@types/node@14.18.33)(typescript@4.9.5)
       typescript: 4.9.5
     transitivePeerDependencies:
       - '@swc/core'
@@ -6707,7 +6716,6 @@ packages:
       '@babel/types': 7.22.10
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /babel-loader@9.1.3(@babel/core@7.22.10)(webpack@5.88.2):
     resolution: {integrity: sha512-xG3ST4DglodGf8qSwv0MdeWLhrDsw/32QMdTO5T1ZIp9gQur0HkCyFs7Awskr10JKXFXwpAhiCuYX5oGXnRGbw==}
@@ -8893,7 +8901,6 @@ packages:
       esbuild: 0.19.1
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /esbuild-sunos-64@0.14.47:
     resolution: {integrity: sha512-uOeSgLUwukLioAJOiGYm3kNl+1wJjgJA8R671GYgcPgCx7QR73zfvYqXFFcIO93/nBdIbt5hd8RItqbbf3HtAQ==}
@@ -10037,7 +10044,6 @@ packages:
       commondir: 1.0.1
       make-dir: 3.1.0
       pkg-dir: 4.2.0
-    dev: true
 
   /find-cache-dir@4.0.0:
     resolution: {integrity: sha512-9ZonPT4ZAK4a+1pUPVPZJapbi7O5qbbJPdYw/NOQWZZbVLdDTYM3A4R9z/DpAM08IDaFGsvPgiGZ82WEwUDWjg==}
@@ -10049,7 +10055,6 @@ packages:
 
   /find-root@1.1.0:
     resolution: {integrity: sha512-NKfW6bec6GfKc0SGx1e07QZY9PE99u0Bft/0rzSD5k3sO/vwkVUpDUKVm5Gpp5Ue3YfShPFTX2070tDs5kB9Ng==}
-    dev: true
 
   /find-up@3.0.0:
     resolution: {integrity: sha512-1yD6RmLI1XBfxugvORwlck6f75tYL+iR0jqwsOrOxMZyGYqUuDhJ0l4AXdO1iX/FTs9cBAMEk1gWSEx1kSbylg==}
@@ -10170,7 +10175,6 @@ packages:
       graceful-fs: 4.2.11
       jsonfile: 6.1.0
       universalify: 2.0.0
-    dev: true
 
   /fs-extra@8.1.0:
     resolution: {integrity: sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==}
@@ -10338,7 +10342,6 @@ packages:
     resolution: {integrity: sha512-pmjiZ7xtB8URYm74PlGJozDNyhvsVLUcpBa8DZBG3bWHwaHa9bPiRpiSfovw+fjhwONSCWKRyk+JQHEGZmMrzw==}
     dependencies:
       resolve-pkg-maps: 1.0.0
-    dev: true
 
   /getenv@1.0.0:
     resolution: {integrity: sha512-7yetJWqbS9sbn0vIfliPsFgoXMKn/YMF+Wuiog97x+urnSRRRZ7xB+uVkwGKzRgq9CDFfMQnE9ruL5DHv9c6Xg==}
@@ -11974,7 +11977,6 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       semver: 6.3.1
-    dev: true
 
   /make-error@1.3.6:
     resolution: {integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==}
@@ -14355,7 +14357,6 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       find-up: 4.1.0
-    dev: true
 
   /pkg-dir@7.0.0:
     resolution: {integrity: sha512-Ie9z/WINcxxLp27BKOCHGde4ITq9UklYKDzVo1nhk5sqGEXU3FpkwP5GM2voTGJkGd9B3Otl+Q4uwSOeSUtOBA==}
@@ -15253,7 +15254,6 @@ packages:
 
   /resolve-pkg-maps@1.0.0:
     resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
-    dev: true
 
   /resolve@1.22.4:
     resolution: {integrity: sha512-PXNdCiPqDqeUou+w1C2eTQbNfxKSuMxqTCuvlmmMsk1NWHL5fRrhY6Pl0qEYYc6+QqGClco1Qj8XnjPego4wfg==}
@@ -16535,12 +16535,14 @@ packages:
       code-block-writer: 10.1.1
     dev: true
 
-  /ts-node@10.9.1:
+  /ts-node@10.9.1(@types/node@14.18.33)(typescript@4.9.5):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
-      '@swc/core': '*'
-      '@swc/wasm': '*'
+      '@swc/core': '>=1.2.50'
+      '@swc/wasm': '>=1.2.50'
+      '@types/node': '*'
+      typescript: '>=2.7'
     peerDependenciesMeta:
       '@swc/core':
         optional: true
@@ -16552,12 +16554,14 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
+      '@types/node': 14.18.33
       acorn: 8.10.0
       acorn-walk: 8.2.0
       arg: 4.1.3
       create-require: 1.1.1
       diff: 4.0.2
       make-error: 1.3.6
+      typescript: 4.9.5
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     dev: true

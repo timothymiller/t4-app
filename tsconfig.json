@@ -6,7 +6,14 @@
       "app/*": ["./packages/app/*"],
       "@t4/api/*": ["./packages/api/*"],
       "@t4/ui/*": ["./packages/ui/*"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "@nderscore/tamagui-typescript-plugin",
+        "pathToApp": "apps/next",
+        "defaultTheme": "light"
+      }
+    ]
   },
   "extends": "expo/tsconfig.base"
 }
