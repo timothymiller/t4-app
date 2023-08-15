@@ -3,14 +3,24 @@
   "globalEnv": ["DISABLE_EXTRACTION", "NODE_ENV", "EAS_BUILD_PLATFORM"],
   "pipeline": {
     "build": {
+      "cache": true,
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "build/**", "node_modules/.cache/metro/**"]
+      "outputs": [
+        ".next/**",
+        "migrations/**",
+        ".wrangler/**",
+        "!.next/cache/**",
+        "build/**",
+        "dist/**",
+        "node_modules/.cache/metro/**"
+      ]
     },
     "dev": {
       "cache": false,
       "persistent": true
     },
     "generate": {
+      "cache": true,
       "dependsOn": ["^generate"],
       "outputs": ["migrations/**"]
     },
