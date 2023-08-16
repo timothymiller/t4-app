@@ -29,10 +29,6 @@
     "drizzle-kit": "^0.19.12",
     "eslint": "^8.47.0",
     "typescript": "^5.1.6",
-    "wrangler": "3.5.1"
-  },
-  "peerDependencies": {
-    "workerd": "1.20230814.1",
-    "miniflare": "3.20230814.1"
+    "wrangler": "^3.5.1"
   }
 }

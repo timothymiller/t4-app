@@ -21,7 +21,7 @@
   "dependencies": {
     "@ducanh2912/next-pwa": "^9.4.0",
     "@t4/ui": "*",
-    "next": "^13.4.16",
+    "next": "13.4.4",
     "nextra": "^2.11.0",
     "nextra-theme-docs": "^2.11.0",
     "react": "^18.2.0",
