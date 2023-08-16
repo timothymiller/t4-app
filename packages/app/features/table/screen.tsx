@@ -1,9 +1,8 @@
 import { H1, Paragraph, YStack } from '@t4/ui'
-import React from 'react'
 import { trpc } from 'app/utils/trpc'
-import { Table } from '@t4/ui/src/table/index.web'
+import { Table } from '@t4/ui/src/table'
 
-export function TableScreen() {
+export const TableScreen = (): React.ReactNode => {
   const allCars = trpc.car.all.useQuery()
   const isError =
     allCars?.failureReason?.data?.httpStatus !== 200 &&
@@ -14,7 +13,7 @@ export function TableScreen() {
       <H1>🛞 Vehicles Table</H1>
       {allCars.isLoading && <Paragraph>Loading...</Paragraph>}
       {isError && <Paragraph>{allCars.error?.data?.code}</Paragraph>}
-      {allCars.data && !allCars.error && <Table data={allCars.data} />}
+      {allCars.data && <Table data={allCars.data} />}
     </YStack>
   )
 }
