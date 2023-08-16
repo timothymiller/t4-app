@@ -1,28 +1,30 @@
 {
   "$schema": "https://turborepo.org/schema.json",
-  "globalEnv": ["DISABLE_EXTRACTION", "NODE_ENV", "EAS_BUILD_PLATFORM"],
+  "globalDependencies": ["**/.env.*local"],
   "pipeline": {
-    "build": {
-      "cache": true,
-      "dependsOn": ["^build"],
-      "outputs": [
-        ".next/**",
-        "migrations/**",
-        ".wrangler/**",
-        "!.next/cache/**",
-        "build/**",
-        "dist/**",
-        "node_modules/.cache/metro/**"
-      ]
+    "next-app#build": {
+      "dependsOn": ["@t4/ui#build"],
+      "inputs": ["pages/**", "public/**"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "t4-app-docs#build": {
+      "dependsOn": ["@t4/ui#build"],
+      "inputs": ["pages/**", "public/**"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "expo-app#postinstall": {
+      "outputs": [".tamagui/**"]
+    },
+    "@t4/ui#build": {
+      "outputs": ["dist/**"]
+    },
+    "@t4/api#generate": {
+      "inputs": ["src/db/schema.ts"],
+      "outputs": ["migrations/**"]
     },
     "dev": {
       "cache": false,
       "persistent": true
-    },
-    "generate": {
-      "cache": true,
-      "dependsOn": ["^generate"],
-      "outputs": ["migrations/**"]
     },
     "clean": {
       "cache": false
