@@ -16,7 +16,6 @@
     "clean": "rm -rf .turbo node_modules"
   },
   "dependencies": {
-    "@cloudflare/d1": "^1.4.1",
     "@hono/trpc-server": "^0.1.0",
     "@trpc/server": "^10.37.1",
     "@tsndr/cloudflare-worker-jwt": "^2.2.1",
@@ -30,6 +29,10 @@
     "drizzle-kit": "^0.19.12",
     "eslint": "^8.47.0",
     "typescript": "^5.1.6",
-    "wrangler": "^3.5.0"
+    "wrangler": "3.5.1"
+  },
+  "peerDependencies": {
+    "workerd": "1.20230814.1",
+    "miniflare": "3.20230814.1"
   }
 }

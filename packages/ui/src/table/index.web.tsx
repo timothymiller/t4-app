@@ -75,7 +75,7 @@ export const Table = ({ data }: Props): React.ReactNode => {
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    debugTable: true,
+    debugTable: false,
   })
 
   const tableContainerRef = useRef<HTMLDivElement>(null)

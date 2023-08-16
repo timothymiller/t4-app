@@ -2,6 +2,10 @@
 const { withTamagui } = require('@tamagui/next-plugin')
 const { join } = require('path')
 const million = require('million/compiler')
+const withPWA = require("@ducanh2912/next-pwa").default({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+});
 
 const boolVals = {
   true: true,
@@ -21,6 +25,7 @@ const enableMillionJS =
 const optimizeCss = false // boolVals[process.env.OPTIMIZE_CSS] ?? process.env.NODE_ENV === 'production'
 
 const plugins = [
+  withPWA,
   withTamagui({
     config: './tamagui.config.ts',
     components: ['tamagui', '@t4/ui'],
