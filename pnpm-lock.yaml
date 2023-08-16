@@ -316,7 +316,7 @@ importers:
         version: 3.4.3
     devDependencies:
       '@cloudflare/workers-types':
-        specifier: ^4.20230814.0
+        specifier: ^4.20230807.0
         version: 4.20230814.0
       better-sqlite3:
         specifier: ^8.5.0
@@ -3005,7 +3005,7 @@ packages:
       getenv: 1.0.0
       glob: 7.1.6
       resolve-from: 5.0.0
-      semver: 7.5.3
+      semver: 7.5.4
       slash: 3.0.0
       xcode: 3.0.1
       xml2js: 0.6.0
@@ -7459,7 +7459,7 @@ packages:
       webpack: '>=4.0.0 <6.0.0'
     dependencies:
       del: 4.1.1
-      webpack: 5.88.2
+      webpack: 5.88.2(esbuild@0.19.2)
     dev: false
 
   /cli-color@2.0.3:
@@ -17861,7 +17861,7 @@ packages:
       fast-json-stable-stringify: 2.1.0
       pretty-bytes: 5.6.0
       upath: 1.2.0
-      webpack: 5.88.2
+      webpack: 5.88.2(esbuild@0.19.2)
       webpack-sources: 1.4.3
       workbox-build: 7.0.0
     transitivePeerDependencies:
