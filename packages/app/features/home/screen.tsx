@@ -88,9 +88,9 @@ export function HomeScreen() {
           <Button {...infiniteListLink} space="$2">
             Virtualized List
           </Button>
-          <Button {...tableLink} space="$2">
+          {/* <Button {...tableLink} space="$2">
             TanStack Table
-          </Button>
+          </Button> */}
           <Button {...dataFetchingLink} space="$2">
             Fetching Data
           </Button>
