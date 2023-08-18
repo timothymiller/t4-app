@@ -165,7 +165,7 @@ pnpm create t4-app
 If you would like to use Tauri use:
 
 ```bash
-pnpm create t4-app --tauri
+pnpm create t4-app yourappname --tauri
 ```
 
 ## 🧩 VSCode Extension
