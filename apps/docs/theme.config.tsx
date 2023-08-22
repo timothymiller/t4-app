@@ -9,7 +9,7 @@ const title = 'T4 App'
 const config: DocsThemeConfig = {
   logo: (
     <>
-      <Image src="/t4-logo.png" width={42} height={42} alt={`${title} logo`} />
+      <Image src="/t4-logo.webp" width={42} height={42} alt={`${title} logo`} />
       <span style={{ paddingLeft: 8 }}>{title} Docs</span>
     </>
   ),
