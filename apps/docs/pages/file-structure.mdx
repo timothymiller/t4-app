@@ -1,0 +1,21 @@
+# 📁 Understanding the file structure of T4 App
+
+For code within the `/packages/app` and `packages/ui` directory, you can target both web, native, or both at the same time.
+
+## 🎯 How targeting React platforms works in T4 App
+
+For a given file name,
+
+- `.native.tsx` targets Expo/React Native
+- `.web.tsx` targets Next.js/React
+- `.tsx` is shared across both
+
+Using this approach, T4 app can share as much code as possible between web and native, while still allowing for platform specific code.
+
+## ➕ How to add a new screen
+
+1. Create a new folder in `/packages/app/features` with your screen name.
+
+2. Create a new file in the folder called `screen.tsx`.
+
+3. Import the screen in your `next.js` and `expo` projects.
