@@ -1,12 +1,11 @@
 import type { AppProps } from 'next/app'
-import { Html } from 'next/document'
 import Head from 'next/head'
 
 const description = 'Type-Safe, Full-Stack Starter Kit for React Native + Web.'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Html lang='en'>
+    <>
       <Head>
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>T4 App Docs</title>
@@ -68,6 +67,6 @@ export default function App({ Component, pageProps }: AppProps) {
         />
       </Head>
       <Component {...pageProps} />
-    </Html>
+    </>
   )
 }

@@ -25,7 +25,8 @@
     "nextra": "^2.11.0",
     "nextra-theme-docs": "^2.11.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "million": "^2.6.0-beta.0"
   },
   "devDependencies": {
     "@types/node": "^18.17.5",
