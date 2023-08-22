@@ -41,13 +41,13 @@
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.47.0",
+    "miniflare": "3.20230807.0",
     "node-gyp": "^9.4.0",
-    "prettier": "^3.0.1",
+    "prettier": "^3.0.2",
     "react-native-url-polyfill": "^2.0.0",
     "turbo": "^1.10.12",
     "typescript": "^5.1.6",
-    "workerd": "1.20230807.0",
-    "miniflare": "3.20230807.0"
+    "workerd": "1.20230807.0"
   },
   "engines": {
     "node": ">=18.16.1",
