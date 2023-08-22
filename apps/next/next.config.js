@@ -1,4 +1,3 @@
-/** @type {import('next').NextConfig} */
 const { withTamagui } = require('@tamagui/next-plugin')
 const { join } = require('path')
 const million = require('million/compiler')
