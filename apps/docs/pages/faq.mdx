@@ -33,3 +33,21 @@ If you see this warning in your console when running `pnpm web`. You can safely 
 No storage option exists to persist the session, which may result in unexpected behavior when using auth.
 If you want to set persistSession to true, please provide a storage option or you may set persistSession to false to disable this warning.
 ```
+
+## Can Expo SDK libraries be used for React Native?
+
+Absolutely! You can use any Expo SDK libraries you want.
+
+### Understanding the file structure of T4 App
+
+For code within the `/packages/app` directory, you can target both web, native, or both at the same time.
+
+#### How targeting React platforms works in T4 App
+
+For a given file name,
+
+- `.native.tsx` targets Expo/React Native
+- `.web.tsx` targets Next.js/React
+- `.tsx` is shared across both
+
+Using this approach, T4 app can share as much code as possible between web and native, while still allowing for platform specific code.
