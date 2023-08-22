@@ -54,6 +54,6 @@ module.exports = function () {
     return million.next(config, millionConfig);
   }
   
-  module.exports = config
+  return config
   
 }

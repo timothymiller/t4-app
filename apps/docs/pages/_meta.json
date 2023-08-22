@@ -16,11 +16,5 @@
     "type": "page",
     "href": "https://app.t4stack.com",
     "newWindow": true
-  },
-  "twitter": {
-    "title": "🐦 Twitter ↗",
-    "type": "page",
-    "href": "https://twitter.com/ogtimothymiller",
-    "newWindow": true
   }
 }
