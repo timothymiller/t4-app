@@ -2,11 +2,20 @@ import { Button, Paragraph, YStack, useToastController, Text } from '@t4/ui';
 import { useRouter } from 'solito/router';
 import { deleteUser, useUser } from 'app/utils/supabase/auth';
 import { isExpoGo } from 'app/utils/flags';
+import { useEffect } from 'react';
 
 export function DeleteAccountScreen() {
   const { push } = useRouter()
-  const { user } = useUser();
+  const { user, loading } = useUser();
   const toast = useToastController()
+
+  useEffect(()=>{
+    if(!loading && !user){
+      push("/")
+    }
+  }, [user, loading])
+
+  if(loading) return null
 
   const handleAccountDeletion = async () => {
     const { error } = await deleteUser(user?.id)
@@ -30,7 +39,7 @@ export function DeleteAccountScreen() {
             Delete your Account
         </Paragraph>
 
-        <Paragraph size="$3" marginBottom="$1">
+        <Paragraph size="$3" marginBottom="$1" px="$1">
             You are about to delete your <Text fontWeight="700">t4-app</Text> account associated with <Text fontWeight="700">{user?.email}</Text>, if you press the button below all of your data will be erased from our servers immediately.
         </Paragraph>
 
