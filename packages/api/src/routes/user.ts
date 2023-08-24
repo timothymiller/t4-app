@@ -1,35 +1,30 @@
 import { eq } from 'drizzle-orm'
-import { users } from '../db/schema'
+import { User, UserSchema } from '../db/schema'
 import { router, protectedProcedure } from '../trpc'
-import { z } from 'zod'
+import { parseAsync } from 'valibot'
 
 export const userRouter = router({
   current: protectedProcedure.query(async ({ ctx }) => {
     const { db } = ctx
-    const user = await db.select().from(users).where(eq(users.id, ctx.user.id)).get()
+    const user = await db.select().from(User).where(eq(User.id, ctx.user.id)).get()
     if (user) {
       return user
     }
     return null
   }),
   create: protectedProcedure
-    .input(
-      z.object({
-        email: z.string(),
-        id: z.string(),
-      })
-    )
+    .input((raw) => parseAsync(UserSchema, raw))
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx
-      const newUser = {
-        email: input.email,
-        id: input.id,
-      }
       try {
-        const user = await db.insert(users).values(newUser).run()
+        const newUser = {
+          email: input.email,
+          id: input.id,
+        }
+        const user = await db.insert(User).values(newUser).run()
         return user
-      } catch (e) {
-        console.log('Insert Failed', e)
+      } catch (err) {
+        console.log(err)
         return null
       }
     }),
