@@ -1,17 +1,29 @@
 import { Meta } from "@storybook/react";
 
-import {PasswordResetComponent} from "./PasswordReset";
+import { PasswordResetComponent } from "./PasswordReset";
 
 export default {
   title: "components/PasswordReset",
   component: PasswordResetComponent,
   argTypes: { 
+    type: {
+      options: ["email", "password"],
+      control: {
+        type: "radio"
+      }
+    },
     handleWithPress: { action: "handleWithPress" },
   },
 } satisfies Meta<typeof PasswordResetComponent>;
 
-export const Basic = {
+export const EmailStep = {
   args: {
     type: "email",
+  },
+};
+
+export const PasswordStep = {
+  args: {
+    type: "password",
   },
 };

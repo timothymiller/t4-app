@@ -1,8 +1,10 @@
 import { dirname, join } from "path";
 module.exports = {
   stories: [
-    "../../../packages/**/*.stories.mdx",
-    "../../../packages/**/*.stories.@(js|jsx|ts|tsx)",
+    "../../../packages/app/**/*.stories.mdx",
+    "../../../packages/app/**/*.stories.@(js|jsx|ts|tsx)",
+    "../../../packages/ui/src/**/*.stories.mdx",
+    "../../../packages/ui/src/**/*.stories.@(js|jsx|ts|tsx)",
   ],
 
   addons: [getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-essentials")],
@@ -39,6 +41,6 @@ module.exports = {
   }
 };
 
-function getAbsolutePath(value) {
+function getAbsolutePath(value: string): any {
   return dirname(require.resolve(join(value, "package.json")));
 }

@@ -12,6 +12,7 @@
     "notes": "turbo run dev --filter t4-app-docs",
     "native": "cd apps/expo && pnpm dev",
     "studio": "cd packages/api && pnpm studio",
+    "storybook:web": "cd apps/next && pnpm storybook",
     "native:prod": "cd apps/expo && pnpm dev:prod",
     "build": "turbo run build --filter=@t4/ui",
     "build:web": "turbo run build --filter=next-app",
@@ -49,6 +50,20 @@
     "turbo": "^1.10.12",
     "typescript": "^5.1.6",
     "workerd": "1.20230807.0"
+  },
+  "resolutions": {
+    "react-docgen-typescript": "2.2.2",
+    "@storybook/react-docgen-typescript-plugin": "1.0.6--canary.9.cd77847.0"
+  },
+  "overrides": {
+    "react-docgen-typescript": "2.2.2",
+    "@storybook/react-docgen-typescript-plugin": "1.0.6--canary.9.cd77847.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "react-docgen-typescript": "2.2.2",
+      "@storybook/react-docgen-typescript-plugin": "1.0.6--canary.9.cd77847.0"
+    }
   },
   "engines": {
     "node": ">=18.16.1",
