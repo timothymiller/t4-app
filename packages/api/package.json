@@ -17,6 +17,7 @@
     "clean": "rm -rf .turbo node_modules"
   },
   "dependencies": {
+    "@decs/typeschema": "^0.10.0",
     "@hono/trpc-server": "^0.1.0",
     "@trpc/server": "^10.37.1",
     "@tsndr/cloudflare-worker-jwt": "^2.2.1",

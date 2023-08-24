@@ -302,6 +302,9 @@ importers:
 
   packages/api:
     dependencies:
+      '@decs/typeschema':
+        specifier: ^0.10.0
+        version: 0.10.0(valibot@0.13.1)
       '@hono/trpc-server':
         specifier: ^0.1.0
         version: 0.1.0(@trpc/server@10.37.1)(hono@3.5.0)
@@ -2063,6 +2066,56 @@ packages:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
+
+  /@decs/typeschema@0.10.0(valibot@0.13.1):
+    resolution: {integrity: sha512-IP6yxwqJtnSW8pWAWMbTYcvBqiv6IN0vZE91qvpQUQJf6sgasTHKWI9ySVstLAGEPK5DL+jYxHxAdHNqFzCR+Q==}
+    peerDependencies:
+      '@deepkit/type': ^1.0.1-alpha.97
+      '@sinclair/typebox': ^0.31.0
+      ajv: ^8.12.0
+      arktype: ^1.0.19-alpha
+      fp-ts: ^2.16.0
+      io-ts: ^2.2.20
+      joi: ^17.9.2
+      ow: ^0.28.2
+      runtypes: ^6.7.0
+      superstruct: ^1.0.3
+      valibot: ^0.13.1
+      vite: ^4.4.9
+      yup: ^1.2.0
+      zod: ^3.21.4
+    peerDependenciesMeta:
+      '@deepkit/type':
+        optional: true
+      '@sinclair/typebox':
+        optional: true
+      ajv:
+        optional: true
+      arktype:
+        optional: true
+      fp-ts:
+        optional: true
+      io-ts:
+        optional: true
+      joi:
+        optional: true
+      ow:
+        optional: true
+      runtypes:
+        optional: true
+      superstruct:
+        optional: true
+      valibot:
+        optional: true
+      vite:
+        optional: true
+      yup:
+        optional: true
+      zod:
+        optional: true
+    dependencies:
+      valibot: 0.13.1
+    dev: false
 
   /@drizzle-team/studio@0.0.5:
     resolution: {integrity: sha512-ps5qF0tMxWRVu+V5gvCRrQNqlY92aTnIKdq27gm9LZMSdaKYZt6AVvSK1dlUMzs6Rt0Jm80b+eWct6xShBKhIw==}
