@@ -1,7 +1,7 @@
 import { Callout } from 'nextra/components'
 import { Steps } from 'nextra/components'
 
-# 🔌 Backend
+# 💾 Cloudflare D1
 
 ## Create a database
 
@@ -9,8 +9,6 @@ import { Steps } from 'nextra/components'
   For more info, see [the official Cloudflare D1
   docs](https://developers.cloudflare.com/d1/get-started/#2-create-a-database).
 </Callout>
-
-Run this command three times to create two databases.
 
 <Steps>
 ### Step 1
@@ -21,6 +19,8 @@ Create a preview database.
  
 Create a production database.
 </Steps>
+
+Run this command three times to create two databases.
 
 ```bash
 wrangler d1 create <DATABASE_NAME>
