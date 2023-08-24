@@ -14,8 +14,7 @@
     "build:ios": " eas build --platform ios --profile production --local",
     "build:android": "eas build --platform android --profile production --local",
     "clean": "git clean -xdf .expo node_modules",
-    "eas-build-pre-install": "npm install -g pnpm@8.6.10",
-    "postinstall": "cross-env TAMAGUI_TARGET=web node generate-tamagui-json.js"
+    "eas-build-pre-install": "npm install -g pnpm@8.6.12"
   },
   "dependencies": {
     "@babel/runtime": "^7.22.10",
