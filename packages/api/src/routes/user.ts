@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm'
 import { User, UserSchema } from '../db/schema'
 import { router, protectedProcedure } from '../trpc'
-import { parseAsync } from 'valibot'
+import { wrap } from '@decs/typeschema'
 
 export const userRouter = router({
   current: protectedProcedure.query(async ({ ctx }) => {
@@ -12,20 +12,14 @@ export const userRouter = router({
     }
     return null
   }),
-  create: protectedProcedure
-    .input((raw) => parseAsync(UserSchema, raw))
-    .mutation(async ({ ctx, input }) => {
-      const { db } = ctx
-      try {
-        const newUser = {
-          email: input.email,
-          id: input.id,
-        }
-        const user = await db.insert(User).values(newUser).run()
-        return user
-      } catch (err) {
-        console.log(err)
-        return null
-      }
-    }),
+  create: protectedProcedure.input(wrap(UserSchema)).mutation(async ({ ctx, input }) => {
+    const { db } = ctx
+    try {
+      const user = await db.insert(User).values(input).run()
+      return user
+    } catch (err) {
+      console.log(err)
+      return null
+    }
+  }),
 })
