@@ -4,7 +4,7 @@
   "main": "src/index.ts",
   "license": "Apache-2.0",
   "scripts": {
-    "dev": "cross-env NO_D1_WARNING=true wrangler dev --persist-to=./db.sqlite src/index.ts",
+    "dev": "cross-env NO_D1_WARNING=true wrangler dev src/index.ts",
     "generate": "drizzle-kit generate:sqlite --schema=./src/db/schema.ts --out=./migrations",
     "migrate": "cross-env NO_D1_WARNING=true wrangler d1 migrations apply production",
     "migrate:local": "cross-env NO_D1_WARNING=true wrangler d1 migrations apply production --local",

@@ -2,7 +2,6 @@
   "recommendations": [
     "albbus.t4-app-tools",
     "esbenp.prettier-vscode",
-    "yawarjamal.cf-d1",
     "wix.vscode-import-cost",
     "unifiedjs.vscode-mdx",
     "RobbOwen.synthwave-vscode",

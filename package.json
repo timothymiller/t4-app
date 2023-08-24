@@ -11,6 +11,7 @@
     "api": "cross-env NO_D1_WARNING=true turbo run dev --filter @t4/api",
     "notes": "turbo run dev --filter t4-app-docs",
     "native": "cd apps/expo && pnpm dev",
+    "studio": "cd packages/api && pnpm studio",
     "native:prod": "cd apps/expo && pnpm dev:prod",
     "build": "turbo run build --filter=@t4/ui",
     "build:web": "turbo run build --filter=next-app",
