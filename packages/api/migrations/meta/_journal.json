@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1687584095750,
-      "tag": "0000_red_brood",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1692056780854,
-      "tag": "0001_cuddly_thunderbird",
+      "when": 1692862097376,
+      "tag": "0000_chemical_spitfire",
       "breakpoints": true
     }
   ]
