@@ -15,10 +15,10 @@ export function DeleteAccountScreen() {
     }
   }, [user, loading])
 
-  if(loading) return null
+  if(loading || !user) return null
 
   const handleAccountDeletion = async () => {
-    const { error } = await deleteUser(user?.id)
+    const { error } = await deleteUser(user.id)
 
     if (error) {
         if (!isExpoGo) {
@@ -40,7 +40,7 @@ export function DeleteAccountScreen() {
         </Paragraph>
 
         <Paragraph size="$3" marginBottom="$1" px="$1">
-            You are about to delete your <Text fontWeight="700">t4-app</Text> account associated with <Text fontWeight="700">{user?.email}</Text>, if you press the button below all of your data will be erased from our servers immediately.
+            You are about to delete your <Text fontWeight="700">t4-app</Text> account associated with <Text fontWeight="700">{user.email}</Text>, if you press the button below all of your data will be erased from our servers immediately.
         </Paragraph>
 
         <Button
