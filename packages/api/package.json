@@ -17,19 +17,13 @@
     "clean": "rm -rf .turbo node_modules"
   },
   "dependencies": {
-    "@decs/typeschema": "^0.10.0",
-    "@deepkit/core": "1.0.1-alpha.97",
-    "@deepkit/type": "1.0.1-alpha.97",
     "@hono/trpc-server": "^0.1.0",
     "@trpc/server": "^10.38.0",
     "@tsndr/cloudflare-worker-jwt": "^2.2.2",
     "drizzle-orm": "^0.28.5",
     "drizzle-valibot": "^0.1.1",
-    "fp-ts": "^2.16.1",
     "hono": "^3.5.4",
-    "ow": "^1.1.1",
-    "valibot": "^0.13.1",
-    "yup": "^1.2.0"
+    "valibot": "^0.13.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230821.0",
