@@ -9,7 +9,7 @@ export const initialWindowMetrics: Metrics | null = {
   insets: { top: 0, left: 0, right: 0, bottom: 0 },
 }
 
-export function Provider({ children, defaultTheme }: Omit<TamaguiProviderProps, 'config'>) {
+export function Provider({ children }: Omit<TamaguiProviderProps, 'config'>) {
   return (
     <TamaguiProvider config={config} disableInjectCSS disableRootThemeClass>
       <SafeAreaProvider>
