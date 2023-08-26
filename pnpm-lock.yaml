@@ -45,7 +45,7 @@ importers:
         specifier: ^1.10.13
         version: 1.10.13
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.1.6
         version: 5.2.2
       workerd:
         specifier: 1.20230807.0
@@ -91,7 +91,7 @@ importers:
         specifier: ^18.17.11
         version: 18.17.11
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.1.6
         version: 5.2.2
 
   apps/expo:
@@ -197,7 +197,7 @@ importers:
         specifier: ^3.4.9
         version: 3.4.9(@babel/runtime@7.22.11)
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.1.6
         version: 5.2.2
 
   apps/next:
@@ -297,7 +297,7 @@ importers:
         specifier: ^10.2.0
         version: 10.2.0
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.1.6
         version: 5.2.2
 
   packages/api:
@@ -340,7 +340,7 @@ importers:
         specifier: ^8.48.0
         version: 8.48.0
       typescript:
-        specifier: ^5.2.2
+        specifier: ^5.1.6
         version: 5.2.2
       wrangler:
         specifier: ^3.6.0
@@ -3094,7 +3094,7 @@ packages:
       getenv: 1.0.0
       glob: 7.1.6
       resolve-from: 5.0.0
-      semver: 7.5.4
+      semver: 7.5.3
       slash: 3.0.0
       xcode: 3.0.1
       xml2js: 0.6.0

@@ -7,7 +7,7 @@ import { NextThemeProvider, useRootTheme } from '@tamagui/next-theme'
 import { Provider, initialWindowMetrics } from 'app/provider'
 import { trpc } from 'app/utils/trpc/index.web'
 import Head from 'next/head'
-import React, { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import type { AppProps } from 'next/app'
 import { SolitoImageProvider } from 'solito/image'
@@ -23,21 +23,12 @@ const imageURL = process.env.NEXT_PUBLIC_APP_URL as `http:${string}` | `https:${
 function MyApp({ Component, pageProps }: AppProps<{ initialSession: Session | null }>) {
   const [supabaseClient] = useState(() => createPagesBrowserClient())
 
-  const contents = useMemo(() => {
-    return <Component {...pageProps} />
-  }, [Component, pageProps])
-
   return (
     <>
       <Head>
         <title>T4 App</title>
         <meta name="description" content="Tamagui, Solito, Expo & Next.js" />
         <link rel="icon" href="/favicon.ico" />
-        <style>{`
-          body, #root, #__next {
-            min-width: 100% !important;
-          }
-        `}</style>
       </Head>
 
       <ThemeProvider>
@@ -45,7 +36,7 @@ function MyApp({ Component, pageProps }: AppProps<{ initialSession: Session | nu
           supabaseClient={supabaseClient}
           initialSession={pageProps.initialSession}
         >
-          {contents}
+          <Component {...pageProps} />
         </SessionContextProvider>
       </ThemeProvider>
     </>
@@ -53,7 +44,7 @@ function MyApp({ Component, pageProps }: AppProps<{ initialSession: Session | nu
 }
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useRootTheme()
+  const [_, setTheme] = useRootTheme()
 
   return (
     <NextThemeProvider
@@ -61,7 +52,7 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
         setTheme(next as any)
       }}
     >
-      <Provider defaultTheme={theme}>
+      <Provider>
         <SolitoImageProvider
           loader={({ quality, width, src }) => {
             return `${imageURL}${src}?w=${width}&q=${quality}`

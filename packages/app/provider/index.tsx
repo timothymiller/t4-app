@@ -1,5 +1,4 @@
 import { CustomToast, TamaguiProvider, TamaguiProviderProps, ToastProvider } from '@t4/ui'
-import { useColorScheme } from 'react-native'
 import { Metrics, SafeAreaProvider } from 'react-native-safe-area-context'
 import { ToastViewport } from './toast/ToastViewport'
 import config from '../tamagui.config'
@@ -10,16 +9,9 @@ export const initialWindowMetrics: Metrics | null = {
   insets: { top: 0, left: 0, right: 0, bottom: 0 },
 }
 
-export function Provider({ children, ...rest }: Omit<TamaguiProviderProps, 'config'>) {
-  const scheme = useColorScheme()
-
+export function Provider({ children, defaultTheme }: Omit<TamaguiProviderProps, 'config'>) {
   return (
-    <TamaguiProvider
-      config={config}
-      disableInjectCSS
-      defaultTheme={scheme === 'dark' ? 'dark' : 'light'}
-      {...rest}
-    >
+    <TamaguiProvider config={config} disableInjectCSS disableRootThemeClass>
       <SafeAreaProvider>
         <ToastProvider swipeDirection="horizontal" duration={6000} native={['mobile']}>
           <TRPCProvider>{children}</TRPCProvider>

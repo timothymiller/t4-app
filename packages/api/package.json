@@ -31,7 +31,7 @@
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.48.0",
-    "typescript": "^5.2.2",
+    "typescript": "^5.1.6",
     "wrangler": "^3.6.0"
   }
 }
