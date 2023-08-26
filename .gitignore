@@ -70,3 +70,4 @@ apps/expo/android/**
 # PWA
 **/sw.js
 **/workbox-*.js
+apps/next/public/fallback-*.js
