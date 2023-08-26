@@ -35,19 +35,19 @@
     "clean:workspaces": "turbo clean"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.10",
+    "@babel/runtime": "^7.22.11",
     "@manypkg/cli": "^0.21.0",
     "@nderscore/tamagui-typescript-plugin": "^0.3.1",
-    "@supabase/supabase-js": "^2.32.0",
+    "@supabase/supabase-js": "^2.33.1",
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
-    "eslint": "^8.47.0",
+    "eslint": "^8.48.0",
     "miniflare": "3.20230807.0",
     "node-gyp": "^9.4.0",
     "prettier": "^3.0.2",
     "react-native-url-polyfill": "^2.0.0",
-    "turbo": "^1.10.12",
-    "typescript": "^5.1.6",
+    "turbo": "^1.10.13",
+    "typescript": "^5.2.2",
     "workerd": "1.20230807.0"
   },
   "engines": {

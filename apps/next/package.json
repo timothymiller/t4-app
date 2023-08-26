@@ -15,7 +15,7 @@
     "@supabase/auth-helpers-nextjs": "^0.7.4",
     "@supabase/auth-helpers-react": "^0.4.2",
     "@t4/ui": "^2.0.0",
-    "@tamagui/next-theme": "^1.57.1",
+    "@tamagui/next-theme": "1.57.2",
     "app": "^2.0.0",
     "million": "2.6.0-beta.4",
     "next": "13.4.19",
@@ -24,12 +24,12 @@
     "react-dom": "^18.2.0",
     "react-native": "^0.72.4",
     "react-native-web": "^0.19.8",
-    "react-native-web-lite": "^1.57.1",
+    "react-native-web-lite": "1.57.2",
     "webpack": "^5.88.2"
   },
   "devDependencies": {
-    "@tamagui/next-plugin": "^1.57.1",
-    "@types/node": "^18.17.6",
+    "@tamagui/next-plugin": "1.57.2",
+    "@types/node": "^18.17.11",
     "dotenv-cli": "^7.3.0",
     "eslint-config-next": "^13.4.19",
     "vercel": "^32.1.0"
