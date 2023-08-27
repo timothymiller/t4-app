@@ -16,8 +16,6 @@ export const parameters = {
   },
 };
 
-const imageURL = process.env.NEXT_PUBLIC_APP_URL as `http:${string}` | `https:${string}`
-
 export const decorators = [
   (Story) => {
     const colorScheme = useColorScheme();
@@ -26,7 +24,7 @@ export const decorators = [
         <Theme name={colorScheme === "dark" ? "dark" : "light"}>
           <SolitoImageProvider
             loader={({ quality, width, src }) => {
-              return `${imageURL}${src}?w=${width}&q=${quality}`
+              return `${src}?w=${width}&q=${quality}`
             }}
           >
             <SafeAreaProvider initialMetrics={initialWindowMetrics}><Story /></SafeAreaProvider>
