@@ -20,19 +20,19 @@ export const TamaguiThemeProvider = ({
   const themeValue = currentTheme === ThemeVariant.dark ? DarkTheme : DefaultTheme
 
   useEffect(() => {
-    const disposer = Appearance.addChangeListener(() => {
+    const systemThemeChangeListener = Appearance.addChangeListener(() => {
       setAppTheme(Appearance.getColorScheme() as ThemeVariant)
       forceUpdate()
     })
     return () => {
-      disposer.remove()
+      systemThemeChangeListener.remove()
     }
   }, [])
 
   useLayoutEffect(() => {
-    const persistedTheme = storage.getString(appThemeKey)
-    if (persistedTheme !== undefined) {
-      setAppTheme(Appearance.getColorScheme() as ThemeVariant)
+    const savedAppTheme = storage.getString(appThemeKey)
+    if (savedAppTheme !== undefined) {
+      setAppTheme(savedAppTheme as ThemeVariant)
     }
   }, [])
 

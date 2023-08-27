@@ -10,9 +10,7 @@ export const TamaguiThemeProvider = ({
   return (
     <NextThemeProvider
       onChangeTheme={(next) => {
-        type NewType = ColorScheme
-
-        setTheme(next as NewType)
+        setTheme(next as ColorScheme)
       }}
     >
       {children}
@@ -20,4 +18,4 @@ export const TamaguiThemeProvider = ({
   )
 }
 
-export { useRootTheme, useThemeSetting } from '@tamagui/next-theme'
+export { useRootTheme } from '@tamagui/next-theme'
