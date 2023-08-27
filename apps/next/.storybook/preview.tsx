@@ -1,7 +1,6 @@
 import { useColorScheme } from "react-native";
 import { TamaguiProvider, Theme } from "tamagui";
-import { initialWindowMetrics } from 'app/provider'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { SafeAreaProvider } from 'app/provider/safe-area'
 import { SolitoImageProvider } from 'solito/image'
 import config from "../tamagui.config";
 import React from "react";
@@ -27,7 +26,9 @@ export const decorators = [
               return `${src}?w=${width}&q=${quality}`
             }}
           >
-            <SafeAreaProvider initialMetrics={initialWindowMetrics}><Story /></SafeAreaProvider>
+            <SafeAreaProvider>
+              <Story />
+            </SafeAreaProvider>
           </SolitoImageProvider> 
         </Theme>
       </TamaguiProvider>
