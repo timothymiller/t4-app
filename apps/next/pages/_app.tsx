@@ -5,7 +5,6 @@ import '@tamagui/font-inter/css/700.css'
 
 import { Provider } from 'app/provider'
 import { trpc } from 'app/utils/trpc/index.web'
-import { Metadata } from 'app/provider/metadata'
 import Head from 'next/head'
 import type { SolitoAppProps } from 'solito'
 import type { Session } from '@supabase/supabase-js'
@@ -18,7 +17,12 @@ function T4App({ Component, pageProps }: SolitoAppProps<{ initialSession: Sessio
   return (
     <>
       <Head>
-        <Metadata />
+        <title>T4 App</title>
+        <meta
+          name="description"
+          content="Type-Safe, Full-Stack Starter Kit for React Native + Web."
+        />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Provider initialSession={pageProps.initialSession}>
