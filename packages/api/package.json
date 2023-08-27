@@ -17,22 +17,21 @@
     "clean": "rm -rf .turbo node_modules"
   },
   "dependencies": {
-    "@decs/typeschema": "^0.10.0",
     "@hono/trpc-server": "^0.1.0",
-    "@trpc/server": "^10.37.1",
-    "@tsndr/cloudflare-worker-jwt": "^2.2.1",
-    "drizzle-orm": "^0.28.2",
+    "@trpc/server": "^10.38.0",
+    "@tsndr/cloudflare-worker-jwt": "^2.2.2",
+    "drizzle-orm": "^0.28.5",
     "drizzle-valibot": "^0.1.1",
-    "hono": "^3.5.0",
+    "hono": "^3.5.4",
     "valibot": "^0.13.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230821.0",
-    "better-sqlite3": "^8.5.1",
+    "better-sqlite3": "^8.5.2",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.19.13",
-    "eslint": "^8.47.0",
-    "typescript": "^5.1.6",
-    "wrangler": "^3.5.1"
+    "eslint": "^8.48.0",
+    "typescript": "^5.2.2",
+    "wrangler": "^3.6.0"
   }
 }

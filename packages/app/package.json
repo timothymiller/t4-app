@@ -12,16 +12,16 @@
   "dependencies": {
     "@shopify/flash-list": "^1.5.0",
     "@t4/ui": "^2.0.0",
-    "@tamagui/animations-react-native": "^1.52.9",
-    "@tamagui/colors": "^1.52.9",
-    "@tamagui/font-inter": "^1.52.9",
-    "@tamagui/lucide-icons": "^1.52.9",
-    "@tamagui/shorthands": "^1.52.9",
-    "@tamagui/themes": "^1.52.9",
+    "@tamagui/animations-react-native": "^1.57.1",
+    "@tamagui/colors": "^1.57.1",
+    "@tamagui/font-inter": "^1.57.1",
+    "@tamagui/lucide-icons": "^1.57.1",
+    "@tamagui/shorthands": "^1.57.1",
+    "@tamagui/themes": "^1.57.1",
     "@tanstack/react-query": "^4.33.0",
-    "@trpc/client": "^10.37.1",
-    "@trpc/next": "^10.37.1",
-    "@trpc/react-query": "^10.37.1",
+    "@trpc/client": "^10.38.0",
+    "@trpc/next": "^10.38.0",
+    "@trpc/react-query": "^10.38.0",
     "burnt": "^0.11.7",
     "expo-constants": "~14.4.2",
     "expo-linking": "~5.0.2",
@@ -30,6 +30,6 @@
     "solito": "^4.0.1"
   },
   "devDependencies": {
-    "@types/react": "^18.2.20"
+    "@types/react": "^18.2.21"
   }
 }

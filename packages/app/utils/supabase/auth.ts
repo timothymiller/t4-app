@@ -66,6 +66,14 @@ const getUser = async () => {
   return { user, error }
 }
 
+const deleteUser = async (userId) => {
+  const { data, error } = await supabase.auth.admin.deleteUser(
+    userId
+  )
+
+  return {data, error};
+}
+
 // @link https://t4stack.com/hooks
 const useUser = () => {
   const [user, setUser] = useSupabaseUser()
@@ -99,5 +107,6 @@ export {
   signUp,
   signOut,
   getUser,
+  deleteUser,
   useUser,
 }
