@@ -154,13 +154,13 @@ importers:
         specifier: ^0.18.12
         version: 0.18.12(expo@49.0.8)
       react:
-        specifier: 18.2.0
+        specifier: ^18.2.0
         version: 18.2.0
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       react-native:
-        specifier: 0.72.4
+        specifier: ^0.72.4
         version: 0.72.4(@babel/core@7.22.11)(@babel/preset-env@7.22.10)(react@18.2.0)
       react-native-gesture-handler:
         specifier: ~2.12.1
@@ -3492,7 +3492,7 @@ packages:
     dependencies:
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 20.5.6
+      '@types/node': 18.17.11
       '@types/yargs': 15.0.15
       chalk: 4.1.2
     dev: false
@@ -6046,7 +6046,7 @@ packages:
   /@types/websocket@1.0.6:
     resolution: {integrity: sha512-JXkliwz93B2cMWOI1ukElQBPN88vMg3CruvW4KVSKpflt3NyNCJImnhIuB/f97rG7kakqRJGFiwkA895Kn02Dg==}
     dependencies:
-      '@types/node': 20.5.6
+      '@types/node': 18.17.11
     dev: false
 
   /@types/yargs-parser@21.0.0:
