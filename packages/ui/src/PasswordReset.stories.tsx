@@ -3,7 +3,7 @@ import { Meta } from "@storybook/react";
 import { PasswordResetComponent } from "./PasswordReset";
 
 export default {
-  title: "components/PasswordReset",
+  title: "Components/PasswordReset",
   component: PasswordResetComponent,
   argTypes: { 
     type: {

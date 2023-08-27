@@ -3,7 +3,7 @@ import { Meta } from "@storybook/react";
 import { SignUpSignInComponent } from "./SignUpSignIn";
 
 export default {
-  title: "components/SignUpSignIn",
+  title: "Components/SignUpSignIn",
   component: SignUpSignInComponent,
   argTypes: { 
     type: {
