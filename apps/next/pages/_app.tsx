@@ -23,6 +23,7 @@ function T4App({ Component, pageProps }: SolitoAppProps<{ initialSession: Sessio
           content="Type-Safe, Full-Stack Starter Kit for React Native + Web."
         />
         <link rel="icon" href="/favicon.ico" />
+        {/* TODO: Add additional PWA resources */}
       </Head>
 
       <Provider initialSession={pageProps.initialSession}>
