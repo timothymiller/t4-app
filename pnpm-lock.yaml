@@ -154,17 +154,20 @@ importers:
         specifier: ^0.18.12
         version: 0.18.12(expo@49.0.8)
       react:
-        specifier: ^18.2.0
+        specifier: 18.2.0
         version: 18.2.0
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       react-native:
-        specifier: ^0.72.4
+        specifier: 0.72.4
         version: 0.72.4(@babel/core@7.22.11)(@babel/preset-env@7.22.10)(react@18.2.0)
       react-native-gesture-handler:
         specifier: ~2.12.1
         version: 2.12.1(react-native@0.72.4)(react@18.2.0)
+      react-native-mmkv:
+        specifier: ^2.10.2
+        version: 2.10.2(react-native@0.72.4)(react@18.2.0)
       react-native-safe-area-context:
         specifier: ^4.7.1
         version: 4.7.1(react-native@0.72.4)(react@18.2.0)
@@ -396,6 +399,9 @@ importers:
       expo-secure-store:
         specifier: ^12.3.1
         version: 12.3.1(expo@49.0.8)
+      react-native-mmkv:
+        specifier: ^2.10.2
+        version: 2.10.2(react-native@0.72.4)(react@18.2.0)
       react-native-safe-area-context:
         specifier: 4.7.1
         version: 4.7.1(react-native@0.72.4)(react@18.2.0)
@@ -3094,7 +3100,7 @@ packages:
       getenv: 1.0.0
       glob: 7.1.6
       resolve-from: 5.0.0
-      semver: 7.5.3
+      semver: 7.5.4
       slash: 3.0.0
       xcode: 3.0.1
       xml2js: 0.6.0
@@ -3457,7 +3463,7 @@ packages:
     dependencies:
       '@jest/fake-timers': 29.6.4
       '@jest/types': 29.6.3
-      '@types/node': 20.5.6
+      '@types/node': 18.17.11
       jest-mock: 29.6.3
     dev: false
 
@@ -3467,7 +3473,7 @@ packages:
     dependencies:
       '@jest/types': 29.6.3
       '@sinonjs/fake-timers': 10.3.0
-      '@types/node': 20.5.6
+      '@types/node': 18.17.11
       jest-message-util: 29.6.3
       jest-mock: 29.6.3
       jest-util: 29.6.3
@@ -3509,7 +3515,7 @@ packages:
       '@jest/schemas': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
-      '@types/node': 20.5.6
+      '@types/node': 18.17.11
       '@types/yargs': 17.0.24
       chalk: 4.1.2
     dev: false
@@ -5938,7 +5944,7 @@ packages:
   /@types/keyv@3.1.4:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
-      '@types/node': 20.5.6
+      '@types/node': 18.17.11
     dev: false
 
   /@types/mdast@3.0.12:
@@ -6003,7 +6009,7 @@ packages:
   /@types/responselike@1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
     dependencies:
-      '@types/node': 20.5.6
+      '@types/node': 18.17.11
     dev: false
 
   /@types/scheduler@0.16.3:
@@ -11711,7 +11717,7 @@ packages:
       '@jest/environment': 29.6.4
       '@jest/fake-timers': 29.6.4
       '@jest/types': 29.6.3
-      '@types/node': 20.5.6
+      '@types/node': 18.17.11
       jest-mock: 29.6.3
       jest-util: 29.6.3
     dev: false
@@ -11741,7 +11747,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 20.5.6
+      '@types/node': 18.17.11
       jest-util: 29.6.3
     dev: false
 
@@ -11767,7 +11773,7 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 20.5.6
+      '@types/node': 18.17.11
       chalk: 4.1.2
       ci-info: 3.8.0
       graceful-fs: 4.2.11
@@ -15214,6 +15220,16 @@ packages:
       invariant: 2.2.4
       lodash: 4.17.21
       prop-types: 15.8.1
+      react: 18.2.0
+      react-native: 0.72.4(@babel/core@7.22.11)(@babel/preset-env@7.22.10)(react@18.2.0)
+    dev: false
+
+  /react-native-mmkv@2.10.2(react-native@0.72.4)(react@18.2.0):
+    resolution: {integrity: sha512-hNrZzwvIFyogJkqf//rVSw7EwceYqkx/jl3hb5tzct6qqwEmS1L9ybvnDjzDkaMyDeouQIqAnsdnb6AuDSrgQQ==}
+    peerDependencies:
+      react: '*'
+      react-native: '>=0.71.0'
+    dependencies:
       react: 18.2.0
       react-native: 0.72.4(@babel/core@7.22.11)(@babel/preset-env@7.22.10)(react@18.2.0)
     dev: false

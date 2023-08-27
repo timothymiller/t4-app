@@ -2,7 +2,7 @@ import type { SignInWithOAuthCredentials, User, UserResponse } from '@supabase/s
 import { Linking } from 'react-native'
 import { supabase } from './init'
 import { useEffect } from 'react'
-import { useSupabaseUser, useUserLoading } from '@t4/ui/src/atoms/auth'
+import { useSupabaseUser, useUserLoading } from '../../atoms/auth'
 
 const signIn = async (email, password) => {
   const {
@@ -67,11 +67,9 @@ const getUser = async () => {
 }
 
 const deleteUser = async (userId) => {
-  const { data, error } = await supabase.auth.admin.deleteUser(
-    userId
-  )
+  const { data, error } = await supabase.auth.admin.deleteUser(userId)
 
-  return {data, error};
+  return { data, error }
 }
 
 // @link https://t4stack.com/hooks
