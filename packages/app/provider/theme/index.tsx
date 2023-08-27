@@ -1,13 +1,17 @@
 import { useForceUpdate } from '@t4/ui'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
-import { useEffect, useLayoutEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import { Appearance } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { storage } from '../kv'
 import { ThemeVariant } from 'app/utils/theme'
 import { appThemeKey, useAppTheme, useCurrentTheme } from 'app/atoms/theme'
 
-export const TamaguiThemeProvider = ({ children }: { children: React.ReactNode }) => {
+export const TamaguiThemeProvider = ({
+  children,
+}: {
+  children: React.ReactNode
+}): React.ReactNode => {
   const [appTheme, setAppTheme] = useAppTheme()
   const [currentTheme] = useCurrentTheme()
   const forceUpdate = useForceUpdate()
@@ -42,4 +46,9 @@ export const TamaguiThemeProvider = ({ children }: { children: React.ReactNode }
       {children}
     </ThemeProvider>
   )
+}
+
+export const useRootTheme = () => {
+  const [currentTheme] = useCurrentTheme()
+  return [currentTheme]
 }

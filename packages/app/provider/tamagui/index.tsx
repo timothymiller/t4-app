@@ -1,9 +1,9 @@
-import { useCurrentTheme } from 'app/atoms/theme'
 import config from '../../tamagui.config'
 import { TamaguiProvider as TamaguiProviderOG } from '@t4/ui'
+import { useRootTheme } from '../theme'
 
 export const TamaguiProvider = ({ children }: { children: React.ReactNode }): React.ReactNode => {
-  const [currentTheme] = useCurrentTheme()
+  const [currentTheme] = useRootTheme()
 
   return (
     <TamaguiProviderOG
