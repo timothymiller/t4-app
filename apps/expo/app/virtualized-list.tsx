@@ -1,4 +1,4 @@
-import { InfiniteListScreen } from 'app/features/infinite-list/screen'
+import { VirtualizedListScreen } from 'app/features/virtualized-list/screen'
 import { Stack } from 'expo-router'
 
 export default function Screen() {
@@ -6,10 +6,10 @@ export default function Screen() {
     <>
       <Stack.Screen
         options={{
-          title: 'Infinite List',
+          title: 'Virtualized List',
         }}
       />
-      <InfiniteListScreen />
+      <VirtualizedListScreen />
     </>
   )
 }

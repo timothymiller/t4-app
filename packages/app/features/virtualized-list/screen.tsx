@@ -1,7 +1,7 @@
 import { Paragraph, VirtualList, YStack } from '@t4/ui'
 import { SolitoImage } from 'solito/image'
 
-export const InfiniteListScreen = (): React.ReactNode => {
+export const VirtualizedListScreen = (): React.ReactNode => {
   return <VirtualList data={data} renderItem={Item} itemHeight={80} />
 }
 

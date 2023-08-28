@@ -27,10 +27,6 @@ export function HomeScreen() {
   const { user, setUser } = useUser()
   const isSignedIn = user !== null
 
-  const tableLink = useLink({
-    href: '/table',
-  })
-
   const signInLink = useLink({
     href: '/sign-in',
   })
@@ -43,8 +39,8 @@ export function HomeScreen() {
     href: '/data-fetching',
   })
 
-  const infiniteListLink = useLink({
-    href: '/infinite-list',
+  const virtualizedListLink = useLink({
+    href: '/virtualized-list',
   })
 
   const paramsLink = useLink({
@@ -85,12 +81,9 @@ export function HomeScreen() {
 
         <H3>🦮🐴 App Demos</H3>
         <YStack space="$2">
-          <Button {...infiniteListLink} space="$2">
+          <Button {...virtualizedListLink} space="$2">
             Virtualized List
           </Button>
-          {/* <Button {...tableLink} space="$2">
-            TanStack Table
-          </Button> */}
           <Button {...dataFetchingLink} space="$2">
             Fetching Data
           </Button>
@@ -104,7 +97,7 @@ export function HomeScreen() {
             onPress={async () => {
               setUser(null)
               // Clear tanstack query cache of authenticated routes
-              utils.auth.secretMessage.setData(undefined, undefined)
+              utils.auth.secretMessage.reset()
               await signOut()
             }}
             space="$2"
