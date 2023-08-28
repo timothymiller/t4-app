@@ -4,7 +4,7 @@ import { Link } from 'solito/link'
 import { type Provider } from '@supabase/supabase-js'
 import { SolitoImage } from 'solito/image'
 
-export interface Props {
+interface Props {
   type: 'sign-up' | 'sign-in'
   handleOAuthWithPress: (provider: Provider) => void
   handleEmailWithPress: (emailAddress, password) => void
