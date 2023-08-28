@@ -4,7 +4,7 @@ import { router, publicProcedure } from '../trpc'
 export const helloRouter = router({
   world: publicProcedure
     .input((raw) => parse(string(), raw))
-    .query(({ input, ctx }) => {
+    .query(({ input }) => {
       return `Hello ${input ?? 'Sam'}!`
     }),
 })

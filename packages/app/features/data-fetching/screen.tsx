@@ -3,8 +3,8 @@ import React from 'react'
 import { trpc } from 'app/utils/trpc'
 
 export function DataFetchingScreen() {
-  const helloWorld = trpc.hello.world.useQuery()
-  const protectedRoute = trpc.auth.secretMessage.useQuery()
+  const helloWorld = trpc.hello.world.useQuery('world')
+  const protectedRoute = trpc.auth.secretMessage.useQuery('world')
   const isError =
     protectedRoute?.failureReason?.data?.httpStatus !== 200 &&
     protectedRoute?.failureReason?.data?.httpStatus !== undefined
