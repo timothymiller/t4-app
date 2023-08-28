@@ -3,6 +3,7 @@ import { httpBatchLink, loggerLink } from '@trpc/client'
 import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import type { AppRouter } from '@t4/api/src/router'
 import { supabase } from '../supabase'
+import superjson from 'superjson'
 
 const getBaseUrl = () => {
   return `${process.env.NEXT_PUBLIC_API_URL}`
@@ -11,6 +12,7 @@ const getBaseUrl = () => {
 export const trpc = createTRPCNext<AppRouter>({
   config() {
     return {
+      transformer: superjson,
       links: [
         loggerLink({
           enabled: (opts) =>

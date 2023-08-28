@@ -23,6 +23,7 @@
     "drizzle-orm": "^0.28.5",
     "drizzle-valibot": "^0.1.1",
     "hono": "^3.5.4",
+    "superjson": "^1.13.1",
     "valibot": "^0.13.1"
   },
   "devDependencies": {
