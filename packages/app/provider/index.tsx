@@ -16,20 +16,20 @@ export function Provider({
   initialSession: Session | null
 }) {
   return (
-    <AuthProvider initialSession={initialSession}>
-      <TamaguiThemeProvider>
-        <TamaguiProvider>
-          <SafeAreaProvider>
-            <SolitoImageProvider>
-              <ToastProvider swipeDirection="horizontal" duration={6000} native={['mobile']}>
+    <TamaguiThemeProvider>
+      <TamaguiProvider>
+        <SafeAreaProvider>
+          <SolitoImageProvider>
+            <ToastProvider swipeDirection="horizontal" duration={6000} native={['mobile']}>
+              <AuthProvider initialSession={initialSession}>
                 <TRPCProvider>{children}</TRPCProvider>
                 <CustomToast />
                 <ToastViewport />
-              </ToastProvider>
-            </SolitoImageProvider>
-          </SafeAreaProvider>
-        </TamaguiProvider>
-      </TamaguiThemeProvider>
-    </AuthProvider>
+              </AuthProvider>
+            </ToastProvider>
+          </SolitoImageProvider>
+        </SafeAreaProvider>
+      </TamaguiProvider>
+    </TamaguiThemeProvider>
   )
 }

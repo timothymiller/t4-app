@@ -4,6 +4,17 @@ const million = require('million/compiler')
 const withPWA = require("@ducanh2912/next-pwa").default({
   dest: "public",
   disable: process.env.NODE_ENV === "development",
+  register: true,
+  sw: "service-worker.js",
+  cacheOnFrontendNav: true,
+  cacheStartUrl: true,
+  extendDefaultRuntimeCaching: true,
+  workboxOptions: {
+    runtimeCaching: [
+    ],
+  },
+  swcMinify: true,
+  reloadOnOnline: true
 });
 
 const boolVals = {
