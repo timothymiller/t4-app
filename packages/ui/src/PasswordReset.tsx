@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { YStack, Paragraph, Button, Input } from 'tamagui'
 
-export interface Props {
+interface Props {
   type: 'email' | 'password'
   handleWithPress: (emailOrPassword: string) => void
 }

@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['next', 'plugin:storybook/recommended'],
+  extends: 'next',
   root: true,
   parserOptions: {
     project: './tsconfig.json'
