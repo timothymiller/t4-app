@@ -68,7 +68,7 @@ module.exports = function () {
     },
     modularizeImports: {
       '@tamagui/lucide-icons': {
-        transform: '@tamagui/lucide-icons/dist/esm/pwa/icons/{{kebabCase member}}',
+        transform: '@tamagui/lucide-icons/dist/esm/icons/{{kebabCase member}}',
         skipDefaultConversion: true
       }
     },
