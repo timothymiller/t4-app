@@ -6,8 +6,9 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   disable: process.env.NODE_ENV === "development",
   register: true,
   sw: "service-worker.js",
-  cacheOnFrontendNav: true,
   cacheStartUrl: true,
+  cacheOnFrontendNav: true,
+  aggressiveFrontEndNavCaching: true,
   extendDefaultRuntimeCaching: true,
   workboxOptions: {
     runtimeCaching: [
@@ -67,7 +68,7 @@ module.exports = function () {
     },
     modularizeImports: {
       '@tamagui/lucide-icons': {
-        transform: '@tamagui/lucide-icons/dist/esm/icons/{{kebabCase member}}',
+        transform: '@tamagui/lucide-icons/dist/esm/pwa/icons/{{kebabCase member}}',
         skipDefaultConversion: true
       }
     },
