@@ -25,13 +25,10 @@ const config: DocsThemeConfig = {
   },
   primaryHue: 295,
   banner: {
-    key: 'book-a-call',
+    key: 'become-a-sponsor',
     text: (
-      <a
-        href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1A5PlGGerAUohHYZ2a6knxIcdoHh17FckhySU-w0V-eweV7ZFR7DK03o3sxnWfwoEr0_mNR80J"
-        target="_blank"
-      >
-        👨‍💼💼 Hire us for your next project. Book a call →
+      <a href="https://github.com/sponsors/timothymiller" target="_blank">
+        ✨ Access exclusive videos, tutorials, and apps. Become a sponsor →
       </a>
     ),
   },
@@ -93,7 +90,7 @@ const config: DocsThemeConfig = {
           </svg>
         </a>
       </>
-    )
+    ),
   },
 }
 

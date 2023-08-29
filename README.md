@@ -118,31 +118,11 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
   </a>
 </p>
 
-## ❓ Why T4?
-
-- Small learning curve
-- Instant feedback, rapid development
-- Universal across **React Native** & **React Web**
-  - [Data fetching](https://tanstack.com/query/latest)
-  - [Styling](https://tamagui.dev)
-  - [Authentication](https://supabase.com)
-  - [Navigation](https://solito.dev)
-- High code re-use
-- Low bundle size
-- Edge compatible
-- Fast startup time
-- Simple setup
-- Allows for platform-specific code when needed.
-- Type-safety
-
-## 📦 What's Included
-
-- [Tamagui](https://tamagui.dev) - A UI kit for building beautiful and responsive user interfaces.
-- [Turborepo](https://turbo.build/) - A high performance build system for TypeScript, built in Rust.
-- [tRPC](https://trpc.io) - A TypeScript framework for building end-to-end typesafe APIs.
-- [TypeScript](https://www.typescriptlang.org) - A typed superset of JavaScript that compiles to plain JavaScript.
-
 ## 🚀 Quick Start
+
+⭐ [Star this project](https://github.com/timothymiller/t4-app) (Highly recommended, starred users may receive priority over regular users)
+
+### Basic Setup
 
 > pnpm v8.6 is required to use `create-t4-app`
 
@@ -167,6 +147,30 @@ If you would like to use Tauri use:
 ```bash
 pnpm create t4-app --tauri
 ```
+
+## ❓ Why T4?
+
+- Small learning curve
+- Instant feedback, rapid development
+- Universal across **React Native** & **React Web**
+  - [Data fetching](https://tanstack.com/query/latest)
+  - [Styling](https://tamagui.dev)
+  - [Authentication](https://supabase.com)
+  - [Navigation](https://solito.dev)
+- High code re-use
+- Low bundle size
+- Edge compatible
+- Fast startup time
+- Simple setup
+- Allows for platform-specific code when needed.
+- Type-safety
+
+## 📦 What's Included
+
+- [Tamagui](https://tamagui.dev) - A UI kit for building beautiful and responsive user interfaces.
+- [Turborepo](https://turbo.build/) - A high performance build system for TypeScript, built in Rust.
+- [tRPC](https://trpc.io) - A TypeScript framework for building end-to-end typesafe APIs.
+- [TypeScript](https://www.typescriptlang.org) - A typed superset of JavaScript that compiles to plain JavaScript.
 
 ## 🧩 VSCode Extension
 
@@ -208,17 +212,16 @@ We welcome contributions from anyone and everyone. Please read our [contributing
 ## 👏 Special Thanks
 
 - [Cloudflare Developers](https://twitter.com/CloudflareDev)
+- [Yusuke Wada](https://twitter.com/yusukebe) - Creator of Hono.js
+- [Nate Birdman](https://twitter.com/natebirdman) - Creator of Tamagui
+- [Fernando Rojo](https://twitter.com/fernandotherojo) - Creator of Solito
+- [Tanner Linsley](https://twitter.com/tannerlinsley) - Creator of TanStack
+- [Daishi Kato](https://twitter.com/dai_shi) Creator of Jotai
 - [Shopify Developers](https://twitter.com/ShopifyDevs)
 - [Drizzle Developers](https://twitter.com/DrizzleOrm)
-- [Yusuke Wada](https://twitter.com/yusukebe) - Creator of Hono.js
-- [Tanner Linsley](https://twitter.com/tannerlinsley) - Creator of TanStack
-- [Nate Birdman](https://twitter.com/natebirdman) - Creator of Tamagui
 - [Tim Neutkens](https://twitter.com/timneutkens) - Co-author of Next.js
-- [Guillermo Rauch](https://twitter.com/rauchg) - Co-author of Next.js
-- [Fernando Rojo](https://twitter.com/fernandotherojo) - Creator of Solito
-- [Daishi Kato](https://twitter.com/dai_shi) Creator of Jotai
 - [Jared Palmer](https://twitter.com/jaredpalmer) - Creator of Turborepo
-- [Evan Bacon](https://twitter.com/Baconbrix) - Maintainer of Expo
+- [Expo Developers](https://twitter.com/expo) - Office hours
 
 ## ⚖️ License
 
