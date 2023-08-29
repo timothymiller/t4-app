@@ -71,3 +71,4 @@ apps/expo/android/**
 **/sw.js
 **/workbox-*.js
 **/fallback-*.js
+**/service-worker.js
