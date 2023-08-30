@@ -7,7 +7,7 @@ import { SolitoImage } from 'solito/image'
 interface Props {
   type: 'sign-up' | 'sign-in'
   handleOAuthWithPress: (provider: Provider) => void
-  handleEmailWithPress: (emailAddress, password) => void
+  handleEmailWithPress: (email, password) => void
 }
 
 export const SignUpSignInComponent = ({
@@ -15,7 +15,7 @@ export const SignUpSignInComponent = ({
   handleOAuthWithPress,
   handleEmailWithPress,
 }: Props): React.ReactNode => {
-  const [emailAddress, setEmailAddress] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   return (
@@ -98,7 +98,7 @@ export const SignUpSignInComponent = ({
         autoCapitalize="none"
         placeholder="Email"
         onChangeText={(text) => {
-          setEmailAddress(text)
+          setEmail(text)
         }}
       />
       <Input
@@ -115,7 +115,7 @@ export const SignUpSignInComponent = ({
       <Button
         themeInverse
         onPress={() => {
-          handleEmailWithPress(emailAddress, password)
+          handleEmailWithPress(email, password)
         }}
         hoverStyle={{ opacity: 0.8 }}
         onHoverIn={() => {}}

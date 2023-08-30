@@ -15,16 +15,17 @@ import { ChevronDown } from '@tamagui/lucide-icons'
 import React, { useState } from 'react'
 import { Linking } from 'react-native'
 import { useLink } from 'solito/link'
-import { signOut } from 'app/utils/supabase'
 import Constants from 'expo-constants'
 import { useSheetOpen } from '../../atoms/sheet'
 import { SolitoImage } from 'solito/image'
 import { useUser } from 'app/utils/supabase/auth'
 import { trpc } from 'app/utils/trpc'
+import { useSupabase } from 'app/utils/supabase/hooks'
 
 export function HomeScreen() {
   const utils = trpc.useContext()
   const { user, setUser } = useUser()
+  const supabase = useSupabase()
   const isSignedIn = user !== null
 
   const signInLink = useLink({
@@ -98,7 +99,7 @@ export function HomeScreen() {
               setUser(null)
               // Clear tanstack query cache of authenticated routes
               utils.auth.secretMessage.reset()
-              await signOut()
+              supabase.auth.signOut()
             }}
             space="$2"
           >
