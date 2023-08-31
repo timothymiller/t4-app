@@ -31,3 +31,14 @@ export const secureCookieOptions = {
   secure: true,
   // domain: 'localhost',
 }
+
+export const getToken = (): string | undefined => {
+  let token = getCookieValue(AUTH_TOKEN_COOKIE_NAME)
+  if (token !== undefined) {
+    const parse = JSON.parse(token)
+    if (Array.isArray(parse) && parse.length > 0) {
+      token = parse[0]
+    }
+  }
+  return token
+}

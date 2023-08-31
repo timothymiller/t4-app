@@ -3,7 +3,7 @@ import type { GetServerSidePropsContext } from 'next'
 import Head from 'next/head'
 import { createPagesServerClient } from '@supabase/auth-helpers-nextjs'
 import jwt from '@tsndr/cloudflare-worker-jwt'
-import { secureCookieOptions } from 'app/provider/auth/index.web'
+import { secureCookieOptions } from 'app/utils/supabase/cookies'
 
 export default function Page() {
   return (
@@ -45,6 +45,7 @@ export const getServerSideProps = async (
   const session = await supabase.auth.getSession()
   const token = session.data.session?.access_token
   if (token === undefined) {
+    console.log('No token found')
     return redirectToSignIn
   }
 
@@ -58,6 +59,7 @@ export const getServerSideProps = async (
     console.error(e)
   } finally {
     if (authorized === false) {
+      console.log('JWT not authorized')
       return redirectToSignIn
     }
   }
@@ -65,6 +67,7 @@ export const getServerSideProps = async (
   // Can use session info safely now
   const userId = session.data.session?.user.id
   if (userId === undefined) {
+    console.log('No user id found')
     return redirectToSignIn
   }
 

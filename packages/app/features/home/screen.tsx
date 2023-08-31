@@ -19,12 +19,12 @@ import { useSheetOpen } from '../../atoms/sheet'
 import { SolitoImage } from 'solito/image'
 import { trpc } from 'app/utils/trpc'
 import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
-import { useUser } from 'app/atoms/auth'
+import { useUser } from 'app/utils/supabase/hooks/useUser'
 
 export function HomeScreen() {
   const utils = trpc.useContext()
   const supabase = useSupabase()
-  const [user] = useUser()
+  const { user } = useUser()
   const toast = useToastController()
 
   const signInLink = useLink({
