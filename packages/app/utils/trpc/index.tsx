@@ -6,7 +6,7 @@ import type { AppRouter } from '@t4/api/src/router'
  */
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink } from '@trpc/client'
-import { supabase } from '../supabase/client'
+import { supabase } from '../supabase/libs/client'
 import superjson from 'superjson'
 import { useState } from 'react'
 

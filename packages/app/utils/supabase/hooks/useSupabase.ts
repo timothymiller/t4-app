@@ -1,4 +1,4 @@
-import { supabase } from '../client'
+import { supabase } from '../libs/client'
 
 export const useSupabase = () => {
   return supabase
