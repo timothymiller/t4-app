@@ -1,8 +1,8 @@
-import type { SignInWithOAuthCredentials, User, UserResponse } from '@supabase/supabase-js'
-// import { Linking } from 'react-native'
-import { useEffect } from 'react'
-import { useSupabaseUser, useUserLoading } from '../../atoms/auth'
-import { useSupabase } from './hooks'
+// import type { SignInWithOAuthCredentials, User, UserResponse } from '@supabase/supabase-js'
+// // import { Linking } from 'react-native'
+// import { useEffect } from 'react'
+// import { useSupabaseUser, useUserLoading } from '../../atoms/auth'
+// import { useSupabase } from './hooks/useSupabase'
 
 // const signIn = async (email, password) => {
 //   const {
@@ -72,40 +72,27 @@ import { useSupabase } from './hooks'
 //   return { data, error }
 // }
 
-// // @link https://t4stack.com/hooks
-export const useUser = () => {
-  const [user, setUser] = useSupabaseUser()
-  const [loading, setLoading] = useUserLoading()
-  const supabase = useSupabase()
+// @link https://t4stack.com/hooks
+// export const useUser = () => {`
+//   const [user, setUser] = useSupabaseUser()
+//   const [loading, setLoading] = useUserLoading()
+//   const supabase = useSupabase()
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response: UserResponse = await supabase.auth.getUser()
-        const user = response?.data?.user
-        setUser(user)
-      } catch (error) {
-        console.error('Error fetching user:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
+//   useEffect(() => {
+//     const fetchUser = async () => {
+//       try {
+//         const response: UserResponse = await supabase.auth.getUser()
+//         const user = response?.data?.user
+//         setUser(user)
+//       } catch (error) {
+//         console.error('Error fetching user:', error)
+//       } finally {
+//         setLoading(false)
+//       }
+//     }
 
-    fetchUser()
-  }, [])
+//     fetchUser()
+//   }, [])
 
-  return { user, loading, setUser }
-}
-
-// export {
-//   supabase,
-//   signIn,
-//   signInWithOAuth,
-//   sendPasswordResetEmail,
-//   updatePassword,
-//   signUp,
-//   signOut,
-//   getUser,
-//   deleteUser,
-//   useUser,
+//   return { user, loading, setUser }
 // }

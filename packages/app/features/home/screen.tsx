@@ -15,18 +15,17 @@ import { ChevronDown } from '@tamagui/lucide-icons'
 import React, { useState } from 'react'
 import { Linking } from 'react-native'
 import { useLink } from 'solito/link'
-import Constants from 'expo-constants'
 import { useSheetOpen } from '../../atoms/sheet'
 import { SolitoImage } from 'solito/image'
-import { useUser } from 'app/utils/supabase/auth'
 import { trpc } from 'app/utils/trpc'
-import { useSupabase } from 'app/utils/supabase/hooks'
+import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
+import { useUser } from 'app/atoms/auth'
 
 export function HomeScreen() {
   const utils = trpc.useContext()
-  const { user, setUser } = useUser()
   const supabase = useSupabase()
-  const isSignedIn = user !== null
+  const [user] = useUser()
+  const toast = useToastController()
 
   const signInLink = useLink({
     href: '/sign-in',
@@ -91,15 +90,23 @@ export function HomeScreen() {
           <Button {...paramsLink} space="$2">
             Params
           </Button>
+          <Button
+            onPress={() => {
+              toast.show('Hello world!', {
+                message: 'Description here',
+              })
+            }}
+          >
+            Show Toast
+          </Button>
           <SheetDemo />
         </YStack>
-        {isSignedIn ? (
+        {user ? (
           <Button
             onPress={async () => {
-              setUser(null)
+              supabase.auth.signOut()
               // Clear tanstack query cache of authenticated routes
               utils.auth.secretMessage.reset()
-              supabase.auth.signOut()
             }}
             space="$2"
           >
@@ -123,7 +130,6 @@ export function HomeScreen() {
 const SheetDemo = (): React.ReactNode => {
   const [open, setOpen] = useSheetOpen()
   const [position, setPosition] = useState(0)
-  const toast = useToastController()
 
   return (
     <>
@@ -148,12 +154,6 @@ const SheetDemo = (): React.ReactNode => {
             icon={ChevronDown}
             onPress={() => {
               setOpen(false)
-              const isExpoGo = Constants.appOwnership === 'expo'
-              if (!isExpoGo) {
-                toast.show('Sheet closed!', {
-                  message: 'Just showing how toast works...',
-                })
-              }
             }}
           />
         </Sheet.Frame>

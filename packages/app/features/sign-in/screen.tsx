@@ -5,7 +5,7 @@ import type { Provider } from '@supabase/supabase-js'
 import Constants from 'expo-constants'
 import { capitalizeWord } from 'app/utils/string'
 import { isExpoGo } from 'app/utils/flags'
-import { useSupabase } from 'app/utils/supabase/hooks'
+import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
 
 export const SignInScreen = (): React.ReactNode => {
   const { replace } = useRouter()

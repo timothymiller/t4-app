@@ -1,3 +1,5 @@
+import { DEFAULT_COOKIE_OPTIONS } from '@supabase/auth-helpers-shared'
+
 export function getCookieValue(cookieName: string): string | undefined {
   const cookieString = document.cookie
   const cookieNameLength = cookieName.length
@@ -7,15 +9,25 @@ export function getCookieValue(cookieName: string): string | undefined {
     let cookie = cookies[i]
     if (cookie?.length === 0) continue
 
-    while (cookie.charAt(0) === ' ') {
+    while (cookie?.charAt(0) === ' ') {
       cookie = cookie.substring(1)
     }
 
-    if (cookie.indexOf(cookieName) === 0) {
+    if (cookie?.indexOf(cookieName) === 0) {
       const cookieValue = cookie.substring(cookieNameLength + 1)
       return decodeURIComponent(cookieValue)
     }
   }
 
   return undefined
+}
+
+export const AUTH_TOKEN_COOKIE_NAME = 'auth-token'
+
+export const secureCookieOptions = {
+  name: AUTH_TOKEN_COOKIE_NAME,
+  ...DEFAULT_COOKIE_OPTIONS,
+  sameSite: 'Strict',
+  secure: true,
+  // domain: 'localhost',
 }

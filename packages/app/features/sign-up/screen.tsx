@@ -6,7 +6,7 @@ import type { Provider } from '@supabase/supabase-js'
 // import { signInWithOAuth } from 'app/utils/supabase/auth'
 import { capitalizeWord } from 'app/utils/string'
 import { isExpoGo } from 'app/utils/flags'
-import { useSupabase } from 'app/utils/supabase/hooks'
+import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
 
 export const SignUpScreen = (): React.ReactNode => {
   const { push } = useRouter()

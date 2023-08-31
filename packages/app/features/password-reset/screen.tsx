@@ -2,7 +2,7 @@ import { YStack, useToastController } from '@t4/ui'
 import { useRouter } from 'solito/router'
 import { PasswordResetComponent } from '@t4/ui/src/PasswordReset'
 import { isExpoGo } from 'app/utils/flags'
-import { useSupabase } from 'app/utils/supabase/hooks'
+import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
 
 export function PasswordResetScreen() {
   const { push } = useRouter()

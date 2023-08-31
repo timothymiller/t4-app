@@ -3,7 +3,7 @@ import { useRouter } from 'solito/router'
 import { PasswordResetComponent } from '@t4/ui/src/PasswordReset'
 // import { updatePassword } from 'app/utils/supabase/auth'
 import { isExpoGo } from 'app/utils/flags'
-import { useSupabase } from 'app/utils/supabase/hooks'
+import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
 
 export function UpdatePasswordScreen() {
   const { push } = useRouter()

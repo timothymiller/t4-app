@@ -3,7 +3,7 @@ import type { User } from '@supabase/supabase-js'
 
 const userAtom = atom<User | null>(null)
 
-export function useSupabaseUser() {
+export function useUser() {
   return [...useAtom(userAtom)] as const
 }
 
