@@ -1,7 +1,7 @@
 import jwt from '@tsndr/cloudflare-worker-jwt'
 import type { GetServerSidePropsContext } from 'next/types'
 import { Session, createPagesServerClient } from '@supabase/auth-helpers-nextjs'
-import { secureCookieOptions } from 'app/utils/supabase/libs/cookies'
+import { secureCookieOptions } from 'app/utils/supabase/cookies'
 
 export const verifyToken = async (token: string): Promise<boolean> => {
   try {
