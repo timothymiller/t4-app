@@ -3,7 +3,7 @@ import React from 'react'
 import { trpc } from 'app/utils/trpc'
 // import type { Car } from '@t4/api/src/db/schema'
 
-export function DataFetchingScreen() {
+export function SSRScreen() {
   const helloWorld = trpc.hello.world.useQuery('world')
   const protectedRoute = trpc.auth.secretMessage.useQuery()
   const isError =
@@ -14,7 +14,11 @@ export function DataFetchingScreen() {
 
   return (
     <YStack f={1} jc="center" ai="center" p="$4" space="$4">
-      <H1>Data Fetching</H1>
+      <H1>Server Side Rendering</H1>
+      <Paragraph>You can perform authentication checks on the server with Next.js</Paragraph>
+      <Paragraph>
+        Additionally, you can pass pre-fetched data via props to avoid loading indicators
+      </Paragraph>
 
       <H2>Public Route</H2>
       {helloWorld.isLoading && <Paragraph>Loading...</Paragraph>}

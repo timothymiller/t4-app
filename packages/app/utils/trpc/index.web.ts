@@ -2,7 +2,7 @@ import { createTRPCNext } from '@trpc/next'
 import { httpBatchLink, loggerLink } from '@trpc/client'
 import type { AppRouter } from '@t4/api/src/router'
 import superjson from 'superjson'
-import { getToken } from '../supabase/cookies'
+import { getToken } from '../supabase/libs/cookies'
 
 const getBaseUrl = () => {
   return `${process.env.NEXT_PUBLIC_API_URL}`
