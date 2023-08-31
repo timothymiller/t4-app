@@ -9,6 +9,8 @@ export function DataFetchingScreen() {
     protectedRoute?.failureReason?.data?.httpStatus !== 200 &&
     protectedRoute?.failureReason?.data?.httpStatus !== undefined
 
+  const allCars = trpc.car.all.useQuery()
+
   return (
     <YStack f={1} jc="center" ai="center" p="$4" space="$4">
       <H1>Data Fetching</H1>
