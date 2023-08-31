@@ -2,7 +2,7 @@ import { createPagesBrowserClient, type Session } from '@supabase/auth-helpers-n
 import { useState } from 'react'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import { secureCookieOptions } from 'app/utils/supabase/cookies'
-import { AuthStateChangeHandler } from '.'
+import { useAuthRedirect } from 'app/utils/supabase/hooks/useAuthRedirect'
 
 export interface Props {
   children: React.ReactNode
@@ -22,4 +22,9 @@ export const AuthProvider = ({ children, initialSession }: Props): React.ReactNo
       {children}
     </SessionContextProvider>
   )
+}
+
+export const AuthStateChangeHandler = () => {
+  useAuthRedirect()
+  return null
 }
