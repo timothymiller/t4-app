@@ -1,7 +1,7 @@
 import { H1, H2, Paragraph, YStack } from '@t4/ui'
 import React from 'react'
 import { trpc } from 'app/utils/trpc'
-// import { Car } from '@t4/api/src/db/schema'
+import type { Car } from '@t4/api/src/db/schema'
 
 export function DataFetchingScreen() {
   const helloWorld = trpc.hello.world.useQuery('world')
@@ -10,10 +10,7 @@ export function DataFetchingScreen() {
     protectedRoute?.failureReason?.data?.httpStatus !== 200 &&
     protectedRoute?.failureReason?.data?.httpStatus !== undefined
 
-  // const allCars = trpc.car.all.useQuery()
-  // allCars.data?.map((car: Car) => {
-  //   console.log(car)
-  // })
+  const allCars = trpc.car.all.useQuery<Car[]>()
 
   return (
     <YStack f={1} jc="center" ai="center" p="$4" space="$4">

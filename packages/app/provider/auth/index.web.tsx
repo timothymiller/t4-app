@@ -1,7 +1,7 @@
 import { createPagesBrowserClient, type Session } from '@supabase/auth-helpers-nextjs'
 import { useState } from 'react'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
-import { secureCookieOptions } from 'app/utils/supabase/cookies'
+import { secureCookieOptions } from 'app/utils/supabase/libs/cookies'
 import { AuthStatusChangeHandler } from '../../utils/supabase/components/AuthStatusChangeHandler'
 
 export interface Props {

@@ -1,9 +1,12 @@
 import { DataFetchingScreen } from 'app/features/data-fetching/screen'
-import type { GetServerSidePropsContext } from 'next'
+import type { GetServerSidePropsContext } from 'next/types'
 import Head from 'next/head'
 import { createPagesServerClient } from '@supabase/auth-helpers-nextjs'
 import jwt from '@tsndr/cloudflare-worker-jwt'
-import { secureCookieOptions } from 'app/utils/supabase/cookies'
+import { secureCookieOptions } from 'app/utils/supabase/libs/cookies'
+import { AuthorizedProps } from 'utils/types/AuthorizedProps'
+import { redirectToSignIn } from 'utils/redirects'
+import { getSession } from 'utils/auth'
 
 export default function Page() {
   return (
@@ -17,37 +20,30 @@ export default function Page() {
 }
 
 interface Props {
-  props: {
-    data: string
-  }
-}
-
-interface Redirect {
-  redirect: {
-    destination: string
-    permanent: boolean
-  }
-}
-
-export const redirectToSignIn = {
-  redirect: {
-    destination: '/sign-in',
-    permanent: false,
-  },
+  data: string
 }
 
 export const getServerSideProps = async (
   ctx: GetServerSidePropsContext
-): Promise<Props | Redirect> => {
-  const supabase = createPagesServerClient(ctx, {
-    cookieOptions: secureCookieOptions,
-  })
-  const session = await supabase.auth.getSession()
-  const token = session.data.session?.access_token
+): Promise<AuthorizedProps<Props>> => {
+  const session = await getSession(ctx)
+  const token = session?.access_token
+
   if (token === undefined) {
-    console.log('No token found')
+    // No token found
     return redirectToSignIn
   }
+
+  // const supabase = createPagesServerClient(ctx, {
+  //   cookieOptions: secureCookieOptions,
+  // })
+  // const supabaseResponse = await supabase.auth.getSession()
+  // const session = supabaseResponse?.data.session
+  // const token = session?.access_token
+  // if (token === undefined) {
+  //   // No token found
+  //   return redirectToSignIn
+  // }
 
   // Verify JWT
   let authorized = false
@@ -65,7 +61,7 @@ export const getServerSideProps = async (
   }
 
   // Can use session info safely now
-  const userId = session.data.session?.user.id
+  const userId = session?.user.id
   if (userId === undefined) {
     console.log('No user id found')
     return redirectToSignIn
@@ -74,6 +70,7 @@ export const getServerSideProps = async (
   return {
     props: {
       data: userId,
+      initialSession: session,
     },
   }
 }
