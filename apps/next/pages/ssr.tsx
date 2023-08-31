@@ -5,7 +5,7 @@ import { AuthorizedProps } from 'utils/types/AuthorizedProps'
 import { redirectToSignIn } from 'utils/redirects'
 import { getSession, verifyToken } from 'utils/auth'
 
-export default function Page({ data }: SSRProps) {
+export default function Page() {
   return (
     <>
       <Head>
@@ -47,3 +47,5 @@ export const getServerSideProps = async (
     },
   }
 }
+
+export const runtime = 'edge'
