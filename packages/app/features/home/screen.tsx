@@ -15,17 +15,17 @@ import { ChevronDown } from '@tamagui/lucide-icons'
 import React, { useState } from 'react'
 import { Linking } from 'react-native'
 import { useLink } from 'solito/link'
-import { signOut } from 'app/utils/supabase'
-import Constants from 'expo-constants'
 import { useSheetOpen } from '../../atoms/sheet'
 import { SolitoImage } from 'solito/image'
-import { useUser } from 'app/utils/supabase/auth'
 import { trpc } from 'app/utils/trpc'
+import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
+import { useUser } from 'app/utils/supabase/hooks/useUser'
 
 export function HomeScreen() {
   const utils = trpc.useContext()
-  const { user, setUser } = useUser()
-  const isSignedIn = user !== null
+  const supabase = useSupabase()
+  const { user } = useUser()
+  const toast = useToastController()
 
   const signInLink = useLink({
     href: '/sign-in',
@@ -37,6 +37,10 @@ export function HomeScreen() {
 
   const dataFetchingLink = useLink({
     href: '/data-fetching',
+  })
+
+  const ssrLink = useLink({
+    href: '/ssr',
   })
 
   const virtualizedListLink = useLink({
@@ -87,18 +91,29 @@ export function HomeScreen() {
           <Button {...dataFetchingLink} space="$2">
             Fetching Data
           </Button>
+          <Button {...ssrLink} space="$2">
+            Server Side Rendering
+          </Button>
           <Button {...paramsLink} space="$2">
             Params
           </Button>
+          <Button
+            onPress={() => {
+              toast.show('Hello world!', {
+                message: 'Description here',
+              })
+            }}
+          >
+            Show Toast
+          </Button>
           <SheetDemo />
         </YStack>
-        {isSignedIn ? (
+        {user ? (
           <Button
             onPress={async () => {
-              setUser(null)
+              supabase.auth.signOut()
               // Clear tanstack query cache of authenticated routes
               utils.auth.secretMessage.reset()
-              await signOut()
             }}
             space="$2"
           >
@@ -122,7 +137,6 @@ export function HomeScreen() {
 const SheetDemo = (): React.ReactNode => {
   const [open, setOpen] = useSheetOpen()
   const [position, setPosition] = useState(0)
-  const toast = useToastController()
 
   return (
     <>
@@ -147,12 +161,6 @@ const SheetDemo = (): React.ReactNode => {
             icon={ChevronDown}
             onPress={() => {
               setOpen(false)
-              const isExpoGo = Constants.appOwnership === 'expo'
-              if (!isExpoGo) {
-                toast.show('Sheet closed!', {
-                  message: 'Just showing how toast works...',
-                })
-              }
             }}
           />
         </Sheet.Frame>

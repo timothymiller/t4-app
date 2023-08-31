@@ -5,7 +5,6 @@
     "*.css"
   ],
   "private": true,
-  "types": "./types/index",
   "main": "src/index.tsx",
   "module:jsx": "src",
   "files": [
@@ -21,18 +20,18 @@
     "@shopify/flash-list": "^1.5.0",
     "@supabase/supabase-js": "^2.33.1",
     "@t4/api": "^2.0.0",
-    "@tamagui/animations-react-native": "1.57.4",
-    "@tamagui/font-inter": "1.57.4",
-    "@tamagui/react-native-media-driver": "1.57.4",
-    "@tamagui/shorthands": "1.57.4",
-    "@tamagui/themes": "1.57.4",
-    "@tamagui/toast": "1.57.4",
+    "@tamagui/animations-react-native": "1.58.0",
+    "@tamagui/font-inter": "1.58.0",
+    "@tamagui/react-native-media-driver": "1.58.0",
+    "@tamagui/shorthands": "1.58.0",
+    "@tamagui/themes": "1.58.0",
+    "@tamagui/toast": "1.58.0",
     "@tanstack/react-table": "^8.9.3",
     "@tanstack/react-virtual": "3.0.0-beta.54",
     "jotai": "^2.4.0",
-    "tamagui": "1.57.4"
+    "tamagui": "1.58.0"
   },
   "devDependencies": {
-    "@tamagui/build": "1.57.4"
+    "@tamagui/build": "1.58.0"
   }
 }

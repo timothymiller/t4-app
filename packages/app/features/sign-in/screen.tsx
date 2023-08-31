@@ -1,19 +1,19 @@
 import { YStack, useToastController } from '@t4/ui'
-import { signIn } from 'app/utils/supabase'
-import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from '@t4/ui/src/SignUpSignIn'
-import { Provider } from '@supabase/supabase-js'
-import { signInWithOAuth } from 'app/utils/supabase/auth'
+import { useRouter } from 'solito/router'
+import type { Provider } from '@supabase/supabase-js'
 import Constants from 'expo-constants'
 import { capitalizeWord } from 'app/utils/string'
 import { isExpoGo } from 'app/utils/flags'
+import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
 
 export const SignInScreen = (): React.ReactNode => {
+  const { replace } = useRouter()
+  const supabase = useSupabase()
   const toast = useToastController()
-  const { push } = useRouter()
 
   const handleOAuthSignInWithPress = async (provider: Provider) => {
-    const { error } = await signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: provider,
       options: { scopes: 'read:user user:email' },
     })
@@ -28,12 +28,14 @@ export const SignInScreen = (): React.ReactNode => {
       return
     }
 
-    push('/')
+    replace('/')
   }
 
-  const handleEmailSignInWithPress = async (emailAddress: string, password: string) => {
-    const { error } = await signIn(emailAddress, password)
-
+  const handleEmailSignInWithPress = async (email: string, password: string) => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    })
     if (error) {
       const isExpoGo = Constants.appOwnership === 'expo'
       if (!isExpoGo) {
@@ -44,7 +46,7 @@ export const SignInScreen = (): React.ReactNode => {
       return
     }
 
-    push('/')
+    replace('/')
   }
 
   return (

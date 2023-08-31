@@ -1,18 +1,19 @@
-import { InferModel } from 'drizzle-orm'
+import { InferSelectModel, InferInsertModel } from 'drizzle-orm'
 import { sqliteTable, text, integer, real } from 'drizzle-orm/sqlite-core'
 import { createInsertSchema } from 'drizzle-valibot'
 
 // User
-export const User = sqliteTable('User', {
+export const UserTable = sqliteTable('User', {
   id: text('id').primaryKey(),
   email: text('email').notNull(),
 })
 
-export type User = InferModel<typeof User>
-export const UserSchema = createInsertSchema(User)
+export type User = InferSelectModel<typeof UserTable>
+export type InsertUser = InferInsertModel<typeof UserTable>
+export const UserSchema = createInsertSchema(UserTable)
 
 // Car
-export const Car = sqliteTable('Car', {
+export const CarTable = sqliteTable('Car', {
   id: text('id').primaryKey(),
   make: text('make').notNull(),
   model: text('model').notNull(),
@@ -24,5 +25,6 @@ export const Car = sqliteTable('Car', {
   transmission: text('transmission').notNull(),
 })
 
-export type Car = InferModel<typeof Car>
-export const CarSchema = createInsertSchema(Car)
+export type Car = InferSelectModel<typeof CarTable>
+export type InsertCar = InferInsertModel<typeof CarTable>
+export const CarSchema = createInsertSchema(CarTable)
