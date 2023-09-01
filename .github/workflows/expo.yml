@@ -19,6 +19,7 @@ env:
 
 jobs:
   build:
+    if: secrets.EXPO_TOKEN
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
