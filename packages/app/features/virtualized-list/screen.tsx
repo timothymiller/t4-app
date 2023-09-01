@@ -20,8 +20,8 @@ export const VirtualizedListScreen = (): React.ReactNode => {
   const scrollOffsetY = useRef(new Animated.Value(0)).current
   const animatedHeaderHeight = scrollOffsetY.interpolate({
     inputRange: [0, SCROLL_RANGE],
-    outputRange: [MAX_HEADER_HEIGHT , MIN_HEADER_HEIGHT],
-    extrapolate: 'clamp'
+    outputRange: [MAX_HEADER_HEIGHT, MIN_HEADER_HEIGHT],
+    extrapolate: 'clamp',
   })
 
   if (query.isInitialLoading) {
@@ -30,26 +30,35 @@ export const VirtualizedListScreen = (): React.ReactNode => {
 
   return (
     <YStack fullscreen flex={1}>
-      <Button {...backLink} animation={["quick", { height: { overshootClamping: true } }]} icon={ArrowLeft} chromeless backgroundColor="$background" br="$0" jc="flex-start" h={animatedHeaderHeight}>Back</Button>
-      {query.error ? (
-          <Paragraph>Error fetching cars: {query.error.message}</Paragraph>
-        ) : null}
+      <Button
+        {...backLink}
+        animation={['quick', { height: { overshootClamping: true } }]}
+        icon={ArrowLeft}
+        chromeless
+        backgroundColor="$background"
+        br="$0"
+        jc="flex-start"
+        h={animatedHeaderHeight}
+      >
+        Back
+      </Button>
+      {query.error ? <Paragraph>Error fetching cars: {query.error.message}</Paragraph> : null}
       {query.data?.length ? (
-        <VirtualList flex={1} data={query.data} renderItem={CarListItem} estimatedItemSize={80} pt="$3"
+        <VirtualList
+          flex={1}
+          data={query.data}
+          renderItem={CarListItem}
+          estimatedItemSize={80}
+          pt="$3"
           scrollEventThrottle={10}
-          onScroll={Animated.event(
-            [{ nativeEvent: {contentOffset: {y: scrollOffsetY}}}],
-            {useNativeDriver: false}
-          )}
+          onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollOffsetY } } }], {
+            useNativeDriver: false,
+          })}
         />
       ) : (
         <>
-          {query.error ? (
-            <Paragraph>Error fetching cars: {query.error.message}</Paragraph>
-          ) : null}
-          {!query.isLoading && (
-            <Paragraph>No cars found.</Paragraph>
-          )}
+          {query.error ? <Paragraph>Error fetching cars: {query.error.message}</Paragraph> : null}
+          {!query.isLoading && <Paragraph>No cars found.</Paragraph>}
         </>
       )}
     </YStack>

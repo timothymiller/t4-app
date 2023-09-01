@@ -1,22 +1,24 @@
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { useRef, useEffect } from 'react'
+import { useRef } from 'react'
 import { Stack } from 'tamagui'
 import type { FlashListProps, ListRenderItemInfo } from '@shopify/flash-list'
 
-
 export function VirtualList<T>(props: FlashListProps<T>): React.ReactNode {
-  // TODO there are more FlashListProps that should be omitted here...
-  const { data, estimatedItemSize, renderItem, onScroll, scrollEventThrottle, ...scrollableNodeProps } = props;
+  // TODO: there are more FlashListProps that should be omitted here...
+  const {
+    data,
+    estimatedItemSize,
+    renderItem,
+    onScroll,
+    scrollEventThrottle,
+    ...scrollableNodeProps
+  } = props
   const parentRef = useRef<HTMLDivElement>(null)
   const rowVirtualizer = useVirtualizer({
     count: data?.length || 0,
     getScrollElement: () => parentRef.current,
     estimateSize: () => estimatedItemSize || 100,
   })
-
-  useEffect(() => {
-    console.log('total size', rowVirtualizer.getTotalSize())
-  }, [rowVirtualizer.getTotalSize()]);
 
   return (
     <Stack
@@ -25,7 +27,7 @@ export function VirtualList<T>(props: FlashListProps<T>): React.ReactNode {
       {...scrollableNodeProps}
       onScroll={(e) => {
         if (!e.target['getBoundingClientRect']) {
-          return;
+          return
         }
         const target = e.target as HTMLDivElement
         const bb = target.getBoundingClientRect()
@@ -53,9 +55,8 @@ export function VirtualList<T>(props: FlashListProps<T>): React.ReactNode {
               height: bb.height,
             },
             zoomScale: 1,
-          }
-        };
-        // console.log('onScroll', scrollViewEvent, onScroll);
+          },
+        }
         onScroll?.(scrollViewEvent)
       }}
     >
