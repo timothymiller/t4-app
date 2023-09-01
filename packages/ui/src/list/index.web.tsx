@@ -1,4 +1,3 @@
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { useRef } from 'react'
 
@@ -9,7 +8,6 @@ interface Props {
 }
 
 export const VirtualList = ({ data, renderItem, itemHeight }: Props): React.ReactNode => {
-  const { top, bottom } = useSafeAreaInsets()
   const parentRef = useRef()
   const rowVirtualizer = useVirtualizer({
     count: data.length,
@@ -21,8 +19,6 @@ export const VirtualList = ({ data, renderItem, itemHeight }: Props): React.Reac
     <div
       ref={parentRef as any}
       style={{
-        paddingTop: top,
-        paddingBottom: bottom,
         height: `100%`,
         overflow: 'auto', // Make it scroll!
       }}
