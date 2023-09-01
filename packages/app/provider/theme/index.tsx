@@ -39,6 +39,7 @@ export const TamaguiThemeProvider = ({
 
   useEffect(() => {
     if (appTheme === undefined) {
+      storage.set(appThemeKey, defaultTheme)
       setAppTheme(defaultTheme)
     } else {
       storage.set(appThemeKey, appTheme)
