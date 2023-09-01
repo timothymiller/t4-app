@@ -1,4 +1,4 @@
-import { supabase } from 'app/utils/supabase/libs/client'
+import { supabase } from 'app/utils/supabase/client'
 import { Props } from './index.web'
 import { AuthStatusChangeHandler } from '../../utils/supabase/components/AuthStatusChangeHandler'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'

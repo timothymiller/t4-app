@@ -16,6 +16,7 @@ export const TamaguiThemeProvider = ({
   const [currentTheme] = useCurrentTheme()
   const forceUpdate = useForceUpdate()
 
+  const defaultTheme = 'system'
   const statusBarStyle = currentTheme === ThemeVariant.dark ? ThemeVariant.light : ThemeVariant.dark
   const themeValue = currentTheme === ThemeVariant.dark ? DarkTheme : DefaultTheme
 
@@ -37,7 +38,11 @@ export const TamaguiThemeProvider = ({
   }, [])
 
   useEffect(() => {
-    storage.set(appThemeKey, appTheme)
+    if (appTheme === undefined) {
+      setAppTheme(defaultTheme)
+    } else {
+      storage.set(appThemeKey, appTheme)
+    }
   }, [appTheme])
 
   return (
