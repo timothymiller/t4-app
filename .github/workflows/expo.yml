@@ -14,12 +14,11 @@ permissions:
   contents: write
 
 env:
-  BUILD_PROFILE: development
-  # BUILD_PROFILE: production
+  # BUILD_PROFILE: development
+  BUILD_PROFILE: production
 
 jobs:
   build:
-    if: ${{ secrets.EXPO_TOKEN }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
