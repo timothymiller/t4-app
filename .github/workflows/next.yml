@@ -12,7 +12,7 @@ on:
 
 jobs:
   publish:
-    if: secrets.CF_PROJECT_NAME
+    if: ${{ secrets.CF_PROJECT_NAME }}
     name: Publish to Cloudflare Pages
     runs-on: ubuntu-latest
     timeout-minutes: 10
