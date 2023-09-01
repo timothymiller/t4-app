@@ -39,10 +39,6 @@ export function HomeScreen() {
     href: '/data-fetching',
   })
 
-  const ssrLink = useLink({
-    href: '/ssr',
-  })
-
   const virtualizedListLink = useLink({
     href: '/virtualized-list',
   })
@@ -90,9 +86,6 @@ export function HomeScreen() {
           </Button>
           <Button {...dataFetchingLink} space="$2">
             Fetching Data
-          </Button>
-          <Button {...ssrLink} space="$2">
-            Server Side Rendering
           </Button>
           <Button {...paramsLink} space="$2">
             Params

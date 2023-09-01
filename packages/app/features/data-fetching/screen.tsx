@@ -1,16 +1,16 @@
 import { H1, H2, Paragraph, YStack } from '@t4/ui'
 import React from 'react'
 import { trpc } from 'app/utils/trpc'
-// import type { Car } from '@t4/api/src/db/schema'
+import type { Car } from '@t4/api/src/db/schema'
 
 export function DataFetchingScreen() {
-  const helloWorld = trpc.hello.world.useQuery('world')
-  const protectedRoute = trpc.auth.secretMessage.useQuery()
+  const helloWorld = trpc.hello.world.useQuery<string>('world')
+  const protectedRoute = trpc.auth.secretMessage.useQuery<string>()
   const isError =
     protectedRoute?.failureReason?.data?.httpStatus !== 200 &&
     protectedRoute?.failureReason?.data?.httpStatus !== undefined
 
-  // const allCars = trpc.car.all.useQuery<Car[]>()
+  const allCars = trpc.car.all.useQuery<Car[]>()
 
   return (
     <YStack f={1} jc="center" ai="center" p="$4" space="$4">
