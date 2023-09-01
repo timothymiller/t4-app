@@ -48,7 +48,7 @@
     "react-native-url-polyfill": "^2.0.0",
     "turbo": "^1.10.13",
     "typescript": "^5.2.2",
-    "workerd": "1.20230807.0"
+    "workerd": "1.20230821.0"
   },
   "engines": {
     "node": ">=18.16.1",
