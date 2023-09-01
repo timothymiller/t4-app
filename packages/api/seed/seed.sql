@@ -1,4 +1,4 @@
-INSERT INTO cars (id, make, model, year, color, price, mileage, fuelType, transmission)
+INSERT INTO Car (id, make, model, year, color, price, mileage, fuelType, transmission)
 VALUES
   (1, 'Toyota', 'Camry', 2018, 'Silver', 20000.00, 35000, 'Gasoline', 'Automatic'),
   (2, 'Honda', 'Civic', 2019, 'Red', 18000.00, 25000, 'Gasoline', 'Automatic'),
