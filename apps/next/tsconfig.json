@@ -4,7 +4,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "baseUrl": ".",
     "paths": {
-      "react-native": ["react-native-web"],
+      "react-native": ["react-native-web-lite"],
       "app/*": ["../../packages/app/*"],
       "@t4/api/*": ["../../packages/api/*"],
       "@t4/ui/*": ["../../packages/ui/*"]
