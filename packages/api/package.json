@@ -22,17 +22,17 @@
     "@tsndr/cloudflare-worker-jwt": "^2.2.2",
     "drizzle-orm": "^0.28.5",
     "drizzle-valibot": "^0.1.1",
-    "hono": "^3.5.6",
+    "hono": "^3.5.8",
     "superjson": "^1.13.1",
     "valibot": "^0.13.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230821.0",
-    "better-sqlite3": "^8.5.2",
+    "better-sqlite3": "^8.6.0",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.48.0",
     "typescript": "^5.2.2",
-    "wrangler": "^3.6.0"
+    "wrangler": "^3.7.0"
   }
 }
