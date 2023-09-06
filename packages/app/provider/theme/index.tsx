@@ -58,3 +58,11 @@ export const useRootTheme = () => {
   const [currentTheme] = useCurrentTheme()
   return [currentTheme]
 }
+
+// Abridged-interop with tamagui/next useTheme
+// https://tamagui.dev/docs/guides/next-js#themes
+export const useThemeSetting = () => {
+  const [current, set] = useAppTheme()
+  const [resolvedTheme] = useCurrentTheme()
+  return { current, resolvedTheme, set }
+}

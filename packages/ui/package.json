@@ -28,6 +28,7 @@
     "@tamagui/toast": "1.59.5",
     "@tanstack/react-table": "^8.9.3",
     "@tanstack/react-virtual": "3.0.0-beta.54",
+    "expo-blur": "^12.4.1",
     "jotai": "^2.4.1",
     "tamagui": "1.59.5"
   },

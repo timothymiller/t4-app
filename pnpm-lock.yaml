@@ -120,6 +120,9 @@ importers:
       expo:
         specifier: ^49.0.8
         version: 49.0.9(@babel/core@7.22.15)
+      expo-blur:
+        specifier: ^12.4.1
+        version: 12.4.1(expo@49.0.9)
       expo-constants:
         specifier: ~14.4.2
         version: 14.4.2(expo@49.0.9)
@@ -387,6 +390,9 @@ importers:
       burnt:
         specifier: ^0.11.7
         version: 0.11.7(expo@49.0.9)(react-dom@18.2.0)(react-native@0.72.4)(react@18.2.0)
+      expo-blur:
+        specifier: ^12.4.1
+        version: 12.4.1(expo@49.0.9)
       expo-constants:
         specifier: ~14.4.2
         version: 14.4.2(expo@49.0.9)
@@ -445,6 +451,9 @@ importers:
       '@tanstack/react-virtual':
         specifier: 3.0.0-beta.54
         version: 3.0.0-beta.54(react@18.2.0)
+      expo-blur:
+        specifier: ^12.4.1
+        version: 12.4.1(expo@49.0.9)
       jotai:
         specifier: ^2.4.1
         version: 2.4.1(react@18.2.0)
@@ -9705,6 +9714,14 @@ packages:
     transitivePeerDependencies:
       - expo
       - supports-color
+    dev: false
+
+  /expo-blur@12.4.1(expo@49.0.9):
+    resolution: {integrity: sha512-lGN8FS9LuGUlEriULTC62cCWyg5V7zSVQeJ6Duh1wSq8aAETinZ2/7wrT6o+Uhd/XVVxFNON2T25AGCOtMG6ew==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 49.0.9(@babel/core@7.22.15)
     dev: false
 
   /expo-constants@14.4.2(expo@49.0.9):

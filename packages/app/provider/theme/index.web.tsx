@@ -5,12 +5,12 @@ export const TamaguiThemeProvider = ({
 }: {
   children: React.ReactNode
 }): React.ReactNode => {
-  const [_, setTheme] = useRootTheme()
+  const [_, setRootTheme] = useRootTheme()
 
   return (
     <NextThemeProvider
       onChangeTheme={(next) => {
-        setTheme(next as ColorScheme)
+        setRootTheme(next as ColorScheme)
       }}
     >
       {children}
@@ -18,4 +18,4 @@ export const TamaguiThemeProvider = ({
   )
 }
 
-export { useRootTheme } from '@tamagui/next-theme'
+export { useRootTheme, useThemeSetting } from '@tamagui/next-theme'

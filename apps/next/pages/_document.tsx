@@ -30,7 +30,7 @@ export default class Document extends NextDocument {
         dangerouslySetInnerHTML={{
           __html: Tamagui.getCSS({
             exclude: process.env.NODE_ENV === 'development' ? null : 'design-system',
-          }),
+          }) + '\nbody, #root, #__next { min-height: 100dvh; }\n.h-100dvh { height: 100dvh; }',
         }}
       />,
     ]

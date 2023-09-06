@@ -1,71 +1,63 @@
+import { ListRenderItemInfo } from '@shopify/flash-list'
 import type { Car } from '@t4/api/src/db/schema'
 import { Button, Paragraph, Spinner, VirtualList, YStack } from '@t4/ui'
 import { ArrowLeft } from '@tamagui/lucide-icons'
+import { useThemeSetting } from 'app/provider/theme'
 import { formatNumber, formatPrice } from 'app/utils/number'
 import { trpc } from 'app/utils/trpc'
-import { useRef } from 'react'
+import { BlurView } from 'expo-blur'
 import { SolitoImage } from 'solito/image'
 import { useLink } from 'solito/link'
-import { Animated } from 'react-native'
 
-const MAX_HEADER_HEIGHT = 75
-const MIN_HEADER_HEIGHT = 40
-const SCROLL_RANGE = MAX_HEADER_HEIGHT - MIN_HEADER_HEIGHT
+const HEADER_HEIGHT = 44
 
 export const VirtualizedListScreen = (): React.ReactNode => {
   const query = trpc.car.all.useQuery()
   const backLink = useLink({
     href: '/',
   })
-  const scrollOffsetY = useRef(new Animated.Value(0)).current
-  const animatedHeaderHeight = scrollOffsetY.interpolate({
-    inputRange: [0, SCROLL_RANGE],
-    outputRange: [MAX_HEADER_HEIGHT, MIN_HEADER_HEIGHT],
-    extrapolate: 'clamp',
-  })
-
-  if (query.isInitialLoading) {
-    return <Spinner />
-  }
+  const { resolvedTheme: themeName } = useThemeSetting()
 
   return (
-    <YStack fullscreen flex={1}>
-      <Button
-        {...backLink}
-        animation={['quick', { height: { overshootClamping: true } }]}
-        icon={ArrowLeft}
-        chromeless
-        backgroundColor="$background"
-        br="$0"
-        jc="flex-start"
-        h={animatedHeaderHeight}
+    <YStack flex={1} className="h-100dvh">
+      <BlurView
+        style={{
+          backgroundColor: 'transparent',
+          top: 0,
+          right: 0,
+          left: 0,
+          position: 'absolute',
+          zIndex: 20,
+        }}
+        tint={themeName}
       >
-        Back
-      </Button>
-      {query.error ? <Paragraph>Error fetching cars: {query.error.message}</Paragraph> : null}
+        <Button {...backLink} icon={ArrowLeft} chromeless br="$0" jc="flex-start">
+          Back
+        </Button>
+      </BlurView>
       {query.data?.length ? (
         <VirtualList
-          flex={1}
           data={query.data}
           renderItem={CarListItem}
           estimatedItemSize={80}
-          pt="$3"
-          scrollEventThrottle={10}
-          onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollOffsetY } } }], {
-            useNativeDriver: false,
-          })}
+          contentContainerStyle={{ paddingTop: HEADER_HEIGHT + 16 }}
         />
       ) : (
-        <>
-          {query.error ? <Paragraph>Error fetching cars: {query.error.message}</Paragraph> : null}
-          {!query.isLoading && <Paragraph>No cars found.</Paragraph>}
-        </>
+        <YStack fullscreen flex={1} pt={HEADER_HEIGHT + 16} px="$3">
+          {query.status === 'loading' && <Spinner />}
+          {query.status === 'error' && (
+            <Paragraph>Error fetching cars: {query.error.message}</Paragraph>
+          )}
+          {query.status === 'success' && <Paragraph>No cars found.</Paragraph>}
+        </YStack>
       )}
     </YStack>
   )
 }
 
-const CarListItem = (car: Car): React.ReactElement => {
+const CarListItem = ({ item: car }: ListRenderItemInfo<Car>): React.ReactElement => {
+  // Note if you useState in a renderItem, you need to make sure it resets if the item changes
+  // https://shopify.github.io/flash-list/docs/recycling
   return (
     <YStack flexDirection="row" paddingLeft="$2">
       <SolitoImage

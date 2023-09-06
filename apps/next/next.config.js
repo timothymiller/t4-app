@@ -74,6 +74,7 @@ module.exports = function () {
     },
     transpilePackages: [
       'solito',
+      'expo-blur',
       'expo-linking',
       'expo-constants',
       'expo-modules-core',

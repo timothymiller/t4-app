@@ -1,7 +1,7 @@
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { useRef } from 'react'
+import { useRef, useMemo } from 'react'
 import { Stack } from 'tamagui'
-import type { FlashListProps, ListRenderItemInfo } from '@shopify/flash-list'
+import type { FlashListProps } from '@shopify/flash-list'
 
 export function VirtualList<T>(props: FlashListProps<T>): React.ReactNode {
   // TODO: there are more FlashListProps that should be omitted here...
@@ -11,7 +11,8 @@ export function VirtualList<T>(props: FlashListProps<T>): React.ReactNode {
     renderItem,
     onScroll,
     scrollEventThrottle,
-    ...scrollableNodeProps
+    contentContainerStyle,
+    ...otherProps
   } = props
   const parentRef = useRef<HTMLDivElement>(null)
   const rowVirtualizer = useVirtualizer({
@@ -19,48 +20,56 @@ export function VirtualList<T>(props: FlashListProps<T>): React.ReactNode {
     getScrollElement: () => parentRef.current,
     estimateSize: () => estimatedItemSize || 100,
   })
+  const scrollHandler = useMemo(
+    () => (e) => {
+      if (!e.target['getBoundingClientRect']) {
+        return
+      }
+      const target = e.target as HTMLDivElement
+      const bb = target.getBoundingClientRect()
+      const scrollViewEvent = {
+        ...e,
+        currentTarget: target.scrollTop,
+        target: target.scrollTop,
+        nativeEvent: {
+          contentInset: {
+            left: 0,
+            top: 0,
+            bottom: 0,
+            right: 0,
+          },
+          contentOffset: {
+            x: target.scrollLeft,
+            y: target.scrollTop,
+          },
+          contentSize: {
+            width: target.scrollWidth,
+            height: target.scrollHeight,
+          },
+          layoutMeasurement: {
+            width: bb.width,
+            height: bb.height,
+          },
+          zoomScale: 1,
+        },
+      }
+      onScroll?.(scrollViewEvent)
+    },
+    [onScroll]
+  )
 
   return (
     <Stack
       ref={parentRef as any}
       overflow="scroll"
-      {...scrollableNodeProps}
-      onScroll={(e) => {
-        if (!e.target['getBoundingClientRect']) {
-          return
-        }
-        const target = e.target as HTMLDivElement
-        const bb = target.getBoundingClientRect()
-        const scrollViewEvent = {
-          ...e,
-          currentTarget: target.scrollTop,
-          target: target.scrollTop,
-          nativeEvent: {
-            contentInset: {
-              left: 0,
-              top: 0,
-              bottom: 0,
-              right: 0,
-            },
-            contentOffset: {
-              x: target.scrollLeft,
-              y: target.scrollTop,
-            },
-            contentSize: {
-              width: target.scrollWidth,
-              height: target.scrollHeight,
-            },
-            layoutMeasurement: {
-              width: bb.width,
-              height: bb.height,
-            },
-            zoomScale: 1,
-          },
-        }
-        onScroll?.(scrollViewEvent)
+      style={{
+        ...contentContainerStyle,
+        flex: 1,
       }}
+      {...otherProps}
+      onScroll={onScroll && scrollHandler}
     >
-      {/* Extra div so the inner element is affected by Stack flexbox */}
+      {/* Extra div for flexbox */}
       <div>
         {/* The large inner element to hold all of the items */}
         <div
@@ -83,7 +92,11 @@ export function VirtualList<T>(props: FlashListProps<T>): React.ReactNode {
                 transform: `translateY(${virtualItem.start}px)`,
               }}
             >
-              {renderItem?.(data![virtualItem.index] as ListRenderItemInfo<T>)}
+              {renderItem?.({
+                index: virtualItem.index,
+                target: 'Cell',
+                item: data![virtualItem.index],
+              })}
             </div>
           ))}
         </div>
