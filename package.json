@@ -35,7 +35,7 @@
     "clean:workspaces": "turbo clean"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.11",
+    "@babel/runtime": "^7.22.15",
     "@manypkg/cli": "^0.21.0",
     "@nderscore/tamagui-typescript-plugin": "^0.5.4",
     "@supabase/supabase-js": "^2.33.1",

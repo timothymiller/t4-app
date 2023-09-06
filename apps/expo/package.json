@@ -17,7 +17,7 @@
     "eas-build-pre-install": "npm install -g pnpm@8.6.12"
   },
   "dependencies": {
-    "@babel/runtime": "^7.22.11",
+    "@babel/runtime": "^7.22.15",
     "@shopify/flash-list": "^1.5.0",
     "@t4/ui": "^2.0.0",
     "@tamagui/static": "1.59.5",
@@ -46,7 +46,7 @@
     "react-native-svg": "^13.13.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.22.11",
+    "@babel/core": "^7.22.15",
     "@expo/metro-config": "^0.10.7",
     "@tamagui/babel-plugin": "1.59.5",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",

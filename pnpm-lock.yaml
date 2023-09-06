@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@babel/runtime':
-        specifier: ^7.22.11
+        specifier: ^7.22.15
         version: 7.22.15
       '@manypkg/cli':
         specifier: ^0.21.0
@@ -97,7 +97,7 @@ importers:
   apps/expo:
     dependencies:
       '@babel/runtime':
-        specifier: ^7.22.11
+        specifier: ^7.22.15
         version: 7.22.15
       '@shopify/flash-list':
         specifier: ^1.5.0
@@ -179,7 +179,7 @@ importers:
         version: 13.13.0(react-native@0.72.4)(react@18.2.0)
     devDependencies:
       '@babel/core':
-        specifier: ^7.22.11
+        specifier: ^7.22.15
         version: 7.22.15
       '@expo/metro-config':
         specifier: ^0.10.7
