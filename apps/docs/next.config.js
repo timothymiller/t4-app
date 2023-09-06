@@ -46,8 +46,8 @@ module.exports = function () {
   }
 
   const plugins = [
-    withPWA,
     withNextra,
+    withPWA,
   ]
 
   for (const plugin of plugins) {
