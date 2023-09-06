@@ -120,8 +120,6 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
 
 ## 🚀 Quick Start
 
-⭐ [Star this project](https://github.com/timothymiller/t4-app) (Highly recommended, starred users may receive priority over regular users)
-
 ### Basic Setup
 
 > pnpm v8.6 is required to use `create-t4-app`
