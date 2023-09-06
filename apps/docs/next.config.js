@@ -6,6 +6,18 @@ const withNextra = require('nextra')({
 const withPWA = require("@ducanh2912/next-pwa").default({
   dest: "public",
   disable: process.env.NODE_ENV === "development",
+  register: true,
+  sw: "service-worker.js",
+  cacheStartUrl: true,
+  cacheOnFrontendNav: true,
+  aggressiveFrontEndNavCaching: true,
+  extendDefaultRuntimeCaching: true,
+  workboxOptions: {
+    runtimeCaching: [
+    ],
+  },
+  swcMinify: true,
+  reloadOnOnline: true
 });
 
 const boolVals = {
@@ -32,19 +44,19 @@ module.exports = function () {
       removeConsole: disableBrowserLogs
     },
   }
-  
+
   const plugins = [
     withPWA,
     withNextra,
   ]
-  
+
   for (const plugin of plugins) {
     config = {
       ...config,
       ...plugin(config)
     }
   }
-  
+
   const millionConfig = {
     auto: true,
     mute: true
@@ -53,7 +65,7 @@ module.exports = function () {
   if (enableMillionJS) {
     return million.next(config, millionConfig);
   }
-  
+
   return config
-  
+
 }
