@@ -20,7 +20,6 @@
     "@babel/runtime": "^7.22.15",
     "@shopify/flash-list": "^1.5.0",
     "@t4/ui": "^2.0.0",
-    "@tamagui/static": "1.64.1",
     "app": "^2.0.0",
     "babel-plugin-module-resolver": "^4.1.0",
     "burnt": "^0.11.7",
