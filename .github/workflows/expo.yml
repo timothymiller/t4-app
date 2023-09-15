@@ -32,7 +32,7 @@ jobs:
           node-version: 18
 
       - name: 📥 Monorepo install
-        uses: ./.github/actions/pnpm-install
+        uses: ./.github/actions/bun-install
 
       - name: Setup EAS
         uses: expo/expo-github-action@v8

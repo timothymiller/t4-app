@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@shopify/flash-list": "^1.5.0",
-    "@t4/ui": "^2.0.0",
+    "@t4/ui": "*",
     "@tamagui/animations-react-native": "1.64.1",
     "@tamagui/colors": "1.64.1",
     "@tamagui/font-inter": "1.64.1",

@@ -14,13 +14,13 @@
     "build:ios": " eas build --platform ios --profile production --local",
     "build:android": "eas build --platform android --profile production --local",
     "clean": "git clean -xdf .expo node_modules",
-    "eas-build-pre-install": "npm install -g pnpm@8.6.12"
+    "eas-build-pre-install": "npm install -g bun@8.6.12"
   },
   "dependencies": {
     "@babel/runtime": "^7.22.15",
     "@shopify/flash-list": "^1.5.0",
-    "@t4/ui": "^2.0.0",
-    "app": "^2.0.0",
+    "@t4/ui": "*",
+    "app": "*",
     "babel-plugin-module-resolver": "^4.1.0",
     "burnt": "^0.11.7",
     "expo": "^49.0.10",

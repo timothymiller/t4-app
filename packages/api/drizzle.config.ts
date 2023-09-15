@@ -8,7 +8,7 @@ if (DATABASE_ID === undefined) {
 }
 
 export default {
-  driver: 'better-sqlite',
+  driver: 'turso',
   dbCredentials: {
     url: './.wrangler/state/v3/d1/' + DATABASE_ID + '/db.sqlite',
   },

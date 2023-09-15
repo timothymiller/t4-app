@@ -28,10 +28,10 @@ jobs:
           node-version: 18
 
       - name: 📥 Monorepo install
-        uses: ./.github/actions/pnpm-install
+        uses: ./.github/actions/bun-install
 
       - name: Migrate database
-        run: pnpm --filter @t4/api migrate
+        run: bun --filter @t4/api migrate
         env:
           NO_D1_WARNING: true
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}

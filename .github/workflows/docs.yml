@@ -31,7 +31,7 @@ jobs:
           node-version: 18
 
       - name: 📥 Monorepo install
-        uses: ./.github/actions/pnpm-install
+        uses: ./.github/actions/bun-install
 
       - name: Build
         run: |

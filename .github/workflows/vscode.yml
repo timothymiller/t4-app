@@ -37,8 +37,8 @@ jobs:
 
       - name: 📥 Monorepo install
         # if: steps.check.outputs.changed == 'true'
-        uses: ./.github/actions/pnpm-install
+        uses: ./.github/actions/bun-install
 
       - name: Publish
         # if: steps.check.outputs.changed == 'true'
-        run: cd apps/vscode && pnpm dlx @vscode/vsce publish --no-dependencies -p ${{ secrets.VSCE_TOKEN }}
+        run: cd apps/vscode && bun dlx @vscode/vsce publish --no-dependencies -p ${{ secrets.VSCE_TOKEN }}

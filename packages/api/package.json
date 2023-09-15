@@ -12,7 +12,7 @@
     "seed:local": "cross-env NO_D1_WARNING=true wrangler d1 execute production --local --file=./seed/seed.sql",
     "studio": "drizzle-kit studio",
     "deploy": "cross-env NO_D1_WARNING=true wrangler deploy --minify src/index.ts",
-    "postinstall": "pnpm generate",
+    "postinstall": "bun generate",
     "with-env": "dotenv -e ../../.env.local --",
     "clean": "rm -rf .turbo node_modules"
   },
@@ -24,15 +24,15 @@
     "drizzle-valibot": "^0.1.1",
     "hono": "^3.6.0",
     "superjson": "^1.13.1",
+    "miniflare": "3.20230904.0",
     "valibot": "^0.15.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230904.0",
-    "better-sqlite3": "^8.6.0",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.49.0",
     "typescript": "^5.2.2",
-    "wrangler": "^3.7.0"
+    "wrangler": "^3.8.0"
   }
 }

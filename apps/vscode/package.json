@@ -38,10 +38,10 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "pnpm compile",
+    "vscode:prepublish": "bun compile",
     "compile": "tsc -p ./ --skipLibCheck",
     "watch": "tsc -watch -p ./ --skipLibCheck",
-    "pretest": "pnpm compile && pnpm lint",
+    "pretest": "bun compile && bun lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js"
   },

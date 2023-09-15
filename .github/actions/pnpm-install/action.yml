@@ -1,12 +1,12 @@
 ########################################################################################
-# "pnpm install" composite action for pnpm 7/8+                                        #
+# "bun install" composite action for bun 7/8+                                        #
 #--------------------------------------------------------------------------------------#
 # Requirement: @setup/node should be run before                                        #
 #                                                                                      #
 # Usage in workflows steps:                                                            #
 #                                                                                      #
 #      - name: 📥 Monorepo install                                                     #
-#        uses: ./.github/actions/pnpm-install                                          #
+#        uses: ./.github/actions/bun-install                                          #
 #        with:                                                                         #
 #          enable-corepack: false # (default)                                          #
 #          cwd: ${{ github.workspace }}/apps/my-app # (default = '.')                  #
@@ -18,9 +18,8 @@
 #   - 1.1.0 - 15-07-2023 - Add project custom directory support.                       #
 ########################################################################################
 
-
-name: 'PNPM install'
-description: 'Run pnpm install with cache enabled'
+name: 'bun install'
+description: 'Run bun install with cache enabled'
 
 inputs:
   enable-corepack:
@@ -42,20 +41,20 @@ runs:
       working-directory: ${{ inputs.cwd }}
       run: |
         corepack enable
-        echo "corepack enabled" 
+        echo "corepack enabled"
 
-    - uses: pnpm/action-setup@v2.2.4
+    - uses: bun/action-setup@v2.2.4
       if: ${{ inputs.enable-corepack == 'false' }}
       with:
         run_install: false
         # If you're not setting the packageManager field in package.json, add the version here
         # version: 8.6.0
 
-    - name: Expose pnpm config(s) through "$GITHUB_OUTPUT"
-      id: pnpm-config
+    - name: Expose bun config(s) through "$GITHUB_OUTPUT"
+      id: bun-config
       shell: bash
       run: |
-        echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+        echo "STORE_PATH=$(bun store path)" >> $GITHUB_OUTPUT
 
     - name: Cache rotation keys
       id: cache-rotation
@@ -64,24 +63,24 @@ runs:
         echo "YEAR_MONTH=$(/bin/date -u "+%Y%m")" >> $GITHUB_OUTPUT
 
     - uses: actions/cache@v3
-      name: Setup pnpm cache
+      name: Setup bun cache
       with:
-        path: ${{ steps.pnpm-config.outputs.STORE_PATH }}
-        key: ${{ runner.os }}-pnpm-store-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+        path: ${{ steps.bun-config.outputs.STORE_PATH }}
+        key: ${{ runner.os }}-bun-store-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-${{ hashFiles('**/bun-lock.yaml') }}
         restore-keys: |
-          ${{ runner.os }}-pnpm-store-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-
+          ${{ runner.os }}-bun-store-cache-${{ steps.cache-rotation.outputs.YEAR_MONTH }}-
 
     # Prevent store to grow over time (not needed with yarn)
     # Note: not perfect as it prune too much in monorepos so the idea
     #       is to use cache-rotation as above. In the future this might work better.
-    #- name: Prune pnpm store
+    #- name: Prune bun store
     #  shell: bash
-    #  run: pnpm prune store
+    #  run: bun prune store
 
     - name: Install dependencies
       shell: bash
       working-directory: ${{ inputs.cwd }}
-      run: pnpm install --frozen-lockfile --prefer-offline
+      run: bun install --frozen-lockfile --prefer-offline
       env:
         # Other environment variables
         HUSKY: '0' # By default do not run HUSKY install

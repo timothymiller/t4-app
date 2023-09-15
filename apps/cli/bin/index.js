@@ -73,7 +73,7 @@ const removeUnnecessaryFiles = async (folderName) => {
 const installDependencies = async (folderName) => {
   const installSpinner = ora(chalk.green.bold('Installing dependencies')).start()
   try {
-    await exec(`cd ${folderName} && pnpm install`)
+    await exec(`cd ${folderName} && bun install`)
     installSpinner.succeed()
   } catch (error) {
     installSpinner.fail()
@@ -84,7 +84,7 @@ const installDependencies = async (folderName) => {
 const generateDrizzleClient = async (folderName) => {
   const drizzleSpinner = ora(chalk.green.bold('Generating Drizzle client')).start()
   try {
-    await exec(`cd ${folderName} && pnpm generate`)
+    await exec(`cd ${folderName} && bun generate`)
     drizzleSpinner.succeed()
   } catch (error) {
     drizzleSpinner.fail()
@@ -125,8 +125,8 @@ This script follows the steps below to create your project:
     console.log(chalk.green.bold(`
 🚀 Successfully created t4 project!
 Make sure you have a Supabase account and have created a new project.
-After filling out your .env file, run 'pnpm migrate:local' to create your database tables.
-To start the API and web development servers, run 'pnpm api' and 'pnpm web' in separate terminal tabs.
+After filling out your .env file, run 'bun migrate:local' to create your database tables.
+To start the API and web development servers, run 'bun api' and 'bun web' in separate terminal tabs.
 `))
   } catch (error) {
     console.error(chalk.red.bold(`🚫 Error: ${error.message}`))
