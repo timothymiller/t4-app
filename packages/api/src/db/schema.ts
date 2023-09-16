@@ -28,3 +28,8 @@ export const CarTable = sqliteTable('Car', {
 export type Car = InferSelectModel<typeof CarTable>
 export type InsertCar = InferInsertModel<typeof CarTable>
 export const CarSchema = createInsertSchema(CarTable)
+
+export const TestTable = sqliteTable('Test', {
+  id: text('id').primaryKey(),
+  name: text('name').notNull(),
+})
