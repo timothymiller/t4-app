@@ -7,7 +7,7 @@ const workspaceRoot = path.resolve(__dirname, '../..')
 
 /** @type {import('expo/metro-config').MetroConfig} */
 const config = getDefaultConfig(projectRoot, {
-    // [Web-only]: Enables CSS support in Metro.
+  // [Web-only]: Enables CSS support in Metro.
   isCSSEnabled: true
 })
 

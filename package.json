@@ -30,7 +30,7 @@
     "check-types": "tsc --noEmit",
     "fix": "manypkg fix",
     "postinstall": "bun run build",
-    "clean": "git clean -xdf node_modules",
+    "clean": "git clean -xdf node_modules && rm bun.lockb",
     "clean:workspaces": "turbo clean"
   },
   "workspaces": [
@@ -45,7 +45,6 @@
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.49.0",
-    "node-gyp": "^9.4.0",
     "prettier": "^3.0.3",
     "react-native-url-polyfill": "^2.0.0",
     "turbo": "latest",
