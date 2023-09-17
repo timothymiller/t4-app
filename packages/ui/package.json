@@ -17,21 +17,21 @@
     "clean": "rm -rf dist types node_modules .turbo"
   },
   "dependencies": {
-    "@shopify/flash-list": "^1.5.0",
-    "@supabase/supabase-js": "^2.33.1",
+    "@shopify/flash-list": "^1.6.1",
+    "@supabase/supabase-js": "^2.33.2",
     "@t4/api": "*",
-    "@tamagui/animations-react-native": "1.64.1",
-    "@tamagui/font-inter": "1.64.1",
-    "@tamagui/react-native-media-driver": "1.64.1",
-    "@tamagui/shorthands": "1.64.1",
-    "@tamagui/themes": "1.64.1",
-    "@tamagui/toast": "1.64.1",
-    "@tanstack/react-table": "^8.9.8",
+    "@tamagui/animations-react-native": "1.68.0",
+    "@tamagui/font-inter": "1.68.0",
+    "@tamagui/react-native-media-driver": "1.68.0",
+    "@tamagui/shorthands": "1.68.0",
+    "@tamagui/themes": "1.68.0",
+    "@tamagui/toast": "1.68.0",
+    "@tanstack/react-table": "^8.10.0",
     "@tanstack/react-virtual": "3.0.0-beta.54",
     "jotai": "^2.4.2",
-    "tamagui": "1.64.1"
+    "tamagui": "1.68.0"
   },
   "devDependencies": {
-    "@tamagui/build": "1.64.1"
+    "@tamagui/build": "1.68.0"
   }
 }
