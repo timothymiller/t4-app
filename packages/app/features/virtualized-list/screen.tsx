@@ -10,7 +10,7 @@ export const VirtualizedListScreen = (): React.ReactNode => {
 
   return (
     <YStack fullscreen f={1}>
-      {query.isInitialLoading ? (
+      {query.isInitialLoading && !query.error ? (
         // Loading
         <YStack fullscreen f={1} jc="center" ai="center">
           <Paragraph pb="$3">Loading...</Paragraph>
@@ -22,7 +22,8 @@ export const VirtualizedListScreen = (): React.ReactNode => {
       ) : query.error ? (
         // Error
         <YStack fullscreen f={1} jc="center" ai="center" p="$6">
-          <Paragraph>Error fetching cars: {query.error.message}</Paragraph>
+          <Paragraph pb="$3">Error fetching cars</Paragraph>
+          <Paragraph>{query.error.message}</Paragraph>
         </YStack>
       ) : (
         // Empty State
