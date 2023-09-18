@@ -166,7 +166,7 @@ importers:
         specifier: ^2.10.2
         version: 2.10.2(react-native@0.72.4)(react@18.2.0)
       react-native-safe-area-context:
-        specifier: ^4.7.2
+        specifier: 4.7.2
         version: 4.7.2(react-native@0.72.4)(react@18.2.0)
       react-native-screens:
         specifier: ^3.25.0

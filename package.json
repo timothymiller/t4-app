@@ -8,7 +8,7 @@
     "ios": "cd apps/expo && pnpm ios",
     "android": "cd apps/expo && pnpm android",
     "web": "turbo run dev --filter next-app",
-    "api": "cross-env NO_D1_WARNING=true turbo run dev --filter @t4/api",
+    "api": "cd packages/api && cross-env NO_D1_WARNING=true pnpm dev",
     "notes": "turbo run dev --filter t4-app-docs",
     "native": "cd apps/expo && pnpm dev",
     "studio": "cd packages/api && pnpm studio",
