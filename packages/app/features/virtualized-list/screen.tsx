@@ -8,32 +8,27 @@ import { SolitoImage } from 'solito/image'
 export const VirtualizedListScreen = (): React.ReactNode => {
   const query = trpc.car.all.useQuery()
 
-  if (query.isInitialLoading) {
-    return (
-      <YStack fullscreen flex={1} justifyContent="center" alignItems="center">
-        <Paragraph paddingBottom="$3">Loading...</Paragraph>
-        <Spinner />
-      </YStack>
-    )
-  }
-
   return (
-    <YStack fullscreen flex={1}>
-      {query.data?.length ? (
+    <YStack fullscreen f={1}>
+      {query.isInitialLoading ? (
+        // Loading
+        <YStack fullscreen f={1} jc="center" ai="center">
+          <Paragraph pb="$3">Loading...</Paragraph>
+          <Spinner />
+        </YStack>
+      ) : query.data?.length ? (
+        // Has Data
         <VirtualList data={query.data} renderItem={CarListItem} itemHeight={80} />
+      ) : query.error ? (
+        // Error
+        <YStack fullscreen f={1} jc="center" ai="center" p="$6">
+          <Paragraph>Error fetching cars: {query.error.message}</Paragraph>
+        </YStack>
       ) : (
-        <>
-          {query.error ? (
-            <YStack fullscreen flex={1} justifyContent="center" alignItems="center">
-              <Paragraph>Error fetching cars: {query.error.message}</Paragraph>
-            </YStack>
-          ) : null}
-          {!query.isLoading && (
-            <YStack fullscreen flex={1} justifyContent="center" alignItems="center">
-              <Paragraph>No cars found.</Paragraph>
-            </YStack>
-          )}
-        </>
+        // Empty State
+        <YStack fullscreen f={1} jc="center" ai="center">
+          <Paragraph>No cars found.</Paragraph>
+        </YStack>
       )}
     </YStack>
   )
