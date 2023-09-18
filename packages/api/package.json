@@ -33,6 +33,6 @@
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.49.0",
     "typescript": "^5.2.2",
-    "wrangler": "^3.8.0"
+    "wrangler": "3.6.0"
   }
 }
