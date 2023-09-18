@@ -1,64 +1,38 @@
 import type { Car } from '@t4/api/src/db/schema'
-import { Button, Paragraph, Spinner, VirtualList, YStack } from '@t4/ui'
-import { ArrowLeft } from '@tamagui/lucide-icons'
+import { Paragraph, Spinner, VirtualList, YStack } from '@t4/ui'
 import { formatNumber, formatPrice } from 'app/utils/number'
 import { trpc } from 'app/utils/trpc'
-import { useRef } from 'react'
+import React from 'react'
 import { SolitoImage } from 'solito/image'
-import { useLink } from 'solito/link'
-import { Animated } from 'react-native'
-
-const MAX_HEADER_HEIGHT = 75
-const MIN_HEADER_HEIGHT = 40
-const SCROLL_RANGE = MAX_HEADER_HEIGHT - MIN_HEADER_HEIGHT
 
 export const VirtualizedListScreen = (): React.ReactNode => {
   const query = trpc.car.all.useQuery()
-  const backLink = useLink({
-    href: '/',
-  })
-  const scrollOffsetY = useRef(new Animated.Value(0)).current
-  const animatedHeaderHeight = scrollOffsetY.interpolate({
-    inputRange: [0, SCROLL_RANGE],
-    outputRange: [MAX_HEADER_HEIGHT, MIN_HEADER_HEIGHT],
-    extrapolate: 'clamp',
-  })
 
   if (query.isInitialLoading) {
-    return <Spinner />
+    return (
+      <YStack fullscreen flex={1} justifyContent="center" alignItems="center">
+        <Paragraph paddingBottom="$3">Loading...</Paragraph>
+        <Spinner />
+      </YStack>
+    )
   }
 
   return (
     <YStack fullscreen flex={1}>
-      <Button
-        {...backLink}
-        animation={['quick', { height: { overshootClamping: true } }]}
-        icon={ArrowLeft}
-        chromeless
-        backgroundColor="$background"
-        br="$0"
-        jc="flex-start"
-        h={animatedHeaderHeight}
-      >
-        Back
-      </Button>
-      {query.error ? <Paragraph>Error fetching cars: {query.error.message}</Paragraph> : null}
       {query.data?.length ? (
-        <VirtualList
-          flex={1}
-          data={query.data}
-          renderItem={CarListItem}
-          estimatedItemSize={80}
-          pt="$3"
-          scrollEventThrottle={10}
-          onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollOffsetY } } }], {
-            useNativeDriver: false,
-          })}
-        />
+        <VirtualList data={query.data} renderItem={CarListItem} itemHeight={80} />
       ) : (
         <>
-          {query.error ? <Paragraph>Error fetching cars: {query.error.message}</Paragraph> : null}
-          {!query.isLoading && <Paragraph>No cars found.</Paragraph>}
+          {query.error ? (
+            <YStack fullscreen flex={1} justifyContent="center" alignItems="center">
+              <Paragraph>Error fetching cars: {query.error.message}</Paragraph>
+            </YStack>
+          ) : null}
+          {!query.isLoading && (
+            <YStack fullscreen flex={1} justifyContent="center" alignItems="center">
+              <Paragraph>No cars found.</Paragraph>
+            </YStack>
+          )}
         </>
       )}
     </YStack>
