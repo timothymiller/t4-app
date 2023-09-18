@@ -20,5 +20,5 @@ export const useAuthRedirect = () => {
     return () => {
       signOutListener.data.subscription.unsubscribe()
     }
-  }, [supabase, router])
+  }, [supabase, router, pathname])
 }
