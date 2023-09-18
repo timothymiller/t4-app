@@ -35,7 +35,7 @@ export const VirtualizedListScreen = (): React.ReactNode => {
   )
 }
 
-const CarListItem = (car: Car): React.ReactElement => {
+const CarListItem = ({ item }: { item: Car }): React.ReactElement => {
   return (
     <YStack flexDirection="row" paddingLeft="$2">
       <SolitoImage
@@ -49,10 +49,11 @@ const CarListItem = (car: Car): React.ReactElement => {
       />
       <YStack>
         <Paragraph paddingTop="$2" paddingLeft="$3" paddingBottom="$1" fontSize={16}>
-          {car.make + ' ' + car.model}
+          {item.make + ' ' + item.model}
         </Paragraph>
         <Paragraph paddingLeft="$3" fontSize={16} opacity={0.6}>
-          {car.color} - {car.year} - {formatNumber(car.mileage)} miles - {formatPrice(car.price)}
+          {item.color} - {item.year} - {formatNumber(item.mileage)} miles -{' '}
+          {formatPrice(item.price)}
         </Paragraph>
       </YStack>
     </YStack>
