@@ -4,14 +4,14 @@
   "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NO_D1_WARNING=true wrangler dev src/index.ts",
+    "dev": "wrangler dev",
     "generate": "drizzle-kit generate:sqlite --schema=./src/db/schema.ts --out=./migrations",
-    "migrate": "cross-env NO_D1_WARNING=true wrangler d1 migrations apply production",
-    "migrate:local": "cross-env NO_D1_WARNING=true wrangler d1 migrations apply production --local",
-    "seed": "cross-env NO_D1_WARNING=true wrangler d1 execute production --file=./seed/seed.sql",
-    "seed:local": "cross-env NO_D1_WARNING=true wrangler d1 execute production --local --file=./seed/seed.sql",
+    "migrate": "wrangler d1 migrations apply production",
+    "migrate:local": "wrangler d1 migrations apply production --local",
+    "seed": "wrangler d1 execute production --file=./seed/seed.sql",
+    "seed:local": "wrangler d1 execute production --local --file=./seed/seed.sql",
     "studio": "drizzle-kit studio",
-    "deploy": "cross-env NO_D1_WARNING=true wrangler deploy --minify src/index.ts",
+    "deploy": "wrangler deploy --minify src/worker.ts",
     "postinstall": "bun generate",
     "with-env": "dotenv -e ../../.env.local --",
     "clean": "rm -rf .turbo node_modules"
@@ -23,8 +23,8 @@
     "drizzle-orm": "^0.28.6",
     "drizzle-valibot": "^0.1.1",
     "hono": "^3.6.3",
+    "miniflare": "3.20230918.0",
     "superjson": "^1.13.1",
-    "miniflare": "3.20230904.0",
     "valibot": "^0.17.0"
   },
   "devDependencies": {
