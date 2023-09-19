@@ -18,17 +18,17 @@ const repositoryUrl = 'https://github.com/timothymiller/t4-app'
 let [projectFolder, ...commandLineArgs] = process.argv.slice(2)
 
 // Parse command line arguments correctly even with no projectFolder specified
-if(projectFolder && projectFolder.startsWith('--')){
+if (projectFolder && projectFolder.startsWith('--')) {
   commandLineArgs.push(projectFolder)
   projectFolder = undefined
 }
-if(!projectFolder && commandLineArgs.length > 1){
-  commandLineArgs.every((arg)=>{
-    if(!arg.startsWith('--')){
+if (!projectFolder && commandLineArgs.length > 1) {
+  commandLineArgs.every((arg) => {
+    if (!arg.startsWith('--')) {
       projectFolder = arg
       return false
     }
-    return true 
+    return true
   })
 }
 const useTauri = commandLineArgs.includes('--tauri')
@@ -148,7 +148,7 @@ console.log(chalk.green.bold(logo))
 console.log(chalk.magentaBright.bold('\n"Type-Safe, Full-Stack Starter Kit for React Native + Web"'))
 console.log(chalk.magentaBright.bold('      ft. Tamagui + TypeScript + tRPC + Turborepo'))
 
-if(repositoryBranch){
+if (repositoryBranch) {
   console.log(chalk.yellow.bold(`\n⚠  Cloning ${repositoryBranch.replace('-b', '').replace('--single-branch', '').trim()} branch.`))
 }
 

@@ -2,7 +2,7 @@
   "name": "@t4/api",
   "version": "2.0.0",
   "main": "src/index.ts",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "scripts": {
     "dev": "cross-env NO_D1_WARNING=true wrangler dev src/index.ts",
     "generate": "drizzle-kit generate:sqlite --schema=./src/db/schema.ts --out=./migrations",

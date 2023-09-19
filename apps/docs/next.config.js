@@ -8,16 +8,7 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   disable: process.env.NODE_ENV === "development",
   register: true,
   sw: "service-worker.js",
-  cacheStartUrl: true,
-  cacheOnFrontendNav: true,
-  aggressiveFrontEndNavCaching: true,
-  extendDefaultRuntimeCaching: true,
-  workboxOptions: {
-    runtimeCaching: [
-    ],
-  },
   swcMinify: true,
-  reloadOnOnline: true
 });
 
 const boolVals = {

@@ -13,7 +13,7 @@
     "url": "git+https://github.com/timothymiller/t4-app.git"
   },
   "author": "Timothy Miller <t4@timknowsbest.com>",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/timothymiller/t4-app/issues"
   },
