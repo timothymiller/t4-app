@@ -35,7 +35,7 @@ export const VirtualizedListScreen = (): React.ReactNode => {
   )
 }
 
-const CarListItem = ({ item }: { item: Car }): React.ReactElement => {
+const CarListItem = (item: Car): React.ReactElement => {
   return (
     <YStack flexDirection="row" paddingLeft="$2">
       <SolitoImage
