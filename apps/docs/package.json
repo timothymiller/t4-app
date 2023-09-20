@@ -19,10 +19,10 @@
   },
   "homepage": "https://github.com/timothymiller/t4-app#readme",
   "dependencies": {
-    "@ducanh2912/next-pwa": "^9.6.0",
+    "@ducanh2912/next-pwa": "^9.7.0",
     "@t4/ui": "^2.0.0",
-    "million": "2.6.0-beta.16",
-    "next": "13.4.19",
+    "million": "2.6.0",
+    "next": "13.5.1",
     "nextra": "^2.12.3",
     "nextra-theme-docs": "^2.12.3",
     "react": "^18.2.0",
