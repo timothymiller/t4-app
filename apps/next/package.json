@@ -15,23 +15,23 @@
     "@supabase/auth-helpers-nextjs": "^0.8.1",
     "@supabase/auth-helpers-react": "^0.4.2",
     "@t4/ui": "^2.0.0",
-    "@tamagui/next-theme": "1.68.2",
+    "@tamagui/next-theme": "1.68.6",
     "@tsndr/cloudflare-worker-jwt": "^2.2.2",
     "app": "^2.0.0",
     "million": "2.6.0",
-    "next": "13.5.1",
+    "next": "13.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "^0.72.4",
-    "react-native-web-lite": "1.68.2",
+    "react-native-web-lite": "1.68.6",
     "webpack": "^5.88.2"
   },
   "devDependencies": {
-    "@tamagui/next-plugin": "1.68.2",
+    "@tamagui/next-plugin": "1.68.6",
     "@types/node": "^18.17.12",
     "@types/react": "^18.2.21",
     "dotenv-cli": "^7.3.0",
-    "eslint-config-next": "^13.4.19",
+    "eslint-config-next": "^13.5.2",
     "vercel": "^32.2.4"
   }
 }

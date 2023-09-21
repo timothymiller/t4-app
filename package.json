@@ -47,8 +47,7 @@
     "prettier": "^3.0.3",
     "react-native-url-polyfill": "^2.0.0",
     "turbo": "^1.10.14",
-    "typescript": "^5.2.2",
-    "workerd": "1.20230914.0"
+    "typescript": "^5.2.2"
   },
   "engines": {
     "node": ">=18.16.1",
