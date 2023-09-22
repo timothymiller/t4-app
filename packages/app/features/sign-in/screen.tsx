@@ -14,8 +14,7 @@ export const SignInScreen = (): React.ReactNode => {
 
   const handleOAuthSignInWithPress = async (provider: Provider) => {
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: provider,
-      options: { scopes: 'read:user user:email' },
+      provider: provider
     })
 
     if (error) {
