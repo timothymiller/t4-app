@@ -14,7 +14,8 @@ export const SignInScreen = (): React.ReactNode => {
 
   const handleOAuthSignInWithPress = async (provider: Provider) => {
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: provider
+      provider: provider,
+	    options: { scopes: (provider === 'google' ? 'https://www.googleapis.com/auth/userinfo.email, https://www.googleapis.com/auth/userinfo.profile' : 'read:user user:email' )},
     })
 
     if (error) {
