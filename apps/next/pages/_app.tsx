@@ -35,6 +35,14 @@ export default trpc.withTRPC(T4App)
 const Metadata = () => (
   <Head>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    {/* Next Tamagui CSS fix */}
+    <style>
+      {`
+        body, #root, #__next {
+          min-width: 100% !important;
+        }
+      `}
+    </style>
     {/* Metadata */}
     <title>{title}</title>
     <meta name="description" content={description} />
