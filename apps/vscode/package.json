@@ -48,12 +48,12 @@
   "devDependencies": {
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^18.17.12",
+    "@types/node": "^20.7.1",
     "@types/vscode": "^1.81.0",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
     "@vscode/test-electron": "^2.3.4",
-    "eslint": "^8.49.0",
+    "eslint": "^8.50.0",
     "glob": "^10.3.4",
     "mocha": "^10.2.0",
     "typescript": "^5.2.2"
