@@ -270,7 +270,7 @@ importers:
         specifier: ^20.7.1
         version: 20.7.1
       '@types/vscode':
-        specifier: ^1.82.0
+        specifier: ^1.81.0
         version: 1.82.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.7.3
