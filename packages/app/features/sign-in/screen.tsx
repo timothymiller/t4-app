@@ -6,6 +6,8 @@ import Constants from 'expo-constants'
 import { capitalizeWord } from 'app/utils/string'
 import { isExpoGo } from 'app/utils/flags'
 import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
+import * as WebBrowser from 'expo-web-browser'
+import { getInitialURL } from 'expo-linking'
 
 export const SignInScreen = (): React.ReactNode => {
   const { replace } = useRouter()
@@ -13,22 +15,44 @@ export const SignInScreen = (): React.ReactNode => {
   const toast = useToastController()
 
   const handleOAuthSignInWithPress = async (provider: Provider) => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: provider,
-      options: { scopes: (provider === 'google' ? 'https://www.googleapis.com/auth/userinfo.email, https://www.googleapis.com/auth/userinfo.profile' : 'read:user user:email' )},
-    })
-
-    if (error) {
-      if (!isExpoGo) {
-        toast.show(capitalizeWord(provider) + ' sign in failed', {
-          description: error.message,
-        })
+    try {
+      const redirectUri = (await getInitialURL()) || 't4://'
+      const response = await WebBrowser.openAuthSessionAsync(
+        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/authorize?provider=${provider}&redirect_to=${redirectUri}`,
+        redirectUri
+      )
+      if (response.type === 'success') {
+        const url = response.url
+        const params = new URLSearchParams(url.split('#')[1])
+        const accessToken = params.get('access_token') || ''
+        const refreshToken = params.get('refresh_token') || ''
+        await supabase.auth
+          .setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          })
+          .then(({ data: { session }, error }) => {
+            if (session) {
+              // @ts-ignore set session does not call subscribers when session is updated
+              supabase.auth._notifyAllSubscribers('SIGNED_IN', session)
+              replace('/')
+            } else {
+              if (!isExpoGo) {
+                toast.show(capitalizeWord(provider) + ' sign in failed', {
+                  description: error?.message || 'Something went wrong, please try again.',
+                })
+              }
+              console.log('Supabase session error:', error)
+            }
+          })
       }
-      console.log('OAuth Sign in failed', error)
-      return
+    } catch (error) {
+      toast.show(capitalizeWord(provider) + ' sign in failed', {
+        description: 'Something went wrong, please try again.',
+      })
+    } finally {
+      WebBrowser.maybeCompleteAuthSession()
     }
-
-    replace('/')
   }
 
   const handleEmailSignInWithPress = async (email: string, password: string) => {

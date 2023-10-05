@@ -1,4 +1,4 @@
-import { AuthChangeEvent } from '@supabase/supabase-js'
+import { AuthChangeEvent, Session } from '@supabase/supabase-js'
 import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
 import { useEffect } from 'react'
 import { useRouter } from 'solito/router'
@@ -10,20 +10,19 @@ export const useAuthRedirect = () => {
   const supabase = useSupabase()
   const router = useRouter()
   useEffect(() => {
-    const signOutListener = supabase.auth.onAuthStateChange(async (event: AuthChangeEvent) => {
-      if (event === 'SIGNED_OUT') {
-        setSession(null)
-        router.replace('/')
-      }
-      if (event === 'SIGNED_IN') {
-        setLoading(true)
-        const response = await supabase.auth.getSession()
-        if (response?.data?.session) {
-          setSession(response?.data?.session)
+    const signOutListener = supabase.auth.onAuthStateChange(
+      async (event: AuthChangeEvent, session: Session) => {
+        if (event === 'SIGNED_OUT') {
+          setSession(null)
+          router.replace('/')
         }
-        setLoading(false)
+        if (event === 'SIGNED_IN') {
+          setLoading(true)
+          setSession(session)
+          setLoading(false)
+        }
       }
-    })
+    )
     return () => {
       signOutListener.data.subscription.unsubscribe()
     }
