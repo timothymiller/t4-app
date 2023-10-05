@@ -7,13 +7,44 @@ import { isExpoGo } from 'app/utils/flags'
 import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
 import * as WebBrowser from 'expo-web-browser'
 import { getInitialURL } from 'expo-linking'
+import { Platform } from 'react-native'
+import { initiateAppleSignIn } from 'app/utils/supabase/appleAuth'
 
 export const SignUpScreen = (): React.ReactNode => {
-  const { push } = useRouter()
+  const { replace } = useRouter()
   const toast = useToastController()
   const supabase = useSupabase()
 
-  const handleOAuthSignInWithPress = async (provider: Provider) => {
+  const signInWithApple = async () => {
+    try {
+      const { token, nonce } = await initiateAppleSignIn()
+      const { error } = await supabase.auth.signInWithIdToken({
+        provider: 'apple',
+        token,
+        nonce,
+      })
+      if (error) {
+        return toast.show('Authentication Error', {
+          description: error.message,
+        })
+      } else {
+        replace('/')
+      }
+    } catch (e) {
+      if (typeof e === 'object' && !!e && 'code' in e) {
+        if (e.code === 'ERR_REQUEST_CANCELED') {
+          toast.show('Canceled')
+        } else {
+          toast.show('Error')
+          // handle other errors
+        }
+      } else {
+        console.error('Unexpected error from Apple SignIn: ', e)
+      }
+    }
+  }
+
+  const handleOAuthWithWeb = async (provider: Provider) => {
     try {
       const redirectUri = (await getInitialURL()) || 't4://'
       const response = await WebBrowser.openAuthSessionAsync(
@@ -34,7 +65,7 @@ export const SignUpScreen = (): React.ReactNode => {
             if (session) {
               // @ts-ignore set session does not call subscribers when session is updated
               supabase.auth._notifyAllSubscribers('SIGNED_IN', session)
-              push('/')
+              replace('/')
             } else {
               if (!isExpoGo) {
                 toast.show(capitalizeWord(provider) + ' sign in failed', {
@@ -51,6 +82,16 @@ export const SignUpScreen = (): React.ReactNode => {
       })
     } finally {
       WebBrowser.maybeCompleteAuthSession()
+    }
+  }
+
+  const handleOAuthSignInWithPress = async (provider: Provider) => {
+    if (provider === 'apple' && Platform.OS === 'ios') {
+      // use native sign in with apple in ios
+      await signInWithApple()
+    } else {
+      // use web sign in with other providers
+      await handleOAuthWithWeb(provider)
     }
   }
 
@@ -72,7 +113,7 @@ export const SignUpScreen = (): React.ReactNode => {
           message: 'Check your email ',
         })
       }
-      push('/')
+      replace('/')
     }
   }
 

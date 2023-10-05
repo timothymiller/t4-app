@@ -114,9 +114,15 @@ importers:
       expo:
         specifier: ^49.0.13
         version: 49.0.13(@babel/core@7.23.0)
+      expo-apple-authentication:
+        specifier: ~6.1.0
+        version: 6.1.2(expo@49.0.13)
       expo-constants:
         specifier: ~14.4.2
         version: 14.4.2(expo@49.0.13)
+      expo-crypto:
+        specifier: ~12.4.1
+        version: 12.4.1(expo@49.0.13)
       expo-dev-client:
         specifier: ~2.4.11
         version: 2.4.11(expo@49.0.13)
@@ -9945,6 +9951,14 @@ packages:
     resolution: {integrity: sha512-XYfuKMvj4O35f/pOXLObndIRvyQ+/+6AhODh+OKWj9S9498pHHn/IMszH+gt0fBCRWMNfk1ZSp5x3AifmnI2vg==}
     engines: {node: '>=6'}
 
+  /expo-apple-authentication@6.1.2(expo@49.0.13):
+    resolution: {integrity: sha512-wXGrltitAu/MncQ7F16uQIZO5Uva2tof7pBa3pbEg1g6TAp4YQhJ1iwEeit0Jlk9J64R9c+kKzbyuRquWMzyyA==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      expo: 49.0.13(@babel/core@7.23.0)
+    dev: false
+
   /expo-application@5.3.1(expo@49.0.13):
     resolution: {integrity: sha512-HR2+K+Hm33vLw/TfbFaHrvUbRRNRco8R+3QaCKy7eJC2LFfT05kZ15ynGaKfB5DJ/oqPV3mxXVR/EfwmE++hoA==}
     peerDependencies:
@@ -9990,6 +10004,15 @@ packages:
       uuid: 3.4.0
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /expo-crypto@12.4.1(expo@49.0.13):
+    resolution: {integrity: sha512-/en03oPNAX6gP0bKpwA1EyLBnGG9uv0+Q7uvGYyOXaQQEvj31a+8cEvNPkv75x6GuK1hcaBfO25RtX9AGOMwVA==}
+    peerDependencies:
+      expo: '*'
+    dependencies:
+      base64-js: 1.5.1
+      expo: 49.0.13(@babel/core@7.23.0)
     dev: false
 
   /expo-dev-client@2.4.11(expo@49.0.13):
