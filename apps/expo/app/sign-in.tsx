@@ -1,4 +1,4 @@
-import { SignInScreen } from 'app/features/sign-in/screen.native'
+import { SignInScreen } from 'app/features/sign-in/screen'
 import { Stack } from 'expo-router'
 
 export default function Screen() {
