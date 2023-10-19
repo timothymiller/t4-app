@@ -16,7 +16,7 @@ export const useAuthRedirect = () => {
           setSession(null)
           router.replace('/')
         }
-        if (event === 'SIGNED_IN') {
+        if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
           setLoading(true)
           setSession(session)
           setLoading(false)
