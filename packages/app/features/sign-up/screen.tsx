@@ -1,6 +1,6 @@
 import { YStack, useToastController } from '@t4/ui'
 import { useRouter } from 'solito/router'
-import { SignUpSignInComponent } from '@t4/ui/src/SignUpSignIn'
+import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import type { Provider } from '@supabase/supabase-js'
 import { capitalizeWord } from 'app/utils/string'
 import { isExpoGo } from 'app/utils/flags'

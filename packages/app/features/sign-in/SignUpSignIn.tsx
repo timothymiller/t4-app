@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { YStack, Paragraph, XStack, Button, Input, Stack } from 'tamagui'
+import { YStack, Paragraph, XStack, Button, Input, Stack } from '@t4/ui'
 import { Link } from 'solito/link'
 import { type Provider } from '@supabase/supabase-js'
 import { SolitoImage } from 'solito/image'

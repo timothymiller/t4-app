@@ -1,5 +1,5 @@
 import { YStack, useToastController } from '@t4/ui'
-import { SignUpSignInComponent } from '@t4/ui/src/SignUpSignIn'
+import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import { useRouter } from 'solito/router'
 import type { Provider } from '@supabase/supabase-js'
 import Constants from 'expo-constants'

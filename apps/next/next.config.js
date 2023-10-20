@@ -24,7 +24,7 @@ const enableMillionJS =
   boolVals[process.env.ENABLE_MILLION_JS] ?? process.env.NODE_ENV === 'production'
 
 // Enabling causes FOUC on page refreshes
-const optimizeCss = false // boolVals[process.env.OPTIMIZE_CSS] ?? process.env.NODE_ENV === 'production'
+const optimizeCss = false
 
 const plugins = [
   withPWA,
@@ -81,11 +81,9 @@ module.exports = function () {
        - Solito doesn't support app dir at the moment - You'll have to remove Solito.
        - The `/app` in this starter has the same routes as the `/pages` directory. You should probably remove `/pages` after enabling this.
       */
-      appDir: false,
       optimizeCss,
       forceSwcTransforms: true,
       scrollRestoration: true,
-      legacyBrowsers: false
     },
     compiler: {
       removeConsole: disableBrowserLogs

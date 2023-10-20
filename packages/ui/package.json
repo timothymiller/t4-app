@@ -18,8 +18,6 @@
   },
   "dependencies": {
     "@shopify/flash-list": "^1.6.1",
-    "@supabase/supabase-js": "^2.36.0",
-    "@t4/api": "^2.0.0",
     "@tamagui/animations-react-native": "1.72.3",
     "@tamagui/font-inter": "1.72.3",
     "@tamagui/react-native-media-driver": "1.72.3",
