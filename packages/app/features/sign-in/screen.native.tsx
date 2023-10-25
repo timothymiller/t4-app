@@ -9,27 +9,19 @@ import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
 import * as WebBrowser from 'expo-web-browser'
 import { getInitialURL } from 'expo-linking'
 import { Platform } from 'react-native'
-import { initiateAppleSignIn } from 'app/utils/supabase/appleAuth'
+import { initiateAppleSignIn } from 'app/utils/auth/appleAuth'
+import { useSignIn } from 'app/utils/auth'
+import { AuthProviderName } from '@t4/api/src/auth/shared'
 
 export const SignInScreen = (): React.ReactNode => {
-  const { replace } = useRouter()
-  const supabase = useSupabase()
+  const { push } = useRouter()
+  const { signIn } = useSignIn()
   const toast = useToastController()
+  const { signIn } = useSignIn()
   const signInWithApple = async () => {
     try {
       const { token, nonce } = await initiateAppleSignIn()
-      const { error } = await supabase.auth.signInWithIdToken({
-        provider: 'apple',
-        token,
-        nonce,
-      })
-      if (error) {
-        return toast.show('Authentication Error', {
-          description: error.message,
-        })
-      } else {
-        replace('/')
-      }
+      const res = await signIn({ provider: 'apple', token, nonce })
     } catch (e) {
       if (typeof e === 'object' && !!e && 'code' in e) {
         if (e.code === 'ERR_REQUEST_CANCELED') {
@@ -44,11 +36,14 @@ export const SignInScreen = (): React.ReactNode => {
     }
   }
 
-  const handleOAuthWithWeb = async (provider: Provider) => {
+  const handleOAuthWithWeb = async (provider: AuthProviderName) => {
+    // FIXME hmm... probably could to host a screen with nextjs to handle this
+
     try {
+      const res = await signIn({ provider })
       const redirectUri = (await getInitialURL()) || 't4://'
       const response = await WebBrowser.openAuthSessionAsync(
-        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/authorize?provider=${provider}&redirect_to=${redirectUri}`,
+        `${process.env.NEXT_PUBLIC_APP_URL}/oauth?provider=${provider}&redirect_to=${redirectUri}`,
         redirectUri
       )
       if (response.type === 'success') {
@@ -96,21 +91,19 @@ export const SignInScreen = (): React.ReactNode => {
   }
 
   const handleEmailSignInWithPress = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    })
-    if (error) {
-      const isExpoGo = Constants.appOwnership === 'expo'
+    try {
+      await signIn({
+        email,
+        password,
+      })
+    } catch (error) {
       if (!isExpoGo) {
         toast.show('Sign in failed', {
           description: error.message,
         })
       }
-      return
+      console.log('Sign in failed', error)
     }
-
-    replace('/')
   }
 
   return (

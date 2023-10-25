@@ -5,8 +5,8 @@ import { SafeAreaProvider } from './safe-area'
 import { TamaguiThemeProvider } from './theme'
 import { TamaguiProvider } from './tamagui'
 import { SolitoImageProvider } from './solito-image'
-import { Session } from '@supabase/supabase-js'
-import { AuthProvider } from './auth'
+import { Session } from 'app/utils/auth'
+import { LuciaAuthProvider as AuthProvider } from './auth'
 
 export function Provider({
   children,

@@ -15,6 +15,13 @@
       "when": 1694824497981,
       "tag": "0001_worried_gamma_corps",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1698424368095,
+      "tag": "0002_elite_blackheart",
+      "breakpoints": true
     }
   ]
 }
