@@ -1,56 +1,52 @@
 import { type inferAsyncReturnType } from '@trpc/server'
-import { type FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
-import { DrizzleD1Database } from 'drizzle-orm/d1'
+import { Bindings } from './worker'
+import type { DB } from './db/client'
 import { createDb } from './db/client'
-import jwt from '@tsndr/cloudflare-worker-jwt'
+import { createHonoAuth } from './auth/hono'
+import type { Context as HonoContext, HonoRequest } from 'hono'
+import { AuthRequest, Session } from 'lucia'
+import { SessionUser, getPayloadFromJWT } from './auth/user'
 
-interface User {
-  id: string
-}
 
-interface ApiContextProps {
-  user: User | null
-  db: DrizzleD1Database
+export interface ApiContextProps {
+  session?: Session
+  user: SessionUser | null
+  auth: Lucia.Auth
+  authRequest?: AuthRequest<Lucia.Auth>
+  req: HonoRequest,
+  setCookie: (value: string) => void
+  db: DB
+  env: Bindings
 }
 
 export const createContext = async (
-  d1: D1Database,
-  JWT_VERIFICATION_KEY: string,
-  opts: FetchCreateContextFnOptions
+  env: Bindings,
+  context: HonoContext
 ): Promise<ApiContextProps> => {
-  const db = createDb(d1)
+  if (!env.DB) {
+    throw new Error('Database binding is undefined')
+  }
+  const db = createDb(env.DB)
 
+  // This was used with supabase auth,
+  // For lucia, we pass just the session ID rather than a JWT
   async function getUser() {
-    const sessionToken = opts.req.headers.get('authorization')?.split(' ')[1]
+    const sessionToken = context.req.header('Authorization')?.split(' ')[1]
 
     if (sessionToken !== undefined && sessionToken !== 'undefined') {
-      if (!JWT_VERIFICATION_KEY) {
+      if (!env.JWT_VERIFICATION_KEY) {
         console.error('JWT_VERIFICATION_KEY is not set')
         return null
       }
 
       try {
-        const authorized = await jwt.verify(sessionToken, JWT_VERIFICATION_KEY, {
-          algorithm: 'HS256',
-        })
-        if (!authorized) {
+        const payload = await getPayloadFromJWT(sessionToken, env.JWT_VERIFICATION_KEY)
+        if (!payload) {
           return null
         }
-
-        const decodedToken = jwt.decode(sessionToken)
-
-        // Check if token is expired
-        const expirationTimestamp = decodedToken.payload.exp
-        const currentTimestamp = Math.floor(Date.now() / 1000)
-        if (!expirationTimestamp || expirationTimestamp < currentTimestamp) {
-          return null
-        }
-
-        const userId = decodedToken?.payload?.sub
-
-        if (userId) {
+        if (payload.sub) {
           return {
-            id: userId,
+            id: payload.sub,
           }
         }
       } catch (e) {
@@ -61,9 +57,38 @@ export const createContext = async (
     return null
   }
 
-  const user = await getUser()
+  // const user = await getUser()
 
-  return { user, db }
+  const auth = createHonoAuth(env.DB, env.APP_URL, context.req)
+
+  async function getSession() {
+    let session: Session | undefined
+    let authRequest: AuthRequest<Lucia.Auth> | undefined
+
+    if (context.req) {
+      authRequest = auth.handleRequest(context)
+      session = await authRequest.validate() || undefined
+      // Allow for either cookie or bearer token
+      if (!session) {
+        session = await authRequest.validateBearerToken() || undefined
+      }
+    }
+    return { session, authRequest }
+  }
+
+  const { session, authRequest } = await getSession()
+  return {
+    db,
+    auth,
+    authRequest,
+    req: context.req,
+    session,
+    user: session?.user ?? null,
+    setCookie: (value) => {
+      context.res.headers.append('Set-Cookie', value)
+    },
+    env,
+  }
 }
 
 export type Context = inferAsyncReturnType<typeof createContext>

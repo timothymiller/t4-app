@@ -1,35 +1,26 @@
 import { YStack, useToastController } from '@t4/ui'
-import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
+import { useRouter } from 'solito/router'
 import type { Provider } from '@supabase/supabase-js'
+import Constants from 'expo-constants'
 import { capitalizeWord } from 'app/utils/string'
 import { isExpoGo } from 'app/utils/flags'
 import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
 import * as WebBrowser from 'expo-web-browser'
 import { getInitialURL } from 'expo-linking'
 import { Platform } from 'react-native'
-import { initiateAppleSignIn } from 'app/utils/supabase/appleAuth'
+import { initiateAppleSignIn } from 'app/utils/auth/appleAuth'
+import { useSignIn, useSignUp } from 'app/utils/auth'
 
-export const SignUpScreen = (): React.ReactNode => {
-  const { replace } = useRouter()
+export const SignInScreen = (): React.ReactNode => {
+  const { push } = useRouter()
+  const { signIn } = useSignIn()
+  const { signUp } = useSignUp()
   const toast = useToastController()
-  const supabase = useSupabase()
-
   const signInWithApple = async () => {
     try {
       const { token, nonce } = await initiateAppleSignIn()
-      const { error } = await supabase.auth.signInWithIdToken({
-        provider: 'apple',
-        token,
-        nonce,
-      })
-      if (error) {
-        return toast.show('Authentication Error', {
-          description: error.message,
-        })
-      } else {
-        replace('/')
-      }
+      const res = await signIn({ provider: 'apple', token, nonce })
     } catch (e) {
       if (typeof e === 'object' && !!e && 'code' in e) {
         if (e.code === 'ERR_REQUEST_CANCELED') {
@@ -45,6 +36,8 @@ export const SignUpScreen = (): React.ReactNode => {
   }
 
   const handleOAuthWithWeb = async (provider: Provider) => {
+    // FIXME hmm... probably could to host a screen with nextjs to handle this
+
     try {
       const redirectUri = (await getInitialURL()) || 't4://'
       const response = await WebBrowser.openAuthSessionAsync(
@@ -96,24 +89,18 @@ export const SignUpScreen = (): React.ReactNode => {
   }
 
   const handleEmailSignUpWithPress = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    })
-    if (error) {
+    try {
+      await signUp({
+        email,
+        password,
+      })
+    } catch (error) {
       if (!isExpoGo) {
-        console.log('error', error)
         toast.show('Sign up failed', {
-          message: error.message,
+          description: error.message,
         })
       }
-    } else if (data?.user) {
-      if (!isExpoGo) {
-        toast.show('Email Confirmation', {
-          message: 'Check your email ',
-        })
-      }
-      replace('/')
+      console.log('Sign up failed', error)
     }
   }
 

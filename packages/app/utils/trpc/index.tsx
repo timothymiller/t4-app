@@ -6,10 +6,10 @@ import type { AppRouter } from '@t4/api/src/router'
  */
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink } from '@trpc/client'
-import { supabase } from '../supabase/client'
 import superjson from 'superjson'
 import { useState } from 'react'
 import { replaceLocalhost } from './localhost.native'
+import { getSessionToken } from '../auth/credentials'
 
 /**
  * A set of typesafe hooks for consuming your API.
@@ -31,9 +31,7 @@ export const TRPCProvider: React.FC<{
       links: [
         httpBatchLink({
           async headers() {
-            const { data } = await supabase.auth.getSession()
-            const token = data?.session?.access_token
-
+            const token = getSessionToken()
             return {
               Authorization: token ? `Bearer ${token}` : undefined,
             }

@@ -15,6 +15,8 @@ migrations_dir = "migrations"
 # - APP_URL - for preventing CORS errors
 # - JWT_VERIFICATION_KEY - for Supabase @link https://supabase.com
 #
+# There are additional vars for configuring OAuth. See .dev.vars.example
+#
 # For local development, you can create a file called .dev.vars and use dotenv syntax.
 #
 # For deployed environments, you can use wrangler secrets to set these values.
