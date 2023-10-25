@@ -1,25 +1,37 @@
 import { YStack, useToastController } from '@t4/ui'
 import { PasswordResetComponent } from '@t4/ui/src/PasswordReset'
-import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
+import { useSessionRedirect, useSignIn } from 'app/utils/auth'
+import { TRPCClientError } from '@trpc/client'
 import { useRouter } from 'solito/router'
 
 export function PasswordResetScreen() {
   const { push } = useRouter()
   const toast = useToastController()
-  const supabase = useSupabase()
+  const { signIn } = useSignIn()
+  useSessionRedirect({ true: '/' })
 
-  const handleEmailWithPress = async (email) => {
-    // Send email with the password reset link
-    const { error } = await supabase.auth.resetPasswordForEmail(email)
-    if (error) {
-      toast.show('Password reset request failed', {
-        description: error.message,
-      })
-      console.log('Password reset request failed', error)
-      return
+  const handleEmailWithPress = async (email: string) => {
+    try {
+      // Send email with the password reset link
+      const res = await signIn({ email })
+      toast.show('Password reset email sent')
+      push('/login')
+    } catch (error) {
+      if (error) {
+        if (
+          error instanceof TRPCClientError &&
+          error.data?.httpStatus &&
+          error.data.httpStatus < 500
+        ) {
+          toast.show(error.message)
+        } else {
+          toast.show('Password reset request failed', {
+            description: error.message,
+          })
+        }
+        console.log('Password reset request failed', error)
+      }
     }
-
-    push('/')
   }
 
   return (

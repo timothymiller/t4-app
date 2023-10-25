@@ -1,33 +1,32 @@
-import type { Provider } from '@supabase/supabase-js'
+import type { AuthProviderName } from '@t4/api/src/auth/providers'
 import { YStack, useToastController } from '@t4/ui'
-import { capitalizeWord } from '@t4/ui/src/libs/string'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
-import { initiateAppleSignIn } from 'app/utils/supabase/appleAuth'
-import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
+import { useSessionRedirect, useSignIn } from 'app/utils/auth'
+import { initiateAppleSignIn } from 'app/utils/auth/appleAuth'
+import { storeSessionToken } from 'app/utils/auth/credentials'
+import { capitalizeWord } from '@t4/ui/src/libs/string'
+import { trpc } from 'app/utils/trpc'
 import { getInitialURL } from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
 import { Platform } from 'react-native'
-import { useRouter } from 'solito/router'
 
 export const SignInScreen = (): React.ReactNode => {
-  const { replace } = useRouter()
-  const supabase = useSupabase()
   const toast = useToastController()
+  const utils = trpc.useUtils()
+  const { signIn } = useSignIn()
+
+  // Redirects back to the home page if signed in
+  useSessionRedirect({ true: '/' })
+
+  const postLogin = () => {
+    utils.user.invalidate()
+    utils.auth.invalidate()
+  }
+
   const signInWithApple = async () => {
     try {
       const { token, nonce } = await initiateAppleSignIn()
-      const { error } = await supabase.auth.signInWithIdToken({
-        provider: 'apple',
-        token,
-        nonce,
-      })
-      if (error) {
-        return toast.show('Authentication Error', {
-          description: error.message,
-        })
-      } else {
-        replace('/')
-      }
+      const res = await signIn({ provider: 'apple', token, nonce })
     } catch (e) {
       if (typeof e === 'object' && !!e && 'code' in e) {
         if (e.code === 'ERR_REQUEST_CANCELED') {
@@ -42,35 +41,21 @@ export const SignInScreen = (): React.ReactNode => {
     }
   }
 
-  const handleOAuthWithWeb = async (provider: Provider) => {
+  const handleOAuthWithWeb = async (provider: AuthProviderName) => {
     try {
       const redirectUri = (await getInitialURL()) || 't4://'
       const response = await WebBrowser.openAuthSessionAsync(
-        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/authorize?provider=${provider}&redirect_to=${redirectUri}`,
+        `${process.env.EXPO_PUBLIC_APP_URL}/oauth/${provider}`,
         redirectUri
       )
       if (response.type === 'success') {
         const url = response.url
         const params = new URLSearchParams(url.split('#')[1])
-        const accessToken = params.get('access_token') || ''
-        const refreshToken = params.get('refresh_token') || ''
-        await supabase.auth
-          .setSession({
-            access_token: accessToken,
-            refresh_token: refreshToken,
-          })
-          .then(({ data: { session }, error }) => {
-            if (session) {
-              // @ts-ignore set session does not call subscribers when session is updated
-              supabase.auth._notifyAllSubscribers('SIGNED_IN', session)
-              replace('/')
-            } else {
-              toast.show(`${capitalizeWord(provider)} sign in failed`, {
-                description: error?.message || 'Something went wrong, please try again.',
-              })
-              console.log('Supabase session error:', error)
-            }
-          })
+        const token = params.get('token') || ''
+        if (token) {
+          storeSessionToken(token)
+          postLogin()
+        }
       }
     } catch (error) {
       toast.show(`${capitalizeWord(provider)} sign in failed`, {
@@ -81,7 +66,7 @@ export const SignInScreen = (): React.ReactNode => {
     }
   }
 
-  const handleOAuthSignInWithPress = async (provider: Provider) => {
+  const handleOAuthSignInWithPress = async (provider: AuthProviderName) => {
     if (provider === 'apple' && Platform.OS === 'ios') {
       // use native sign in with apple in ios
       await signInWithApple()
@@ -92,18 +77,17 @@ export const SignInScreen = (): React.ReactNode => {
   }
 
   const handleEmailSignInWithPress = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    })
-    if (error) {
+    try {
+      await signIn({
+        email,
+        password,
+      })
+    } catch (error) {
       toast.show('Sign in failed', {
         description: error.message,
       })
-      return
+      console.log('Sign in failed', error)
     }
-
-    replace('/')
   }
 
   return (

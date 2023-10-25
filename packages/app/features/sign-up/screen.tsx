@@ -1,52 +1,67 @@
-import type { Provider } from '@supabase/supabase-js'
+import type { AuthProviderName } from '@t4/api/src/auth/providers'
 import { YStack, useToastController } from '@t4/ui'
-import { capitalizeWord } from '@t4/ui/src/libs/string'
+import { TRPCClientError } from '@trpc/client'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
-import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
+import { useSessionRedirect, useSignIn, useSignUp } from 'app/utils/auth'
+import { capitalizeWord } from '@t4/ui/src/libs/string'
 import { useRouter } from 'solito/router'
 
 export const SignUpScreen = (): React.ReactNode => {
   const { push } = useRouter()
   const toast = useToastController()
-  const supabase = useSupabase()
+  const { signIn } = useSignIn()
+  const { signUp } = useSignUp()
 
-  const handleOAuthSignInWithPress = async (provider: Provider) => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: provider,
-      options:
-        provider === 'google'
-          ? {
-              queryParams: {
-                access_type: 'offline',
-                prompt: 'consent',
-              },
-            }
-          : {},
-    })
-    if (error) {
-      toast.show(`${capitalizeWord(provider)} sign up failed`, {
-        description: error.message,
+  // TODO maybe manage this state and pass as props to SignUpSignInComponent
+  // const [authenticating, setAuthenticating] = useState(false)
+  // const [signUpError, setSignUpError] = useState<string>()
+
+  // Redirect back to the home page if signed in
+  useSessionRedirect({ true: '/' })
+
+  const handleOAuthSignInWithPress = async (provider: AuthProviderName) => {
+    try {
+      const res = await signIn({
+        provider,
       })
-      return
+      if (res?.oauthRedirect) {
+        push(res.oauthRedirect)
+      }
+    } catch (error) {
+      if (
+        error instanceof TRPCClientError &&
+        error.data?.httpStatus &&
+        error.data.httpStatus < 500
+      ) {
+        toast.show(error.message)
+      } else {
+        toast.show(`${capitalizeWord(provider)} sign up failed`, {
+          description: error.message,
+        })
+      }
+      console.log('OAuth Sign up failed', error)
     }
-    push('/')
   }
 
   const handleEmailSignUpWithPress = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    })
-    if (error) {
-      console.log('error', error)
-      toast.show('Sign up failed', {
-        message: error.message,
+    try {
+      await signUp({
+        email,
+        password,
       })
-    } else if (data?.user) {
-      toast.show('Email Confirmation', {
-        message: 'Check your email ',
-      })
-      push('/')
+    } catch (error) {
+      if (
+        error instanceof TRPCClientError &&
+        error.data?.httpStatus &&
+        error.data.httpStatus < 500
+      ) {
+        toast.show(error.message)
+      } else {
+        toast.show('Sign up failed', {
+          description: error.message,
+        })
+      }
+      console.log('Sign up failed', error)
     }
   }
 

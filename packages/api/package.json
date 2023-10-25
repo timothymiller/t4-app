@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "wrangler dev",
+    "types": "wrangler types",
     "generate": "drizzle-kit generate:sqlite --schema=./src/db/schema.ts --out=./migrations",
     "migrate": "wrangler d1 migrations apply production",
     "migrate:local": "wrangler d1 migrations apply production --local",
@@ -17,11 +18,15 @@
   },
   "dependencies": {
     "@hono/trpc-server": "^0.1.0",
+    "@libsql/client": "^0.3.5",
+    "@lucia-auth/adapter-sqlite": "^2.0.1",
+    "@lucia-auth/oauth": "^3.3.1",
     "@trpc/server": "^10.43.2",
     "@tsndr/cloudflare-worker-jwt": "^2.2.5",
     "drizzle-orm": "^0.29.0",
     "drizzle-valibot": "beta",
     "hono": "^3.9.2",
+    "lucia": "^2.7.2",
     "miniflare": "3.20231025.1",
     "superjson": "1.13.3",
     "valibot": "^0.20.1"

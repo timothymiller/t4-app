@@ -1,6 +1,7 @@
 import { TRPCError, initTRPC } from '@trpc/server'
 import superJson from 'superjson'
 import { type Context } from './context'
+import { ObjectSchema, ObjectEntries, parse } from 'valibot'
 
 const t = initTRPC.context<Context>().create({
   transformer: superJson,
@@ -8,6 +9,11 @@ const t = initTRPC.context<Context>().create({
     return shape
   },
 })
+
+export const valibotParser =
+  <T extends ObjectEntries>(schema: ObjectSchema<T>) =>
+  (raw: any) =>
+    parse(schema, raw)
 
 /**
  * This is a middleware that checks if the user is authenticated
