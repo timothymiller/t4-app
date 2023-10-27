@@ -69,7 +69,6 @@ export type SignInResult = {
   session?: Session | null
   message?: string
   codeSent?: boolean,
-  oauthState?: string | null,
   oauthRedirect?: string,
 }
 

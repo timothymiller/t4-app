@@ -62,15 +62,15 @@ export const createContext = async (
   const auth = createHonoAuth(env.DB, env.APP_URL, context.req)
 
   async function getSession() {
-    let session: Session | undefined
+    let session: Session | null = null
     let authRequest: AuthRequest<Lucia.Auth> | undefined
 
     if (context.req) {
       authRequest = auth.handleRequest(context)
-      session = await authRequest.validate() || undefined
+      session = await authRequest.validate()
       // Allow for either cookie or bearer token
       if (!session) {
-        session = await authRequest.validateBearerToken() || undefined
+        session = await authRequest.validateBearerToken()
       }
     }
     return { session, authRequest }

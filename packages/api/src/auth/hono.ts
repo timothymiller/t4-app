@@ -95,6 +95,7 @@ export const handleOAuthCallback = async (c: HonoContext, ctx: ApiContextProps, 
     throw new Error("Unknown auth service: " + service)
   }
   const storedState = getCookie(c, service + "_oauth_state");
+  const storedRedirectUrl = getCookie(c, service + "_oauth_redirect");
   const state = c.req.query('state');
   const code = c.req.query('code');
   if (
@@ -109,7 +110,8 @@ export const handleOAuthCallback = async (c: HonoContext, ctx: ApiContextProps, 
     const user = await getOAuthUser(service, ctx, { state, code })
     const session = await createSession(ctx.auth, user.userId)
     ctx.authRequest?.setSession(session);
-    return c.redirect(ctx.env.APP_URL, 302);
+    const redirectTo = (storedRedirectUrl ? storedRedirectUrl : ctx.env.APP_URL) + "#token=" + session.token;
+    return c.redirect(redirectTo, 302);
   } catch (e) {
     if (e instanceof OAuthRequestError) {
       // invalid code
