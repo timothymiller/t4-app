@@ -111,6 +111,7 @@ export type SignInWithAppleIdTokenAndNonce = {
 
 export type SignInWithOAuth = {
   provider: AuthProviderName
+  redirectTo?: string
 }
 
 
@@ -171,6 +172,7 @@ export function useSignIn() {
     utils.auth.invalidate()
   }
 
+  // Might want to useMemo here...
   const signIn = async (props: SignInProps) => {
     if (isSignInWithEmailAndPassword(props)) {
       const res = await mutation.mutateAsync(props)

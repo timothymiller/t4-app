@@ -211,8 +211,11 @@ const signIn = async ({ ctx, input }: { ctx: ApiContextProps, input: Input<typeo
       const provider = getAuthProvider(ctx, input.provider)
       const [url, state] = await provider.getAuthorizationUrl()
       ctx.setCookie(`${provider}_oauth_state=${state}; HttpOnly; SameSite=Strict`)
+      if (input.redirectTo) {
+        // TODO should probably validate the redirect starts with APP_URL, API_URL or t4://
+        ctx.setCookie(`${provider}_oauth_redirect=${input.redirectTo}; HttpOnly; SameSite=Strict`)
+      }
       res.oauthRedirect = url.toString()
-      res.oauthState = state
     } if (input.email) {
       if (input.code) {
         res = await signInWithCode(ctx, 'email', input.email, input.code, ctx.setCookie)

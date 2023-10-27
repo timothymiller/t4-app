@@ -36,6 +36,7 @@ export const SignInSchema = object({
   email: optionalEmail,
   code: optional(string()), // for password-less sign in
   provider: optional(authProvidersInput),
+  redirectTo: optional(string()),
   // Used with apple sign-in on native
   token: optional(string()),
   nonce: optional(string()),
