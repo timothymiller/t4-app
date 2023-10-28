@@ -18,21 +18,21 @@
   },
   "dependencies": {
     "@hono/trpc-server": "^0.1.0",
-    "@trpc/server": "^10.41.0",
+    "@trpc/server": "^10.43.0",
     "@tsndr/cloudflare-worker-jwt": "^2.2.5",
     "drizzle-orm": "^0.28.6",
     "drizzle-valibot": "^0.1.1",
-    "hono": "^3.6.3",
-    "miniflare": "3.20230918.0",
+    "hono": "^3.9.0",
+    "miniflare": "3.20231025.0",
     "superjson": "^1.13.1",
-    "valibot": "^0.17.0"
+    "valibot": "^0.19.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20230914.0",
+    "@cloudflare/workers-types": "^4.20231025.0",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.19.13",
-    "eslint": "^8.51.0",
+    "eslint": "^8.52.0",
     "typescript": "^5.2.2",
-    "wrangler": "^3.8.0"
+    "wrangler": "^3.15.0"
   }
 }

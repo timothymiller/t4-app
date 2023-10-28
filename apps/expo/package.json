@@ -18,11 +18,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
-    "@shopify/flash-list": "^1.6.1",
+    "@shopify/flash-list": "^1.6.2",
     "@t4/ui": "*",
     "app": "*",
     "babel-plugin-module-resolver": "^5.0.0",
-    "burnt": "^0.11.7",
+    "burnt": "^0.12.1",
     "expo": "^49.0.16",
     "expo-apple-authentication": "~6.1.2",
     "expo-constants": "~14.4.2",
@@ -50,7 +50,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.2",
     "@expo/metro-config": "^0.10.7",
-    "@tamagui/babel-plugin": "1.75.1",
+    "@tamagui/babel-plugin": "1.75.5",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "metro-minify-terser": "^0.79.1",
     "react-native-dotenv": "^3.4.9",
