@@ -25,7 +25,6 @@
     "seed:local": "cd packages/api && bun seed:local",
     "migrate": "cd packages/api && bun migrate",
     "seed": "cd packages/api && bun seed",
-    "upgrade:tamagui": "bun up -r '*tamagui*'@latest '@tamagui/*'@latest react-native-web-lite@latest",
     "check-deps": "check-dependency-version-consistency .",
     "check-types": "tsc --noEmit",
     "fix": "manypkg fix",
