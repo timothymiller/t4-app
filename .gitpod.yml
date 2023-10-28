@@ -5,7 +5,5 @@
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
 
 tasks:
-  - init: pnpm install && pnpm run build
-    command: pnpm run dev
-
-
+  - init: bun install && bun run build
+    command: bun run dev

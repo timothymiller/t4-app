@@ -1,6 +1,6 @@
 # Security Policy for T4 App
 
-### Reporting Security Vulnerabilities
+## Reporting Security Vulnerabilities
 
 We take the security of our project seriously and appreciate any efforts to responsibly disclose vulnerabilities. If you discover any security vulnerabilities or potential threats in our T4 App, please report them to our security team by emailing security@t4stack.com. We request that you provide us with sufficient information to reproduce the vulnerability, including steps to replicate, affected versions, and any additional details that may be helpful for our investigation.
 

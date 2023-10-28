@@ -16,8 +16,7 @@
         "completionFilters": {
           "showColorTokens": true,
           "showTrueTokens": true,
-          "custom": {
-          }
+          "custom": {}
         }
       }
     ]

@@ -4,7 +4,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "ios": "cross-env TAMAGUI_TARGET=native expo run:ios",
+    "ios": "expo run:ios",
     "android": "cross-env TAMAGUI_TARGET=native expo run:android",
     "dev": "cross-env TAMAGUI_TARGET=native expo start --dev-client",
     "dev:prod": "cross-env TAMAGUI_TARGET=native expo start --no-dev --minify",
@@ -13,15 +13,15 @@
     "build:android:preview": "eas build --platform android --profile preview --local",
     "build:ios": " eas build --platform ios --profile production --local",
     "build:android": "eas build --platform android --profile production --local",
-    "clean": "git clean -xdf .expo node_modules",
-    "eas-build-pre-install": "npm install -g pnpm@8.6.12"
+    "clean": "git clean -xdf .expo node_modules ios android",
+    "eas-build-pre-install": "npm install -g bun@8.6.12"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
     "@shopify/flash-list": "^1.6.1",
-    "@t4/ui": "^2.0.0",
-    "app": "^2.0.0",
-    "babel-plugin-module-resolver": "5.0.0",
+    "@t4/ui": "*",
+    "app": "*",
+    "babel-plugin-module-resolver": "^5.0.0",
     "burnt": "^0.11.7",
     "expo": "^49.0.16",
     "expo-apple-authentication": "~6.1.2",
@@ -34,7 +34,7 @@
     "expo-linking": "6.0.0",
     "expo-router": "^2.0.9",
     "expo-splash-screen": "^0.22.0",
-    "expo-status-bar": "1.7.1",
+    "expo-status-bar": "~1.7.1",
     "expo-system-ui": "^2.6.0",
     "expo-updates": "^0.18.16",
     "expo-web-browser": "~12.3.2",
@@ -50,7 +50,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.2",
     "@expo/metro-config": "^0.10.7",
-    "@tamagui/babel-plugin": "1.74.21",
+    "@tamagui/babel-plugin": "1.75.1",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "metro-minify-terser": "^0.79.1",
     "react-native-dotenv": "^3.4.9",

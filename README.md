@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  Get started with the <a rel="noopener noreferrer" target="_blank" href="https://t4stack.com">T4 Stack</a> by running <code>pnpm create t4-app</code>
+  Get started with the <a rel="noopener noreferrer" target="_blank" href="https://t4stack.com">T4 Stack</a> by running <code>bun create t4-app</code>
 </p>
 
 <p align="center">
@@ -122,20 +122,20 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
 
 ### Basic Setup
 
-> pnpm v8.6 is required to use `create-t4-app`
+> bun v8.6 is required to use `create-t4-app`
 
 <p align="left">
-  <a href="https://pnpm.io">
-    <img src="https://img.shields.io/badge/pnpm-%234a4a4a.svg?style=for-the-badge&logo=pnpm&logoColor=f69220" alt="pnpm is required to use `create-t4-app`">
+  <a href="https://bun.io">
+    <img src="https://img.shields.io/badge/bun-%234a4a4a.svg?style=for-the-badge&logo=bun&logoColor=f69220" alt="bun is required to use `create-t4-app`">
   </a>
 </p>
 
 To scaffold an app using `create-t4-app`, run any of the following commands.
 
-### **pnpm**
+### **bun**
 
 ```bash
-pnpm create t4-app
+bun create t4-app
 ```
 
 ### **Tauri**
@@ -143,7 +143,7 @@ pnpm create t4-app
 If you would like to use Tauri use:
 
 ```bash
-pnpm create t4-app --tauri
+bun create t4-app --tauri
 ```
 
 ## ❓ Why T4?
@@ -177,7 +177,7 @@ The VSCode extension is optional but highly recommended. It provides a better de
 ## ✨ Features
 
 - ✅ Tamagui UI kit across all platforms.
-- ✅ PNPM support
+- ✅ bun support
 - ✅ Million.js Support
 - ✅ Supabase Auth
 - ✅ Uses Next.js for building web apps.

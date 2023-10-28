@@ -22,22 +22,22 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+      - name: 'Bun setup'
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: 18
+          bun-version: latest
 
-      - name: 📥 Monorepo install
-        uses: ./.github/actions/pnpm-install
+      - name: 'Bun install'
+        run: bun install
 
       - name: Migrate database
-        run: pnpm --filter @t4/api migrate
+        run: cd packages/api && bun run migrate
         env:
           NO_D1_WARNING: true
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
       - name: Deploy
-        uses: cloudflare/wrangler-action@v3.1.0
+        uses: cloudflare/wrangler-action@v3.3.1
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: packages/api
