@@ -1,5 +1,5 @@
 name = "t4-api"
-compatibility_date = "2023-09-22"
+compatibility_date = "2023-10-16"
 send_metrics = false
 node_compat = true
 main = "src/worker.ts"
