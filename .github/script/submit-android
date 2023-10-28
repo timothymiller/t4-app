@@ -1,4 +1,0 @@
-cd apps/expo
-eas build --platform android --profile production --local
-export filename=$(find . -type f -name "*.aab" -print -quit)
-eas submit --platform android --path $filename

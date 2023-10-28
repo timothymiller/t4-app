@@ -22,16 +22,16 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+      - name: 'Bun setup'
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: 18
+          bun-version: latest
 
-      - name: 📥 Monorepo install
-        uses: ./.github/actions/bun-install
+      - name: 'Bun install'
+        run: bun install
 
       - name: Migrate database
-        run: bun --filter @t4/api migrate
+        run: cd packages/api && bun run migrate
         env:
           NO_D1_WARNING: true
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
