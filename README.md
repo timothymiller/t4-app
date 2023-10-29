@@ -125,7 +125,7 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
 > bun v8.6 is required to use `create-t4-app`
 
 <p align="left">
-  <a href="https://bun.io">
+  <a href="https://bun.sh">
     <img src="https://img.shields.io/badge/bun-%234a4a4a.svg?style=for-the-badge&logo=bun&logoColor=f69220" alt="bun is required to use `create-t4-app`">
   </a>
 </p>
