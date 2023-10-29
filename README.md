@@ -122,7 +122,7 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
 
 ### Basic Setup
 
-> bun v8.6 is required to use `create-t4-app`
+> bun v1.0 is required to use `create-t4-app`
 
 <p align="left">
   <a href="https://bun.sh">
