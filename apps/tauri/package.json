@@ -3,11 +3,11 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm with-env tauri dev",
-    "next-dev": "pnpm with-env next dev",
-    "build": "pnpm with-env tauri build",
-    "next-build": "pnpm with-env next build",
-    "start": "pnpm with-env start",
+    "dev": "bun with-env tauri dev",
+    "next-dev": "bun with-env next dev",
+    "build": "bun with-env tauri build",
+    "next-build": "bun with-env next build",
+    "start": "bun with-env start",
     "lint": "next lint",
     "with-env": "dotenv -e ../../.env.local --",
     "clean": "git clean -xdf .next node_modules .tamagui"

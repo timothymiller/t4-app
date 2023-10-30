@@ -57,8 +57,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
 
-      - name: 📥 Monorepo install
-        uses: ./.github/actions/pnpm-install
+      - name: Bun setup
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Bun install
+        run: bun install
 
       - uses: tauri-apps/tauri-action@v0
         env:
@@ -71,7 +76,7 @@ jobs:
           prerelease: false
           projectPath: ./apps/tauri/
           distPath: ./apps/tauri/out/
-          tauriScript: pnpm
+          tauriScript: bun
           # You can change the following flags to include release and/or debug builds
           includeDebug: true
           includeRelease: false
