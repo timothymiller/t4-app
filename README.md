@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  Get started with the <a rel="noopener noreferrer" target="_blank" href="https://t4stack.com">T4 Stack</a> by running <code>pnpm create t4-app</code>
+  Get started with the <a rel="noopener noreferrer" target="_blank" href="https://t4stack.com">T4 Stack</a> by running <code>bun create t4-app</code>
 </p>
 
 <p align="center">
@@ -118,6 +118,34 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
   </a>
 </p>
 
+## 🚀 Quick Start
+
+### Basic Setup
+
+> bun v1.0 is required to use `create-t4-app`
+
+<p align="left">
+  <a href="https://bun.sh">
+    <img src="https://img.shields.io/badge/bun-%234a4a4a.svg?style=for-the-badge&logo=bun&logoColor=f69220" alt="bun is required to use `create-t4-app`">
+  </a>
+</p>
+
+To scaffold an app using `create-t4-app`, run any of the following commands.
+
+### **bun**
+
+```bash
+bun create t4-app
+```
+
+### **Tauri**
+
+If you would like to use Tauri use:
+
+```bash
+bun create t4-app --tauri
+```
+
 ## ❓ Why T4?
 
 - Small learning curve
@@ -142,32 +170,6 @@ Build native apps for iOS, Android, macOS, Windows, and Linux using the same cod
 - [tRPC](https://trpc.io) - A TypeScript framework for building end-to-end typesafe APIs.
 - [TypeScript](https://www.typescriptlang.org) - A typed superset of JavaScript that compiles to plain JavaScript.
 
-## 🚀 Quick Start
-
-> pnpm v8.6 is required to use `create-t4-app`
-
-<p align="left">
-  <a href="https://pnpm.io">
-    <img src="https://img.shields.io/badge/pnpm-%234a4a4a.svg?style=for-the-badge&logo=pnpm&logoColor=f69220" alt="pnpm is required to use `create-t4-app`">
-  </a>
-</p>
-
-To scaffold an app using `create-t4-app`, run any of the following commands.
-
-### **pnpm**
-
-```bash
-pnpm create t4-app
-```
-
-### **Tauri**
-
-If you would like to use Tauri use:
-
-```bash
-pnpm create t4-app --tauri
-```
-
 ## 🧩 VSCode Extension
 
 The VSCode extension is optional but highly recommended. It provides a better developer experience by providing code actions to help you scaffold your app. You can find more info in the [docs](https://t4stack.com/extension) or install it from the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=albbus.t4-app-tools).
@@ -175,8 +177,9 @@ The VSCode extension is optional but highly recommended. It provides a better de
 ## ✨ Features
 
 - ✅ Tamagui UI kit across all platforms.
+- ✅ bun support
+- ✅ Million.js Support
 - ✅ Supabase Auth
-- ✅ PNPM support
 - ✅ Uses Next.js for building web apps.
 - ✅ Uses Expo for building native mobile apps.
 - ✅ PWA by default for native desktop support. No Electron required.
@@ -192,18 +195,7 @@ The VSCode extension is optional but highly recommended. It provides a better de
 
 ## ⭐ Wish List
 
-I would like to add the following features to `create-t4-app` in the future:
-
-- [ ] R2 Image upload example
-- [ ] Legend State example
-- [ ] Self-hosting docs for building with Expo CI/CD & Expo updates
-- [ ] Single dependency version policy check
-- [ ] Million.js example - once React Native support is added
-- [ ] GraphQL (type-safe) data fetching
-  - ⏲️ [GQty](https://gqty.dev) - A No-GraphQL client for TypeScript.
-  - 🔄 [Garph](https://garph.dev) - Fullstack GraphQL Framework for TypeScript
-- [ ] 📚 [Storybook](https://storybook.js.org) support
-- [ ] 🖌️ [Chromatic](https://chromatic.com) support
+👉 The wish list has moved to [the docs website](https://t4stack.com/wish-list).
 
 ## 💬 Community
 
@@ -218,18 +210,17 @@ We welcome contributions from anyone and everyone. Please read our [contributing
 ## 👏 Special Thanks
 
 - [Cloudflare Developers](https://twitter.com/CloudflareDev)
+- [Yusuke Wada](https://twitter.com/yusukebe) - Creator of Hono.js
+- [Nate Birdman](https://twitter.com/natebirdman) - Creator of Tamagui
+- [Fernando Rojo](https://twitter.com/fernandotherojo) - Creator of Solito
+- [Tanner Linsley](https://twitter.com/tannerlinsley) - Creator of TanStack
+- [Daishi Kato](https://twitter.com/dai_shi) Creator of Jotai
 - [Shopify Developers](https://twitter.com/ShopifyDevs)
 - [Drizzle Developers](https://twitter.com/DrizzleOrm)
-- [Yusuke Wada](https://twitter.com/yusukebe) - Creator of Hono.js
-- [Tanner Linsley](https://twitter.com/tannerlinsley) - Creator of TanStack
-- [Nate Birdman](https://twitter.com/natebirdman) - Creator of Tamagui
 - [Tim Neutkens](https://twitter.com/timneutkens) - Co-author of Next.js
-- [Guillermo Rauch](https://twitter.com/rauchg) - Co-author of Next.js
-- [Fernando Rojo](https://twitter.com/fernandotherojo) - Creator of Solito
-- [Daishi Kato](https://twitter.com/dai_shi) Creator of Jotai
 - [Jared Palmer](https://twitter.com/jaredpalmer) - Creator of Turborepo
-- [Evan Bacon](https://twitter.com/Baconbrix) - Maintainer of Expo
+- [Expo Developers](https://twitter.com/expo) - Office hours
 
 ## ⚖️ License
 
-**Create T4 App** is licensed under the [Apache License](https://github.com/timothymiller/t4-app/blob/main/LICENSE).
+**Create T4 App** is licensed under the [MIT License](https://github.com/timothymiller/t4-app/blob/main/LICENSE).

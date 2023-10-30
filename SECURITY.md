@@ -1,6 +1,6 @@
 # Security Policy for T4 App
 
-### Reporting Security Vulnerabilities
+## Reporting Security Vulnerabilities
 
 We take the security of our project seriously and appreciate any efforts to responsibly disclose vulnerabilities. If you discover any security vulnerabilities or potential threats in our T4 App, please report them to our security team by emailing security@t4stack.com. We request that you provide us with sufficient information to reproduce the vulnerability, including steps to replicate, affected versions, and any additional details that may be helpful for our investigation.
 
@@ -37,4 +37,4 @@ To ensure the overall security of T4 App, we encourage all users, contributors, 
 
 Note: This security policy is subject to change without notice. Please refer to the latest version available on the official repository for any updates or modifications.
 
-> Disclaimer: T4 App is licensed under the Apache License, Version 2.0. As such, it is provided "as is" without warranties or conditions of any kind, either expressed or implied, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose. The entire risk as to the quality and performance of T4 App is with you. In no event will the project contributors be liable for any damages resulting from the use of T4 App. Please review the full text of the Apache License, Version 2.0 for further details.
+> Disclaimer: T4 App is licensed under the MIT License. As such, it is provided "as is" without warranties or conditions of any kind, either expressed or implied, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose. The entire risk as to the quality and performance of T4 App is with you. In no event will the project contributors be liable for any damages resulting from the use of T4 App. Please review the full text of the MIT License for further details.

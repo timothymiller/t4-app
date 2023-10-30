@@ -15,7 +15,22 @@ const rl = readline.createInterface({
 
 const repositoryUrl = 'https://github.com/timothymiller/t4-app'
 
-const [projectFolder, ...commandLineArgs] = process.argv.slice(2)
+let [projectFolder, ...commandLineArgs] = process.argv.slice(2)
+
+// Parse command line arguments correctly even with no projectFolder specified
+if (projectFolder && projectFolder.startsWith('--')) {
+  commandLineArgs.push(projectFolder)
+  projectFolder = undefined
+}
+if (!projectFolder && commandLineArgs.length > 1) {
+  commandLineArgs.every((arg) => {
+    if (!arg.startsWith('--')) {
+      projectFolder = arg
+      return false
+    }
+    return true
+  })
+}
 const useTauri = commandLineArgs.includes('--tauri')
 
 const generateRepositoryBranch = () => {
@@ -58,7 +73,7 @@ const removeUnnecessaryFiles = async (folderName) => {
 const installDependencies = async (folderName) => {
   const installSpinner = ora(chalk.green.bold('Installing dependencies')).start()
   try {
-    await exec(`cd ${folderName} && pnpm install`)
+    await exec(`cd ${folderName} && bun install`)
     installSpinner.succeed()
   } catch (error) {
     installSpinner.fail()
@@ -69,7 +84,7 @@ const installDependencies = async (folderName) => {
 const generateDrizzleClient = async (folderName) => {
   const drizzleSpinner = ora(chalk.green.bold('Generating Drizzle client')).start()
   try {
-    await exec(`cd ${folderName} && pnpm generate`)
+    await exec(`cd ${folderName} && bun generate`)
     drizzleSpinner.succeed()
   } catch (error) {
     drizzleSpinner.fail()
@@ -81,11 +96,11 @@ const setupProject = async (folderName) => {
   try {
     console.log(chalk.yellow(`
 👉 Setting up a new t4 project.
-Follow the steps below to create your project:
-1. Cloning the t4-app repository into the specified folder.
-2. Removing unnecessary files.
-3. Installing dependencies.
-4. Generating the Drizzle client.
+This script follows the steps below to create your project:
+1. Clone the t4-app repository into the specified folder.
+2. Remove unnecessary files.
+3. Install dependencies.
+4. Generate the Drizzle client.
 `))
 
     await cloneRepository(folderName)
@@ -108,10 +123,10 @@ Follow the steps below to create your project:
 `))
 
     console.log(chalk.green.bold(`
-✅ Successfully created t4 project!
+🚀 Successfully created t4 project!
 Make sure you have a Supabase account and have created a new project.
-After filling out your .env file, run 'pnpm migrate:local' to create your database tables.
-To start the API and web development servers, run 'pnpm api' and 'pnpm web' in separate terminal tabs.
+After filling out your .env file, run 'bun migrate:local' to create your database tables.
+To start the API and web development servers, run 'bun api' and 'bun web' in separate terminal tabs.
 `))
   } catch (error) {
     console.error(chalk.red.bold(`🚫 Error: ${error.message}`))
@@ -127,14 +142,18 @@ const logo = `
    \\::\\ \\   \\::\\_\\::\\/_/\\  \\::(_)  \\ \\\\:(_) \\ \\\\:(_) \\ \\ 
     \\::\\ \\   \\_:::   __\\/   \\:: __  \\ \\\\: ___\\/ \\: ___\\/ 
      \\::\\ \\       \\::\\ \\     \\:.\\ \\  \\ \\\\ \\ \\    \\ \\ \\   
-      \\__\\/        \\__\\/      \\__\\/\\__\\/ \\_\\/     \\`
+      \\__\\/        \\__\\/      \\__\\/\\__\\/ \\_\\/     \\_\\/`
 
 console.log(chalk.green.bold(logo))
-console.log(chalk.magentaBright.bold('"Type-Safe, Full-Stack Starter Kit for React Native + Web" 🚀'))
-console.log(chalk.magentaBright.bold('ft. Tamagui + TypeScript + tRPC + Turborepo'))
+console.log(chalk.magentaBright.bold('\n"Type-Safe, Full-Stack Starter Kit for React Native + Web"'))
+console.log(chalk.magentaBright.bold('      ft. Tamagui + TypeScript + tRPC + Turborepo'))
+
+if (repositoryBranch) {
+  console.log(chalk.yellow.bold(`\n⚠  Cloning ${repositoryBranch.replace('-b', '').replace('--single-branch', '').trim()} branch.`))
+}
 
 if (!projectFolder) {
-  console.log(chalk.green.bold('Enter the name of the project:'))
+  console.log(chalk.green.bold('\nEnter the name of the project:'))
 
   try {
     const folderName = await promptQuestion('> ')
@@ -173,7 +192,7 @@ const removePaths = async (paths) => {
       console.log(`Removed: ${pathToRemove}`);
     }
 
-    console.log('All paths removed successfully!');
+    console.log('All paths removed successfully!\n');
   } catch (error) {
     console.error('Error removing paths:', error);
   }

@@ -1,5 +1,4 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useColorScheme } from 'react-native'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { useRef } from 'react'
 
@@ -11,8 +10,6 @@ interface Props {
 
 export const VirtualList = ({ data, renderItem, itemHeight }: Props): React.ReactNode => {
   const { top, bottom } = useSafeAreaInsets()
-  const scheme = useColorScheme()
-  const isLight = scheme === 'light'
 
   const parentRef = useRef()
   const rowVirtualizer = useVirtualizer({
@@ -25,7 +22,6 @@ export const VirtualList = ({ data, renderItem, itemHeight }: Props): React.Reac
     <div
       ref={parentRef as any}
       style={{
-        backgroundColor: !isLight ? '#000' : '#fff',
         paddingTop: top,
         paddingBottom: bottom,
         height: `100%`,
@@ -53,7 +49,7 @@ export const VirtualList = ({ data, renderItem, itemHeight }: Props): React.Reac
               transform: `translateY(${virtualItem.start}px)`,
             }}
           >
-            {renderItem(virtualItem)}
+            {renderItem(data[virtualItem.index])}
           </div>
         ))}
       </div>

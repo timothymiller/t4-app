@@ -9,7 +9,7 @@ module.exports = function (api) {
         {
           moduleName: '@env',
           path: '../../.env',
-          allowlist: ['NEXT_PUBLIC_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_ANON_KEY'],
+          allowlist: ['NEXT_PUBLIC_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_ANON_KEY', 'NEXT_PUBLIC_APP_URL', 'NEXT_PUBLIC_API_URL', 'NEXT_PUBLIC_SUPPORT_EMAIL'],
           safe: false,
           allowUndefined: true
         }

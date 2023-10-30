@@ -1,9 +1,11 @@
 name = "t4-api"
-compatibility_date = "2023-01-01"
+compatibility_date = "2023-10-16"
 send_metrics = false
+node_compat = true
+main = "src/worker.ts"
 account_id = "719e3374c9fabba87860b809acb3c939"
 
-[[ d1_databases ]]
+[[d1_databases]]
 binding = "DB"
 database_name = "production"
 database_id = "aa5e3923-0f1b-469a-8bb8-d10fb866efe0"

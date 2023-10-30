@@ -1,0 +1,7 @@
+{
+  "commands": "💻 Commands",
+  "development": "👨‍💻 Development",
+  "production": "🚀 Production",
+  "database": "🗄️ Database",
+  "trpc": "🛰️ tRPC"
+}

@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## 👨‍💻 Setting up Local Development
 
 ### API (Dev)
@@ -17,6 +19,11 @@ JWT_VERIFICATION_KEY=
 - Get your `JWT_VERIFICATION_KEY` from [Supabase](https://supabase.com).
 
 #### Configure Wrangler.toml
+
+<Callout type="info">
+  For more info, see [the official Cloudflare Wrangler
+  docs](https://developers.cloudflare.com/workers/wrangler/configuration/#sample-wranglertoml-configuration).
+</Callout>
 
 > Wrangler is the official CLI tool for Cloudflare Workers.
 
@@ -58,6 +65,7 @@ NEXT_PUBLIC_API_URL=http://localhost:8787/
 # @link https://supabase.com/dashboard for your Supabase API keys
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_SUPPORT_EMAIL=
 ```
 
 #### Expo

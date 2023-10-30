@@ -24,3 +24,24 @@ In the meantime, Cloudflare R2 integration is easier than ever. The bulk of your
 ## Why no Prisma support?
 
 Prisma is not supported in Cloudflare Workers because it's a chunky boi in terms of bundle size.
+
+## Supabase warning logged in local dev
+
+If you see this warning in your console when running `bun web`. You can safely ignore it.
+
+```bash
+No storage option exists to persist the session, which may result in unexpected behavior when using auth.
+If you want to set persistSession to true, please provide a storage option or you may set persistSession to false to disable this warning.
+```
+
+## Can Expo SDK libraries be used for React Native within T4?
+
+Absolutely! You can use any Expo SDK libraries you want.
+
+View the docs on [file structure to learn more](https://t4stack.com/file-structure).
+
+## Does T4 Stack support Next.js app directory?
+
+Currently, there are no immediate plans to migrate T4 stack to the Next.js app directory, despite the compatibility of app directory with Tamagui. This decision is primarily influenced by concerns regarding stability and performance issues associated with the app directory.
+
+It is well documented on Twitter that Next.js app directory degrades performance and stability of Next.js apps in local develoment and production. This is a known issue that is being worked on by the Next.js team.

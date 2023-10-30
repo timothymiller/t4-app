@@ -25,7 +25,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+.bun-debug.log*
 
 # local env files
 **.env
@@ -66,3 +66,9 @@ apps/expo/android/**
 **/*.apk
 **/*.aab
 **/*.ipa
+
+# PWA
+**/sw.js
+**/workbox-*.js
+**/fallback-*.js
+**/service-worker.js

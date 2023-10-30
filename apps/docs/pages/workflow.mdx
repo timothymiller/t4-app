@@ -1,22 +1,10 @@
-## 🔨 Workflow
+import { Cards, Card } from 'nextra/components'
+ 
+# Workflow
 
-## Web
-
-Your workflow will look like `pnpm api` followed by `pnpm web`
-
-> Or use the shorthand `pnpm dev` to run both at the same time.
-
-## Native
-
-For native development, you must first run `pnpm ios` or `pnpm android` to create a development build before `pnpm native` will work.
-
-The native environment depends on the web environment, so you must have the web environment running before you can run the native environment.
-
-`pnpm dev`
-
-or
-
-`pnpm api`
-`pnpm web` - Images won't work without it
-
-> But first, you must setup your environment variables.
+<Cards>
+  <Card title="💻 Commands" href="/workflow/commands" />
+  <Card title="👨‍💻 Development" href="/workflow/development" />
+  <Card title="🚀 Production" href="/workflow/production" />
+  <Card title="🗄️ Database" href="/workflow/database" />
+</Cards>

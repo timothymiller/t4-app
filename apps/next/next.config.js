@@ -1,6 +1,13 @@
-/** @type {import('next').NextConfig} */
 const { withTamagui } = require('@tamagui/next-plugin')
 const { join } = require('path')
+const million = require('million/compiler')
+const withPWA = require("@ducanh2912/next-pwa").default({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+  register: true,
+  sw: "service-worker.js",
+  swcMinify: true,
+});
 
 const boolVals = {
   true: true,
@@ -13,10 +20,14 @@ const disableExtraction =
 const disableBrowserLogs =
   boolVals[process.env.DISABLE_BROWSER_LOGS] ?? process.env.NODE_ENV === 'production'
 
+const enableMillionJS =
+  boolVals[process.env.ENABLE_MILLION_JS] ?? process.env.NODE_ENV === 'production'
+
 // Enabling causes FOUC on page refreshes
-const optimizeCss = false // boolVals[process.env.OPTIMIZE_CSS] ?? process.env.NODE_ENV === 'production'
+const optimizeCss = false
 
 const plugins = [
+  withPWA,
   withTamagui({
     config: './tamagui.config.ts',
     components: ['tamagui', '@t4/ui'],
@@ -54,7 +65,6 @@ module.exports = function () {
     },
     transpilePackages: [
       'solito',
-      'react-native-web',
       'expo-linking',
       'expo-constants',
       'expo-modules-core',
@@ -71,11 +81,9 @@ module.exports = function () {
        - Solito doesn't support app dir at the moment - You'll have to remove Solito.
        - The `/app` in this starter has the same routes as the `/pages` directory. You should probably remove `/pages` after enabling this.
       */
-      appDir: false,
       optimizeCss,
       forceSwcTransforms: true,
       scrollRestoration: true,
-      legacyBrowsers: false
     },
     compiler: {
       removeConsole: disableBrowserLogs
@@ -89,5 +97,13 @@ module.exports = function () {
     }
   }
 
+  const millionConfig = {
+    auto: true,
+    mute: true
+  }
+
+  if (enableMillionJS) {
+    return million.next(config, millionConfig);
+  }
   return config;
 }

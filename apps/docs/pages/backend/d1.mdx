@@ -1,0 +1,39 @@
+import { Callout } from 'nextra/components'
+import { Steps } from 'nextra/components'
+
+# 💾 Cloudflare D1
+
+## Create a database
+
+<Callout type="info">
+  For more info, see [the official Cloudflare D1
+  docs](https://developers.cloudflare.com/d1/get-started/#2-create-a-database).
+</Callout>
+
+<Steps>
+### Step 1
+ 
+Create a preview database.
+ 
+### Step 2
+ 
+Create a production database.
+</Steps>
+
+Run this command three times to create two databases.
+
+```bash
+wrangler d1 create <DATABASE_NAME>
+```
+
+The output will look like this:
+
+```bash
+✅ Successfully created DB '<DATABASE_NAME>'
+
+[[d1_databases]]
+binding = "DB"
+database_name = "<DATABASE_NAME>"
+database_id = "<unique-ID-for-your-database>"
+```
+

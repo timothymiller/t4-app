@@ -1,0 +1,27 @@
+{
+  "name": "T4 App Docs",
+  "short_name": "T4 Docs",
+  "icons": [
+    {
+      "src": "/pwa/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/pwa/icons/android-chrome-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/pwa/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#5E35B1",
+  "background_color": "#B39DDB",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}

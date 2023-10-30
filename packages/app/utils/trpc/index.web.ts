@@ -1,8 +1,8 @@
 import { createTRPCNext } from '@trpc/next'
 import { httpBatchLink, loggerLink } from '@trpc/client'
-import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import type { AppRouter } from '@t4/api/src/router'
-import { supabase } from '../supabase'
+import superjson from 'superjson'
+import { getToken } from '../supabase/cookies'
 
 const getBaseUrl = () => {
   return `${process.env.NEXT_PUBLIC_API_URL}`
@@ -11,6 +11,7 @@ const getBaseUrl = () => {
 export const trpc = createTRPCNext<AppRouter>({
   config() {
     return {
+      transformer: superjson,
       links: [
         loggerLink({
           enabled: (opts) =>
@@ -19,11 +20,8 @@ export const trpc = createTRPCNext<AppRouter>({
         }),
         httpBatchLink({
           async headers() {
-            const { data } = await supabase.auth.getSession()
-            const token = data?.session?.access_token
-
             return {
-              Authorization: token ? `Bearer ${token}` : undefined,
+              Authorization: `Bearer ${getToken()}`,
             }
           },
           url: `${getBaseUrl()}/trpc`,
@@ -33,15 +31,3 @@ export const trpc = createTRPCNext<AppRouter>({
   },
   ssr: false,
 })
-
-/**
- * Inference helpers for input types
- * @example type HelloInput = RouterInputs['example']['hello']
- **/
-export type RouterInputs = inferRouterInputs<AppRouter>
-
-/**
- * Inference helpers for output types
- * @example type HelloOutput = RouterOutputs['example']['hello']
- **/
-export type RouterOutputs = inferRouterOutputs<AppRouter>

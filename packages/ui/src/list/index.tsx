@@ -1,6 +1,6 @@
 import { FlashList } from '@shopify/flash-list'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useColorScheme } from 'react-native'
+import { useCallback } from 'react'
 
 interface Props {
   data: any[]
@@ -8,20 +8,25 @@ interface Props {
   itemHeight: number
 }
 
-export const VirtualList = ({ data, renderItem, itemHeight }: Props): React.ReactNode => {
+export function VirtualList<T>({ data, renderItem, itemHeight }: Props): React.ReactNode {
   const { top, bottom } = useSafeAreaInsets()
-  const scheme = useColorScheme()
-  const isLight = scheme === 'light'
+
+  // FlashList's API is awkward.
+  const render = useCallback(
+    (item) => {
+      return renderItem(item.item)
+    },
+    [renderItem]
+  )
 
   return (
     <FlashList
       data={data}
       contentContainerStyle={{
-        backgroundColor: !isLight ? '#000' : '#fff',
         paddingTop: top,
         paddingBottom: bottom,
       }}
-      renderItem={renderItem}
+      renderItem={render}
       estimatedItemSize={itemHeight}
     />
   )

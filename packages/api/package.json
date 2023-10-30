@@ -2,33 +2,37 @@
   "name": "@t4/api",
   "version": "2.0.0",
   "main": "src/index.ts",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "scripts": {
-    "dev": "wrangler dev src/index.ts",
+    "dev": "wrangler dev",
     "generate": "drizzle-kit generate:sqlite --schema=./src/db/schema.ts --out=./migrations",
     "migrate": "wrangler d1 migrations apply production",
     "migrate:local": "wrangler d1 migrations apply production --local",
-    "seed": "cross-env NO_D1_WARNING=true wrangler d1 execute production --local --file=./seed/seed.sql",
-    "deploy": "cross-env NO_D1_WARNING=true wrangler deploy --minify src/index.ts",
-    "postinstall": "pnpm generate",
+    "seed": "wrangler d1 execute production --file=./seed/seed.sql",
+    "seed:local": "wrangler d1 execute production --local --file=./seed/seed.sql",
+    "studio": "drizzle-kit studio",
+    "deploy": "wrangler deploy --minify src/worker.ts",
+    "postinstall": "bun generate",
     "with-env": "dotenv -e ../../.env.local --",
     "clean": "rm -rf .turbo node_modules"
   },
   "dependencies": {
-    "@cloudflare/d1": "^1.4.1",
     "@hono/trpc-server": "^0.1.0",
-    "@trpc/server": "^10.37.1",
-    "@tsndr/cloudflare-worker-jwt": "^2.2.1",
-    "drizzle-orm": "^0.27.2",
-    "hono": "^3.3.4"
+    "@trpc/server": "^10.43.0",
+    "@tsndr/cloudflare-worker-jwt": "^2.2.5",
+    "drizzle-orm": "^0.28.6",
+    "drizzle-valibot": "^0.1.1",
+    "hono": "^3.9.0",
+    "miniflare": "3.20231025.0",
+    "superjson": "^1.13.1",
+    "valibot": "^0.19.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20230801.0",
-    "better-sqlite3": "^8.5.0",
-    "dotenv-cli": "^7.2.1",
-    "drizzle-kit": "^0.19.12",
-    "eslint": "^8.46.0",
-    "typescript": "^5.1.6",
-    "wrangler": "^3.4.0"
+    "@cloudflare/workers-types": "^4.20231025.0",
+    "dotenv-cli": "^7.3.0",
+    "drizzle-kit": "^0.19.13",
+    "eslint": "^8.52.0",
+    "typescript": "^5.2.2",
+    "wrangler": "^3.15.0"
   }
 }

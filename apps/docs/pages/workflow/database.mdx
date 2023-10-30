@@ -1,0 +1,80 @@
+import { Steps } from 'nextra/components'
+
+## 🗄️ Database
+
+### 🗃️ Extending database schema
+
+Follow the steps below to extend your database schema.
+
+> All commands can be ran from the top level (project root) directory.
+
+<Steps>
+
+### Define schema
+
+Define your [Drizzle](https://drizzle.team) schema in `/packages/api/src/db/schema.ts`.
+
+### Generate migration
+
+Generate migration files using the `bun generate` command.
+
+```bash
+# Generate types & migrations
+bun generate
+```
+
+### Run migrations
+
+Run the schema migration using the `bun migrate:local` command.
+
+```bash
+# Migrate local database
+bun migrate:local
+# Migrate database hosted on Cloudflare D1
+bun migrate
+```
+
+### Create seed data
+
+Modify the .sql file at `/packages/api/seed/seed.sql` with your seed data. ChatGPT or faker.js are great tools for generating seed data.
+
+### Seed data
+
+Seed the database using `bun seed:local` command.
+
+```bash
+# Seed local database
+bun seed:local
+# Seed database hosted by Cloudflare D1
+bun seed
+```
+
+</Steps>
+
+To run the steps on the Cloudflare D1 hosted database, drop the `:local` suffix.
+
+### 📦 Migrations
+
+Here are helpful commands for migrating your SQLite / Cloudflare D1 database schema.
+
+```bash
+# Generate migrations
+bun generate
+
+# Run migrations on local
+bun migrate:local
+
+# Run migrations on database hosted by Cloudflare D1
+bun migrate
+```
+
+### 📦 Seeding data
+
+Here are helpful commands for seeding your SQLite / Cloudflare D1 database with data.
+
+```bash
+# Run seeding on local
+bun seed:local
+# Run seeding on production
+bun seed
+```

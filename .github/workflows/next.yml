@@ -27,13 +27,13 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+      - name: 'Bun setup'
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: 18
+          bun-version: latest
 
-      - name: 📥 Monorepo install
-        uses: ./.github/actions/pnpm-install
+      - name: 'Bun install'
+        run: bun install
 
       - name: Build
         run: |
@@ -43,10 +43,10 @@ jobs:
           export NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}
           export NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           export NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-          pnpx @cloudflare/next-on-pages
+          bunx @cloudflare/next-on-pages
 
       - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/pages-action@v1.5.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}

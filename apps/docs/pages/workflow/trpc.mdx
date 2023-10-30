@@ -1,0 +1,21 @@
+import { Callout } from 'nextra/components'
+
+# 🛰️ tRPC
+
+## Runtime Type checking
+
+<Callout type="info">
+  For more info, see [the official Valibot docs](https://valibot.dev/guides/introduction/).
+</Callout>
+
+Given that the majority of API endpoints are accessible through the Internet, it is imperative to implement a zero trust security approach and diligently examine request data prior to proceeding with further processing.
+
+> Valibot is used for the lightest, fastest runtime type checking.
+
+## Valibot + Drizzle
+
+Drizzle makes a library called [drizzle-valibot](https://orm.drizzle.team/docs/valibot) that generates Valibot schemas from TypeScript types.
+
+This ensures there is no mismatch between the TypeScript types and the Valibot schemas.
+
+This is also useful for validating data to be inserted into the database.

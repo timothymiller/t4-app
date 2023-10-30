@@ -2,11 +2,9 @@
   "recommendations": [
     "albbus.t4-app-tools",
     "esbenp.prettier-vscode",
-    "yawarjamal.cf-d1",
     "wix.vscode-import-cost",
     "unifiedjs.vscode-mdx",
     "RobbOwen.synthwave-vscode",
-    "rangav.vscode-thunder-client",
     "wayou.vscode-todo-highlight",
     "steoates.autoimport",
     "IronGeek.vscode-env",
@@ -18,6 +16,7 @@
     "tamasfe.even-better-toml",
     "formulahendry.auto-rename-tag",
     "dbaeumer.vscode-eslint",
-    "expo.vscode-expo-tools"
+    "expo.vscode-expo-tools",
+    "Postman.postman-for-vscode"
   ]
 }

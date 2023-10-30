@@ -1,6 +1,5 @@
-/* provider for expo, tRPC */
-import { TRPCProvider as Provider } from '../../utils/trpc'
+import { TRPCProvider as TRPCProviderOG } from '../../utils/trpc'
 
-export function TRPCProvider({ children }: { children: React.ReactNode }) {
-  return <Provider>{children}</Provider>
+export const TRPCProvider = ({ children }: { children: React.ReactNode }): React.ReactNode => {
+  return <TRPCProviderOG>{children}</TRPCProviderOG>
 }

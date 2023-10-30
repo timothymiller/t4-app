@@ -13,20 +13,22 @@
     "url": "git+https://github.com/timothymiller/t4-app.git"
   },
   "author": "Timothy Miller <t4@timknowsbest.com>",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/timothymiller/t4-app/issues"
   },
   "homepage": "https://github.com/timothymiller/t4-app#readme",
   "dependencies": {
-    "next": "^13.4.12",
-    "nextra": "^2.10.0",
-    "nextra-theme-docs": "^2.10.0",
+    "@ducanh2912/next-pwa": "^9.7.2",
+    "@t4/ui": "*",
+    "million": "2.6.4",
+    "next": "13.5.6",
+    "nextra": "^2.12.3",
+    "nextra-theme-docs": "^2.12.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^18.16.19",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   }
 }
