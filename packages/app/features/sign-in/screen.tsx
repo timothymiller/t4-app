@@ -1,4 +1,4 @@
-import type { AuthProviderName } from '@t4/api/src/auth/shared'
+import type { AuthProviderName } from '@t4/api/src/auth/providers'
 import { YStack, useToastController } from '@t4/ui'
 import { TRPCClientError } from '@trpc/client'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'

@@ -1,26 +1,17 @@
 import { lucia, type Env as LuciaEnv } from 'lucia'
 import { d1 } from '@lucia-auth/adapter-sqlite'
-import { apple, AppleAuth, discord, DiscordAuth, google, GoogleAuth } from "@lucia-auth/oauth/providers";
-import { ApiContextProps } from '../context';
-import { OAuth2ProviderAuth } from '@lucia-auth/oauth';
-import { HonoRequest } from 'hono';
+import { apple, discord, google } from '@lucia-auth/oauth/providers'
+import { ApiContextProps } from '../context'
+import { OAuth2ProviderAuth } from '@lucia-auth/oauth'
+import { HonoRequest } from 'hono'
+import { AuthProviderName, providers } from './providers'
+export { isAuthProviderName } from './providers'
+export type { AuthProviderName }
 
-const providers: {
-  apple: AppleAuth | null,
-  discord: DiscordAuth | null,
-  google: GoogleAuth | null,
-} = {
-  apple: null,
-  discord: null,
-  google: null,
-}
-export type AuthProviderName = keyof typeof providers
-
-export const isAuthProviderName = (name: string): name is AuthProviderName => {
-  return name === 'apple' || name === 'discord' || name === 'google'
-}
-
-export const getAuthProvider = (ctx: ApiContextProps, name: AuthProviderName): OAuth2ProviderAuth => {
+export const getAuthProvider = (
+  ctx: ApiContextProps,
+  name: AuthProviderName
+): OAuth2ProviderAuth => {
   if (!providers[name]) {
     if (name === 'apple') {
       providers[name] = apple(ctx.auth, {
@@ -52,7 +43,7 @@ export const getAuthProvider = (ctx: ApiContextProps, name: AuthProviderName): O
   }
   const service = providers[name]
   if (service === null) {
-    throw new Error("Unable to configure oauth for " + name)
+    throw new Error('Unable to configure oauth for ' + name)
   }
   return service
 }
@@ -106,7 +97,7 @@ export const getAuthConfig = (db: D1Database, url: string, request?: HonoRequest
 
     // https://lucia-auth.com/basics/configuration/#csrfprotection
     csrfProtection: {
-      allowedSubdomains: "*",
+      allowedSubdomains: '*',
       host: getAllowedOriginHost(url, request),
     },
 

@@ -10,6 +10,16 @@ import {
   toTrimmed
 } from 'valibot'
 import type { AuthProviderName } from '../auth/shared'
+import type { User as SessionUser } from 'lucia'
+import type { User } from '../db/schema'
+
+export function isSessionUser(user: User | SessionUser): user is SessionUser {
+  return !!(user as SessionUser).userId
+}
+
+export function isUser(user: User | SessionUser): user is User {
+  return !!(user as User).id
+}
 
 const email = string('Email address is required.', [
   toTrimmed(),

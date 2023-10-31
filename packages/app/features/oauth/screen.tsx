@@ -1,4 +1,4 @@
-import { AuthProviderName } from '@t4/api/src/auth/shared'
+import type { AuthProviderName } from '@t4/api/src/auth/providers'
 import { Paragraph } from '@t4/ui'
 import { useSignIn } from 'app/utils/auth'
 import { useEffect } from 'react'

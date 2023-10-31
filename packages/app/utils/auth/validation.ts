@@ -1,5 +1,5 @@
+export type { User as SessionUser } from 'lucia'
 export {
-  type SessionUser,
   isSessionUser,
   isUser,
-} from '@t4/api/src/auth/user'
+} from '@t4/api/src/schema/user'

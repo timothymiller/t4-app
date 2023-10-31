@@ -17,19 +17,21 @@ export function Provider({
 }) {
   return (
     <TamaguiThemeProvider>
-      <TamaguiProvider>
-        <SafeAreaProvider>
-          <SolitoImageProvider>
-            <ToastProvider swipeDirection="horizontal" duration={6000} native={['mobile']}>
+      <SafeAreaProvider>
+        <SolitoImageProvider>
+          <ToastProvider swipeDirection="horizontal" duration={6000} native={['mobile']}>
+            <TRPCProvider>
               <AuthProvider initialSession={initialSession}>
-                <TRPCProvider>{children}</TRPCProvider>
-                <CustomToast />
-                <ToastViewport />
+                <TamaguiProvider>
+                  {children}
+                  <CustomToast />
+                  <ToastViewport />
+                </TamaguiProvider>
               </AuthProvider>
-            </ToastProvider>
-          </SolitoImageProvider>
-        </SafeAreaProvider>
-      </TamaguiProvider>
+            </TRPCProvider>
+          </ToastProvider>
+        </SolitoImageProvider>
+      </SafeAreaProvider>
     </TamaguiThemeProvider>
   )
 }

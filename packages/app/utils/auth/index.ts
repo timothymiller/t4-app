@@ -6,7 +6,7 @@ import { atom, useAtom } from 'jotai'
 import { useEffect } from 'react'
 import { useSupabase } from '../supabase/hooks/useSupabase'
 import { useRouter } from 'solito/router'
-import type { AuthProviderName } from '@t4/api/src/auth/shared'
+import type { AuthProviderName } from '@t4/api/src/auth/providers'
 import { CreateUserSchema } from '@t4/api/src/schema/user';
 import { isWeb } from '@t4/ui/src';
 

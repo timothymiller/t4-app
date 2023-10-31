@@ -1,4 +1,4 @@
-import { AuthProviderName } from '@t4/api/src/auth/shared'
+import type { AuthProviderName } from '@t4/api/src/auth/providers'
 import { YStack, useToastController } from '@t4/ui'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import { useSignIn, useSignUp } from 'app/utils/auth'
@@ -11,7 +11,7 @@ import { getInitialURL } from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
 import { Platform } from 'react-native'
 
-export const SignInScreen = (): React.ReactNode => {
+export const SignUpScreen = (): React.ReactNode => {
   const { signIn } = useSignIn()
   const { signUp } = useSignUp()
   const toast = useToastController()
