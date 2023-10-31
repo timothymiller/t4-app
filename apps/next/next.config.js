@@ -65,6 +65,7 @@ module.exports = function () {
     },
     transpilePackages: [
       'solito',
+      'react-native-web',
       'expo-linking',
       'expo-constants',
       'expo-modules-core',
