@@ -40,7 +40,7 @@ jobs:
           wranglerVersion: '3.15.0'
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: packages/api
-          command: deploy src/index.ts
+          command: deploy src/worker.ts
           packageManager: bun
           secrets: |
             APP_URL
