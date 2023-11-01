@@ -13,9 +13,7 @@ jobs:
     name: Deploy to Cloudflare Workers
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    env:
-      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -37,11 +35,13 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
       - name: Deploy
-        uses: cloudflare/wrangler-action@v3.3.1
+        uses: cloudflare/wrangler-action@v3.3.2
         with:
+          wranglerVersion: '3.15.0'
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: packages/api
-          command: deploy src/index.ts
+          command: deploy src/worker.ts
+          packageManager: bun
           secrets: |
             APP_URL
             JWT_VERIFICATION_KEY
