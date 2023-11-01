@@ -11,28 +11,19 @@ const icons = {
 }
 export const ThemeToggle = (props: ButtonProps) => {
   const themeSetting = useThemeSetting()!;
-  const [clientTheme, setClientTheme] = useState<string>("system");
+  const [clientTheme, setClientTheme] = useState("system");
 
   useIsomorphicLayoutEffect(() => {
-    if (themeSetting.resolvedTheme !== "system") {
-      document
-        .querySelector("#theme-color")
-        ?.setAttribute(
-          "content",
-          themeSetting.resolvedTheme === "light" ? "#fff" : "#050505"
-        );
-    }
-
     setClientTheme(themeSetting.current || "system");
-  }, [themeSetting.current, themeSetting.resolvedTheme]);
+  }, [themeSetting.current]);
 
   return (
     <Button
       size="$4"
       onPress={themeSetting.toggle}
-      {...props}
       aria-label="Toggle color scheme"
       icon={icons[clientTheme]}
+      {...props}
     />
   );
 };
