@@ -10,7 +10,7 @@
     "migrate:local": "wrangler d1 migrations apply production --local",
     "seed": "wrangler d1 execute production --file=./seed/seed.sql",
     "seed:local": "wrangler d1 execute production --local --file=./seed/seed.sql",
-    "studio": "drizzle-kit studio",
+    "studio": "cd .wrangler/ && bun ../src/db/studio.ts",
     "deploy": "wrangler deploy --minify src/worker.ts",
     "postinstall": "bun generate",
     "with-env": "dotenv -e ../../.env.local --",
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231025.0",
+    "bun-types": "^1.0.7",
     "dotenv-cli": "^7.3.0",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.52.0",
