@@ -85,6 +85,14 @@ module.exports = function () {
       optimizeCss,
       forceSwcTransforms: true,
       scrollRestoration: true,
+      swcPlugins: [
+        [
+          'next-superjson-plugin',
+          {
+            excluded: [],
+          },
+        ],
+      ],
     },
     compiler: {
       removeConsole: disableBrowserLogs

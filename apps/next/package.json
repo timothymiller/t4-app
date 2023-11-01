@@ -12,25 +12,25 @@
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^9.7.2",
-    "@supabase/auth-helpers-nextjs": "^0.8.3",
+    "@supabase/auth-helpers-nextjs": "^0.8.4",
     "@supabase/auth-helpers-react": "^0.4.2",
     "@t4/ui": "*",
-    "@tamagui/next-theme": "1.75.5",
-    "@tsndr/cloudflare-worker-jwt": "^2.2.2",
+    "@tamagui/next-theme": "1.75.9",
+    "@tsndr/cloudflare-worker-jwt": "^2.2.5",
     "app": "*",
     "million": "2.6.4",
-    "next": "13.5.6",
+    "next": "14.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "^0.72.6",
-    "react-native-web-lite": "1.75.5",
+    "react-native-web-lite": "1.75.9",
     "webpack": "^5.88.2"
   },
   "devDependencies": {
-    "@tamagui/next-plugin": "1.75.5",
-    "@types/react": "^18.2.21",
+    "@tamagui/next-plugin": "1.75.9",
+    "@types/react": "^18.2.33",
     "dotenv-cli": "^7.3.0",
-    "eslint-config-next": "^13.5.6",
-    "vercel": "^32.4.1"
+    "eslint-config-next": "^14.0.1",
+    "vercel": "^32.5.0"
   }
 }

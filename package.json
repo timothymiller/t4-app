@@ -4,12 +4,16 @@
   "license": "MIT",
   "version": "3.0.0",
   "scripts": {
-    "dev": "turbo dev --parallel --filter={next-app,@t4/api}",
+    "dev": "run-p api web",
     "ios": "cd apps/expo && bun ios",
     "android": "cd apps/expo && bun android",
     "web": "cd apps/next && bun run dev",
     "api": "cd packages/api && bun dev",
-    "notes": "cd apps/docs && bun dev",
+    "generate": "cd packages/api && bun generate",
+    "migrate:local": "cd packages/api && bun migrate:local",
+    "seed:local": "cd packages/api && bun seed:local",
+    "migrate": "cd packages/api && bun migrate",
+    "seed": "cd packages/api && bun seed",
     "native": "cd apps/expo && bun dev",
     "studio": "cd packages/api && bun studio",
     "native:prod": "cd apps/expo && bun dev:prod",
@@ -20,17 +24,12 @@
     "build:ios:preview": "cd apps/expo && bun build:ios:preview",
     "build:android:preview": "cd apps/expo && bun build:android:preview",
     "submit:android": "cd apps/expo && eas submit --platform android --path ./app-release.aab",
-    "generate": "cd packages/api && bun generate",
-    "migrate:local": "cd packages/api && bun migrate:local",
-    "seed:local": "cd packages/api && bun seed:local",
-    "migrate": "cd packages/api && bun migrate",
-    "seed": "cd packages/api && bun seed",
     "check-deps": "check-dependency-version-consistency .",
     "check-types": "tsc --noEmit",
     "fix": "manypkg fix",
-    "postinstall": "bun run build",
+    "postinstall": "bun run build && bun run check-deps",
     "clean": "git clean -xdf node_modules && rm bun.lockb",
-    "clean:workspaces": "turbo clean"
+    "clean:all": "npm-run-all clean"
   },
   "workspaces": [
     "apps/*",
@@ -40,17 +39,15 @@
     "@babel/runtime": "^7.23.2",
     "@manypkg/cli": "^0.21.0",
     "@nderscore/tamagui-typescript-plugin": "^0.6.0",
-    "@supabase/supabase-js": "^2.38.2",
+    "@supabase/supabase-js": "^2.38.4",
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.52.0",
+    "next-superjson-plugin": "^0.5.9",
+    "npm-run-all": "^4.1.5",
     "prettier": "^3.0.3",
     "react-native-url-polyfill": "^2.0.0",
-    "turbo": "latest",
     "typescript": "^5.2.2",
-    "workerd": "1.20231025.0"
-  },
-  "engines": {
-    "node": ">=18.16.1"
+    "workerd": "1.20231030.0"
   }
 }
