@@ -20,6 +20,7 @@ import { SolitoImage } from 'solito/image'
 import { trpc } from 'app/utils/trpc'
 import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
 import { useUser } from 'app/utils/supabase/hooks/useUser'
+import { ThemeToggle } from '@t4/ui/src/ThemeToggle'
 
 export function HomeScreen() {
   const utils = trpc.useContext()
@@ -77,7 +78,10 @@ export function HomeScreen() {
           </Anchor>
         </Paragraph>
 
-        <Button onPress={() => Linking.openURL('https://t4stack.com/')}>Learn More...</Button>
+        <XStack gap="$5">
+          <Button onPress={() => Linking.openURL('https://t4stack.com/')}>Learn More...</Button>
+          <ThemeToggle/>
+        </XStack>
 
         <H3>🦮🐴 App Demos</H3>
         <YStack space="$2">
