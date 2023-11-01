@@ -32,9 +32,11 @@ const host = "0.0.0.0";
 server.start({
   host,
   port,
-  cb: (err: any) => {
+  cb: (err: any, address: any) => {
     if (err) {
       console.error(err);
+    } else {
+      console.log(`Drizzle Studio running on ${address}`)
     }
   },
 });
