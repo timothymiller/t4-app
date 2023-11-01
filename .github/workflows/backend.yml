@@ -37,11 +37,12 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
 
       - name: Deploy
-        uses: cloudflare/wrangler-action@v3.3.1
+        uses: cloudflare/wrangler-action@v3.3.2
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: packages/api
           command: deploy src/index.ts
+          packageManager: bun
           secrets: |
             APP_URL
             JWT_VERIFICATION_KEY
