@@ -37,6 +37,7 @@ jobs:
       - name: Deploy
         uses: cloudflare/wrangler-action@v3.3.2
         with:
+          wranglerVersion: '3.15.0'
           apiToken: ${{ secrets.CF_API_TOKEN }}
           workingDirectory: packages/api
           command: deploy src/index.ts
