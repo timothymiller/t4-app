@@ -4,10 +4,6 @@ import type { AppRouter } from '@t4/api/src/router'
 import superjson from 'superjson'
 import { getToken } from '../supabase/cookies'
 
-const getBaseUrl = () => {
-  return `${process.env.NEXT_PUBLIC_API_URL}`
-}
-
 export const trpc = createTRPCNext<AppRouter>({
   config() {
     return {
@@ -24,7 +20,7 @@ export const trpc = createTRPCNext<AppRouter>({
               Authorization: `Bearer ${getToken()}`,
             }
           },
-          url: `${getBaseUrl()}/trpc`,
+          url: `${process.env.NEXT_PUBLIC_API_URL}/trpc`,
         }),
       ],
     }

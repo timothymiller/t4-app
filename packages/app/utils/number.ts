@@ -1,11 +1,18 @@
 export function formatNumber(x: number): string {
   return x.toLocaleString('en-US')
-};
+}
 
-export function formatPrice(price: number): string {
-  return price.toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  })
-};
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
+})
+
+export function formatPrice(number) {
+  if (typeof number !== 'number' || isNaN(number) || !isFinite(number)) {
+    throw new Error('Invalid number value')
+  }
+
+  return formatter.format(number)
+}

@@ -4,17 +4,16 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "ios": "expo run:ios",
-    "android": "cross-env TAMAGUI_TARGET=native expo run:android",
-    "dev": "cross-env TAMAGUI_TARGET=native expo start --dev-client",
-    "dev:prod": "cross-env TAMAGUI_TARGET=native expo start --no-dev --minify",
-    "prebuild": "cross-env TAMAGUI_TARGET=native expo prebuild",
-    "build:ios:preview": " eas build --platform ios --profile preview --local",
-    "build:android:preview": "eas build --platform android --profile preview --local",
-    "build:ios": " eas build --platform ios --profile production --local",
-    "build:android": "eas build --platform android --profile production --local",
-    "clean": "git clean -xdf .expo node_modules ios android",
-    "eas-build-pre-install": "npm install -g bun@8.6.12"
+    "ios": "cross-env TAMAGUI_TARGET=native bun expo run:ios",
+    "android": "cross-env TAMAGUI_TARGET=native bun expo run:android",
+    "dev": "cross-env TAMAGUI_TARGET=native bun expo start --dev-client",
+    "dev:prod": "cross-env TAMAGUI_TARGET=native bun expo start --no-dev --minify",
+    "prebuild": "cross-env TAMAGUI_TARGET=native bun expo prebuild",
+    "build:ios:preview": "bun eas build --platform ios --profile preview --local",
+    "build:android:preview": "bun eas build --platform android --profile preview --local",
+    "build:ios": "bun eas build --platform ios --profile production --local",
+    "build:android": "bun eas build --platform android --profile production --local",
+    "clean": "git clean -xdf .expo node_modules ios android"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
