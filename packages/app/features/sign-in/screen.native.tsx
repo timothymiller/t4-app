@@ -101,12 +101,9 @@ export const SignInScreen = (): React.ReactNode => {
       password: password,
     })
     if (error) {
-      const isExpoGo = Constants.appOwnership === 'expo'
-      if (!isExpoGo) {
-        toast.show('Sign in failed', {
-          description: error.message,
-        })
-      }
+      toast.show('Sign in failed', {
+        description: error.message,
+      })
       return
     }
 

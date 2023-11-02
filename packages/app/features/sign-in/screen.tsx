@@ -2,7 +2,6 @@ import { YStack, useToastController } from '@t4/ui'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import { useRouter } from 'solito/router'
 import type { Provider } from '@supabase/supabase-js'
-import Constants from 'expo-constants'
 import { capitalizeWord } from 'app/utils/string'
 import { isExpoGo } from 'app/utils/flags'
 import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
@@ -42,12 +41,9 @@ export const SignInScreen = (): React.ReactNode => {
       password: password,
     })
     if (error) {
-      const isExpoGo = Constants.appOwnership === 'expo'
-      if (!isExpoGo) {
-        toast.show('Sign in failed', {
-          description: error.message,
-        })
-      }
+      toast.show('Sign in failed', {
+        description: error.message,
+      })
       return
     }
 
