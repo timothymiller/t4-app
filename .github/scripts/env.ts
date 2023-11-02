@@ -3,7 +3,7 @@ import * as path from 'path'
 
 const isCI = process.env.CI === 'true'
 if (isCI) {
-  console.log('🛑 CI detected, skipping .env.local generation')
+  console.log('🏃 CI detected, skipping .env.local generation')
   process.exit(0)
 }
 
