@@ -3,9 +3,8 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { SolitoImage } from 'solito/image'
 import { RotateCw } from '@tamagui/lucide-icons'
-import { env } from "../env.mjs"
 
-const customerCareEmail = env.NEXT_PUBLIC_SUPPORT_EMAIL
+const customerCareEmail = process.env.NEXT_PUBLIC_SUPPORT_EMAIL
 
 export default function Page() {
   const router = useRouter()

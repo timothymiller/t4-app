@@ -1,8 +1,7 @@
 import { withTamagui } from '@tamagui/next-plugin'
 import { join } from 'path'
 import million from 'million/compiler'
-import withPWAInit from "@ducanh2912/next-pwa";
-import './env.mjs'
+import withPWAInit from '@ducanh2912/next-pwa'
 
 const withPWA = withPWAInit({
   dest: "public",

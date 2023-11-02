@@ -10,15 +10,14 @@ import { trpc } from 'app/utils/trpc/index.web'
 import Head from 'next/head'
 import type { SolitoAppProps } from 'solito'
 import type { Session } from '@supabase/supabase-js'
-import { env } from "../env.mjs"
 
 if (process.env.NODE_ENV === 'production') {
   require('../public/tamagui.css')
 }
 
-const title = `${env.NEXT_PUBLIC_METADATA_NAME}`
-const description = `${env.NEXT_PUBLIC_METADATA_DESCRIPTION}`
-const url = `${env.NEXT_PUBLIC_METADATA_URL}`
+const title = `${process.env.NEXT_PUBLIC_METADATA_NAME}`
+const description = `${process.env.NEXT_PUBLIC_METADATA_DESCRIPTION}`
+const url = `${process.env.NEXT_PUBLIC_METADATA_URL}`
 
 const T4App = ({ Component, pageProps }: SolitoAppProps<{ initialSession: Session | null }>) => {
   return (
