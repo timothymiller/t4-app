@@ -5,21 +5,10 @@ module.exports = function (api) {
     plugins: [
       require.resolve('expo-router/babel'),
       [
-        'module:react-native-dotenv',
-        {
-          moduleName: '@env',
-          path: '../../.env.local',
-          allowlist: ['NEXT_PUBLIC_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_ANON_KEY', 'NEXT_PUBLIC_APP_URL', 'NEXT_PUBLIC_API_URL', 'NEXT_PUBLIC_SUPPORT_EMAIL'],
-          safe: false,
-          allowUndefined: true
-        }
-      ],
-      [
         require.resolve('babel-plugin-module-resolver'),
         {
           root: ['../..'],
           alias: {
-            // define aliases to shorten the import paths
             app: '../../packages/app',
             '@t4/api': '../../packages/api',
             '@t4/ui': '../../packages/ui'
@@ -27,8 +16,6 @@ module.exports = function (api) {
           extensions: ['.js', '.jsx', '.tsx', '.ios.js', '.android.js']
         }
       ],
-      // if you want reanimated support
-      // 'react-native-reanimated/plugin',
       ...(process.env.EAS_BUILD_PLATFORM === 'android'
         ? []
         : [
@@ -40,12 +27,6 @@ module.exports = function (api) {
             }
           ]
         ]),
-      [
-        'transform-inline-environment-variables',
-        {
-          include: 'TAMAGUI_TARGET'
-        }
-      ],
       'jotai/babel/plugin-react-refresh'
     ]
   }

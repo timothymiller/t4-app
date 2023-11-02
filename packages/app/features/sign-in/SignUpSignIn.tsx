@@ -48,7 +48,6 @@ export const SignUpSignInComponent = ({
             src={'/auth/google-logo.png'}
             width={20}
             height={20}
-            resizeMode="contain"
             alt="Google Logo"
           />
         </Button>
@@ -64,7 +63,6 @@ export const SignUpSignInComponent = ({
             src={'/auth/apple-logo.png'}
             width={22}
             height={22}
-            resizeMode="contain"
             alt="Apple Logo"
           />
         </Button>
@@ -80,7 +78,6 @@ export const SignUpSignInComponent = ({
             src={'/auth/discord-logo.png'}
             width={20}
             height={20}
-            resizeMode="contain"
             alt="Discord Logo"
           />
         </Button>

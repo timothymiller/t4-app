@@ -2,4 +2,4 @@ tasks:
   - init: |
       curl -fsSL https://bun.sh/install | bash 
       source /home/gitpod/.bashrc
-      bun install && bun run build
+      bun install && bun build

@@ -3,11 +3,10 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "dev": "bun with-env next dev",
-    "build": "bun with-env next build",
-    "start": "bun with-env next start",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "next lint",
-    "with-env": "dotenv -e ../../.env.local --",
     "clean": "git clean -xdf .next node_modules .tamagui"
   },
   "dependencies": {
@@ -29,7 +28,6 @@
   "devDependencies": {
     "@tamagui/next-plugin": "1.75.9",
     "@types/react": "^18.2.33",
-    "dotenv-cli": "^7.3.0",
     "eslint-config-next": "^14.0.1",
     "vercel": "^32.5.0"
   }

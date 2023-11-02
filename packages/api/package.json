@@ -13,7 +13,6 @@
     "studio": "cd .wrangler/ && bun ../src/db/studio.ts",
     "deploy": "wrangler deploy --minify src/worker.ts",
     "postinstall": "bun generate",
-    "with-env": "dotenv -e ../../.env.local --",
     "clean": "rm -rf .turbo node_modules"
   },
   "dependencies": {

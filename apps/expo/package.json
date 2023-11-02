@@ -4,15 +4,15 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "ios": "cross-env TAMAGUI_TARGET=native bun expo run:ios",
-    "android": "cross-env TAMAGUI_TARGET=native bun expo run:android",
-    "dev": "cross-env TAMAGUI_TARGET=native bun expo start --dev-client",
-    "dev:prod": "cross-env TAMAGUI_TARGET=native bun expo start --no-dev --minify",
-    "prebuild": "cross-env TAMAGUI_TARGET=native bun expo prebuild",
-    "build:ios:preview": "bun eas build --platform ios --profile preview --local",
-    "build:android:preview": "bun eas build --platform android --profile preview --local",
-    "build:ios": "bun eas build --platform ios --profile production --local",
-    "build:android": "bun eas build --platform android --profile production --local",
+    "ios": "expo run:ios",
+    "android": "expo run:android",
+    "dev": "expo start --dev-client",
+    "dev:prod": "expo start --no-dev --minify",
+    "prebuild": "expo prebuild",
+    "build:ios:preview": "eas build --platform ios --profile preview --local",
+    "build:android:preview": "eas build --platform android --profile preview --local",
+    "build:ios": "eas build --platform ios --profile production --local",
+    "build:android": "eas build --platform android --profile production --local",
     "clean": "git clean -xdf .expo node_modules ios android"
   },
   "dependencies": {
@@ -50,9 +50,7 @@
     "@babel/core": "^7.23.2",
     "@expo/metro-config": "^0.10.7",
     "@tamagui/babel-plugin": "1.75.9",
-    "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "metro-minify-terser": "^0.80.0",
-    "react-native-dotenv": "^3.4.9",
     "typescript": "^5.2.2"
   }
 }

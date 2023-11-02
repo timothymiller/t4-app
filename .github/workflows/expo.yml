@@ -44,7 +44,6 @@ jobs:
         id: build
         continue-on-error: true
         run: |
-          export TAMAGUI_TARGET=native
           export EAS_OWNER=${{ secrets.EAS_OWNER }}
           export EAS_PROJECT_ID=${{ secrets.EAS_PROJECT_ID }}
           cd apps/expo && build_json=$(eas build --profile $BUILD_PROFILE --platform all --non-interactive --json)

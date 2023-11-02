@@ -17,7 +17,7 @@ import { replaceLocalhost } from './localhost.native'
 export const trpc = createTRPCReact<AppRouter>()
 
 const getApiUrl = () => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}`
+  const apiUrl = `${process.env.EXPO_PUBLIC_API_URL}`
   return replaceLocalhost(apiUrl)
 }
 
