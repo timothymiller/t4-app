@@ -1,5 +1,5 @@
 import { ConfigContext, ExpoConfig } from '@expo/config'
-import env from './env.js'
+import env from './env'
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
