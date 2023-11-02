@@ -1,3 +1,8 @@
+/**
+ * This is a WIP. The goal is to have a single source of truth for all environment variables.
+ * Different prefixes for public environments across Expo & Next.js currently block this.
+ */
+
 import { string, object, parse } from 'valibot'
 
 const envSchema = object({
@@ -19,9 +24,3 @@ const envSchema = object({
 })
 
 export const env = parse(envSchema, process.env)
-
-// declare global {
-//   namespace NodeJS {
-//     interface ProcessEnv extends Input<typeof envSchema> {}
-//   }
-// }
