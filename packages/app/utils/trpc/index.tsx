@@ -9,14 +9,16 @@ import { httpBatchLink } from '@trpc/client'
 import { supabase } from '../supabase/client'
 import superjson from 'superjson'
 import { useState } from 'react'
+import { replaceLocalhost } from './localhost.native'
 
 /**
  * A set of typesafe hooks for consuming your API.
  */
 export const trpc = createTRPCReact<AppRouter>()
 
-const getBaseUrl = () => {
-  return process.env.NEXT_PUBLIC_API_URL
+const getApiUrl = () => {
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}`
+  return replaceLocalhost(apiUrl)
 }
 
 export const TRPCProvider: React.FC<{
@@ -36,7 +38,7 @@ export const TRPCProvider: React.FC<{
               Authorization: token ? `Bearer ${token}` : undefined,
             }
           },
-          url: `${getBaseUrl()}/trpc`,
+          url: `${getApiUrl()}/trpc`,
         }),
       ],
     })

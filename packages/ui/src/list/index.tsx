@@ -9,9 +9,8 @@ interface Props {
 }
 
 export function VirtualList<T>({ data, renderItem, itemHeight }: Props): React.ReactNode {
-  const { top, bottom } = useSafeAreaInsets()
+  const { bottom } = useSafeAreaInsets()
 
-  // FlashList's API is awkward.
   const render = useCallback(
     (item) => {
       return renderItem(item.item)
@@ -23,8 +22,7 @@ export function VirtualList<T>({ data, renderItem, itemHeight }: Props): React.R
     <FlashList
       data={data}
       contentContainerStyle={{
-        paddingTop: top,
-        paddingBottom: bottom,
+        paddingBottom: bottom + 8,
       }}
       renderItem={render}
       estimatedItemSize={itemHeight}
