@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import * as SecureStore from 'expo-secure-store'
 import 'react-native-url-polyfill/auto'
-import { env } from "../../../env.mjs";
+import { env } from "app/env";
 
 const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseKey = env.NEXT_PUBLIC_SUPABASE_ANON_KEY

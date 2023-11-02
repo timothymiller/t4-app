@@ -3,7 +3,7 @@ import { httpBatchLink, loggerLink } from '@trpc/client'
 import type { AppRouter } from '@t4/api/src/router'
 import superjson from 'superjson'
 import { getToken } from '../supabase/cookies'
-import { env } from "../../../env.mjs";
+import { env } from "app/env";
 
 export const trpc = createTRPCNext<AppRouter>({
   config() {

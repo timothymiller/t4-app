@@ -10,7 +10,7 @@ import { supabase } from '../supabase/client'
 import superjson from 'superjson'
 import { useState } from 'react'
 import { replaceLocalhost } from './localhost.native'
-import { env } from "../../../env.mjs";
+import { env } from "app/env";
 
 /**
  * A set of typesafe hooks for consuming your API.

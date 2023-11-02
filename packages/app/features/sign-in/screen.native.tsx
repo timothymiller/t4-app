@@ -10,7 +10,7 @@ import * as WebBrowser from 'expo-web-browser'
 import { getInitialURL } from 'expo-linking'
 import { Platform } from 'react-native'
 import { initiateAppleSignIn } from 'app/utils/supabase/appleAuth'
-import { env } from "../../../env.mjs";
+import { env } from "app/env";
 
 export const SignInScreen = (): React.ReactNode => {
   const { replace } = useRouter()

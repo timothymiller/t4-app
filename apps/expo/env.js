@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config()
 
 module.exports = createEnv({
+  skipValidation: process.env.EAS_BUILD_RUNNER === "eas-build",
   server: {
     EAS_OWNER: z.string().min(1),
     EAS_PROJECT_ID: z.string().min(1),

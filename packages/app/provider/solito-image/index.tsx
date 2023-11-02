@@ -1,6 +1,6 @@
 import { replaceLocalhost } from 'app/utils/trpc/localhost.native'
 import { SolitoImageProvider as SolitoImageProviderOG } from 'solito/image'
-import { env } from "../../../env.mjs";
+import { env } from "app/env";
 
 export const getImageUrl = () => {
   const imageUrl = `${env.NEXT_PUBLIC_APP_URL}`

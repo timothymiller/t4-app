@@ -1,14 +1,14 @@
 import { ConfigContext, ExpoConfig } from '@expo/config'
-import env from "./env.js"
+import env from './env.js'
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   extra: {
     eas: {
-      projectId: env.EAS_PROJECT_ID,
+      projectId: env.EAS_PROJECT_ID || '85fc6ccd-0ce1-4e4d-804c-b15df989f97e',
     },
   },
-  owner: env.EAS_OWNER,
+  owner: env.EAS_OWNER || 'timothymiller',
   plugins: ['expo-router'],
   experiments: {
     tsconfigPaths: true,
@@ -16,9 +16,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   platforms: ['ios', 'android'],
   name: 'T4 App',
-  slug: env.EAS_SLUG,
+  slug: 't4-demo',
   updates: {
-    url: 'https://u.expo.dev/' + env.EAS_PROJECT_ID,
+    url: 'https://u.expo.dev/' + (env.EAS_PROJECT_ID || '85fc6ccd-0ce1-4e4d-804c-b15df989f97e'),
   },
   runtimeVersion: {
     policy: 'sdkVersion',

@@ -7,6 +7,7 @@
     "ios": "cross-env TAMAGUI_TARGET=native bun expo run:ios",
     "android": "cross-env TAMAGUI_TARGET=native bun expo run:android",
     "dev": "cross-env TAMAGUI_TARGET=native bun expo start --dev-client",
+    "dev:gitpod": "cross-env TAMAGUI_TARGET=native bun expo start --dev-client --tunnel",
     "dev:prod": "cross-env TAMAGUI_TARGET=native bun expo start --no-dev --minify",
     "prebuild": "cross-env TAMAGUI_TARGET=native bun expo prebuild",
     "build:ios:preview": "bun eas build --platform ios --profile preview --local",

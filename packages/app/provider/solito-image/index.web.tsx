@@ -1,5 +1,5 @@
 import { SolitoImageProvider as SolitoImageProviderOG } from 'solito/image'
-import { env } from "../../../env.mjs";
+import { env } from "app/env";
 
 const imageURL = env.NEXT_PUBLIC_APP_URL as `http:${string}` | `https:${string}`
 
