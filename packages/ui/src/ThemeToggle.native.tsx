@@ -1,6 +1,6 @@
 // import { useState, useEffect } from "react";
 // import { Monitor, Sun, Moon } from "@tamagui/lucide-icons";
-// import type { ButtonProps } from "tamagui";
+import type { ButtonProps } from "tamagui";
 // import { Button } from "tamagui";
 // import { ThemeVariant } from 'app/utils/theme'
 // import { useAppTheme } from 'app/atoms/theme'
@@ -11,7 +11,7 @@
 //   light: Sun,
 //   dark: Moon
 // }
-// export const ThemeToggle = (props: ButtonProps) => {
+export const ThemeToggle = (props: ButtonProps) => {
 //   const [clientTheme, setClientTheme] = useState<ThemeVariant>("system")
 //   const [_, setAppTheme] = useAppTheme()
 //   const forceUpdate = useForceUpdate()
@@ -21,6 +21,7 @@
 //     forceUpdate()
 //   }, [clientTheme]);
 
+  return null
 //   return (
 //     <Button
 //       size="$4"
@@ -38,4 +39,4 @@
 //       {...props}
 //     />
 //   );
-// };
+};
