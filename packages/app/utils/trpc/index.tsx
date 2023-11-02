@@ -10,6 +10,7 @@ import { supabase } from '../supabase/client'
 import superjson from 'superjson'
 import { useState } from 'react'
 import { replaceLocalhost } from './localhost.native'
+import { env } from "../../../env.mjs";
 
 /**
  * A set of typesafe hooks for consuming your API.
@@ -17,7 +18,7 @@ import { replaceLocalhost } from './localhost.native'
 export const trpc = createTRPCReact<AppRouter>()
 
 const getApiUrl = () => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}`
+  const apiUrl = `${env.NEXT_PUBLIC_API_URL}`
   return replaceLocalhost(apiUrl)
 }
 

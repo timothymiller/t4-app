@@ -1,7 +1,10 @@
-const { withTamagui } = require('@tamagui/next-plugin')
-const { join } = require('path')
-const million = require('million/compiler')
-const withPWA = require("@ducanh2912/next-pwa").default({
+import { withTamagui } from '@tamagui/next-plugin'
+import { join } from 'path'
+import million from 'million/compiler'
+import withPWAInit from "@ducanh2912/next-pwa";
+import '../../packages/env.mjs'
+
+const withPWA = withPWAInit({
   dest: "public",
   disable: process.env.NODE_ENV === "development",
   register: true,
@@ -44,7 +47,7 @@ const plugins = [
   })
 ]
 
-module.exports = function () {
+const nextConfig = () => {
   /** @type {import('next').NextConfig} */
   let config = {
     // Uncomment if you want to use Cloudflare's Paid Image Resizing w/ Next/Image
@@ -116,3 +119,5 @@ module.exports = function () {
   }
   return config;
 }
+
+export default nextConfig

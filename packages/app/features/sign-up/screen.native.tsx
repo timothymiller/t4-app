@@ -9,6 +9,7 @@ import * as WebBrowser from 'expo-web-browser'
 import { getInitialURL } from 'expo-linking'
 import { Platform } from 'react-native'
 import { initiateAppleSignIn } from 'app/utils/supabase/appleAuth'
+import { env } from "../../../env.mjs";
 
 export const SignUpScreen = (): React.ReactNode => {
   const { replace } = useRouter()
@@ -48,7 +49,7 @@ export const SignUpScreen = (): React.ReactNode => {
     try {
       const redirectUri = (await getInitialURL()) || 't4://'
       const response = await WebBrowser.openAuthSessionAsync(
-        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/authorize?provider=${provider}&redirect_to=${redirectUri}`,
+        `${env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/authorize?provider=${provider}&redirect_to=${redirectUri}`,
         redirectUri
       )
       if (response.type === 'success') {
