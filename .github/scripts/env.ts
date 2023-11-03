@@ -16,8 +16,8 @@ const outputName = '.env.local'
 // Read the .env file
 const envFilePath = path.join(__dirname, '../../' + outputName)
 if (!fs.existsSync(envFilePath)) {
-  console.error('🛑 .env.local file does not exist')
-  process.exit(1)
+  console.log('🛑 .env.local file does not exist')
+  process.exit(0)
 }
 const envFileContent = fs.readFileSync(envFilePath, 'utf8')
 
