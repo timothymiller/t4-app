@@ -23,13 +23,12 @@
     "drizzle-valibot": "^0.1.1",
     "hono": "^3.9.1",
     "miniflare": "3.20231025.1",
-    "superjson": "^2.2.0",
-    "valibot": "^0.20.0"
+    "superjson": "1.13.3",
+    "valibot": "^0.20.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231025.0",
-    "bun-types": "^1.0.7",
-    "dotenv-cli": "^7.3.0",
+    "bun-types": "^1.0.8",
     "drizzle-kit": "^0.19.13",
     "eslint": "^8.52.0",
     "typescript": "^5.2.2",
