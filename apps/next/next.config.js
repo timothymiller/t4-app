@@ -1,6 +1,7 @@
 const { withTamagui } = require('@tamagui/next-plugin')
 const { join } = require('path')
 const million = require('million/compiler')
+const pattycake = require('pattycake');
 const withPWA = require("@ducanh2912/next-pwa").default({
   dest: "public",
   disable: process.env.NODE_ENV === "development",
@@ -22,6 +23,8 @@ const disableBrowserLogs =
 
 const enableMillionJS =
   boolVals[process.env.ENABLE_MILLION_JS] ?? process.env.NODE_ENV === 'production'
+
+const enablePattyCake = boolVals[process.env.ENABLE_PATTY_CAKE] ?? process.env.NODE_ENV === 'production'
 
 // Enabling causes FOUC on page refreshes
 const optimizeCss = false
@@ -112,7 +115,12 @@ module.exports = function () {
   }
 
   if (enableMillionJS) {
-    return million.next(config, millionConfig);
+    config = million.next(config, millionConfig);
   }
+
+  if (enablePattyCake) {
+    config = pattycake.next(config);
+  }
+
   return config;
 }

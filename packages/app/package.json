@@ -31,6 +31,6 @@
     "solito": "^4.1.3"
   },
   "devDependencies": {
-    "@types/react": "^18.2.33"
+    "@types/react": "^18.2.34"
   }
 }
