@@ -18,7 +18,7 @@
     "studio": "cd packages/api && bun studio",
     "native:prod": "cd apps/expo && bun dev:prod",
     "build": "cd packages/ui && tamagui-build",
-    "build:web": "cd apps/next && bun build",
+    "build:web": "cd apps/next && bun run build",
     "build:ios": "cd apps/expo && bun build:ios",
     "build:android": "cd apps/expo && bun build:android",
     "build:ios:preview": "cd apps/expo && bun build:ios:preview",
