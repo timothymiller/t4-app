@@ -46,7 +46,7 @@
     "pattycake": "^0.0.2",
     "prettier": "^3.0.3",
     "react-native-url-polyfill": "^2.0.0",
-    "ts-pattern": "^5.0.5",
+    
     "typescript": "^5.2.2",
     "workerd": "1.20231030.0"
   }
