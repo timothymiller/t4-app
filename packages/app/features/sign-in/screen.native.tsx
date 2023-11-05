@@ -2,14 +2,12 @@ import { YStack, useToastController } from '@t4/ui'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import { useRouter } from 'solito/router'
 import type { Provider } from '@supabase/supabase-js'
-import Constants from 'expo-constants'
-import { capitalizeWord } from 'app/utils/string'
-import { isExpoGo } from 'app/utils/flags'
 import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
 import * as WebBrowser from 'expo-web-browser'
 import { getInitialURL } from 'expo-linking'
 import { Platform } from 'react-native'
 import { initiateAppleSignIn } from 'app/utils/supabase/appleAuth'
+import { capitalizeWord } from '@t4/ui/src/libs/string'
 
 export const SignInScreen = (): React.ReactNode => {
   const { replace } = useRouter()
@@ -67,11 +65,9 @@ export const SignInScreen = (): React.ReactNode => {
               supabase.auth._notifyAllSubscribers('SIGNED_IN', session)
               replace('/')
             } else {
-              if (!isExpoGo) {
-                toast.show(capitalizeWord(provider) + ' sign in failed', {
-                  description: error?.message || 'Something went wrong, please try again.',
-                })
-              }
+              toast.show(capitalizeWord(provider) + ' sign in failed', {
+                description: error?.message || 'Something went wrong, please try again.',
+              })
               console.log('Supabase session error:', error)
             }
           })

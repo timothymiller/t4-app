@@ -2,9 +2,8 @@ import { YStack, useToastController } from '@t4/ui'
 import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import type { Provider } from '@supabase/supabase-js'
-import { capitalizeWord } from 'app/utils/string'
-import { isExpoGo } from 'app/utils/flags'
 import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
+import { capitalizeWord } from '@t4/ui/src/libs/string'
 
 export const SignUpScreen = (): React.ReactNode => {
   const { push } = useRouter()
@@ -25,11 +24,9 @@ export const SignUpScreen = (): React.ReactNode => {
           : {},
     })
     if (error) {
-      if (!isExpoGo) {
-        toast.show(capitalizeWord(provider) + ' sign up failed', {
-          description: error.message,
-        })
-      }
+      toast.show(capitalizeWord(provider) + ' sign up failed', {
+        description: error.message,
+      })
       return
     }
     push('/')
@@ -41,18 +38,14 @@ export const SignUpScreen = (): React.ReactNode => {
       password,
     })
     if (error) {
-      if (!isExpoGo) {
-        console.log('error', error)
-        toast.show('Sign up failed', {
-          message: error.message,
-        })
-      }
+      console.log('error', error)
+      toast.show('Sign up failed', {
+        message: error.message,
+      })
     } else if (data?.user) {
-      if (!isExpoGo) {
-        toast.show('Email Confirmation', {
-          message: 'Check your email ',
-        })
-      }
+      toast.show('Email Confirmation', {
+        message: 'Check your email ',
+      })
       push('/')
     }
   }

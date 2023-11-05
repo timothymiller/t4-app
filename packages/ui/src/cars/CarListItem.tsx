@@ -1,4 +1,4 @@
-import { formatNumber, formatPrice } from 'app/utils/number'
+import { formatNumber, formatPrice } from '@t4/ui/src/libs/number'
 import type { Car } from '@t4/api/src/db/schema'
 import { SolitoImage } from 'solito/image'
 import { Paragraph, YStack } from 'tamagui'

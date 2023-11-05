@@ -2,13 +2,12 @@ import { YStack, useToastController } from '@t4/ui'
 import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import type { Provider } from '@supabase/supabase-js'
-import { capitalizeWord } from 'app/utils/string'
-import { isExpoGo } from 'app/utils/flags'
 import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
 import * as WebBrowser from 'expo-web-browser'
 import { getInitialURL } from 'expo-linking'
 import { Platform } from 'react-native'
 import { initiateAppleSignIn } from 'app/utils/supabase/appleAuth'
+import { capitalizeWord } from '@t4/ui/src/libs/string'
 
 export const SignUpScreen = (): React.ReactNode => {
   const { replace } = useRouter()
@@ -67,11 +66,9 @@ export const SignUpScreen = (): React.ReactNode => {
               supabase.auth._notifyAllSubscribers('SIGNED_IN', session)
               replace('/')
             } else {
-              if (!isExpoGo) {
-                toast.show(capitalizeWord(provider) + ' sign in failed', {
-                  description: error?.message || 'Something went wrong, please try again.',
-                })
-              }
+              toast.show(capitalizeWord(provider) + ' sign in failed', {
+                description: error?.message || 'Something went wrong, please try again.',
+              })
               console.log('Supabase session error:', error)
             }
           })
@@ -101,18 +98,14 @@ export const SignUpScreen = (): React.ReactNode => {
       password,
     })
     if (error) {
-      if (!isExpoGo) {
-        console.log('error', error)
-        toast.show('Sign up failed', {
-          message: error.message,
-        })
-      }
+      console.log('error', error)
+      toast.show('Sign up failed', {
+        message: error.message,
+      })
     } else if (data?.user) {
-      if (!isExpoGo) {
-        toast.show('Email Confirmation', {
-          message: 'Check your email ',
-        })
-      }
+      toast.show('Email Confirmation', {
+        message: 'Check your email ',
+      })
       replace('/')
     }
   }
