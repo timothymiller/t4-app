@@ -1,5 +1,5 @@
 /**
- * This is a WIP. The goal is to have a single source of truth for all environment variables.
+ * TODO: This is a WIP. The goal is to have a single source of truth for all environment variables.
  * Different prefixes for public environments across Expo & Next.js currently block this.
  */
 
