@@ -1,7 +1,7 @@
 <p align="center">
   <a href="https://t4stack.com" target="_blank" rel="noopener noreferrer">
     <picture>
-      <img src="https://github.com/timothymiller/t4-app/blob/main/apps/next/public/t4-logo-large.png?raw=true" width="200" alt="Logo of Create T4 App">
+      <img src="https://github.com/timothymiller/t4-app/blob/master/apps/next/public/t4-logo-large.png?raw=true" width="200" alt="Logo of Create T4 App">
     </picture>
   </a>
 </p>
