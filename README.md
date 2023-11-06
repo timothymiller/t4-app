@@ -58,17 +58,31 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 
 - 🎨 [Tamagui](https://tamagui.dev)
 
-### 📡 Data Fetching
-
-- 🔄 [tRPC](https://trpc.io)
-- ⏲️ [Tanstack Query](https://tanstack.com/query/latest)
-
 ### 🔮 Frontend
 
 - 🔗 [Next.js](https://nextjs.org)
 - 📱 [Expo](https://expo.io)
 
-### 🧭 Navigation
+### 📡 Data Fetching
+
+- 🔄 [tRPC](https://trpc.io)
+- ⏲️ [Tanstack Query](https://tanstack.com/query/latest)
+- 🎂 [ts-pattern](https://github.com/gvergnaud/ts-pattern)
+  - Handle data fetching UI states
+
+### 📈 Performance Improvements
+
+- 💨 [Million.js](https://million.dev/)
+  - Virtual DOM replacement for React
+  - Achieve SolidJS-like performance with React
+- 🎂 [PattyCake](https://github.com/aidenybai/pattycake)
+  - Zero-runtime pattern matching with ts-pattern
+
+### ✅ Type Validation
+
+- 🤖 [Valibot](https://valibot.dev)
+
+### 🧭 Router
 
 - ☀️ [Solito](https://solito.dev)
 
@@ -148,6 +162,10 @@ bun create t4-app --tauri
 
 ## ❓ Why T4?
 
+T4 is the result of extensive research and testing to identify the best libraries for React Native and Web development. We've done the hard work for you, so you can focus on building amazing apps without worrying about performance bottlenecks.
+
+Whether you're developing a mobile app with React Native or a web app using React, T4 is the perfect choice. Our template is designed to seamlessly integrate with your existing projects, making it easy to enhance performance without starting from scratch.
+
 - Small learning curve
 - Instant feedback, rapid development
 - Universal across **React Native** & **React Web**
@@ -155,6 +173,7 @@ bun create t4-app --tauri
   - [Styling](https://tamagui.dev)
   - [Authentication](https://supabase.com)
   - [Navigation](https://solito.dev)
+  - [Type Safety](https://valibot.dev)
 - High code re-use
 - Low bundle size
 - Edge compatible
@@ -166,7 +185,7 @@ bun create t4-app --tauri
 ## 📦 What's Included
 
 - [Tamagui](https://tamagui.dev) - A UI kit for building beautiful and responsive user interfaces.
-- [Turborepo](https://turbo.build/) - A high performance build system for TypeScript, built in Rust.
+- [TanStack](https://tanstack.com/) - High-quality open-source software for React developers.
 - [tRPC](https://trpc.io) - A TypeScript framework for building end-to-end typesafe APIs.
 - [TypeScript](https://www.typescriptlang.org) - A typed superset of JavaScript that compiles to plain JavaScript.
 
@@ -176,9 +195,15 @@ The VSCode extension is optional but highly recommended. It provides a better de
 
 ## ✨ Features
 
+- ✅ 6 second package install time
+- ✅ 30 second backend deployments
+- ✅ 90 second frontend deployments
 - ✅ Tamagui UI kit across all platforms.
-- ✅ bun support
+- ✅ Bun support
 - ✅ Million.js Support
+- ✅ PattyCake Support
+- ✅ Valibot Support
+- ✅ Generate Valibot Type Guards from your Drizzle Schema
 - ✅ Supabase Auth
 - ✅ Uses Next.js for building web apps.
 - ✅ Uses Expo for building native mobile apps.
@@ -205,22 +230,18 @@ For help, discussion about best practices, or any other conversation that would 
 
 ## 🫶 Contributors
 
-We welcome contributions from anyone and everyone. Please read our [contributing guidelines](https://github.com/timothymiller/t4-app/blob/main/CONTRIBUTING.md) for more information on how to get started.
+We welcome contributions from anyone and everyone. Please read our [contributing guidelines](https://github.com/timothymiller/t4-app/blob/master/CONTRIBUTING.md) for more information on how to get started.
 
 ## 👏 Special Thanks
 
-- [Cloudflare Developers](https://twitter.com/CloudflareDev)
-- [Yusuke Wada](https://twitter.com/yusukebe) - Creator of Hono.js
 - [Nate Birdman](https://twitter.com/natebirdman) - Creator of Tamagui
-- [Fernando Rojo](https://twitter.com/fernandotherojo) - Creator of Solito
 - [Tanner Linsley](https://twitter.com/tannerlinsley) - Creator of TanStack
-- [Daishi Kato](https://twitter.com/dai_shi) Creator of Jotai
-- [Shopify Developers](https://twitter.com/ShopifyDevs)
 - [Drizzle Developers](https://twitter.com/DrizzleOrm)
-- [Tim Neutkens](https://twitter.com/timneutkens) - Co-author of Next.js
-- [Jared Palmer](https://twitter.com/jaredpalmer) - Creator of Turborepo
-- [Expo Developers](https://twitter.com/expo) - Office hours
+- [Yusuke Wada](https://twitter.com/yusukebe) - Creator of Hono.js
+- [Fernando Rojo](https://twitter.com/fernandotherojo) - Creator of Solito
+- [Daishi Kato](https://twitter.com/dai_shi) Creator of Jotai
+- [Expo Developers](https://twitter.com/expo) - Insightful office hours
 
 ## ⚖️ License
 
-**Create T4 App** is licensed under the [MIT License](https://github.com/timothymiller/t4-app/blob/main/LICENSE).
+**Create T4 App** is licensed under the [MIT License](https://github.com/timothymiller/t4-app/blob/master/LICENSE).
