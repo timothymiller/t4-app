@@ -68,7 +68,9 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 - 🔄 [tRPC](https://trpc.io)
 - ⏲️ [Tanstack Query](https://tanstack.com/query/latest)
 - 🎂 [ts-pattern](https://github.com/gvergnaud/ts-pattern)
-  - Handle data fetching UI states
+  - Handle data fetching UI states like this:
+ ![tanstack-ts-pattern](https://github.com/timothymiller/t4-app/assets/46549361/f022b20d-840d-48a9-83b8-c52d5f037880)
+ 
 
 ### 📈 Performance Improvements
 
