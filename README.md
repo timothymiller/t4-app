@@ -166,6 +166,12 @@ T4 is the result of extensive research and testing to identify the best librarie
 
 Whether you're developing a mobile app with React Native or a web app using React, T4 is the perfect choice. Our template is designed to seamlessly integrate with your existing projects, making it easy to enhance performance without starting from scratch.
 
+### 🚅 Performance
+
+- 👉 6 second package install time
+- 👉 30 second backend deployments
+- 👉 90 second frontend deployments
+
 - Small learning curve
 - Instant feedback, rapid development
 - Universal across **React Native** & **React Web**
@@ -180,7 +186,6 @@ Whether you're developing a mobile app with React Native or a web app using Reac
 - Fast startup time
 - Simple setup
 - Allows for platform-specific code when needed.
-- Type-safety
 
 ## 📦 What's Included
 
