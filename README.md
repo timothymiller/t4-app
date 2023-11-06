@@ -243,6 +243,7 @@ We welcome contributions from anyone and everyone. Please read our [contributing
 ## 👏 Special Thanks
 
 - [Nate Birdman](https://twitter.com/natebirdman) - Creator of Tamagui
+- [Aiden Bai](https://aiden.mov/) - Creator of Million.js and PattyCake
 - [Tanner Linsley](https://twitter.com/tannerlinsley) - Creator of TanStack
 - [Drizzle Developers](https://twitter.com/DrizzleOrm)
 - [Yusuke Wada](https://twitter.com/yusukebe) - Creator of Hono.js
