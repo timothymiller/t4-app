@@ -26,8 +26,9 @@
     "submit:android": "cd apps/expo && eas submit --platform android --path ./app-release.aab",
     "check-deps": "check-dependency-version-consistency .",
     "check-types": "tsc --noEmit",
+    "format": "bunx @biomejs/biome format --write ./packages ./apps",
     "fix": "manypkg fix",
-    "postinstall": "bun run build && bun ./.github/scripts/env.ts && bun check-deps",
+    "postinstall": "bun run build && bun ./.github/scripts/env.ts && bun check-deps && bun format",
     "clean": "git clean -xdf node_modules && rm bun.lockb",
     "clean:all": "npm-run-all clean"
   },
