@@ -24,7 +24,7 @@ const envFileContent = fs.readFileSync(envFilePath, 'utf8')
 /**
  * Generate Expo .env file content
  */
-let expoOutputPath = path.join(__dirname, '../../apps/expo', outputName)
+const expoOutputPath = path.join(__dirname, '../../apps/expo', outputName)
 const expoFileContent = envFileContent
   .split('\n')
   .map((line) => {
