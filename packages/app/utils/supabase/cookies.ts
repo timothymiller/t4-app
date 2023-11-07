@@ -1,7 +1,6 @@
 import { DEFAULT_COOKIE_OPTIONS } from '@supabase/auth-helpers-shared'
 
 export function getCookieValue(cookieName: string): string | undefined {
-  // @ts-ignore
   const cookieString = document.cookie
   const cookieNameLength = cookieName.length
   const cookies = cookieString.split(';')
