@@ -26,8 +26,8 @@ export function getCookieValue(cookieName: string): string | undefined {
 export const AUTH_TOKEN_COOKIE_NAME = 'auth-token'
 
 export const secureCookieOptions = {
-  name: AUTH_TOKEN_COOKIE_NAME,
   ...DEFAULT_COOKIE_OPTIONS,
+  name: AUTH_TOKEN_COOKIE_NAME,
   sameSite: 'Strict',
   secure: true,
   // domain: 'localhost',
