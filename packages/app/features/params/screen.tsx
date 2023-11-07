@@ -12,11 +12,11 @@ export const ParamsScreen = (): React.ReactNode => {
   })
 
   return (
-    <YStack flex={1} justifyContent="center" alignItems="center" space>
-      <H2 textAlign="center" space="$4">
+    <YStack flex={1} justifyContent='center' alignItems='center' space>
+      <H2 textAlign='center' space='$4'>
         This value is passed via params
       </H2>
-      <Paragraph textAlign="center" fontWeight="700">{`User ID: ${id}`}</Paragraph>
+      <Paragraph textAlign='center' fontWeight='700'>{`User ID: ${id}`}</Paragraph>
       <Button {...link} icon={ChevronLeft}>
         Go Home
       </Button>

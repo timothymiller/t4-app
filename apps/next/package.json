@@ -30,7 +30,6 @@
   "devDependencies": {
     "@tamagui/next-plugin": "1.75.9",
     "@types/react": "^18.2.34",
-    "eslint-config-next": "^14.0.1",
     "vercel": "^32.5.0"
   }
 }

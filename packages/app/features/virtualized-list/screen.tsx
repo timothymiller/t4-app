@@ -11,8 +11,8 @@ export const VirtualizedListScreen = (): React.ReactNode => {
   const carsListLayout = match(carsList)
     .with(error, () => <CarListError message={carsList.failureReason?.message} />)
     .with(loading, () => (
-      <YStack fullscreen f={1} jc="center" ai="center">
-        <Paragraph pb="$3">Loading...</Paragraph>
+      <YStack fullscreen f={1} jc='center' ai='center'>
+        <Paragraph pb='$3'>Loading...</Paragraph>
         <Spinner />
       </YStack>
     ))

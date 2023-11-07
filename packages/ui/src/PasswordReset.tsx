@@ -11,37 +11,37 @@ export const PasswordResetComponent: React.FC<Props> = ({ type, handleWithPress 
 
   return (
     <YStack
-      borderRadius="$10"
+      borderRadius='$10'
       space
-      paddingHorizontal="$7"
-      paddingVertical="$6"
+      paddingHorizontal='$7'
+      paddingVertical='$6'
       width={350}
       shadowColor={'#00000020'}
       shadowRadius={26}
       shadowOffset={{ width: 0, height: 4 }}
-      backgroundColor="$background"
+      backgroundColor='$background'
     >
-      <Paragraph size="$5" fontWeight={'700'} opacity={0.8} marginBottom="$1">
+      <Paragraph size='$5' fontWeight={'700'} opacity={0.8} marginBottom='$1'>
         {type == 'email' ? 'Reset your password' : 'Change your password'}
       </Paragraph>
 
       {/* email or password input */}
       {type === 'email' ? (
         <Input
-          autoCapitalize="none"
-          placeholder="Email"
+          autoCapitalize='none'
+          placeholder='Email'
           onChangeText={(text) => {
             setEmailOrPassword(text)
           }}
         />
       ) : (
         <Input
-          autoCapitalize="none"
-          placeholder="New Password"
+          autoCapitalize='none'
+          placeholder='New Password'
           onChangeText={(text) => {
             setEmailOrPassword(text)
           }}
-          textContentType="password"
+          textContentType='password'
           secureTextEntry
         />
       )}

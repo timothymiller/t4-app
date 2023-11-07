@@ -26,7 +26,7 @@ export default class Document extends NextDocument {
     const styles = [
       getStyleElement(),
       <style
-        key="tamagui-css"
+        key='tamagui-css'
         dangerouslySetInnerHTML={{
           __html: Tamagui.getCSS({
             exclude: process.env.NODE_ENV === 'development' ? null : 'design-system',
@@ -42,7 +42,7 @@ export default class Document extends NextDocument {
     return (
       <Html>
         <Head>
-          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+          <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
         </Head>
         <body>
           <Main />

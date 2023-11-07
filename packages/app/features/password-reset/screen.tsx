@@ -23,8 +23,8 @@ export function PasswordResetScreen() {
   }
 
   return (
-    <YStack flex={1} justifyContent="center" alignItems="center" space>
-      <PasswordResetComponent type="email" handleWithPress={handleEmailWithPress} />
+    <YStack flex={1} justifyContent='center' alignItems='center' space>
+      <PasswordResetComponent type='email' handleWithPress={handleEmailWithPress} />
     </YStack>
   )
 }

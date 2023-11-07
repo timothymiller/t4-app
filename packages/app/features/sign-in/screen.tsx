@@ -48,9 +48,9 @@ export const SignInScreen = (): React.ReactNode => {
   }
 
   return (
-    <YStack flex={1} justifyContent="center" alignItems="center" space>
+    <YStack flex={1} justifyContent='center' alignItems='center' space>
       <SignUpSignInComponent
-        type="sign-in"
+        type='sign-in'
         handleOAuthWithPress={handleOAuthSignInWithPress}
         handleEmailWithPress={handleEmailSignInWithPress}
       />

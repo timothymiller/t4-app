@@ -18,7 +18,7 @@ export const NativeToast = (): React.ReactNode => {
       y={0}
       opacity={1}
       scale={1}
-      animation="quick"
+      animation='quick'
     >
       <YStack>
         <Toast.Title>{currentToast.title}</Toast.Title>

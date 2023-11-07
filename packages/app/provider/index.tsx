@@ -20,7 +20,7 @@ export function Provider({
       <TamaguiProvider>
         <SafeAreaProvider>
           <SolitoImageProvider>
-            <ToastProvider swipeDirection="horizontal" duration={6000} native={['mobile']}>
+            <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
               <AuthProvider initialSession={initialSession}>
                 <TRPCProvider>{children}</TRPCProvider>
                 <CustomToast />

@@ -20,7 +20,7 @@ export function DataFetchingScreen() {
     .otherwise(() => <Paragraph>{protectedRoute.failureReason?.message}</Paragraph>)
 
   return (
-    <YStack f={1} jc="center" ai="center" p="$4" space="$4">
+    <YStack f={1} jc='center' ai='center' p='$4' space='$4'>
       <H1>Data Fetching</H1>
       <H2>Public Route</H2>
       {helloWorldLayout}

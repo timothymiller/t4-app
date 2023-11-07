@@ -30,7 +30,6 @@
     "@cloudflare/workers-types": "^4.20231025.0",
     "bun-types": "^1.0.8",
     "drizzle-kit": "^0.19.13",
-    "eslint": "^8.52.0",
     "typescript": "^5.2.2",
     "wrangler": "^3.15.0"
   }
