@@ -3,17 +3,18 @@
     "albbus.t4-app-tools",
     "wix.vscode-import-cost",
     "unifiedjs.vscode-mdx",
-    "RobbOwen.synthwave-vscode",
+    "robbowen.synthwave-vscode",
     "wayou.vscode-todo-highlight",
     "steoates.autoimport",
-    "IronGeek.vscode-env",
-    "DavidAnson.vscode-markdownlint",
+    "irongeek.vscode-env",
+    "davidanson.vscode-markdownlint",
     "waderyan.gitblame",
-    "PeterSchmalfeldt.explorer-exclude",
+    "peterschmalfeldt.explorer-exclude",
     "wilsonsio.color-vision",
     "tamasfe.even-better-toml",
     "formulahendry.auto-rename-tag",
     "expo.vscode-expo-tools",
-    "Postman.postman-for-vscode"
+    "postman.postman-for-vscode",
+    "biomejs.biome"
   ]
 }
