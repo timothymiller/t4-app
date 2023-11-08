@@ -1,7 +1,6 @@
 {
   "recommendations": [
     "albbus.t4-app-tools",
-    "wix.vscode-import-cost",
     "unifiedjs.vscode-mdx",
     "robbowen.synthwave-vscode",
     "wayou.vscode-todo-highlight",
@@ -12,9 +11,7 @@
     "peterschmalfeldt.explorer-exclude",
     "wilsonsio.color-vision",
     "tamasfe.even-better-toml",
-    "formulahendry.auto-rename-tag",
     "expo.vscode-expo-tools",
-    "postman.postman-for-vscode",
     "biomejs.biome"
   ]
 }
