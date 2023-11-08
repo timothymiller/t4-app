@@ -8,6 +8,7 @@ import '@tamagui/font-inter/css/700.css'
 import type { Session } from '@supabase/supabase-js'
 import { Provider } from 'app/provider'
 import { trpc } from 'app/utils/trpc/index.web'
+import { DefaultSeo } from 'next-seo'
 import Head from 'next/head'
 import type { SolitoAppProps } from 'solito'
 
@@ -17,7 +18,6 @@ if (process.env.NODE_ENV === 'production') {
 
 const title = `${process.env.NEXT_PUBLIC_METADATA_NAME}`
 const description = `${process.env.NEXT_PUBLIC_METADATA_DESCRIPTION}`
-const url = `${process.env.NEXT_PUBLIC_APP_URL}`
 
 const T4App = ({ Component, pageProps }: SolitoAppProps<{ initialSession: Session | null }>) => {
   return (
@@ -34,8 +34,9 @@ export default trpc.withTRPC(T4App)
 
 const Metadata = () => (
   <Head>
+    <DefaultSeo title={title} description={description} />
     <meta name='viewport' content='width=device-width,initial-scale=1' />
-    {/* Next Tamagui CSS fix */}
+    {/* Ensure a minimum width of 100% */}
     <style>
       {`
         body, #root, #__next {
@@ -43,27 +44,10 @@ const Metadata = () => (
         }
       `}
     </style>
-    {/* Metadata */}
-    <title>{title}</title>
-    <meta name='description' content={description} />
+    {/* Favicons */}
     <link rel='icon' href='/pwa/icons/favicon.ico' />
     <link rel='shortcut icon' href='/pwa/icons/favicon.ico' />
-    {/* <link rel="mask-icon" href="/pwa/icons/mask-icon.svg" color="#FFFFFF" /> */}
     <meta name='theme-color' content='#FFFFFF' />
-    {/* Social Media Cards  */}
-    <link rel='manifest' href='/manifest.json' />
-    <meta name='twitter:card' content='summary' />
-    <meta name='twitter:url' content={url} />
-    <meta name='twitter:title' content={title} />
-    <meta name='twitter:description' content={description} />
-    {/* <meta name="twitter:image" content="/pwa/icons/twitter.png" /> */}
-    <meta name='twitter:creator' content='@ogtimothymiller' />
-    <meta property='og:type' content='website' />
-    <meta property='og:title' content={title} />
-    <meta property='og:description' content={description} />
-    <meta property='og:site_name' content={title} />
-    <meta property='og:url' content={url} />
-    {/* <meta property="og:image" content="/pwa/icons/og.png" /> */}
     {/* PWA App Icons for iOS */}
     <link rel='apple-touch-icon' href='/pwa/icons/touch-icon-iphone.png' />
     <link rel='apple-touch-icon' sizes='152x152' href='/pwa/icons/touch-icon-ipad.png' />
