@@ -1,5 +1,5 @@
-import Head from 'next/head'
 import { PasswordResetScreen } from 'app/features/password-reset/screen'
+import Head from 'next/head'
 
 export default function Page() {
   return (

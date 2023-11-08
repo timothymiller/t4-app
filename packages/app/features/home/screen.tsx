@@ -11,16 +11,16 @@ import {
   YStack,
   useToastController,
 } from '@t4/ui'
+import { ThemeToggle } from '@t4/ui/src/ThemeToggle'
 import { ChevronDown } from '@tamagui/lucide-icons'
-import React, { useState } from 'react'
-import { Linking } from 'react-native'
-import { useLink } from 'solito/link'
-import { useSheetOpen } from '../../atoms/sheet'
-import { SolitoImage } from 'solito/image'
-import { trpc } from 'app/utils/trpc'
 import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
 import { useUser } from 'app/utils/supabase/hooks/useUser'
-import { ThemeToggle } from '@t4/ui/src/ThemeToggle'
+import { trpc } from 'app/utils/trpc'
+import React, { useState } from 'react'
+import { Linking } from 'react-native'
+import { SolitoImage } from 'solito/image'
+import { useLink } from 'solito/link'
+import { useSheetOpen } from '../../atoms/sheet'
 
 export function HomeScreen() {
   const utils = trpc.useContext()

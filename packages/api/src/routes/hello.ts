@@ -1,5 +1,5 @@
 import { parse, string } from 'valibot'
-import { router, publicProcedure } from '../trpc'
+import { publicProcedure, router } from '../trpc'
 
 export const helloRouter = router({
   world: publicProcedure

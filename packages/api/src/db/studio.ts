@@ -1,9 +1,9 @@
-import * as schema from './schema'
-import studio, { Setup } from '@drizzle-team/studio'
-import { drizzle } from 'drizzle-orm/bun-sqlite'
 import { Database } from 'bun:sqlite'
 import { readdir } from 'node:fs/promises'
 import { join } from 'node:path'
+import studio, { Setup } from '@drizzle-team/studio'
+import { drizzle } from 'drizzle-orm/bun-sqlite'
+import * as schema from './schema'
 
 async function getSqliteFile() {
   try {

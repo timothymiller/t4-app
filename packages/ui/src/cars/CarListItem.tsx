@@ -1,5 +1,5 @@
-import { formatNumber, formatPrice } from '@t4/ui/src/libs/number'
 import type { Car } from '@t4/api/src/db/schema'
+import { formatNumber, formatPrice } from '@t4/ui/src/libs/number'
 import { SolitoImage } from 'solito/image'
 import { Paragraph, YStack } from 'tamagui'
 
@@ -17,7 +17,7 @@ export const CarListItem = (item: Car): React.ReactElement => {
       />
       <YStack>
         <Paragraph paddingTop='$2' paddingLeft='$3' paddingBottom='$1' fontSize={16}>
-          {item.make + ' ' + item.model}
+          {`${item.make} ${item.model}`}
         </Paragraph>
         <Paragraph paddingLeft='$3' fontSize={16} opacity={0.6}>
           {item.color} - {item.year} - {formatNumber(item.mileage)} miles -{' '}

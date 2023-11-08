@@ -1,6 +1,6 @@
 import { FlashList } from '@shopify/flash-list'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useCallback } from 'react'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 interface Props {
   data: any[]

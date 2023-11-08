@@ -5,7 +5,7 @@
 	},
 	"files": {
     "ignoreUnknown": true,
-		"ignore": ["**/node_modules/**", "**/dist/**", "**/build/**", "**/ios/**", "**/.git/**", "**/.vscode/**", "**/.android/**", "**/.DS_Store/**", "**/Thumbs.db/**", "**/.tamagui*", "**/.next*"]
+		"ignore": ["**/.wrangler/**", "**/tamagui.css", "**/workbox*.js", "**/service-worker.js", "**/fallback*.js", "**/node_modules/**", "**/dist/**", "**/build/**", "**/ios/**", "**/.git/**", "**/.vscode/**", "**/.android/**", "**/.DS_Store/**", "**/Thumbs.db/**", "**/.tamagui*", "**/.next*"]
 	},
 	"linter": {
 		"enabled": true,
@@ -13,6 +13,13 @@
 			"recommended": true,
 			"style": {
 				"useTemplate": "warn"
+			},
+			"suspicious": {
+				"noEmptyInterface": "off",
+				"noExplicitAny": "off"
+			},
+			"security": {
+				"noDangerouslySetInnerHtml": "off"
 			}
 		}
 	},

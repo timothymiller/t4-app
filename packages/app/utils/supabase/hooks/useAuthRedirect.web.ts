@@ -1,8 +1,8 @@
 import { AuthChangeEvent } from '@supabase/supabase-js'
 import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
+import { useRouter as useNextRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useRouter } from 'solito/router'
-import { useRouter as useNextRouter } from 'next/router'
 
 export const useAuthRedirect = () => {
   const supabase = useSupabase()

@@ -1,5 +1,5 @@
 import { CarTable } from '../db/schema'
-import { router, publicProcedure } from '../trpc'
+import { publicProcedure, router } from '../trpc'
 
 export const carsRouter = router({
   all: publicProcedure.query(async ({ ctx }) => {

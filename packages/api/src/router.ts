@@ -1,8 +1,8 @@
-import { router } from './trpc'
-import { helloRouter } from './routes/hello'
 import { authRouter } from './routes/auth'
-import { userRouter } from './routes/user'
 import { carsRouter } from './routes/cars'
+import { helloRouter } from './routes/hello'
+import { userRouter } from './routes/user'
+import { router } from './trpc'
 
 export const appRouter = router({
   hello: helloRouter,

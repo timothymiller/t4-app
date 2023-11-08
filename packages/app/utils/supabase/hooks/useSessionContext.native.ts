@@ -1,5 +1,5 @@
-import { atom, useAtom } from 'jotai'
 import type { Session } from '@supabase/supabase-js'
+import { atom, useAtom } from 'jotai'
 
 export const useSessionContext = () => {
   const [session] = useSession()

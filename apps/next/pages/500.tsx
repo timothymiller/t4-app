@@ -1,8 +1,8 @@
 import { Anchor, Button, H1, Paragraph, XStack, YStack } from '@t4/ui'
+import { RotateCw } from '@tamagui/lucide-icons'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { SolitoImage } from 'solito/image'
-import { RotateCw } from '@tamagui/lucide-icons'
 
 const customerCareEmail = process.env.NEXT_PUBLIC_CUSTOMER_CARE_EMAIL
 
@@ -20,7 +20,7 @@ export default function Page() {
         <Paragraph maxWidth={500}>
           Your changes were saved, but we could not connect to the server due to a technical issue
           on our end. Please try connecting again. If the issue keeps happening,{' '}
-          <Anchor href={'mailto:' + customerCareEmail} target='_blank' rel='noreferrer'>
+          <Anchor href={`mailto:${customerCareEmail}`} target='_blank' rel='noreferrer'>
             contact Customer Care
           </Anchor>
           .

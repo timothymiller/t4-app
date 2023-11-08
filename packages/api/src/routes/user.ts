@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm'
-import { UserTable, UserSchema, type User } from '../db/schema'
-import { router, protectedProcedure } from '../trpc'
 import { parse } from 'valibot'
+import { type User, UserSchema, UserTable } from '../db/schema'
+import { protectedProcedure, router } from '../trpc'
 
 export const userRouter = router({
   current: protectedProcedure.query(async ({ ctx }) => {

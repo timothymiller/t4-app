@@ -1,8 +1,8 @@
 import { type inferAsyncReturnType } from '@trpc/server'
 import { type FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
+import jwt from '@tsndr/cloudflare-worker-jwt'
 import { DrizzleD1Database } from 'drizzle-orm/d1'
 import { createDb } from './db/client'
-import jwt from '@tsndr/cloudflare-worker-jwt'
 
 interface User {
   id: string

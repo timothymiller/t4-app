@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { YStack, Paragraph, Button, Input } from 'tamagui'
+import { Button, Input, Paragraph, YStack } from 'tamagui'
 
 interface Props {
   type: 'email' | 'password'
@@ -22,7 +22,7 @@ export const PasswordResetComponent: React.FC<Props> = ({ type, handleWithPress 
       backgroundColor='$background'
     >
       <Paragraph size='$5' fontWeight={'700'} opacity={0.8} marginBottom='$1'>
-        {type == 'email' ? 'Reset your password' : 'Change your password'}
+        {type === 'email' ? 'Reset your password' : 'Change your password'}
       </Paragraph>
 
       {/* email or password input */}
@@ -57,7 +57,7 @@ export const PasswordResetComponent: React.FC<Props> = ({ type, handleWithPress 
         onHoverOut={() => {}}
         focusStyle={{ scale: 0.975 }}
       >
-        {type == 'email' ? 'Reset Password' : 'Change Password'}
+        {type === 'email' ? 'Reset Password' : 'Change Password'}
       </Button>
     </YStack>
   )

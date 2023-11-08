@@ -1,6 +1,6 @@
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { useRef } from 'react'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 interface Props {
   data: any[]
@@ -24,7 +24,7 @@ export const VirtualList = ({ data, renderItem, itemHeight }: Props): React.Reac
       style={{
         paddingTop: top,
         paddingBottom: bottom,
-        height: `100%`,
+        height: '100%',
         overflow: 'auto', // Make it scroll!
       }}
     >

@@ -2,7 +2,7 @@ import { AuthChangeEvent, Session } from '@supabase/supabase-js'
 import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
 import { useEffect } from 'react'
 import { useRouter } from 'solito/router'
-import { useSession, useIsLoadingSession } from './useSessionContext.native'
+import { useIsLoadingSession, useSession } from './useSessionContext.native'
 
 export const useAuthRedirect = () => {
   const [, setSession] = useSession()
@@ -26,5 +26,5 @@ export const useAuthRedirect = () => {
     return () => {
       signOutListener.data.subscription.unsubscribe()
     }
-  }, [supabase, router])
+  }, [supabase, router, setSession, setLoading])
 }

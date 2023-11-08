@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { Monitor, Moon, Sun } from '@tamagui/lucide-icons'
 import { useThemeSetting } from '@tamagui/next-theme'
-import { Monitor, Sun, Moon } from '@tamagui/lucide-icons'
+import { useState } from 'react'
 import type { ButtonProps } from 'tamagui'
 import { Button, useIsomorphicLayoutEffect } from 'tamagui'
 

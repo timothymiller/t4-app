@@ -1,13 +1,13 @@
-import { YStack, useToastController } from '@t4/ui'
-import { useRouter } from 'solito/router'
-import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import type { Provider } from '@supabase/supabase-js'
-import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
-import * as WebBrowser from 'expo-web-browser'
-import { getInitialURL } from 'expo-linking'
-import { Platform } from 'react-native'
-import { initiateAppleSignIn } from 'app/utils/supabase/appleAuth'
+import { YStack, useToastController } from '@t4/ui'
 import { capitalizeWord } from '@t4/ui/src/libs/string'
+import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
+import { initiateAppleSignIn } from 'app/utils/supabase/appleAuth'
+import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
+import { getInitialURL } from 'expo-linking'
+import * as WebBrowser from 'expo-web-browser'
+import { Platform } from 'react-native'
+import { useRouter } from 'solito/router'
 
 export const SignUpScreen = (): React.ReactNode => {
   const { replace } = useRouter()
@@ -66,7 +66,7 @@ export const SignUpScreen = (): React.ReactNode => {
               supabase.auth._notifyAllSubscribers('SIGNED_IN', session)
               replace('/')
             } else {
-              toast.show(capitalizeWord(provider) + ' sign in failed', {
+              toast.show(`${capitalizeWord(provider)} sign in failed`, {
                 description: error?.message || 'Something went wrong, please try again.',
               })
               console.log('Supabase session error:', error)
@@ -74,7 +74,7 @@ export const SignUpScreen = (): React.ReactNode => {
           })
       }
     } catch (error) {
-      toast.show(capitalizeWord(provider) + ' sign in failed', {
+      toast.show(`${capitalizeWord(provider)} sign in failed`, {
         description: 'Something went wrong, please try again.',
       })
     } finally {

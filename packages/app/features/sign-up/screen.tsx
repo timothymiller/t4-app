@@ -1,9 +1,9 @@
-import { YStack, useToastController } from '@t4/ui'
-import { useRouter } from 'solito/router'
-import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import type { Provider } from '@supabase/supabase-js'
-import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
+import { YStack, useToastController } from '@t4/ui'
 import { capitalizeWord } from '@t4/ui/src/libs/string'
+import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
+import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
+import { useRouter } from 'solito/router'
 
 export const SignUpScreen = (): React.ReactNode => {
   const { push } = useRouter()
@@ -24,7 +24,7 @@ export const SignUpScreen = (): React.ReactNode => {
           : {},
     })
     if (error) {
-      toast.show(capitalizeWord(provider) + ' sign up failed', {
+      toast.show(`${capitalizeWord(provider)} sign up failed`, {
         description: error.message,
       })
       return

@@ -1,4 +1,4 @@
-import { styled, YStack, type TamaguiComponent } from 'tamagui'
+import { type TamaguiComponent, YStack, styled } from 'tamagui'
 
 export const MyComponent: TamaguiComponent = styled(YStack, {
   name: 'MyComponent',
