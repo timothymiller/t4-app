@@ -5,7 +5,7 @@
 	},
 	"files": {
     "ignoreUnknown": true,
-		"ignore": ["**/.wrangler/**", "**/tamagui.css", "**/workbox*.js", "**/service-worker.js", "**/fallback*.js", "**/node_modules/**", "**/dist/**", "**/build/**", "**/ios/**", "**/.git/**", "**/.vscode/**", "**/.android/**", "**/.DS_Store/**", "**/Thumbs.db/**", "**/.tamagui*", "**/.next*"]
+		"ignore": ["**/.wrangler/**", "**/tamagui.css", "**/workbox*.js", "**/sw*.js", "**/service-worker.js", "**/fallback*.js", "**/node_modules/**", "**/dist/**", "**/build/**", "**/ios/**", "**/.git/**", "**/.vscode/**", "**/.android/**", "**/.DS_Store/**", "**/Thumbs.db/**", "**/.tamagui*", "**/.next*"]
 	},
 	"linter": {
 		"enabled": true,
