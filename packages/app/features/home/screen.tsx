@@ -50,7 +50,7 @@ export function HomeScreen() {
 
   return (
     <ScrollView>
-      <YStack flex={1} justifyContent='center' alignItems='center' padding='$4' space='$4'>
+      <YStack flex={1} jc='center' ai='center' p='$4' space='$4'>
         <SolitoImage src='/t4-logo.png' width={128} height={128} alt='T4 Logo' />
         <H1 textAlign='center'>👋 Hello, T4 App</H1>
         <Separator />

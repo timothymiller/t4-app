@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@tamagui/next-plugin": "1.75.9",
-    "@types/react": "^18.2.34",
+    "@types/react": "^18.2.37",
     "vercel": "^32.5.0"
   }
 }

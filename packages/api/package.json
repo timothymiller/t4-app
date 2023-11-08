@@ -17,18 +17,18 @@
   },
   "dependencies": {
     "@hono/trpc-server": "^0.1.0",
-    "@trpc/server": "^10.43.0",
+    "@trpc/server": "^10.43.1",
     "@tsndr/cloudflare-worker-jwt": "^2.2.5",
     "drizzle-orm": "^0.28.6",
     "drizzle-valibot": "^0.1.1",
-    "hono": "^3.9.1",
+    "hono": "^3.9.2",
     "miniflare": "3.20231025.1",
     "superjson": "1.13.3",
     "valibot": "^0.20.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231025.0",
-    "bun-types": "^1.0.8",
+    "bun-types": "^1.0.10",
     "drizzle-kit": "^0.19.13",
     "typescript": "^5.2.2",
     "wrangler": "^3.15.0"

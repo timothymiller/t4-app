@@ -61,6 +61,9 @@
   "editor.defaultFormatter": "biomejs.biome",
   "[typescriptreact]": {
     "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
   }
   // Turn this on if you want to debug the T4 App Tools Extension
   // "terminal.integrated.defaultProfile.windows": null
