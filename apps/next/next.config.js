@@ -24,8 +24,9 @@ const disableBrowserLogs =
 const enableMillionJS =
   boolVals[process.env.ENABLE_MILLION_JS] ?? process.env.NODE_ENV === 'production'
 
-const enablePattyCake =
-  boolVals[process.env.ENABLE_PATTY_CAKE] ?? process.env.NODE_ENV === 'production'
+// Temporarily disabled, produces chatty logs
+const enablePattyCake = false
+// boolVals[process.env.ENABLE_PATTY_CAKE] ?? process.env.NODE_ENV === 'production'
 
 // Enabling causes FOUC on page refreshes
 const optimizeCss = false
@@ -87,6 +88,7 @@ module.exports = function () {
        - The `/app` in this starter has the same routes as the `/pages` directory. You should probably remove `/pages` after enabling this.
       */
       optimizeCss,
+      webpackBuildWorker: true,
       forceSwcTransforms: true,
       scrollRestoration: true,
       swcPlugins: [
