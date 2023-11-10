@@ -18,9 +18,9 @@
     "@tsndr/cloudflare-worker-jwt": "^2.2.5",
     "app": "*",
     "million": "2.6.4",
-    "next": "14.0.1",
+    "next": "14.0.2",
     "next-seo": "^6.4.0",
-    "next-superjson-plugin": "^0.5.9",
+    "next-superjson-plugin": "^0.5.10",
     "pattycake": "^0.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -31,6 +31,6 @@
   "devDependencies": {
     "@tamagui/next-plugin": "1.75.9",
     "@types/react": "^18.2.37",
-    "vercel": "^32.5.0"
+    "vercel": "^32.5.3"
   }
 }
