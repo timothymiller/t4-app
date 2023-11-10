@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm'
 import { parse } from 'valibot'
-import { insertUserSchema, UserTable } from '../db/schema'
+import { UserTable, insertUserSchema } from '../db/schema'
 import { protectedProcedure, router } from '../trpc'
 
 export const userRouter = router({
