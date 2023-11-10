@@ -103,7 +103,7 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 
 ### 🔒 Authentication
 
-- 🔑 [Supabase](https://supabase.com/auth)
+- 🔑 [Supertokens](https://supertokens.com/)
 
 ## 📖 Background
 
@@ -180,7 +180,7 @@ Whether you're developing a mobile app with React Native or a web app using Reac
 - Universal across **React Native** & **React Web**
   - [Data fetching](https://tanstack.com/query/latest)
   - [Styling](https://tamagui.dev)
-  - [Authentication](https://supabase.com)
+  - [Authentication](https://supertokens.com/)
   - [Navigation](https://solito.dev)
   - [Type Safety](https://valibot.dev)
 - High code re-use
@@ -212,7 +212,7 @@ The VSCode extension is optional but highly recommended. It provides a better de
 - ✅ PattyCake Support
 - ✅ Valibot Support
 - ✅ Generate Valibot Type Guards from your Drizzle Schema
-- ✅ Supabase Auth
+- ✅ Supertokens Auth
 - ✅ Uses Next.js for building web apps.
 - ✅ Uses Expo for building native mobile apps.
 - ✅ PWA by default for native desktop support. No Electron required.
