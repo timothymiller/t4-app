@@ -34,6 +34,7 @@ export const TRPCProvider: React.FC<{
             const token = getSessionToken()
             return {
               Authorization: token ? `Bearer ${token}` : undefined,
+              'x-enable-tokens': 'true',
             }
           },
           url: `${getApiUrl()}/trpc`,

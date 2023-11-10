@@ -1,18 +1,21 @@
-import { type inferAsyncReturnType } from '@trpc/server'
-import { Bindings } from './worker'
-import type { DB } from './db/client'
+import { createHonoAuth, HonoLucia } from './auth/hono'
+import { type Session } from './auth/user'
 import { createDb } from './db/client'
-import { createHonoAuth } from './auth/hono'
+import type { DB } from './db/client'
+import type { User } from './db/schema'
+import { Bindings } from './worker'
+import type { inferAsyncReturnType } from '@trpc/server'
 import type { Context as HonoContext, HonoRequest } from 'hono'
-import { AuthRequest, Session } from 'lucia'
-import { SessionUser, getPayloadFromJWT } from './auth/user'
+import type { AuthRequest, Lucia } from 'lucia'
+import { getPayloadFromJWT } from './utils/crypto'
 
 export interface ApiContextProps {
-  session?: Session | null
-  user: SessionUser | null
-  auth: Lucia.Auth
-  authRequest?: AuthRequest<Lucia.Auth>
-  req: HonoRequest
+  session?: Session
+  user?: User
+  auth: HonoLucia
+  authRequest?: AuthRequest<Lucia>
+  req?: HonoRequest
+  c?: HonoContext
   setCookie: (value: string) => void
   db: DB
   env: Bindings
@@ -20,7 +23,8 @@ export interface ApiContextProps {
 
 export const createContext = async (
   env: Bindings,
-  context: HonoContext
+  context: HonoContext,
+  resHeaders: Headers
 ): Promise<ApiContextProps> => {
   if (!env.DB) {
     throw new Error('Database binding is undefined')
@@ -43,7 +47,7 @@ export const createContext = async (
         if (!payload) {
           return null
         }
-        if (payload.sub) {
+        if ('sub' in payload && payload.sub) {
           return {
             id: payload.sub,
           }
@@ -61,30 +65,40 @@ export const createContext = async (
   const auth = createHonoAuth(env.DB, env.APP_URL, context.req)
 
   async function getSession() {
-    let session: Session | null = null
-    let authRequest: AuthRequest<Lucia.Auth> | undefined
+    let user: User | undefined
+    let session: Session | undefined
+    let authRequest: AuthRequest<Lucia> | undefined
 
     if (context.req) {
       authRequest = auth.handleRequest(context)
-      session = await authRequest.validate()
-      // Allow for either cookie or bearer token
-      if (!session) {
-        session = await authRequest.validateBearerToken()
+      const authResult = await authRequest.validate()
+      if (authResult.session) {
+        session = authResult.session
+        user = authResult.user || undefined
+      }
+      // console.log('cookie session and auth request', session, authRequest)
+      if (!session && context.req.header('x-enable-tokens')) {
+        const tokenAuthResult = await authRequest.validateBearerToken()
+        if (tokenAuthResult.session) {
+          session = tokenAuthResult.session
+          user = tokenAuthResult.user || undefined
+        }
       }
     }
-    return { session, authRequest }
+    return { session, user, authRequest }
   }
 
-  const { session, authRequest } = await getSession()
+  const { session, user, authRequest } = await getSession()
   return {
     db,
     auth,
     authRequest,
     req: context.req,
+    c: context,
     session,
-    user: session?.user ?? null,
+    user,
     setCookie: (value) => {
-      context.res.headers.append('Set-Cookie', value)
+      resHeaders.append('set-cookie', value)
     },
     env,
   }

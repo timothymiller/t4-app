@@ -3,13 +3,11 @@ import { appRouter } from '@t4/api/src/router'
 import { cors } from 'hono/cors'
 import { createContext } from '@t4/api/src/context'
 import { trpcServer } from '@hono/trpc-server'
-import { handleOAuthCallback } from './auth/hono'
-
-// import { trpcServer } from '@hono/trpc-server'
 
 export type Bindings = Env & {
   JWT_VERIFICATION_KEY: string
   APP_URL: string
+  API_URL: string
   // For auth
   APPLE_CLIENT_ID: string
   APPLE_TEAM_ID: string
@@ -17,10 +15,15 @@ export type Bindings = Env & {
   APPLE_CERTIFICATE: string
   DISCORD_CLIENT_ID: string
   DISCORD_CLIENT_SECRET: string
+  GITHUB_CLIENT_ID: string
+  GITHUB_CLIENT_SECRET: string
   GOOGLE_CLIENT_ID: string
   GOOGLE_CLIENT_SECRET: string
   RESEND_API_KEY: string
-  NEXT_PUBLIC_SUPPORT_EMAIL: string
+  PUBLIC_SUPPORT_EMAIL: string
+  PUBLIC_API_URL: string
+  PUBLIC_NATIVE_SCHEME: string
+  TOTP_SECRET: string
   [k: string]: unknown
 }
 
@@ -40,22 +43,18 @@ const corsHandler = async (c: Context<{ Bindings: Bindings }>, next: Next) => {
 
 // Setup CORS for the frontend
 app.use('/trpc/*', corsHandler)
-app.use('/auth/*', corsHandler)
 
 // Setup TRPC server with context
 app.use('/trpc/*', async (c, next) => {
   return await trpcServer({
     router: appRouter,
-    createContext: async () => {
-      return await createContext(c.env, c)
+    createContext: async ({ resHeaders }) => {
+      return await createContext(c.env, c, resHeaders)
+    },
+    onError: ({ path, error }) => {
+      console.error(path, error)
     },
   })(c, next)
-})
-
-// Setup OAuth callbacks
-app.use('/auth/callback/:service', async (c, next) => {
-  const ctx = await createContext(c.env, c)
-  return await handleOAuthCallback(c, ctx, c.req.param('service'))
 })
 
 export default app

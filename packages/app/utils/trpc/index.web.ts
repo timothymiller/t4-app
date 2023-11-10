@@ -6,6 +6,20 @@ import superjson from 'superjson'
 export const trpc = createTRPCNext<AppRouter>({
   config() {
     return {
+      // tRPC will pause queries/mutations while offline
+      // https://tanstack.com/query/latest/docs/react/guides/network-mode
+      // If you are developing locally, you probably want to enable "always" network mode
+      // so that tRPC will make requests to localhost.
+      queryClientConfig: {
+        defaultOptions: {
+          queries: {
+            networkMode: process.env.NODE_ENV === 'development' ? 'always' : 'online',
+          },
+          mutations: {
+            networkMode: process.env.NODE_ENV === 'development' ? 'always' : 'online',
+          },
+        },
+      },
       transformer: superjson,
       links: [
         loggerLink({

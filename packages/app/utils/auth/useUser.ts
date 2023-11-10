@@ -1,8 +1,7 @@
 import { useSessionContext } from './index'
 
 export const useUser = () => {
-  const { session, isLoading } = useSessionContext()
-  const user = session?.user
+  const { session, user, isLoading } = useSessionContext()
   // TODO: Load profile information from external sources here
   // Ex: profile photo, display name, etc.
 

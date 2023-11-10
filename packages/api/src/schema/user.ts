@@ -1,7 +1,7 @@
 import {
   Input,
   email as emailValidator,
-  enumType,
+  picklist,
   minLength,
   object,
   optional,
@@ -9,9 +9,9 @@ import {
   toLowerCase,
   toTrimmed,
 } from 'valibot'
-import type { AuthProviderName } from '../auth/shared'
 import type { User as SessionUser } from 'lucia'
 import type { User } from '../db/schema'
+import { AuthProviderName } from '../auth/providers'
 
 export function isSessionUser(user: User | SessionUser): user is SessionUser {
   return !!(user as SessionUser).userId
@@ -39,16 +39,20 @@ const password = optional(string([minLength(1, 'Password is required.')]))
 const optionalPassword = optional(string())
 
 const authProviders: [AuthProviderName, ...AuthProviderName[]] = ['apple', 'discord', 'google']
-const authProvidersInput = enumType(authProviders)
+const authProvidersInput = picklist(authProviders)
 
 export const SignInSchema = object({
   password: optionalPassword,
   email: optionalEmail,
   code: optional(string()), // for password-less sign in
   provider: optional(authProvidersInput),
+  state: optional(string()), // to compare to http-only cookie set before 3rd party redirect
   redirectTo: optional(string()),
-  // Used with apple sign-in on native
-  token: optional(string()),
+  // The following params are used with apple sign-in on native
+  // On web, http-only cookies should be used
+  accessToken: optional(string()),
+  idToken: optional(string()),
+  refreshToken: optional(string()),
   nonce: optional(string()),
 })
 

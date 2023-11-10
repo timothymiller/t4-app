@@ -25,8 +25,8 @@ export const SignInScreen = (): React.ReactNode => {
 
   const signInWithApple = async () => {
     try {
-      const { token, nonce } = await initiateAppleSignIn()
-      const res = await signIn({ provider: 'apple', token, nonce })
+      const { idToken, nonce } = await initiateAppleSignIn()
+      const res = await signIn({ provider: 'apple', idToken, nonce })
     } catch (e) {
       if (typeof e === 'object' && !!e && 'code' in e) {
         if (e.code === 'ERR_REQUEST_CANCELED') {
@@ -45,7 +45,9 @@ export const SignInScreen = (): React.ReactNode => {
     try {
       const redirectUri = (await getInitialURL()) || 't4://'
       const response = await WebBrowser.openAuthSessionAsync(
-        `${process.env.EXPO_PUBLIC_APP_URL}/oauth/${provider}`,
+        `${process.env.EXPO_PUBLIC_APP_URL}/oauth/${provider}?redirectTo=${encodeURIComponent(
+          redirectUri
+        )}`,
         redirectUri
       )
       if (response.type === 'success') {

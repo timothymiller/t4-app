@@ -2,6 +2,7 @@ import { InferSelectModel, InferInsertModel, relations, sql } from 'drizzle-orm'
 import { sqliteTable, text, integer, real, index } from 'drizzle-orm/sqlite-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-valibot'
 import { createId } from '../utils/id'
+import { HASH_METHODS } from '../utils/password/hash-methods'
 
 // User
 export const UserTable = sqliteTable('User', {
@@ -10,7 +11,7 @@ export const UserTable = sqliteTable('User', {
 })
 export const userRelations = relations(UserTable, ({ many }) => ({
   sessions: many(SessionTable),
-  userKeys: many(UserKeyTable),
+  authMethods: many(AuthMethodTable),
 }))
 export type User = InferSelectModel<typeof UserTable>
 export type InsertUser = InferInsertModel<typeof UserTable>
@@ -21,29 +22,33 @@ export const selectUserSchema = createSelectSchema(UserTable)
 // Users have a 1-to-many relationship to keys
 // The id consists of a provider type combined with a provider id
 // https://lucia-auth.com/basics/keys/
-export const UserKeyTable = sqliteTable(
-  'UserKey',
+export const AuthMethodTable = sqliteTable(
+  'AuthMethod',
   {
     id: text('id').primaryKey(),
     userId: text('user_id')
       .notNull()
       .references(() => UserTable.id),
     hashedPassword: text('hashed_password'),
+    hashMethod: text('hash_method', { enum: HASH_METHODS }),
     createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
+    // Depending on which providers you connect... you may want to store more data, i.e. username, profile pic, etc
+    // Instead of creating separate fields for each, you could add a single field to store any additional data
+    // data: text('data', { mode: 'json' })
   },
   (t) => ({
     userIdIdx: index('idx_userKey_userId').on(t.userId),
   })
 )
-export const userKeyRelations = relations(UserKeyTable, ({ one }) => ({
+export const userKeyRelations = relations(AuthMethodTable, ({ one }) => ({
   user: one(UserTable, {
-    fields: [UserKeyTable.userId],
+    fields: [AuthMethodTable.userId],
     references: [UserTable.id],
   }),
 }))
-export type UserKey = InferSelectModel<typeof UserKeyTable>
-export type InsertUserKey = InferInsertModel<typeof UserKeyTable>
-export const UserKeySchema = createInsertSchema(UserKeyTable)
+export type AuthMethod = InferSelectModel<typeof AuthMethodTable>
+export type InsertAuthMethod = InferInsertModel<typeof AuthMethodTable>
+export const AuthMethodSchema = createInsertSchema(AuthMethodTable)
 
 export const SessionTable = sqliteTable(
   'Session',
@@ -52,8 +57,7 @@ export const SessionTable = sqliteTable(
     userId: text('user_id')
       .notNull()
       .references(() => UserTable.id),
-    activeExpires: integer('active_expires', { mode: 'timestamp_ms' }).notNull(),
-    idleExpires: integer('idle_expires', { mode: 'timestamp_ms' }).notNull(),
+    expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
   },
   (t) => ({
     userIdIdx: index('idx_session_userId').on(t.userId),

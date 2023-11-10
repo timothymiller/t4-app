@@ -1,116 +1,202 @@
-import jwt, { JwtData } from '@tsndr/cloudflare-worker-jwt'
-import { createKeyId, Session, User as SessionUser } from 'lucia'
-import { Auth } from './shared'
-import { UserKeyTable, User, VerificationCodeTable, UserTable } from '../db/schema'
 import { ApiContextProps } from '../context'
-import { and, eq } from 'drizzle-orm'
-import { createCode, createId } from '../utils/id'
-import { isWithinExpiration } from 'lucia/utils'
+import { AuthMethodTable, SessionTable, User, UserTable, VerificationCodeTable } from '../db/schema'
+import { createId } from '../utils/id'
+import { hashPassword, verifyPassword } from '../utils/password'
+import { DEFAULT_HASH_METHOD } from '../utils/password/hash-methods'
 import { TRPCError } from '@trpc/server'
+import { and, eq, lt } from 'drizzle-orm'
+import type { RegisteredLucia, Session } from 'lucia'
+import { isWithinExpirationDate } from 'oslo'
+import { createCode, verifyCode } from '../utils/crypto'
+import { AuthProviderName } from './providers'
+import { OAuth2RequestError } from 'arctic'
+import { getOAuthUser } from './shared'
 
-export { Session, SessionUser }
-
-export function isSessionUser(user: User | SessionUser): user is SessionUser {
-  return !!(user as SessionUser).userId
+export const createAuthMethodId = (providerId: string, providerUserId: string) => {
+  if (providerId.includes(':')) {
+    throw new TypeError('Provider id must not include any colons (:)')
+  }
+  return `${providerId}:${providerUserId}`
 }
 
-export function isUser(user: User | SessionUser): user is User {
-  return !!(user as User).id
-}
+export { Session }
 
-export const userToAuthUserAttributes = (user: Partial<User>): Lucia.DatabaseUserAttributes => ({
-  email: user.email || null,
-})
-
-export const createUser = async (
-  auth: Auth,
-  email: string,
-  password: string | undefined | null,
-  user: Partial<User>
-): Promise<SessionUser> => {
-  return await auth.createUser({
-    key: {
-      providerId: 'email',
-      providerUserId: email,
-      password: password || null,
-    },
-    attributes: userToAuthUserAttributes(user),
+export async function getAuthMethod(ctx: ApiContextProps, authMethodId: string) {
+  return await ctx.db.query.AuthMethodTable.findFirst({
+    where: eq(AuthMethodTable.id, authMethodId),
   })
 }
 
-export function getUserId(user: SessionUser | User) {
-  return isSessionUser(user) ? user.userId : user.id
+export async function getUserById(ctx: ApiContextProps, id: string) {
+  return await ctx.db.query.UserTable.findFirst({ where: eq(UserTable.id, id) })
 }
 
-export const updateAuthEmail = async (
+export async function getUserByEmail(ctx: ApiContextProps, email: string) {
+  const existingAuthMethod = await ctx.db.query.AuthMethodTable.findFirst({
+    where: eq(AuthMethodTable.id, createAuthMethodId('email', email)),
+  })
+  if (existingAuthMethod) {
+    const user = await ctx.db.query.UserTable.findFirst({
+      where: eq(UserTable.id, existingAuthMethod.userId),
+    })
+    if (user) {
+      return user
+    }
+  }
+  return false
+}
+
+export const createUser = async (
   ctx: ApiContextProps,
-  user: User | SessionUser,
-  email: string
-) => {
-  // Lucia doesn't give us a way to do this... but we can just make the database updates directly
-  const userId = getUserId(user)
+  providerId: string,
+  providerUserId: string, // email
+  password: string | undefined | null,
+  user: Partial<User>
+): Promise<User> => {
+  const userId = user.id || createId()
+  const authMethodId = createAuthMethodId(providerId, providerUserId)
+  const existing = await ctx.db.query.AuthMethodTable.findFirst({
+    where: eq(AuthMethodTable.id, authMethodId),
+  })
+  if (existing) {
+    const existingUser = await ctx.db.query.UserTable.findFirst({
+      where: eq(UserTable.id, existing.userId),
+    })
+    if (existingUser) {
+      throw new TRPCError({ message: 'User exists', code: 'CONFLICT' })
+    }
+    await ctx.db.delete(AuthMethodTable).where(eq(AuthMethodTable.id, authMethodId))
+  }
+
+  const { hashedPassword, hashMethod } = password
+    ? await hashPassword(password)
+    : { hashedPassword: undefined, hashMethod: undefined }
+  await ctx.db.insert(UserTable).values({
+    ...user,
+    email: user.email || '',
+    id: userId,
+  })
+  await ctx.db.insert(AuthMethodTable).values({
+    id: authMethodId,
+    userId,
+    hashedPassword,
+    hashMethod,
+  })
+  const createdUser = await ctx.db.query.UserTable.findFirst({
+    where: eq(UserTable.id, userId),
+  })
+  if (!createdUser) {
+    throw new TRPCError({ message: 'Unable to create user', code: 'INTERNAL_SERVER_ERROR' })
+  }
+  return createdUser
+}
+
+/**
+ * Admin function to change a user email
+ * Consider deleting user sessions after calling this
+ */
+export const updateAuthEmail = async (ctx: ApiContextProps, user: User, email: string) => {
   const res = await ctx.db
-    .update(UserKeyTable)
-    .set({ id: createKeyId('email', email) })
+    .update(AuthMethodTable)
+    .set({ id: createAuthMethodId('email', email) })
     .where(
       and(
-        user.email ? eq(UserKeyTable.id, createKeyId('email', user.email)) : undefined,
-        eq(UserKeyTable.userId, userId)
+        user.email ? eq(AuthMethodTable.id, createAuthMethodId('email', user.email)) : undefined,
+        eq(AuthMethodTable.userId, user.id)
       )
     )
   return res
 }
 
-export const updatePassword = async (auth: Auth, email: string, password: string | null) => {
-  return await auth.updateKeyPassword('email', email, password)
+export const updatePassword = async (
+  ctx: ApiContextProps,
+  email: string,
+  password: string | null
+) => {
+  const authMethodId = createAuthMethodId('email', email)
+  const existing = await getAuthMethod(ctx, authMethodId)
+  if (!existing) {
+    throw new TRPCError({ message: 'User not found', code: 'NOT_FOUND' })
+  }
+  const { hashedPassword, hashMethod } = password
+    ? await hashPassword(password)
+    : { hashedPassword: null, hashMethod: null }
+  return await ctx.db
+    .update(AuthMethodTable)
+    .set({
+      hashedPassword,
+      hashMethod,
+    })
+    .where(eq(AuthMethodTable.id, authMethodId))
 }
 
 export type SignInResult = {
   session?: Session | null
   message?: string
   codeSent?: boolean
-  oauthRedirect?: string
+  redirectTo?: string
 }
 
 export const signInWithEmail = async (
-  auth: Auth,
+  ctx: ApiContextProps,
   email: string,
   password: string,
   setCookie?: (value: string) => void
 ): Promise<SignInResult> => {
-  // These can create errors, but maybe just let them pass through rather than catch them?
-  const key = await auth.useKey('email', email, password)
-  const session = await createSession(auth, key.userId)
+  const authMethodId = createAuthMethodId('email', email)
+  const authMethod = await getAuthMethod(ctx, authMethodId)
+  if (!authMethod) {
+    throw new TRPCError({ message: 'No user found with that email', code: 'UNAUTHORIZED' })
+  }
+  if (!authMethod.hashedPassword) {
+    throw new TRPCError({
+      message: 'Password sign-in is not enabled for this account',
+      code: 'UNAUTHORIZED',
+    })
+  }
+  const verifyResult = await verifyPassword(
+    password,
+    authMethod.hashedPassword,
+    authMethod.hashMethod
+  )
+  if (!verifyResult) {
+    // TODO should use similar code to signInWithCode to require backoff or max attempts
+    // Maybe should email the user if multiple failed sign-in attempts are detected
+    throw new TRPCError({ message: 'Invalid password', code: 'UNAUTHORIZED' })
+  }
+  if (verifyResult && authMethod.hashMethod !== DEFAULT_HASH_METHOD) {
+    await updatePassword(ctx, email, password)
+  }
+  const session = await createSession(ctx.auth, authMethod.userId)
   if (setCookie) {
-    const cookie = auth.createSessionCookie(session)
+    const cookie = ctx.auth.createSessionCookie(session.id)
     setCookie(cookie.serialize())
   }
   return { session }
 }
 
+const passwordResetTimeoutSeconds = 300
+
 export const sendEmailSignIn = async (ctx: ApiContextProps, email: string) => {
-  const key = await ctx.auth.getKey('email', email)
-  if (!key) {
-    throw new Error('No user found with that email.')
+  const authMethod = await getAuthMethod(ctx, createAuthMethodId('email', email))
+  if (!authMethod) {
+    throw new TRPCError({ message: 'No user found with that email', code: 'UNAUTHORIZED' })
   }
   const props = {
-    code: createCode(),
-    expires: new Date(Date.now() + 1000 * 60 * 5), // 5 minutes
+    code: await createCode({ seconds: passwordResetTimeoutSeconds, secret: ctx.env.TOTP_SECRET }),
+    expires: new Date(Date.now() + 1000 * passwordResetTimeoutSeconds), // 5 minutes
   }
   await ctx.db
     .insert(VerificationCodeTable)
     .values({
       id: createId(),
-      userId: key.userId,
+      userId: authMethod.userId,
       ...props,
     })
     .onConflictDoUpdate({ target: VerificationCodeTable.userId, set: props })
   const resetLink =
-    ctx.env.APP_URL +
-    '/password-reset/update-password?code=' +
-    encodeURIComponent(props.code) +
-    '&email=' +
-    encodeURIComponent(email)
+    `${ctx.env.APP_URL}/password-reset/update-password` +
+    `?code=${encodeURIComponent(props.code)}&email=${encodeURIComponent(email)}`
 
   if (ctx.env.RESEND_API_KEY) {
     // send email
@@ -147,29 +233,27 @@ export const signInWithCode = async (
   code: string,
   setCookie?: (value: string) => void
 ) => {
-  const key = await ctx.auth.getKey(providerId, providerUserId)
-  if (!key) {
+  const authMethodId = createAuthMethodId(providerId, providerUserId)
+  const authMethod = await getAuthMethod(ctx, authMethodId)
+  if (!authMethod) {
     // Note... you might want to create a user here
     // or throw a more generic error if you don't want
     // to expose that the user doesn't exist
-    throw new Error('Unable to find account where ' + providerId + ' is ' + providerUserId)
+    throw new Error(`Unable to find account where ${providerId} is ${providerUserId}`)
   }
   const verificationCode = (
     await ctx.db
       .select()
       .from(VerificationCodeTable)
-      .where(and(eq(VerificationCodeTable.userId, key.userId)))
+      .where(and(eq(VerificationCodeTable.userId, authMethod.userId)))
   )?.[0]
 
-  if (!verificationCode || !isWithinExpiration(verificationCode?.expires.getTime())) {
+  if (!verificationCode || !isWithinExpirationDate(verificationCode?.expires)) {
     // optionally send a new code instead of an error
-    throw new TRPCError({ message: 'Expired verification code', code: 'NOT_FOUND' })
+    throw new TRPCError({ message: 'Expired verification code', code: 'UNAUTHORIZED' })
   }
 
-  if (
-    verificationCode.timeoutUntil &&
-    !isWithinExpiration(verificationCode.timeoutUntil.getTime())
-  ) {
+  if (verificationCode.timeoutUntil && !isWithinExpirationDate(verificationCode.timeoutUntil)) {
     throw new TRPCError({ message: 'Too many requests', code: 'TOO_MANY_REQUESTS' })
   }
 
@@ -183,9 +267,14 @@ export const signInWithCode = async (
       .update(VerificationCodeTable)
       .set({ timeoutUntil, timeoutSeconds })
       .where(eq(VerificationCodeTable.id, verificationCode.id))
-    return {
-      message: 'Invalid code',
-    }
+    throw new TRPCError({ message: 'Expired verification code', code: 'UNAUTHORIZED' })
+  }
+
+  // Extra cryptographic verification
+  if (
+    !(await verifyCode(code, { seconds: passwordResetTimeoutSeconds, secret: ctx.env.TOTP_SECRET }))
+  ) {
+    throw new TRPCError({ message: 'Expired verification code', code: 'UNAUTHORIZED' })
   }
 
   await ctx.db
@@ -194,24 +283,52 @@ export const signInWithCode = async (
 
   // You may want to sign the user out of other sessions here,
   // but for now, we only do it if the user is changing their password
-  // await ctx.auth.invalidateAllUserSessions(user.userId);
+  // await ctx.auth.invalidateUserSessions(authMethod.userId);
 
   // If you want to require email verification before allowing password-based login
   // you could update a User emailVerified attribute here...
   // await ctx.db.update(UserTable).set({ emailVerified: true }).where(eq(UserTable.id, verificationCode.userId))
 
-  const session = await createSession(ctx.auth, key.userId)
+  const session = await createSession(ctx.auth, authMethod.userId)
+  if (setCookie) {
+    const cookie = ctx.auth.createSessionCookie(session.id)
+    setCookie(cookie.serialize())
+  }
   return {
     session: session,
   }
 }
 
-export const sendPhoneSignIn = async (auth: Auth, phone: number) => {
+export const signInWithOAuthCode = async (
+  ctx: ApiContextProps,
+  service: AuthProviderName,
+  code: string,
+  state?: string,
+  storedState?: string,
+  redirectTo?: string
+) => {
+  if (!storedState || !state || storedState !== state || typeof code !== 'string') {
+    throw new TRPCError({ message: 'Invalid state', code: 'BAD_REQUEST' })
+  }
+  try {
+    const user = await getOAuthUser(service, ctx, { code })
+    const session = await createSession(ctx.auth, user.id)
+    ctx.authRequest?.setSessionCookie(session.id)
+    return { redirectTo: `${redirectTo ? redirectTo : ctx.env.APP_URL}#token=${session.id}` }
+  } catch (e) {
+    if (e instanceof OAuth2RequestError) {
+      throw new TRPCError({ message: 'Invalid code', code: 'BAD_REQUEST' })
+    }
+    throw new TRPCError({ message: 'Unknown auth error', code: 'INTERNAL_SERVER_ERROR' })
+  }
+}
+
+export const sendPhoneSignIn = async (ctx: ApiContextProps, phone: number) => {
   throw new Error('Password-less sign-in not yet implemented.')
 }
 
 export const signInWithPhoneAndCode = async (
-  auth: Auth,
+  ctx: ApiContextProps,
   phone: number,
   code: string,
   setCookie?: (value: string) => void
@@ -220,68 +337,42 @@ export const signInWithPhoneAndCode = async (
 }
 
 export const signOut = async (
-  auth: Auth,
+  auth: RegisteredLucia,
   sessionId: string,
   setCookie?: (value: string) => void
 ) => {
   await auth.invalidateSession(sessionId)
   if (setCookie) {
-    const cookie = auth.createSessionCookie(null)
+    const cookie = auth.createBlankSessionCookie()
     setCookie(cookie.serialize())
   }
   return { success: true }
 }
 
 export const signOutEverywhere = async (
-  auth: Auth,
+  auth: RegisteredLucia,
   userId: string,
   setCookie?: (value: string) => void
 ) => {
-  const res = await auth.invalidateAllUserSessions(userId)
+  const res = await auth.invalidateUserSessions(userId)
   if (setCookie) {
-    const cookie = auth.createSessionCookie(null)
+    const cookie = auth.createBlankSessionCookie()
     setCookie(cookie.serialize())
   }
   return { success: true }
 }
 
-export const createSession = async (auth: Auth, userId: string) => {
-  return await auth.createSession({
-    userId,
-    attributes: {}, // expects `Lucia.DatabaseSessionAttributes`
-  })
+export const createSession = async (auth: RegisteredLucia, userId: string) => {
+  return await auth.createSession(userId, {})
 }
 
-export const cleanup = async (auth: Auth, userId: string) => {
-  return auth.deleteDeadUserSessions(userId)
-}
-
-/**
- * Verifies the JWT and returns the payload if it is valid or null if it is not.
- *
- * The verification_key param can be a function to fetch the key from an external source.
- */
-export async function getPayloadFromJWT(
-  token: string,
-  verification_key: string | JsonWebKey | ((decodedToken: JwtData) => Promise<string | JsonWebKey>)
-) {
-  const decodedToken = jwt.decode(token)
-
-  // Check if token is expired
-  const expirationTimestamp = decodedToken.payload.exp
-  const currentTimestamp = Math.floor(Date.now() / 1000)
-  if (!expirationTimestamp || expirationTimestamp < currentTimestamp) {
-    return null
-  }
-
-  const key =
-    typeof verification_key === 'function' ? await verification_key(decodedToken) : verification_key
-  const authorized = await jwt.verify(token, key, {
-    algorithm: decodedToken.header.alg,
-  })
-  if (!authorized) {
-    return null
-  }
-
-  return decodedToken?.payload
+export const cleanup = async (context: ApiContextProps, userId?: string) => {
+  return await context.db
+    .delete(SessionTable)
+    .where(
+      and(
+        userId ? eq(SessionTable.userId, userId) : undefined,
+        lt(SessionTable.expiresAt, new Date())
+      )
+    )
 }

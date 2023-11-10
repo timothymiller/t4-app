@@ -43,7 +43,9 @@ export const SignUpScreen = (): React.ReactNode => {
     try {
       const redirectUri = (await getInitialURL()) || 't4://'
       const response = await WebBrowser.openAuthSessionAsync(
-        `${process.env.EXPO_PUBLIC_APP_URL}/oauth/${provider}`,
+        `${process.env.EXPO_PUBLIC_APP_URL}/oauth/${provider}?redirectTo=${encodeURIComponent(
+          redirectUri
+        )}`,
         redirectUri
       )
       if (response.type === 'success') {

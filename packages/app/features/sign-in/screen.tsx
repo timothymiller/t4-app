@@ -20,8 +20,8 @@ export const SignInScreen = (): React.ReactNode => {
       const res = await signIn({
         provider,
       })
-      if (res?.oauthRedirect) {
-        push(res.oauthRedirect)
+      if (res?.redirectTo) {
+        push(res.redirectTo)
       }
     } catch (error) {
       if (

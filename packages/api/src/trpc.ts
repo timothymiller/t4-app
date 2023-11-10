@@ -20,7 +20,7 @@ export const valibotParser =
  * @link https://trpc.io/docs/middlewares
  */
 const isAuthed = t.middleware(({ next, ctx }) => {
-  if (ctx.user === null) {
+  if (!ctx.user) {
     throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Not authenticated' })
   }
   return next({

@@ -1,7 +1,7 @@
 import { Input } from 'valibot'
 import { trpc } from '../trpc'
 import { storeSessionToken } from './credentials'
-import type { SessionUser, Session, SignInResult } from '@t4/api/src/auth/user'
+import type { Session, SignInResult } from '@t4/api/src/auth/user'
 import { atom, useAtom } from 'jotai'
 import { useEffect } from 'react'
 import { useSupabase } from '../supabase/hooks/useSupabase'
@@ -9,6 +9,7 @@ import { useRouter } from 'solito/router'
 import type { AuthProviderName } from '@t4/api/src/auth/providers'
 import { CreateUserSchema } from '@t4/api/src/schema/user'
 import { isWeb } from '@t4/ui/src'
+import type { User } from '@t4/api/src/db/schema'
 
 export const AUTH_SERVICE: 'lucia' | 'supabase' = 'lucia'
 // ^ We could maybe configure which auth service to use
@@ -19,7 +20,7 @@ export const useSessionContext = () => {
   const sessionQuery = trpc.user.session.useQuery(undefined, {
     refetchInterval: 300000, // 300 seconds = 5 minutes
   })
-  const [session, setSession] = useSessionAtom()
+  const [{ session, user }, setSession] = useSessionAtom()
   const [isLoadingSession, setIsLoadingSession] = useIsLoadingSession()
 
   useEffect(() => {
@@ -29,15 +30,28 @@ export const useSessionContext = () => {
     if (sessionQuery.data?.session === session || sessionQuery.isFetching) return
     // Web is not as secure as native, so just use http-only cookies for auth
     if (!isWeb) {
-      storeSessionToken(sessionQuery.data?.session?.sessionId)
+      storeSessionToken(sessionQuery.data?.session?.id)
     }
-    setSession(sessionQuery.data?.session || null)
-  }, [sessionQuery.data, session, isLoadingSession])
+    setSession({
+      session: sessionQuery.data?.session || null,
+      user: sessionQuery.data?.user || null,
+    })
+  }, [
+    setIsLoadingSession,
+    setSession,
+    sessionQuery.data,
+    sessionQuery.isFetching,
+    session,
+    isLoadingSession,
+  ])
 
-  return { session, isLoading: isLoadingSession }
+  return { session, user, isLoading: isLoadingSession }
 }
 
-const sessionAtom = atom<Session | null>(null)
+const sessionAtom = atom<{ session: Session | null; user: User | null }>({
+  session: null,
+  user: null,
+})
 
 export function useSessionAtom() {
   return [...useAtom(sessionAtom)] as const
@@ -105,13 +119,15 @@ export type SignInWithPhoneAndCode = {
 
 export type SignInWithAppleIdTokenAndNonce = {
   provider: 'apple'
-  token: string
+  idToken: string
   nonce: string
 }
 
 export type SignInWithOAuth = {
   provider: AuthProviderName
   redirectTo?: string
+  code?: string
+  state?: string
 }
 
 export type SignInProps =
@@ -124,35 +140,42 @@ export type SignInProps =
   | SignInWithOAuth
 
 export function isSignInWithEmail(props: SignInProps): props is SignInWithEmail {
+  // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
   return props['email'] && !props['password']
 }
 
 export function isSignInWithEmailAndCode(props: SignInProps): props is SignInWithEmailAndCode {
+  // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
   return props['email'] && props['code']
 }
 
 export function isSignInWithPhone(props: SignInProps): props is SignInWithPhone {
+  // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
   return props['phone'] && !props['password']
 }
 
 export function isSignInWithPhoneAndCode(props: SignInProps): props is SignInWithPhoneAndCode {
+  // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
   return props['phone'] && props['code']
 }
 
 export function isSignInWithEmailAndPassword(
   props: SignInProps
 ): props is SignInWithEmailAndPassword {
+  // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
   return props['email'] && props['password']
 }
 
 export function isSignInWithOAuth(props: SignInProps): props is SignInWithOAuth {
-  return props['provider'] && !props['token'] && !props['nonce']
+  // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
+  return props['provider'] && !props['idToken'] && !props['nonce']
 }
 
 export function isSignInWithAppleIdTokenAndNonce(
   props: SignInProps
 ): props is SignInWithAppleIdTokenAndNonce {
-  return props['provider'] === 'apple' && props['token'] && props['nonce']
+  // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
+  return props['provider'] === 'apple' && props['idToken'] && props['nonce']
 }
 
 export function useSignIn() {
@@ -172,7 +195,7 @@ export function useSignIn() {
     utils.auth.invalidate()
   }
 
-  // Might want to useMemo here...
+  // Might want to useCallback here and replace guards with ts-pattern
   const signIn = async (props: SignInProps) => {
     if (isSignInWithEmailAndPassword(props)) {
       const res = await mutation.mutateAsync(props)
@@ -237,17 +260,17 @@ export interface UseSessionProps {
 
 export type UseSessionResponse = {
   session?: Session | null
-  user?: SessionUser
+  user?: User | null
   isLoadingSession: boolean
 }
 
 export function useSession(props?: UseSessionProps): UseSessionResponse {
-  const [session] = useSessionAtom()
+  const [{ session, user }] = useSessionAtom()
   const [isLoadingSession] = useIsLoadingSession()
   return {
     session,
     isLoadingSession,
-    user: session?.user,
+    user,
   }
 }
 
@@ -269,14 +292,14 @@ export type SessionRedirectProps = {
  * ```
  */
 export function useSessionRedirect(props: SessionRedirectProps = { true: '/', false: '/' }) {
-  const { session, isLoadingSession } = useSession()
+  const { session, user, isLoadingSession } = useSession()
   const { push } = useRouter()
 
   useEffect(() => {
     if (isLoadingSession) {
       return
     }
-    if (session?.user) {
+    if (user) {
       if (props.true) {
         push(props.true)
       }
@@ -285,7 +308,7 @@ export function useSessionRedirect(props: SessionRedirectProps = { true: '/', fa
         push(props.false)
       }
     }
-  }, [session, isLoadingSession])
+  }, [user, isLoadingSession, props, push])
 }
 
 export * from 'app/utils/auth/validation'
