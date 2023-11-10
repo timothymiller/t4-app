@@ -14,12 +14,12 @@ const t = initTRPC.context<Context>().create({
  * @link https://trpc.io/docs/middlewares
  */
 const isAuthed = t.middleware(({ next, ctx }) => {
-  if (ctx.user === null) {
+  if (!ctx.session) {
     throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Not authenticated' })
   }
   return next({
     ctx: {
-      user: ctx.user,
+      session: ctx.session,
     },
   })
 })

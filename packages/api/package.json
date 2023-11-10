@@ -18,12 +18,12 @@
   "dependencies": {
     "@hono/trpc-server": "^0.1.0",
     "@trpc/server": "^10.43.0",
-    "@tsndr/cloudflare-worker-jwt": "^2.2.5",
     "drizzle-orm": "^0.28.6",
     "drizzle-valibot": "^0.1.1",
     "hono": "^3.9.1",
     "miniflare": "3.20231025.1",
     "superjson": "1.13.3",
+    "supertokens-node": "^16.4.0",
     "valibot": "^0.20.1"
   },
   "devDependencies": {
