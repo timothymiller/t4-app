@@ -1,52 +1,52 @@
 import { YStack, useToastController } from '@t4/ui'
 import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
-import type { Provider } from '@supabase/supabase-js'
-import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
-import { capitalizeWord } from '@t4/ui/src/libs/string'
+import { emailPasswordSignUp } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 
 export const SignUpScreen = (): React.ReactNode => {
   const { push } = useRouter()
   const toast = useToastController()
-  const supabase = useSupabase()
 
-  const handleOAuthSignInWithPress = async (provider: Provider) => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: provider,
-      options:
-        provider === 'google'
-          ? {
-              queryParams: {
-                access_type: 'offline',
-                prompt: 'consent',
-              },
-            }
-          : {},
-    })
-    if (error) {
-      toast.show(capitalizeWord(provider) + ' sign up failed', {
-        description: error.message,
-      })
-      return
-    }
-    push('/')
+  const handleOAuthSignInWithPress = async (provider: string) => {
+    toast.show(`Sign in with ${provider} is not supported yet.`)
   }
 
   const handleEmailSignUpWithPress = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    })
-    if (error) {
-      console.log('error', error)
-      toast.show('Sign up failed', {
-        message: error.message,
+    try {
+      const response = await emailPasswordSignUp({
+        formFields: [
+          {
+            id: 'email',
+            value: email,
+          },
+          {
+            id: 'password',
+            value: password,
+          },
+        ],
       })
-    } else if (data?.user) {
-      toast.show('Email Confirmation', {
-        message: 'Check your email ',
-      })
-      push('/')
+
+      if (response.status === 'FIELD_ERROR') {
+        // one of the input formFields failed validaiton
+        response.formFields.forEach((formField) => {
+          toast.show(`${formField.id}:  ${formField.error}`)
+        })
+      } else if (response.status === 'SIGN_UP_NOT_ALLOWED') {
+        // this can happen during automatic account linking. Tell the user to use another
+        // login method, or go through the password reset flow.
+        toast.show('Use another login method or go through the password reset flow!')
+      } else {
+        // sign up successful. The session tokens are automatically handled by
+        // the frontend SDK.
+        push('/')
+      }
+    } catch (err: any) {
+      if (err.isSuperTokensGeneralError === true) {
+        // this may be a custom error message sent from the API by you.
+        toast.show(err.message)
+      } else {
+        toast.show('Oops! Something went wrong.')
+      }
     }
   }
 

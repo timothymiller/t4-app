@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "t4-app",
-    "slug": "t4-app",
+    "name": "t4-supertokens",
+    "slug": "t4-supertokens",
     "scheme": "t4",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -28,10 +28,10 @@
     },
     "extra": {
       "eas": {
-        "projectId": "85fc6ccd-0ce1-4e4d-804c-b15df989f97e"
+        "projectId": "43272672-ff67-42e6-962b-730567148c3c"
       }
     },
-    "owner": "timothymiller",
+    "owner": "anku255",
     "plugins": ["expo-router"],
     "experiments": {
       "tsconfigPaths": true,

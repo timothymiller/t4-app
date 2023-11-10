@@ -18,16 +18,15 @@ import { useLink } from 'solito/link'
 import { useSheetOpen } from '../../atoms/sheet'
 import { SolitoImage } from 'solito/image'
 import { trpc } from 'app/utils/trpc'
-import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
-import { useUser } from 'app/utils/supabase/hooks/useUser'
+import Session from "supertokens-web-js/recipe/session";
 import { ThemeToggle } from '@t4/ui/src/ThemeToggle'
+import { useSession } from 'app/utils/supertokens/hooks/useSession'
 
 export function HomeScreen() {
   const utils = trpc.useContext()
-  const supabase = useSupabase()
-  const { user } = useUser()
-  const toast = useToastController()
-
+  const { doesSessionExist, accessTokenPayload, userId } = useSession();
+  const toast = useToastController();
+  
   const signInLink = useLink({
     href: '/sign-in',
   })
@@ -105,10 +104,10 @@ export function HomeScreen() {
           </Button>
           <SheetDemo />
         </YStack>
-        {user ? (
+        {doesSessionExist ? (
           <Button
             onPress={async () => {
-              supabase.auth.signOut()
+              await Session.signOut();
               // Clear tanstack query cache of authenticated routes
               utils.auth.secretMessage.reset()
             }}

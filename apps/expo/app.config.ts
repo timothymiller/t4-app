@@ -4,10 +4,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   extra: {
     eas: {
-      projectId: process.env.EAS_PROJECT_ID || '85fc6ccd-0ce1-4e4d-804c-b15df989f97e',
+      projectId: process.env.EAS_PROJECT_ID || '43272672-ff67-42e6-962b-730567148c3c',
     },
   },
-  owner: process.env.EAS_OWNER || 'timothymiller',
+  owner: process.env.EAS_OWNER || 'anku255',
   plugins: ['expo-router'],
   experiments: {
     tsconfigPaths: true,
@@ -15,9 +15,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   platforms: ['ios', 'android'],
   name: 'T4 App',
-  slug: 't4-app',
+  slug: 't4-supertokens',
   updates: {
-    url: 'https://u.expo.dev/85fc6ccd-0ce1-4e4d-804c-b15df989f97e',
+    url: 'https://u.expo.dev/43272672-ff67-42e6-962b-730567148c3c',
   },
   runtimeVersion: {
     policy: 'sdkVersion',

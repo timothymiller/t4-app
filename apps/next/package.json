@@ -18,13 +18,14 @@
     "@tsndr/cloudflare-worker-jwt": "^2.2.5",
     "app": "*",
     "million": "2.6.4",
-    "pattycake": "^0.0.2",
     "next": "14.0.1",
     "next-superjson-plugin": "^0.5.9",
+    "pattycake": "^0.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "^0.72.6",
     "react-native-web-lite": "1.75.9",
+    "supertokens-web-js": "^0.8.0",
     "webpack": "^5.88.2"
   },
   "devDependencies": {

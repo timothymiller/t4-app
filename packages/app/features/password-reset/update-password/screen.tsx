@@ -1,26 +1,32 @@
 import { YStack, useToastController } from '@t4/ui'
-import { useRouter } from 'solito/router'
 import { PasswordResetComponent } from '@t4/ui/src/PasswordReset'
-import { isExpoGo } from 'app/utils/flags'
-import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
+import { useRouter } from 'solito/router'
+import { submitNewPassword } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 
 export function UpdatePasswordScreen() {
   const { push } = useRouter()
   const toast = useToastController()
-  const supabase = useSupabase()
 
   const handlePasswordUpdateWithPress = async (password) => {
-    const { error } = await supabase.auth.updateUser({ password })
-    if (error) {
-      if (!isExpoGo) {
-        toast.show('Password change failed', {
-          description: error.message,
-        })
+    try {
+      const { status } = await submitNewPassword({
+        formFields: [
+          {
+            id: 'password',
+            value: password,
+          },
+        ],
+      })
+      if (status === 'OK') {
+        toast.show(`Your password has been updated!`)
+        push('/')
+      } else {
+        toast.show(`Oops! Something went wrong.`)
       }
-      console.log('Password change failed', error)
-      return
+    } catch (err) {
+      console.log('Password update request failed', err)
+      toast.show('Password update request failed')
     }
-    push('/')
   }
 
   return (

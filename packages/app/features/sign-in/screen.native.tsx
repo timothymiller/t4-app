@@ -1,109 +1,59 @@
 import { YStack, useToastController } from '@t4/ui'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import { useRouter } from 'solito/router'
-import type { Provider } from '@supabase/supabase-js'
-import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
-import * as WebBrowser from 'expo-web-browser'
-import { getInitialURL } from 'expo-linking'
-import { Platform } from 'react-native'
-import { initiateAppleSignIn } from 'app/utils/supabase/appleAuth'
-import { capitalizeWord } from '@t4/ui/src/libs/string'
+import { emailPasswordSignIn } from 'supertokens-web-js/recipe/thirdpartyemailpassword';
+
 
 export const SignInScreen = (): React.ReactNode => {
   const { replace } = useRouter()
-  const supabase = useSupabase()
   const toast = useToastController()
-  const signInWithApple = async () => {
-    try {
-      const { token, nonce } = await initiateAppleSignIn()
-      const { error } = await supabase.auth.signInWithIdToken({
-        provider: 'apple',
-        token,
-        nonce,
-      })
-      if (error) {
-        return toast.show('Authentication Error', {
-          description: error.message,
-        })
-      } else {
-        replace('/')
-      }
-    } catch (e) {
-      if (typeof e === 'object' && !!e && 'code' in e) {
-        if (e.code === 'ERR_REQUEST_CANCELED') {
-          toast.show('Canceled')
-        } else {
-          toast.show('Error')
-          // handle other errors
-        }
-      } else {
-        console.error('Unexpected error from Apple SignIn: ', e)
-      }
-    }
-  }
 
-  const handleOAuthWithWeb = async (provider: Provider) => {
-    try {
-      const redirectUri = (await getInitialURL()) || 't4://'
-      const response = await WebBrowser.openAuthSessionAsync(
-        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/authorize?provider=${provider}&redirect_to=${redirectUri}`,
-        redirectUri
-      )
-      if (response.type === 'success') {
-        const url = response.url
-        const params = new URLSearchParams(url.split('#')[1])
-        const accessToken = params.get('access_token') || ''
-        const refreshToken = params.get('refresh_token') || ''
-        await supabase.auth
-          .setSession({
-            access_token: accessToken,
-            refresh_token: refreshToken,
-          })
-          .then(({ data: { session }, error }) => {
-            if (session) {
-              // @ts-ignore set session does not call subscribers when session is updated
-              supabase.auth._notifyAllSubscribers('SIGNED_IN', session)
-              replace('/')
-            } else {
-              toast.show(capitalizeWord(provider) + ' sign in failed', {
-                description: error?.message || 'Something went wrong, please try again.',
-              })
-              console.log('Supabase session error:', error)
-            }
-          })
-      }
-    } catch (error) {
-      toast.show(capitalizeWord(provider) + ' sign in failed', {
-        description: 'Something went wrong, please try again.',
-      })
-    } finally {
-      WebBrowser.maybeCompleteAuthSession()
-    }
-  }
-
-  const handleOAuthSignInWithPress = async (provider: Provider) => {
-    if (provider === 'apple' && Platform.OS === 'ios') {
-      // use native sign in with apple in ios
-      await signInWithApple()
-    } else {
-      // use web sign in with other providers
-      await handleOAuthWithWeb(provider)
-    }
+  const handleOAuthSignInWithPress = async (provider: string) => {
+    toast.show(`Sign in with ${provider} is not supported yet.`);
   }
 
   const handleEmailSignInWithPress = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    })
-    if (error) {
-      toast.show('Sign in failed', {
-        description: error.message,
+    try {
+      let response = await emailPasswordSignIn({
+        formFields: [
+          {
+            id: 'email',
+            value: email,
+          },
+          {
+            id: 'password',
+            value: password,
+          },
+        ],
       })
-      return
-    }
 
-    replace('/')
+      if (response.status === 'FIELD_ERROR') {
+        response.formFields.forEach((formField) => {
+          if (formField.id === 'email') {
+            // Email validation failed (for example incorrect email syntax).
+            toast.show(formField.error);
+          }
+        })
+      } else if (response.status === 'WRONG_CREDENTIALS_ERROR') {
+        // window.alert("Email password combination is incorrect.")
+        toast.show('Email password combination is incorrect.')
+      } else if (response.status === 'SIGN_IN_NOT_ALLOWED') {
+        // this can happen due to automatic account linking. Tell the user that their
+        // input credentials is wrong (so that they do through the password reset flow)
+        toast.show('Invalid credentials. Please go through the password reset flow!')
+      } else {
+        // sign in successful. The session tokens are automatically handled by
+        // the SDK.
+        replace('/')
+      }
+    } catch (err: any) {
+      if (err.isSuperTokensGeneralError === true) {
+        toast.show(err.message)
+      } else {
+        console.log('err', err);
+        toast.show('Oops! Something went wrong.')
+      }
+    }
   }
 
   return (

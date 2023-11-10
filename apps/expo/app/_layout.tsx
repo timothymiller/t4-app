@@ -33,7 +33,7 @@ export default function RootLayout() {
   }
 
   return (
-    <Provider initialSession={null}>
+    <Provider>
       <Stack />
     </Provider>
   )

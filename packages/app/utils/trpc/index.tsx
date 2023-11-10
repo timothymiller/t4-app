@@ -6,7 +6,6 @@ import type { AppRouter } from '@t4/api/src/router'
  */
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink } from '@trpc/client'
-import { supabase } from '../supabase/client'
 import superjson from 'superjson'
 import { useState } from 'react'
 import { replaceLocalhost } from './localhost.native'
@@ -30,14 +29,6 @@ export const TRPCProvider: React.FC<{
       transformer: superjson,
       links: [
         httpBatchLink({
-          async headers() {
-            const { data } = await supabase.auth.getSession()
-            const token = data?.session?.access_token
-
-            return {
-              Authorization: token ? `Bearer ${token}` : undefined,
-            }
-          },
           url: `${getApiUrl()}/trpc`,
         }),
       ],

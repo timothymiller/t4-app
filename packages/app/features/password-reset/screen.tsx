@@ -1,28 +1,37 @@
 import { YStack, useToastController } from '@t4/ui'
 import { useRouter } from 'solito/router'
 import { PasswordResetComponent } from '@t4/ui/src/PasswordReset'
-import { isExpoGo } from 'app/utils/flags'
-import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
+import { sendPasswordResetEmail } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 
 export function PasswordResetScreen() {
   const { push } = useRouter()
   const toast = useToastController()
-  const supabase = useSupabase()
 
   const handleEmailWithPress = async (email) => {
-    // Send email with the password reset link
-    const { error } = await supabase.auth.resetPasswordForEmail(email)
-    if (error) {
-      if (!isExpoGo) {
-        toast.show('Password reset request failed', {
-          description: error.message,
-        })
-      }
-      console.log('Password reset request failed', error)
-      return
-    }
+    try {
+      const { status } = await sendPasswordResetEmail({
+        formFields: [
+          {
+            id: 'email',
+            value: email,
+          },
+        ],
+      })
 
-    push('/')
+      if (status === 'PASSWORD_RESET_NOT_ALLOWED') {
+        toast.show(`Password reset is not allowed for this email! Please contact support!`)
+      } else if (status === 'FIELD_ERROR') {
+        toast.show(`No account exists with this email.`)
+      } else {
+        toast.show(`A password reset email has been sent to your email!`)
+        push('/')
+      }
+    } catch (error) {
+      console.log('Password reset request failed', error)
+      toast.show('Password reset request failed', {
+        description: error.message,
+      })
+    }
   }
 
   return (
