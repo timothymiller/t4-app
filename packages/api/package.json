@@ -20,7 +20,7 @@
     "@trpc/server": "^10.43.2",
     "@tsndr/cloudflare-worker-jwt": "^2.2.5",
     "drizzle-orm": "^0.29.0",
-    "drizzle-valibot": "^0.1.1",
+    "drizzle-valibot": "0.1.1-a6dc062",
     "hono": "^3.9.2",
     "miniflare": "3.20231025.1",
     "superjson": "1.13.3",
