@@ -1,23 +1,18 @@
 {
   "name": "@t4/ui",
   "version": "2.0.0",
-  "sideEffects": [
-    "*.css"
-  ],
+  "sideEffects": ["*.css"],
   "private": true,
   "main": "src/index.tsx",
   "module:jsx": "src",
-  "files": [
-    "types",
-    "dist"
-  ],
+  "files": ["types", "dist"],
   "scripts": {
     "build": "tamagui-build",
     "watch": "tamagui-build --watch",
     "clean": "rm -rf dist types node_modules .turbo"
   },
   "dependencies": {
-    "@shopify/flash-list": "^1.6.2",
+    "@shopify/flash-list": "^1.6.3",
     "@supabase/supabase-js": "^2.38.4",
     "@t4/api": "*",
     "@tamagui/animations-react-native": "1.75.9",

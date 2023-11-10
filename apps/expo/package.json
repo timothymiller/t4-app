@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
-    "@shopify/flash-list": "^1.6.2",
+    "@shopify/flash-list": "^1.6.3",
     "@t4/ui": "*",
     "app": "*",
     "babel-plugin-module-resolver": "^5.0.0",

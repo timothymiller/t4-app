@@ -3,14 +3,12 @@
   "version": "2.0.0",
   "main": "index.ts",
   "private": true,
-  "sideEffects": [
-    "*.css"
-  ],
+  "sideEffects": ["*.css"],
   "scripts": {
     "clean": "rm -rf node_modules"
   },
   "dependencies": {
-    "@shopify/flash-list": "^1.6.2",
+    "@shopify/flash-list": "^1.6.3",
     "@t4/ui": "*",
     "@tamagui/animations-react-native": "1.75.9",
     "@tamagui/colors": "1.75.9",
@@ -19,9 +17,9 @@
     "@tamagui/shorthands": "1.75.9",
     "@tamagui/themes": "1.75.9",
     "@tanstack/react-query": "^4.36.1",
-    "@trpc/client": "^10.43.1",
-    "@trpc/next": "^10.43.1",
-    "@trpc/react-query": "^10.43.1",
+    "@trpc/client": "^10.43.2",
+    "@trpc/next": "^10.43.2",
+    "@trpc/react-query": "^10.43.2",
     "burnt": "^0.12.1",
     "expo-constants": "~14.4.2",
     "expo-linking": "6.0.0",
