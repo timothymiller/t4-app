@@ -67,7 +67,10 @@
   },
   "[json]": {
     "editor.defaultFormatter": "biomejs.biome"
-  }
+  },
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true
   // Turn this on if you want to debug the T4 App Tools Extension
   // "terminal.integrated.defaultProfile.windows": null
 }
