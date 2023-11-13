@@ -1,16 +1,17 @@
-import { MMKVLoader } from 'react-native-mmkv-storage'
+import { MMKV } from 'react-native-mmkv'
 
-const cookieStorage = new MMKVLoader().withEncryption().withInstanceID('cookie').initialize()
+const cookieStorage = new MMKV()
 
 export class CookieHandler {
   private storageId = 'supertokens-cookie-handler'
 
-  private getData() {
-    return (cookieStorage.getMap(this.storageId) ?? {}) as Record<string, unknown>
+  private getData(): Record<string, string> {
+    const stringifiedJSON = cookieStorage.getString(this.storageId)
+    return JSON.parse(stringifiedJSON || '{}')
   }
 
-  private setData(data: Record<string, unknown>) {
-    cookieStorage.setMap(this.storageId, data)
+  private setData(data: Record<string, string>) {
+    cookieStorage.set(this.storageId, JSON.stringify(data))
   }
 
   private async setItem(key: string, value: string): Promise<void> {
@@ -19,37 +20,31 @@ export class CookieHandler {
     return this.setData(data)
   }
 
-  private async deleteItem(key: string): Promise<void> {
-    const data = this.getData()
-    if (!data) return
-    delete data[key]
-    return this.setData(data)
-  }
-
-  private isCookieExpired(expires: Date): boolean {
-    return expires.getTime() <= Date.now()
-  }
-
   async setCookie(cookieString: string): Promise<void> {
     const [nameValue = '', ...options] = cookieString.split(';')
     const [name, value] = nameValue.split('=').map((str) => str.trim())
     if (!name) return
     const optionsString = options.join(';')
-    const expiresMatch = optionsString.match(/expires=([^;]*)/)
-    if (expiresMatch) {
-      const expiresString = expiresMatch[1]!
-      const expires = new Date(expiresString)
-      if (this.isCookieExpired(expires)) {
-        this.deleteItem(name)
-        return
-      }
-    }
     this.setItem(name, `${name}=${value};${optionsString}`)
   }
 
   async getCookie(): Promise<string> {
     const data = this.getData()
-    const cookieString = Object.values(data).join('; ')
+
+    const activeCookies = Object.fromEntries(
+      Object.entries(data).filter(([key, value]) => {
+        const expiresMatch = value.match(/expires=([^;]*)/)
+        if (expiresMatch) {
+          const expiresString = expiresMatch[1]!
+          return new Date(expiresString).getTime() > Date.now()
+        }
+        return true
+      })
+    )
+
+    this.setData(activeCookies)
+
+    const cookieString = Object.values(activeCookies).join('; ')
     return cookieString
   }
 }

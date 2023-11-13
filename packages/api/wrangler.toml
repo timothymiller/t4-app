@@ -13,6 +13,11 @@ migrations_dir = "migrations"
 
 # The necessary secrets are:
 # - APP_URL - for preventing CORS errors
+#   Following are required for configuring SuperTokens. Fore more info see - https://supertokens.com/docs/thirdpartyemailpassword/appinfo 
+# - APP_NAME -
+# - API_URL - 
+# - SUPERTOKENS_CONNECTION_URI - 
+# - SUPERTOKENS_API_KEY -
 #
 # For local development, you can create a file called .dev.vars and use dotenv syntax.
 #

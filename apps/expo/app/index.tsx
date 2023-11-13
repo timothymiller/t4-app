@@ -1,10 +1,10 @@
-import 'app/utils/supertokens/superTokensPolyfill';
+import './supertokens/superTokensPolyfill';
 import { HomeScreen } from 'app/features/home/screen'
 import { Stack } from 'expo-router'
 import SuperTokens from 'supertokens-web-js'
-import { nativeConfig } from 'app/utils/supertokens/nativeConfig'
+import { config } from './supertokens/config'
 
-SuperTokens.init(nativeConfig);
+SuperTokens.init(config);
 
 export default function Screen() {
   return (

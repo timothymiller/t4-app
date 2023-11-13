@@ -5,7 +5,7 @@ import { createContext } from '@t4/api/src/context'
 import { trpcServer } from '@hono/trpc-server'
 import supertokens from 'supertokens-node'
 import { middleware as superTokensMiddleware } from './supertokens/middleware'
-import { superTokensConfig } from './supertokens/config'
+import { superTokensConfig } from './supertokens/config';
 
 supertokens.init(superTokensConfig)
 

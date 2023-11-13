@@ -1,13 +1,15 @@
 import { Context as HonoContext } from 'hono'
 import { getCookie, setCookie } from 'hono/cookie'
-import { BaseRequest, BaseResponse } from 'supertokens-node/lib/build/framework'
-import { HTTPMethod } from 'supertokens-node/lib/build/types'
+import type { HTTPMethod } from 'supertokens-node/types'
 
-export class STHonoRequest extends BaseRequest {
+
+export class STHonoRequest {
+  wrapperUsed: boolean;
+  original: any;
   private context: HonoContext
 
   constructor(context: HonoContext) {
-    super()
+    this.wrapperUsed = true;
     this.context = context
   }
 
@@ -43,11 +45,13 @@ export class STHonoRequest extends BaseRequest {
 // Note that SuperTokens' BaseResponse class requires returning a response to the client after using the sendJSONResponse or sendHTMLResponse methods. 
 // However, Hono's Context methods json and html yield a Response object that must be explicitly returned by the middleware or route handler.
 // To address this, we substitute context.res with the Response object returned by the json or html methods, and subsequently manually return the context.res object when necessary.
-export class STHonoResponse extends BaseResponse {
+export class STHonoResponse {
+  wrapperUsed: boolean;
+  original: any;
   private context: HonoContext
 
   constructor(context: HonoContext) {
-    super()
+    this.wrapperUsed = true;
     this.context = context
   }
 
@@ -94,8 +98,8 @@ export class STHonoResponse extends BaseResponse {
     this.context.res = this.context.json(content)
   }
 
-  sendHTMLResponse = (html: string) => {
-    this.context.res = this.context.html(html)
+  sendHTMLResponse = async (html: string) => {
+    this.context.res = await this.context.html(html)
   }
 
 }

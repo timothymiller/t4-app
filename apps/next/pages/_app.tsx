@@ -10,12 +10,10 @@ import { trpc } from 'app/utils/trpc/index.web'
 import Head from 'next/head'
 import type { SolitoAppProps } from 'solito'
 import SuperTokens from 'supertokens-web-js'
-import { SessionAuth } from 'app/utils/supertokens/SessionAuth'
-import { webConfig } from 'app/utils/supertokens/webConfig'
-import { useEffect } from 'react'
+import { config } from '../supertokens/config'
 
 if (typeof window !== 'undefined') {
-  SuperTokens.init(webConfig)
+  SuperTokens.init(config)
 }
 
 if (process.env.NODE_ENV === 'production') {
@@ -30,13 +28,6 @@ const T4App = ({
   Component,
   pageProps,
 }: SolitoAppProps) => {
-  useEffect(() => {
-    const removeListener = SessionAuth.getInstanceOrThrow().addEventListener((event) => {
-      console.log('Inside custom event listener', event)
-    })
-    return removeListener
-  }, [])
-
   return (
     <>
       <Metadata />

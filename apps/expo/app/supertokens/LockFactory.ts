@@ -1,31 +1,46 @@
+type LockState = { isLocked: boolean; waitingPromises: Array<(value: boolean) => void> }
 class Lock {
-  private locks: Record<string, boolean> = {};
+  private lockStateMap: Record<string, LockState> = {}
+
+  private getOrCreateLockState(key: string) {
+    if (!this.lockStateMap[key]) {
+      this.lockStateMap[key] = {
+        isLocked: false,
+        waitingPromises: [],
+      }
+    }
+    return this.lockStateMap[key] as LockState
+  }
 
   async acquireLock(key: string, timeout: number): Promise<boolean> {
-    if (!this.locks[key]) {
-      this.locks[key] = true
+    const lockState = this.getOrCreateLockState(key)
+
+    if (!lockState.isLocked) {
+      lockState.isLocked = true
       return true
     } else {
-      const startTime = Date.now()
-      while (Date.now() - startTime < timeout) {
-        await new Promise((resolve) => setTimeout(resolve, 100))
-        if (!this.locks[key]) {
-          this.locks[key] = true
-          return true
-        }
-      }
-      return false
+      return new Promise<boolean>((resolve) => {
+        lockState.waitingPromises.push(resolve)
+        setTimeout(() => resolve(false), timeout)
+      })
     }
   }
 
   async releaseLock(key: string): Promise<void> {
-    console.log('releaseLock called', key)
-    if (this.locks[key]) {
-      delete this.locks[key]
+    const lockState = this.getOrCreateLockState(key)
+
+    if (lockState.isLocked) {
+      lockState.isLocked = false
+
+      const nextLockPromise = lockState.waitingPromises.shift()
+      if (nextLockPromise) {
+        lockState.isLocked = true
+        nextLockPromise(true)
+      }
     }
   }
 }
 
 export async function LockFactory(): Promise<Lock> {
-  return new Lock();
+  return new Lock()
 }

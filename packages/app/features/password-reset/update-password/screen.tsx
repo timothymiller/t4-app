@@ -24,7 +24,6 @@ export function UpdatePasswordScreen() {
         toast.show(`Oops! Something went wrong.`)
       }
     } catch (err) {
-      console.log('Password update request failed', err)
       toast.show('Password update request failed')
     }
   }

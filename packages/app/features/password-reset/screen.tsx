@@ -27,7 +27,6 @@ export function PasswordResetScreen() {
         push('/')
       }
     } catch (error) {
-      console.log('Password reset request failed', error)
       toast.show('Password reset request failed', {
         description: error.message,
       })

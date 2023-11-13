@@ -1,51 +1,44 @@
-import { MMKVLoader } from 'react-native-mmkv-storage'
+import { MMKV } from 'react-native-mmkv'
 
-const localStorage = new MMKVLoader().withEncryption().withInstanceID('localStorage').initialize();
-
+const localStorage = new MMKV();
 export class StorageHandler {
   async key(index: number): Promise<string | null> {
-    throw new Error("Unsupported");
+    throw new Error(`key is not implemented`);
   }
 
   async getItem(key: string): Promise<string | null> {
-    console.log('getItem called', key);
-    return localStorage.getString(key);
+    return localStorage.getString(key) || null;
   }
 
   async clear(): Promise<void> {
-    throw new Error("Unsupported");
+    localStorage.clearAll();
   }
 
   async removeItem(key: string): Promise<void> {
-    console.log('removeItem called', key);
-    localStorage.removeItem(key);
+    localStorage.delete(key);
   }
 
   async setItem(key: string, value: string): Promise<void> {
-    localStorage.setString(key, value);
+    localStorage.set(key, value);
   }
 
   keySync(index: number): string | null {
-    throw new Error("Unsupported");
+    throw new Error(`keySync is not implemented`);
   }
 
   getItemSync(key: string): string | null {
-    console.log('getItemSync called', key);
-    return localStorage.getString(key);
+    return localStorage.getString(key) || null;
   }
 
   clearSync(): void {
-    console.log('clearSync called');
-    localStorage.clearStore();
+    localStorage.clearAll();
   }
 
   removeItemSync(key: string): void {
-    console.log('removeItemSync called', key);
-    localStorage.removeItem(key);
+    localStorage.delete(key);
   }
 
   setItemSync(key: string, value: string): void {
-    console.log('setItemSync called', key, value);
-    localStorage.setString(key, value);
+    localStorage.set(key, value);
   }
 }
