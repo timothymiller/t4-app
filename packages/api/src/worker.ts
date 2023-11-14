@@ -9,7 +9,7 @@ import { superTokensConfig } from './supertokens/config'
 
 supertokens.init(superTokensConfig)
 
-export type Bindings = {
+type Bindings = {
   DB: D1Database
   APP_URL: string
 }

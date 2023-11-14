@@ -6,8 +6,8 @@ import { createTRPCReact } from '@trpc/react-query'
  */
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink } from '@trpc/client'
-import { useState } from 'react'
 import superjson from 'superjson'
+import { useState } from 'react'
 import { replaceLocalhost } from './localhost.native'
 
 /**

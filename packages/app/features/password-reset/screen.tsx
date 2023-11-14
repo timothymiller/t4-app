@@ -2,6 +2,7 @@ import { YStack, useToastController } from '@t4/ui'
 import { PasswordResetComponent } from '@t4/ui/src/PasswordReset'
 import { sendPasswordResetEmail } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 import { isIos, isAndroid } from '@tamagui/core'
+import { useRouter } from 'solito/router'
 
 export function PasswordResetScreen() {
   const { push } = useRouter()
