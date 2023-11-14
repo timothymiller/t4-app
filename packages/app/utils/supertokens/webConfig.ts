@@ -1,5 +1,5 @@
 import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword'
-import { SessionAuth } from './SessionAuth';
+import { SessionAuth } from './SessionAuth'
 
 export const webConfig = {
   appInfo: {
@@ -16,4 +16,3 @@ export const webConfig = {
     ThirdPartyEmailPassword.init(),
   ],
 }
-

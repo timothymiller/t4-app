@@ -1,11 +1,13 @@
-import { Hono } from 'hono'
+import { trpcServer } from '@hono/trpc-server'
+import { createContext } from '@t4/api/src/context'
 import { appRouter } from '@t4/api/src/router'
+import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { createContext } from '@t4/api/src/context'
 import { trpcServer } from '@hono/trpc-server'
 import supertokens from 'supertokens-node'
 import { middleware as superTokensMiddleware } from './supertokens/middleware'
-import { superTokensConfig } from './supertokens/config';
+import { superTokensConfig } from './supertokens/config'
 
 supertokens.init(superTokensConfig)
 

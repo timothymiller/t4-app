@@ -221,7 +221,7 @@ The VSCode extension is optional but highly recommended. It provides a better de
 - ✅ Uses tRPC & Tanstack Query for fetching & caching across all platforms.
 - ✅ Authentication across all platforms.
 - ✅ Powered by TypeScript for type safety and better developer experience.
-- ✅ Comes with pre-configured ESLint and Prettier for code consistency.
+- ✅ Comes with pre-configured Biome for lightning fast code consistency.
 - ✅ Github Action publishing for Expo apps
 - ✅ Database migration in CI/CD
 - ✅ Tauri Support

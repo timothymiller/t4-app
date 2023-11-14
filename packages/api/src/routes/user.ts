@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm'
-import { UserTable, UserSchema, type User } from '../db/schema'
-import { router, protectedProcedure } from '../trpc'
 import { parse } from 'valibot'
+import { UserTable, insertUserSchema } from '../db/schema'
+import { protectedProcedure, router } from '../trpc'
 
 export const userRouter = router({
   current: protectedProcedure.query(async ({ ctx }) => {
@@ -10,7 +10,7 @@ export const userRouter = router({
     return user
   }),
   create: protectedProcedure
-    .input((raw) => parse(UserSchema, raw))
+    .input((raw) => parse(insertUserSchema, raw))
     .mutation(async ({ ctx, input }) => {
       const { db } = ctx
       await db.insert(UserTable).values(input).run()

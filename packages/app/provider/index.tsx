@@ -1,11 +1,11 @@
 import { CustomToast, ToastProvider } from '@t4/ui'
+import { AuthProvider } from './auth'
+import { SafeAreaProvider } from './safe-area'
+import { SolitoImageProvider } from './solito-image'
+import { TamaguiProvider } from './tamagui'
+import { TamaguiThemeProvider } from './theme'
 import { ToastViewport } from './toast-viewport'
 import { TRPCProvider } from './trpc'
-import { SafeAreaProvider } from './safe-area'
-import { TamaguiThemeProvider } from './theme'
-import { TamaguiProvider } from './tamagui'
-import { SolitoImageProvider } from './solito-image'
-import { AuthProvider } from './auth'
 
 export function Provider({
   children,
@@ -17,7 +17,7 @@ export function Provider({
       <TamaguiProvider>
         <SafeAreaProvider>
           <SolitoImageProvider>
-            <ToastProvider swipeDirection="horizontal" duration={6000} native={['mobile']}>
+            <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
               <AuthProvider>
                 <TRPCProvider>{children}</TRPCProvider>
                 <CustomToast />

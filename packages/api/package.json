@@ -10,17 +10,17 @@
     "migrate:local": "wrangler d1 migrations apply production --local",
     "seed": "wrangler d1 execute production --file=./seed/seed.sql",
     "seed:local": "wrangler d1 execute production --local --file=./seed/seed.sql",
-    "studio": "cd .wrangler/ && bun ../src/db/studio.ts",
+    "studio": "drizzle-kit studio",
     "deploy": "wrangler deploy --minify src/worker.ts",
     "postinstall": "bun generate",
     "clean": "rm -rf .turbo node_modules"
   },
   "dependencies": {
     "@hono/trpc-server": "^0.1.0",
-    "@trpc/server": "^10.43.0",
-    "drizzle-orm": "^0.28.6",
-    "drizzle-valibot": "^0.1.1",
-    "hono": "^3.9.1",
+    "@trpc/server": "^10.43.2",
+    "drizzle-orm": "^0.29.0",
+    "drizzle-valibot": "beta",
+    "hono": "^3.9.2",
     "miniflare": "3.20231025.1",
     "superjson": "1.13.3",
     "supertokens-node": "^16.4.0",
@@ -28,9 +28,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231025.0",
-    "bun-types": "^1.0.8",
-    "drizzle-kit": "^0.19.13",
-    "eslint": "^8.52.0",
+    "drizzle-kit": "^0.20.1",
     "typescript": "^5.2.2",
     "wrangler": "^3.15.0"
   }

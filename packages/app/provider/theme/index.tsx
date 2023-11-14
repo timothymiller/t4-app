@@ -1,11 +1,11 @@
-import { useForceUpdate } from '@t4/ui'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
+import { useForceUpdate } from '@t4/ui'
+import { appThemeKey, useAppTheme, useCurrentTheme } from 'app/atoms/theme'
+import { ThemeVariant } from 'app/utils/theme'
+import { StatusBar } from 'expo-status-bar'
 import React, { useEffect, useLayoutEffect } from 'react'
 import { Appearance } from 'react-native'
-import { StatusBar } from 'expo-status-bar'
 import { storage } from '../kv'
-import { ThemeVariant } from 'app/utils/theme'
-import { appThemeKey, useAppTheme, useCurrentTheme } from 'app/atoms/theme'
 
 export const TamaguiThemeProvider = ({
   children,
@@ -28,14 +28,14 @@ export const TamaguiThemeProvider = ({
     return () => {
       systemThemeChangeListener.remove()
     }
-  }, [])
+  }, [setAppTheme, forceUpdate])
 
   useLayoutEffect(() => {
     const savedAppTheme = storage.getString(appThemeKey)
     if (savedAppTheme !== undefined) {
       setAppTheme(savedAppTheme as ThemeVariant)
     }
-  }, [])
+  }, [setAppTheme])
 
   useEffect(() => {
     if (appTheme === undefined) {
@@ -44,7 +44,7 @@ export const TamaguiThemeProvider = ({
     } else {
       storage.set(appThemeKey, appTheme)
     }
-  }, [appTheme])
+  }, [appTheme, setAppTheme])
 
   return (
     <ThemeProvider value={themeValue}>

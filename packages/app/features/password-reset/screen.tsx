@@ -1,8 +1,7 @@
 import { YStack, useToastController } from '@t4/ui'
-import { useRouter } from 'solito/router'
 import { PasswordResetComponent } from '@t4/ui/src/PasswordReset'
 import { sendPasswordResetEmail } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
-import { isIos, isAndroid } from '@tamagui/core';
+import { isIos, isAndroid } from '@tamagui/core'
 
 export function PasswordResetScreen() {
   const { push } = useRouter()
@@ -19,19 +18,19 @@ export function PasswordResetScreen() {
         ],
         options: {
           async preAPIHook(input) {
-              return {
-                ...input,
-                requestInit: {
-                  ...input.requestInit,
-                  headers: {
-                    ...input.requestInit.headers,
-                    'X-Platform': isAndroid ? 'android' : isIos ? 'ios' : 'web',
-                  }
-                }
-              }
+            return {
+              ...input,
+              requestInit: {
+                ...input.requestInit,
+                headers: {
+                  ...input.requestInit.headers,
+                  'X-Platform': isAndroid ? 'android' : isIos ? 'ios' : 'web',
+                },
+              },
+            }
           },
-        }
-      }, )
+        },
+      })
 
       if (status === 'PASSWORD_RESET_NOT_ALLOWED') {
         toast.show(`Password reset is not allowed for this email! Please contact support!`)
@@ -49,8 +48,8 @@ export function PasswordResetScreen() {
   }
 
   return (
-    <YStack flex={1} justifyContent="center" alignItems="center" space>
-      <PasswordResetComponent type="email" handleWithPress={handleEmailWithPress} />
+    <YStack flex={1} justifyContent='center' alignItems='center' space>
+      <PasswordResetComponent type='email' handleWithPress={handleEmailWithPress} />
     </YStack>
   )
 }

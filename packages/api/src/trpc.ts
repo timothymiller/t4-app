@@ -1,6 +1,6 @@
-import { initTRPC, TRPCError } from '@trpc/server'
-import { type Context } from './context'
+import { TRPCError, initTRPC } from '@trpc/server'
 import superJson from 'superjson'
+import { type Context } from './context'
 
 const t = initTRPC.context<Context>().create({
   transformer: superJson,
@@ -19,7 +19,7 @@ const isAuthed = t.middleware(({ next, ctx }) => {
   }
   return next({
     ctx: {
-      session: ctx.session
+      session: ctx.session,
     },
   })
 })

@@ -1,15 +1,14 @@
 import { YStack, useToastController } from '@t4/ui'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import { useRouter } from 'solito/router'
-import { emailPasswordSignIn } from 'supertokens-web-js/recipe/thirdpartyemailpassword';
-
+import { emailPasswordSignIn } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 
 export const SignInScreen = (): React.ReactNode => {
   const { replace } = useRouter()
   const toast = useToastController()
 
   const handleOAuthSignInWithPress = async (provider: string) => {
-    toast.show(`Sign in with ${provider} is not supported yet.`);
+    toast.show(`Sign in with ${provider} is not supported yet.`)
   }
 
   const handleEmailSignInWithPress = async (email: string, password: string) => {
@@ -31,7 +30,7 @@ export const SignInScreen = (): React.ReactNode => {
         response.formFields.forEach((formField) => {
           if (formField.id === 'email') {
             // Email validation failed (for example incorrect email syntax).
-            toast.show(formField.error);
+            toast.show(formField.error)
           }
         })
       } else if (response.status === 'WRONG_CREDENTIALS_ERROR') {
@@ -50,16 +49,15 @@ export const SignInScreen = (): React.ReactNode => {
       if (err.isSuperTokensGeneralError === true) {
         toast.show(err.message)
       } else {
-        console.log('err', err);
         toast.show('Oops! Something went wrong.')
       }
     }
   }
 
   return (
-    <YStack flex={1} justifyContent="center" alignItems="center" space>
+    <YStack flex={1} justifyContent='center' alignItems='center' space>
       <SignUpSignInComponent
-        type="sign-in"
+        type='sign-in'
         handleOAuthWithPress={handleOAuthSignInWithPress}
         handleEmailWithPress={handleEmailSignInWithPress}
       />

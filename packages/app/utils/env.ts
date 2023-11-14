@@ -3,7 +3,7 @@
  * Different prefixes for public environments across Expo & Next.js currently block this.
  */
 
-import { string, object, parse } from 'valibot'
+import { object, parse, string } from 'valibot'
 
 const envSchema = object({
   NODE_ENV: string(),

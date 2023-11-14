@@ -11,22 +11,22 @@ import {
   YStack,
   useToastController,
 } from '@t4/ui'
+import { ThemeToggle } from '@t4/ui/src/ThemeToggle'
 import { ChevronDown } from '@tamagui/lucide-icons'
+import { trpc } from 'app/utils/trpc'
 import React, { useState } from 'react'
 import { Linking } from 'react-native'
+import { SolitoImage } from 'solito/image'
 import { useLink } from 'solito/link'
 import { useSheetOpen } from '../../atoms/sheet'
-import { SolitoImage } from 'solito/image'
-import { trpc } from 'app/utils/trpc'
-import Session from "supertokens-web-js/recipe/session";
-import { ThemeToggle } from '@t4/ui/src/ThemeToggle'
+import Session from 'supertokens-web-js/recipe/session'
 import { useSession } from 'app/utils/supertokens/hooks/useSession'
 
 export function HomeScreen() {
   const utils = trpc.useContext()
-  const { doesSessionExist, accessTokenPayload, userId } = useSession();
-  const toast = useToastController();
-  
+  const { doesSessionExist, accessTokenPayload, userId } = useSession()
+  const toast = useToastController()
+
   const signInLink = useLink({
     href: '/sign-in',
   })
@@ -49,48 +49,48 @@ export function HomeScreen() {
 
   return (
     <ScrollView>
-      <YStack flex={1} justifyContent="center" alignItems="center" padding="$4" space="$4">
-        <SolitoImage src="/t4-logo.png" width={128} height={128} alt="T4 Logo" />
-        <H1 textAlign="center">👋 Hello, T4 App</H1>
+      <YStack flex={1} jc='center' ai='center' p='$4' space='$4'>
+        <SolitoImage src='/t4-logo.png' width={128} height={128} alt='T4 Logo' />
+        <H1 textAlign='center'>👋 Hello, T4 App</H1>
         <Separator />
-        <Paragraph textAlign="center" size={'$2'}>
+        <Paragraph textAlign='center' size={'$2'}>
           Unifying React Native + Web.
         </Paragraph>
-        <Paragraph textAlign="center" size={'$2'}>
+        <Paragraph textAlign='center' size={'$2'}>
           The T4 Stack is made by{' '}
-          <Anchor href="https://twitter.com/ogtimothymiller" target="_blank">
+          <Anchor href='https://twitter.com/ogtimothymiller' target='_blank'>
             Tim Miller
           </Anchor>
           , give it a star{' '}
-          <Anchor href="https://github.com/timothymiller/t4-app" target="_blank" rel="noreferrer">
+          <Anchor href='https://github.com/timothymiller/t4-app' target='_blank' rel='noreferrer'>
             on Github.
           </Anchor>
         </Paragraph>
-        <Paragraph textAlign="center" size={'$2'}>
+        <Paragraph textAlign='center' size={'$2'}>
           Tamagui is made by{' '}
-          <Anchor href="https://twitter.com/natebirdman" target="_blank">
+          <Anchor href='https://twitter.com/natebirdman' target='_blank'>
             Nate Weinert
           </Anchor>
           , give it a star{' '}
-          <Anchor href="https://github.com/tamagui/tamagui" target="_blank" rel="noreferrer">
+          <Anchor href='https://github.com/tamagui/tamagui' target='_blank' rel='noreferrer'>
             on Github.
           </Anchor>
         </Paragraph>
 
-        <XStack gap="$5">
+        <XStack gap='$5'>
           <Button onPress={() => Linking.openURL('https://t4stack.com/')}>Learn More...</Button>
-          <ThemeToggle/>
+          <ThemeToggle />
         </XStack>
 
         <H3>🦮🐴 App Demos</H3>
-        <YStack space="$2">
-          <Button {...virtualizedListLink} space="$2">
+        <YStack space='$2'>
+          <Button {...virtualizedListLink} space='$2'>
             Virtualized List
           </Button>
-          <Button {...dataFetchingLink} space="$2">
+          <Button {...dataFetchingLink} space='$2'>
             Fetching Data
           </Button>
-          <Button {...paramsLink} space="$2">
+          <Button {...paramsLink} space='$2'>
             Params
           </Button>
           <Button
@@ -107,20 +107,20 @@ export function HomeScreen() {
         {doesSessionExist ? (
           <Button
             onPress={async () => {
-              await Session.signOut();
+              await Session.signOut()
               // Clear tanstack query cache of authenticated routes
               utils.auth.secretMessage.reset()
             }}
-            space="$2"
+            space='$2'
           >
             Sign Out
           </Button>
         ) : (
-          <XStack space="$2">
-            <Button {...signInLink} space="$2">
+          <XStack space='$2'>
+            <Button {...signInLink} space='$2'>
               Sign In
             </Button>
-            <Button {...signUpLink} space="$2">
+            <Button {...signUpLink} space='$2'>
               Sign Up
             </Button>
           </XStack>
@@ -136,7 +136,7 @@ const SheetDemo = (): React.ReactNode => {
 
   return (
     <>
-      <Button onPress={() => setOpen((x) => !x)} space="$2">
+      <Button onPress={() => setOpen((x) => !x)} space='$2'>
         Bottom Sheet
       </Button>
       <Sheet
@@ -149,10 +149,10 @@ const SheetDemo = (): React.ReactNode => {
         dismissOnSnapToBottom
       >
         <Sheet.Overlay />
-        <Sheet.Frame alignItems="center" justifyContent="center">
+        <Sheet.Frame alignItems='center' justifyContent='center'>
           <Sheet.Handle />
           <Button
-            size="$6"
+            size='$6'
             circular
             icon={ChevronDown}
             onPress={() => {

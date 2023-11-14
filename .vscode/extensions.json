@@ -1,22 +1,17 @@
 {
   "recommendations": [
     "albbus.t4-app-tools",
-    "esbenp.prettier-vscode",
-    "wix.vscode-import-cost",
     "unifiedjs.vscode-mdx",
-    "RobbOwen.synthwave-vscode",
+    "robbowen.synthwave-vscode",
     "wayou.vscode-todo-highlight",
     "steoates.autoimport",
-    "IronGeek.vscode-env",
-    "DavidAnson.vscode-markdownlint",
+    "irongeek.vscode-env",
+    "davidanson.vscode-markdownlint",
     "waderyan.gitblame",
-    "PeterSchmalfeldt.explorer-exclude",
-    "dbaeumer.vscode-eslint",
+    "peterschmalfeldt.explorer-exclude",
     "wilsonsio.color-vision",
     "tamasfe.even-better-toml",
-    "formulahendry.auto-rename-tag",
-    "dbaeumer.vscode-eslint",
     "expo.vscode-expo-tools",
-    "Postman.postman-for-vscode"
+    "biomejs.biome"
   ]
 }

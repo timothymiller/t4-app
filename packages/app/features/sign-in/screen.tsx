@@ -30,7 +30,7 @@ export const SignInScreen = (): React.ReactNode => {
         response.formFields.forEach((formField) => {
           if (formField.id === 'email') {
             // Email validation failed (for example incorrect email syntax).
-            toast.show(formField.error);
+            toast.show(formField.error)
           }
         })
       } else if (response.status === 'WRONG_CREDENTIALS_ERROR') {
@@ -45,7 +45,7 @@ export const SignInScreen = (): React.ReactNode => {
         replace('/')
       }
     } catch (err: any) {
-      console.log("err", err)
+      console.log('err', err)
       if (err.isSuperTokensGeneralError === true) {
         toast.show(err.message)
       } else {
@@ -55,9 +55,9 @@ export const SignInScreen = (): React.ReactNode => {
   }
 
   return (
-    <YStack flex={1} justifyContent="center" alignItems="center" space>
+    <YStack flex={1} justifyContent='center' alignItems='center' space>
       <SignUpSignInComponent
-        type="sign-in"
+        type='sign-in'
         handleOAuthWithPress={handleOAuthSignInWithPress}
         handleEmailWithPress={handleEmailSignInWithPress}
       />

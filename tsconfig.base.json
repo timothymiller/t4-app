@@ -20,8 +20,7 @@
     "experimentalDecorators": true,
     "useUnknownInCatchVariables": false,
     "preserveConstEnums": true,
-    // DONT DO THIS so jsdoc will remain
-    "removeComments": false,
+    "removeComments": true,
     "skipLibCheck": true,
     "sourceMap": false,
     "strictNullChecks": true,

@@ -4,5 +4,3 @@ export const redirectToSignIn = {
     permanent: false,
   },
 }
-
-

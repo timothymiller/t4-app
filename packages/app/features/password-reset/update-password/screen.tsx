@@ -51,8 +51,8 @@ export function UpdatePasswordScreen() {
   }
 
   return (
-    <YStack flex={1} justifyContent="center" alignItems="center" space>
-      <PasswordResetComponent type="password" handleWithPress={handlePasswordUpdateWithPress} />
+    <YStack flex={1} justifyContent='center' alignItems='center' space>
+      <PasswordResetComponent type='password' handleWithPress={handlePasswordUpdateWithPress} />
     </YStack>
   )
 }

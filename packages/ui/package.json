@@ -1,24 +1,19 @@
 {
   "name": "@t4/ui",
   "version": "2.0.0",
-  "sideEffects": [
-    "*.css"
-  ],
+  "sideEffects": ["*.css"],
   "private": true,
   "main": "src/index.tsx",
   "module:jsx": "src",
-  "files": [
-    "types",
-    "dist"
-  ],
+  "files": ["types", "dist"],
   "scripts": {
     "build": "tamagui-build",
     "watch": "tamagui-build --watch",
     "clean": "rm -rf dist types node_modules .turbo"
   },
   "dependencies": {
-    "@shopify/flash-list": "^1.6.2",
-    "@t4/api": "*",
+    "@shopify/flash-list": "^1.6.3",
+    "@t4/api": "workspace:*",
     "@tamagui/animations-react-native": "1.75.9",
     "@tamagui/font-inter": "1.75.9",
     "@tamagui/react-native-media-driver": "1.75.9",
@@ -26,7 +21,7 @@
     "@tamagui/themes": "1.75.9",
     "@tamagui/toast": "1.75.9",
     "@tanstack/react-virtual": "3.0.0-beta.68",
-    "jotai": "^2.5.0",
+    "jotai": "^2.5.1",
     "tamagui": "1.75.9"
   },
   "devDependencies": {

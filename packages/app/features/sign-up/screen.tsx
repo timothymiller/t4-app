@@ -1,6 +1,6 @@
 import { YStack, useToastController } from '@t4/ui'
-import { useRouter } from 'solito/router'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
+import { useRouter } from 'solito/router'
 import { emailPasswordSignUp } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 
 export const SignUpScreen = (): React.ReactNode => {
@@ -51,9 +51,9 @@ export const SignUpScreen = (): React.ReactNode => {
   }
 
   return (
-    <YStack flex={1} justifyContent="center" alignItems="center" space>
+    <YStack flex={1} justifyContent='center' alignItems='center' space>
       <SignUpSignInComponent
-        type="sign-up"
+        type='sign-up'
         handleOAuthWithPress={handleOAuthSignInWithPress}
         handleEmailWithPress={handleEmailSignUpWithPress}
       />
