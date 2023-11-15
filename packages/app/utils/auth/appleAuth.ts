@@ -16,8 +16,8 @@ export async function initiateAppleSignIn() {
     nonce: hashedNonce,
   })
 
-  const token = credential.identityToken
-  if (!token) throw new Error('No id token')
+  const idToken = credential.identityToken
+  if (!idToken) throw new Error('No id token')
 
-  return { token, nonce: rawNonce }
+  return { idToken, nonce: rawNonce }
 }

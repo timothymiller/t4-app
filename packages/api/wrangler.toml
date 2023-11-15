@@ -15,7 +15,26 @@ migrations_dir = "migrations"
 # - APP_URL - for preventing CORS errors
 # - JWT_VERIFICATION_KEY - for Supabase @link https://supabase.com
 #
-# For local development, you can create a file called .dev.vars and use dotenv syntax.
+# Other env variables for auth:
+#
+# - APPLE_CLIENT_ID
+# - APPLE_TEAM_ID
+# - APPLE_KEY_ID
+# - APPLE_CERTIFICATE
+# - DISCORD_CLIENT_ID
+# - DISCORD_CLIENT_SECRET
+# - GITHUB_CLIENT_ID
+# - GITHUB_CLIENT_SECRET
+# - GOOGLE_CLIENT_ID
+# - GOOGLE_CLIENT_SECRET
+# - RESEND_API_KEY
+# - PUBLIC_SUPPORT_EMAIL
+# - PUBLIC_API_URL
+# - PUBLIC_NATIVE_SCHEME
+# - TOTP_SECRET
+#
+# These can be set in the top level .env.local file followed by running `bun i`
+# which will then generate a .dev.vars file used for local cloudflare development.
 #
 # For deployed environments, you can use wrangler secrets to set these values.
 # For example:

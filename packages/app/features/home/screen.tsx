@@ -13,20 +13,18 @@ import {
 } from '@t4/ui'
 import { ThemeToggle } from '@t4/ui/src/ThemeToggle'
 import { ChevronDown } from '@tamagui/lucide-icons'
-import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
-import { useUser } from 'app/utils/supabase/hooks/useUser'
-import { trpc } from 'app/utils/trpc'
 import React, { useState } from 'react'
 import { Linking } from 'react-native'
-import { SolitoImage } from 'solito/image'
 import { useLink } from 'solito/link'
 import { useSheetOpen } from '../../atoms/sheet'
+import { SolitoImage } from 'solito/image'
+import { useUser } from 'app/utils/auth/useUser'
+import { useSignOut } from 'app/utils/auth'
 
 export function HomeScreen() {
-  const utils = trpc.useContext()
-  const supabase = useSupabase()
   const { user } = useUser()
   const toast = useToastController()
+  const { signOut } = useSignOut()
 
   const signInLink = useLink({
     href: '/sign-in',
@@ -108,9 +106,7 @@ export function HomeScreen() {
         {user ? (
           <Button
             onPress={async () => {
-              supabase.auth.signOut()
-              // Clear tanstack query cache of authenticated routes
-              utils.auth.secretMessage.reset()
+              await signOut()
             }}
             space='$2'
           >

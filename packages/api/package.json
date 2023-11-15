@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "wrangler dev",
+    "types": "wrangler types",
     "generate": "drizzle-kit generate:sqlite --schema=./src/db/schema.ts --out=./migrations",
     "migrate": "wrangler d1 migrations apply production",
     "migrate:local": "wrangler d1 migrations apply production --local",
@@ -16,18 +17,25 @@
     "clean": "rm -rf .turbo node_modules"
   },
   "dependencies": {
+    "@cloudflare/workers-wasi": "^0.0.5",
     "@hono/trpc-server": "^0.1.0",
+    "@libsql/client": "^0.3.5",
+    "@lucia-auth/adapter-sqlite": "3.0.0-beta.1",
     "@trpc/server": "^10.43.2",
-    "@tsndr/cloudflare-worker-jwt": "^2.2.5",
-    "drizzle-orm": "^0.29.0",
+    "arctic": "0.3.1",
+    "drizzle-orm": "0.29.0",
     "drizzle-valibot": "beta",
     "hono": "^3.9.2",
+    "lucia": "3.0.0-beta.6",
     "miniflare": "3.20231025.1",
+    "oslo": "0.22.0",
     "superjson": "1.13.3",
+    "ts-pattern": "^5.0.5",
     "valibot": "^0.20.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231025.0",
+    "bun-types": "^1.0.11",
     "drizzle-kit": "^0.20.1",
     "typescript": "^5.2.2",
     "wrangler": "^3.15.0"
