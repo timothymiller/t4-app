@@ -1,13 +1,8 @@
-import { ApiContextProps } from '../context'
 import { getAuthOptions } from './shared'
-import { signInWithOAuthCode } from './user'
 import { D1Adapter } from '@lucia-auth/adapter-sqlite'
 import type { Context as HonoContext, HonoRequest } from 'hono'
-import { getCookie } from 'hono/cookie'
 import { Lucia } from 'lucia'
 import type { Middleware } from 'lucia'
-import { isAuthProviderName } from './providers'
-import { TRPCError } from '@trpc/server'
 
 export const hono = (): Middleware<[HonoContext]> => {
   return ({ args }) => {
