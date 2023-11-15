@@ -104,28 +104,6 @@ async function getUser({
   }
 }
 
-async function getUserByEmail(ctx: ApiContextProps, email: string) {
-  try {
-    const existingUserKey = await ctx.auth.getKey('email', email)
-    if (existingUserKey) {
-      const users = await ctx.db
-        .select()
-        .from(UserTable)
-        .where(eq(UserTable.id, existingUserKey.userId))
-      if (users?.length) {
-        return users[0]
-      }
-    }
-  } catch (e) {
-    if (e instanceof LuciaError && e.message === 'AUTH_INVALID_KEY_ID') {
-      // no user exists with this email
-    } else {
-      throw e
-    }
-  }
-  return false
-}
-
 interface AppleIdTokenPayload {
   nonce?: string
   nonce_supported?: string
