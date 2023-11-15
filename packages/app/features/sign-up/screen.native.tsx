@@ -1,7 +1,7 @@
 import type { AuthProviderName } from '@t4/api/src/auth/providers'
 import { YStack, useToastController } from '@t4/ui'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
-import { useSignIn, useSignUp } from 'app/utils/auth'
+import { useSessionRedirect, useSignIn, useSignUp } from 'app/utils/auth'
 import { initiateAppleSignIn } from 'app/utils/auth/appleAuth'
 import { storeSessionToken } from 'app/utils/auth/credentials'
 import { capitalizeWord } from '@t4/ui/src/libs/string'
@@ -16,6 +16,9 @@ export const SignUpScreen = (): React.ReactNode => {
   const toast = useToastController()
   const utils = trpc.useUtils()
 
+  // Redirects back to the home page if signed in
+  useSessionRedirect({ true: '/' })
+
   const postLogin = () => {
     utils.user.invalidate()
     utils.auth.invalidate()
@@ -23,8 +26,8 @@ export const SignUpScreen = (): React.ReactNode => {
 
   const signInWithApple = async () => {
     try {
-      const { token, nonce } = await initiateAppleSignIn()
-      const res = await signIn({ provider: 'apple', token, nonce })
+      const { idToken, nonce } = await initiateAppleSignIn()
+      const res = await signIn({ provider: 'apple', idToken, nonce })
     } catch (e) {
       if (typeof e === 'object' && !!e && 'code' in e) {
         if (e.code === 'ERR_REQUEST_CANCELED') {
