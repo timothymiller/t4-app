@@ -10,6 +10,7 @@ import type { AuthProviderName } from '@t4/api/src/auth/providers'
 import { CreateUserSchema } from '@t4/api/src/schema/user'
 import { isWeb } from '@t4/ui/src'
 import type { User } from '@t4/api/src/db/schema'
+import { match } from 'ts-pattern'
 
 export const AUTH_SERVICE: 'lucia' | 'supabase' = 'lucia'
 // ^ We could maybe configure which auth service to use
@@ -139,26 +140,6 @@ export type SignInProps =
   | SignInWithAppleIdTokenAndNonce
   | SignInWithOAuth
 
-export function isSignInWithEmail(props: SignInProps): props is SignInWithEmail {
-  // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
-  return props['email'] && !props['password']
-}
-
-export function isSignInWithEmailAndCode(props: SignInProps): props is SignInWithEmailAndCode {
-  // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
-  return props['email'] && props['code']
-}
-
-export function isSignInWithPhone(props: SignInProps): props is SignInWithPhone {
-  // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
-  return props['phone'] && !props['password']
-}
-
-export function isSignInWithPhoneAndCode(props: SignInProps): props is SignInWithPhoneAndCode {
-  // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
-  return props['phone'] && props['code']
-}
-
 export function isSignInWithEmailAndPassword(
   props: SignInProps
 ): props is SignInWithEmailAndPassword {
@@ -166,9 +147,24 @@ export function isSignInWithEmailAndPassword(
   return props['email'] && props['password']
 }
 
-export function isSignInWithOAuth(props: SignInProps): props is SignInWithOAuth {
+export function isSignInWithEmailAndCode(props: SignInProps): props is SignInWithEmailAndCode {
   // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
-  return props['provider'] && !props['idToken'] && !props['nonce']
+  return props['email'] && props['code']
+}
+
+export function isSignInWithEmail(props: SignInProps): props is SignInWithEmail {
+  // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
+  return props['email'] && !props['password']
+}
+
+export function isSignInWithPhoneAndCode(props: SignInProps): props is SignInWithPhoneAndCode {
+  // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
+  return props['phone'] && props['code']
+}
+
+export function isSignInWithPhone(props: SignInProps): props is SignInWithPhone {
+  // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
+  return props['phone'] && !props['password']
 }
 
 export function isSignInWithAppleIdTokenAndNonce(
@@ -176,6 +172,11 @@ export function isSignInWithAppleIdTokenAndNonce(
 ): props is SignInWithAppleIdTokenAndNonce {
   // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
   return props['provider'] === 'apple' && props['idToken'] && props['nonce']
+}
+
+export function isSignInWithOAuth(props: SignInProps): props is SignInWithOAuth {
+  // biome-ignore lint/complexity/useLiteralKeys: Index access needed for type guard
+  return props['provider'] && !props['idToken'] && !props['nonce']
 }
 
 export function useSignIn() {
@@ -197,40 +198,43 @@ export function useSignIn() {
 
   // Might want to useCallback here and replace guards with ts-pattern
   const signIn = async (props: SignInProps) => {
-    if (isSignInWithEmailAndPassword(props)) {
-      const res = await mutation.mutateAsync(props)
-      postLogin(res)
-      return res
-    }
-    if (isSignInWithAppleIdTokenAndNonce(props)) {
-      const res = await mutation.mutateAsync(props)
-      if (res.session) {
+    return await match(props)
+      .with({}, isSignInWithAppleIdTokenAndNonce, async (props) => {
+        const res = await mutation.mutateAsync(props)
+        if (res.session) {
+          postLogin(res)
+        }
+        return res
+      })
+      .with({}, isSignInWithOAuth, async (props) => {
+        return await mutation.mutateAsync(props)
+      })
+      .with({}, isSignInWithEmailAndPassword, async (props) => {
+        const res = await mutation.mutateAsync(props)
         postLogin(res)
-      }
-      return res
-    }
-    if (isSignInWithOAuth(props)) {
-      return await mutation.mutateAsync(props)
-    }
-    if (isSignInWithEmail(props)) {
-      return await mutation.mutateAsync(props)
-    }
-    if (isSignInWithEmailAndCode(props)) {
-      const res = await mutation.mutateAsync(props)
-      postLogin(res)
-      return res
-    }
-    if (isSignInWithPhone(props)) {
-      throw new Error('Sign in with phone is not implemented yet')
-      // const res = await mutation.mutateAsync(props)
-      // TODO should switch to a view to enter the sms code
-      // return res
-    }
-    if (isSignInWithPhoneAndCode(props)) {
-      const res = await mutation.mutateAsync(props)
-      postLogin(res)
-      return res
-    }
+        return res
+      })
+      .with({}, isSignInWithEmailAndCode, async (props) => {
+        const res = await mutation.mutateAsync(props)
+        postLogin(res)
+        return res
+      })
+      .with({}, isSignInWithEmail, async (props) => {
+        return await mutation.mutateAsync(props)
+      })
+      .with({}, isSignInWithPhoneAndCode, async () => {
+        throw new Error('Sign in with phone is not implemented yet')
+        // const res = await mutation.mutateAsync(props)
+        // TODO should switch to a view to enter the sms code
+        // return res
+      })
+      .with({}, isSignInWithPhone, async () => {
+        throw new Error('Sign in with phone is not implemented yet')
+        // const res = await mutation.mutateAsync(props)
+        // TODO should switch to a view to enter the sms code
+        // return res
+      })
+      .exhaustive()
   }
 
   return { signIn, mutation }
