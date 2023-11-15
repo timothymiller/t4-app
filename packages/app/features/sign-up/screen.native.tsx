@@ -11,10 +11,10 @@ import * as WebBrowser from 'expo-web-browser'
 import { Platform } from 'react-native'
 
 export const SignUpScreen = (): React.ReactNode => {
-  const { signIn } = useSignIn()
-  const { signUp } = useSignUp()
   const toast = useToastController()
   const utils = trpc.useUtils()
+  const { signIn } = useSignIn()
+  const { signUp } = useSignUp()
 
   // Redirects back to the home page if signed in
   useSessionRedirect({ true: '/' })

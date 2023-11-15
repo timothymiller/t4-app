@@ -7,7 +7,7 @@ import { Bindings } from './worker'
 import type { inferAsyncReturnType } from '@trpc/server'
 import type { Context as HonoContext, HonoRequest } from 'hono'
 import type { AuthRequest, Lucia } from 'lucia'
-import { getPayloadFromJWT } from './utils/crypto'
+import { verifyToken } from './utils/crypto'
 
 export interface ApiContextProps {
   session?: Session
@@ -43,13 +43,13 @@ export const createContext = async (
       }
 
       try {
-        const payload = await getPayloadFromJWT(sessionToken, env.JWT_VERIFICATION_KEY)
+        const payload = await verifyToken(sessionToken, env.JWT_VERIFICATION_KEY)
         if (!payload) {
           return null
         }
-        if ('sub' in payload && payload.sub) {
+        if (payload.subject) {
           return {
-            id: payload.sub,
+            id: payload.subject,
           }
         }
       } catch (e) {

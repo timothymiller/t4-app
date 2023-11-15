@@ -70,17 +70,12 @@ export const isJWTExpired = (parsedJWT: JWT): boolean => {
   return false
 }
 
+export function textToArrayBuffer(text: string) {
+  return Uint8Array.from(text.split('').map((x) => x.charCodeAt(0))).buffer as ArrayBuffer
+}
+
 export async function importHMACKey(key: string) {
-  return await crypto.subtle.exportKey(
-    'raw',
-    await crypto.subtle.importKey(
-      'jwk',
-      { kty: 'oct', k: key, alg: 'HS256', ext: true },
-      { name: 'HMAC', hash: { name: 'SHA-256' } },
-      true,
-      ['verify']
-    )
-  )
+  return textToArrayBuffer(key)
 }
 
 /**
@@ -88,7 +83,7 @@ export async function importHMACKey(key: string) {
  *
  * The verification_key param can be a function to fetch the key from an external source.
  */
-export async function getPayloadFromJWT(
+export async function verifyToken(
   token: string,
   verificationKey:
     | ArrayBuffer
@@ -111,12 +106,12 @@ export async function getPayloadFromJWT(
     .with(
       [P.any, P.intersection({}, P.not(P.instanceOf(ArrayBuffer)))],
       async ([decodedToken, key]) => {
-        return await crypto.subtle.exportKey(
+        return (await crypto.subtle.exportKey(
           'spki',
           await crypto.subtle.importKey('jwk', key as JsonWebKey, decodedToken.algorithm, true, [
             'verify',
           ])
-        )
+        )) as ArrayBuffer
       }
     )
     .otherwise(() => {
@@ -130,5 +125,5 @@ export async function getPayloadFromJWT(
     return null
   }
 
-  return authorized?.payload
+  return authorized
 }
