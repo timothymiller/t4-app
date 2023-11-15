@@ -207,7 +207,7 @@ export const sendEmailSignIn = async (ctx: ApiContextProps, email: string) => {
         Authorization: `Bearer ${ctx.env.RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: ctx.env.NEXT_PUBLIC_SUPPORT_EMAIL,
+        from: ctx.env.PUBLIC_SUPPORT_EMAIL,
         to: email,
         subject: 'T4 App verification code',
         html: `<p>This email was used to sign in to ${ctx.env.APP_URL}.</p>

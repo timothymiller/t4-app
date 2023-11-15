@@ -7,7 +7,6 @@ import { trpcServer } from '@hono/trpc-server'
 export type Bindings = Env & {
   JWT_VERIFICATION_KEY: string
   APP_URL: string
-  API_URL: string
   // For auth
   APPLE_CLIENT_ID: string
   APPLE_TEAM_ID: string
