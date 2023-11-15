@@ -18,7 +18,7 @@
   "dependencies": {
     "@hono/trpc-server": "^0.1.0",
     "@trpc/server": "^10.43.2",
-    "@tsndr/cloudflare-worker-jwt": "^2.2.5",
+    "@tsndr/cloudflare-worker-jwt": "2.2.7",
     "drizzle-orm": "^0.29.0",
     "drizzle-valibot": "beta",
     "hono": "^3.9.2",
