@@ -23,7 +23,7 @@
     <img src="https://img.shields.io/discord/1117289587472081016?color=%235865F2&label=Discord&logo=discord&logoColor=white&style=for-the-badge" alt="Join the T4 discord community">
   </a>&nbsp;
   <a href = "https://www.npmjs.com/package/create-t4-app">
-    <img src="https://img.shields.io/npm/dw/create-t4-app?logo=npm&style=for-the-badge&color=CC3534" alt="Weekly downloads for create-t4-app on npmjs.org">
+    <img src="https://img.shields.io/npm/dm/create-t4-app?logo=npm&style=for-the-badge&color=CC3534" alt="Weekly downloads for create-t4-app on npmjs.org">
   </a>&nbsp;
   <a href="https://marketplace.visualstudio.com/items?itemName=albbus.t4-app-tools">
     <img src="https://img.shields.io/visual-studio-marketplace/i/albbus.t4-app-tools?logo=visual-studio-code&style=for-the-badge&color=0078D7" alt="VSCode Extension Installs">
