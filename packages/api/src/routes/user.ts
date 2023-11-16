@@ -23,9 +23,11 @@ import { GetByIdSchema, GetSessionsSchema } from '../schema/shared'
 import { CreateUserSchema, SignInSchema } from '../schema/user'
 import { AppleIdTokenClaims, generateCodeVerifier, generateState } from 'arctic'
 import { getAuthProvider, getUserFromAuthProvider } from '../auth/shared'
-import { getPayloadFromJWT, isJWTExpired, sha256 } from '../utils/crypto'
+import { verifyToken, isJWTExpired, sha256 } from '../utils/crypto'
 import { getCookie } from 'hono/cookie'
 import { JWT, parseJWT } from '../utils/jwt'
+import { P, match } from 'ts-pattern'
+import { AuthProviderName } from '../auth/providers'
 
 export function sanitizeUserIdInput<K extends keyof T, T>({
   ctx,
@@ -104,14 +106,6 @@ async function getUser({
   }
 }
 
-interface AppleIdTokenPayload {
-  nonce?: string
-  nonce_supported?: string
-  sub: string
-  email?: string
-  email_verified?: boolean
-}
-
 const validateRedirectDomain = (ctx: ApiContextProps, redirectTo?: string) => {
   if (!redirectTo) {
     return true
@@ -123,22 +117,16 @@ const validateRedirectDomain = (ctx: ApiContextProps, redirectTo?: string) => {
   )
 }
 
-const signIn = async ({
-  ctx,
-  input,
-}: {
-  ctx: ApiContextProps
-  input: Input<typeof SignInSchema>
-}) => {
-  let res: SignInResult = {}
-  if (input.provider && input.idToken) {
+const signInWithAppleIdTokenHandler =
+  (ctx: ApiContextProps) =>
+  async (input: Input<typeof SignInSchema> & { provider: AuthProviderName; idToken: string }) => {
     // This supports native sign-in with apple
     //
     // It could be possible to fetch the Apple public RSA key and verify the JWT.
     // However, cloudflare workers webcrypto threw in error during testing:
     // `Unrecognized key import algorithm "RS256" requested`
     // https://developers.cloudflare.com/workers/runtime-apis/web-crypto/#supported-algorithms
-    // const payload = (await getPayloadFromJWT(input.idToken, async (payload: JWT) => {
+    // const payload = (await verifyToken(input.idToken, async (payload: JWT) => {
     //   if (
     //     !('kid' in payload.header) ||
     //     typeof payload.header.kid !== 'string' ||
@@ -198,8 +186,12 @@ const signIn = async ({
     })
     const session = await createSession(ctx.auth, user.id)
     ctx.authRequest?.setSessionCookie(session.id)
-    res.session = session
-  } else if (input.provider && input.code) {
+    return { session }
+  }
+
+const signInWithOAuthCodeHandler =
+  (ctx: ApiContextProps) =>
+  async (input: Input<typeof SignInSchema> & { provider: AuthProviderName; code: string }) => {
     // Handling OAuth callback after user has authenticated with provider
     if (!ctx.c) {
       throw new TRPCError({
@@ -210,7 +202,7 @@ const signIn = async ({
 
     const storedState = getCookie(ctx.c, `${input.provider}_oauth_state`)
     const storedRedirect = getCookie(ctx.c, `${input.provider}_oauth_redirect`)
-    res = await signInWithOAuthCode(
+    return await signInWithOAuthCode(
       ctx,
       input.provider,
       input.code,
@@ -218,7 +210,11 @@ const signIn = async ({
       storedState,
       storedRedirect
     )
-  } else if (input.provider) {
+  }
+
+const authorizationUrlHandler =
+  (ctx: ApiContextProps) =>
+  async (input: Input<typeof SignInSchema> & { provider: AuthProviderName }) => {
     // Get the authorization URL and store the state in a cookie
     const provider = getAuthProvider(ctx, input.provider)
     const state = generateState()
@@ -235,42 +231,63 @@ const signIn = async ({
     ctx.setCookie(
       `${input.provider}_oauth_redirect=${input.redirectTo || ''}; Path=/; HttpOnly; SameSite=Lax`
     )
-    res.redirectTo = url.toString()
+    return { redirectTo: url.toString() }
   }
-  if (input.email) {
-    if (input.code) {
-      res = await signInWithCode(ctx, 'email', input.email, input.code, ctx.setCookie)
-      if (res.session?.userId && input.password) {
-        // If the user is also resetting their password,
-        // update the password, invalidate all sessions, create a new session and return it
-        updatePassword(ctx, input.email, input.password)
-        console.log('calling update passing and invalidate sessions')
-        await ctx.auth.invalidateUserSessions(res.session?.userId)
-        const session = await createSession(ctx.auth, res.session?.userId)
-        ctx.authRequest?.setSessionCookie(session.id)
-        res.session = session
-      }
-    } else if (input.password) {
-      res = await signInWithEmail(ctx, input.email, input.password, ctx.setCookie)
-    } else {
-      res = await sendEmailSignIn(ctx, input.email)
+
+const signInWithEmailCodeHandler =
+  (ctx: ApiContextProps) =>
+  async (input: Input<typeof SignInSchema> & { email: string; code: string }) => {
+    const res = await signInWithCode(ctx, 'email', input.email, input.code, ctx.setCookie)
+    if (res.session?.userId && input.password) {
+      // If the user is also resetting their password,
+      // update the password, invalidate all sessions, create a new session and return it
+      updatePassword(ctx, input.email, input.password)
+      console.log('calling update passing and invalidate sessions')
+      await ctx.auth.invalidateUserSessions(res.session?.userId)
+      const session = await createSession(ctx.auth, res.session?.userId)
+      ctx.authRequest?.setSessionCookie(session.id)
+      res.session = session
     }
-    // } else if (input.phone) {
-    //   if (input.code) {
-    //     res = await signInWithPhoneAndCode(ctx, input.phone, input.code, ctx.setCookie)
-    //   } else {
-    //     res = await sendPhoneSignIn(ctx, input.phone)
-    //   }
+    return res
   }
-  // console.log('log in result', res)
-  return res
+
+const signIn = async ({
+  ctx,
+  input,
+}: {
+  ctx: ApiContextProps
+  input: Input<typeof SignInSchema>
+}) => {
+  return await match(input)
+    .returnType<Promise<SignInResult>>()
+    .with({ provider: P.string, idToken: P.string }, signInWithAppleIdTokenHandler(ctx))
+    .with({ provider: P.string, code: P.string }, signInWithOAuthCodeHandler(ctx))
+    .with({ provider: P.string }, authorizationUrlHandler(ctx))
+    .with({ email: P.string, code: P.string }, signInWithEmailCodeHandler(ctx))
+    .with({ email: P.string, password: P.string }, async (input) => {
+      return await signInWithEmail(ctx, input.email, input.password, ctx.setCookie)
+    })
+    .with({ email: P.string }, async (input) => {
+      return await sendEmailSignIn(ctx, input.email)
+    })
+    // .with({ phone: P.string, code: P.string }, async (input) => {
+    //   return await signInWithPhoneAndCode(ctx, input.phone, input.code, ctx.setCookie)
+    // .with({ phone: P.string }, async (input) => {
+    //     return await sendPhoneSignIn(ctx, input.phone)
+    // })
+    .otherwise(() => {
+      throw new TRPCError({
+        code: 'BAD_REQUEST',
+        message: 'Invalid sign in request.',
+      })
+    })
 }
 
 export const userRouter = router({
   signIn: publicProcedure.input(valibotParser(SignInSchema)).mutation(signIn),
 
   signOut: protectedProcedure.mutation(async ({ ctx }) => {
-    if (!ctx.user?.id) {
+    if (!ctx.session?.id) {
       throw new TRPCError({
         code: 'UNAUTHORIZED',
         message: 'You must be signed in to sign out.',
