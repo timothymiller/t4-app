@@ -2,18 +2,38 @@ import { YStack, useToastController } from '@t4/ui'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import { useRouter } from 'solito/router'
 import { emailPasswordSignIn } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
+import { getAuthorisationURLWithQueryParamsAndSetState } from 'supertokens-web-js/recipe/thirdparty'
 
 export const SignInScreen = (): React.ReactNode => {
   const { replace } = useRouter()
   const toast = useToastController()
 
-  const handleOAuthSignInWithPress = async (provider: string) => {
-    alert('OAuth sign in is not implemented yet')
+  const handleOAuthSignInWithPress = async (provider: 'google' | 'apple' | 'discord') => {
+    if (provider === 'apple') {
+      toast.show('Apple OAuth is not supported yet.')
+      return
+    }
+
+    try {
+      const authUrl = await getAuthorisationURLWithQueryParamsAndSetState({
+        thirdPartyId: provider,
+        frontendRedirectURI: `http://localhost:3000/oauth/${provider}`,
+      })
+
+      window.location.assign(authUrl)
+    } catch (err) {
+      console.log('err', err)
+      if (err.isSuperTokensGeneralError === true) {
+        toast.show(err.message)
+      } else {
+        toast.show('Oops! Something went wrong.')
+      }
+    }
   }
 
   const handleEmailSignInWithPress = async (email: string, password: string) => {
     try {
-      let response = await emailPasswordSignIn({
+      const response = await emailPasswordSignIn({
         formFields: [
           {
             id: 'email',
@@ -27,12 +47,11 @@ export const SignInScreen = (): React.ReactNode => {
       })
 
       if (response.status === 'FIELD_ERROR') {
-        response.formFields.forEach((formField) => {
+        for (const formField of response.formFields) {
           if (formField.id === 'email') {
-            // Email validation failed (for example incorrect email syntax).
             toast.show(formField.error)
           }
-        })
+        }
       } else if (response.status === 'WRONG_CREDENTIALS_ERROR') {
         toast.show('Email password combination is incorrect.')
       } else if (response.status === 'SIGN_IN_NOT_ALLOWED') {

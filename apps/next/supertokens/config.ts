@@ -1,4 +1,5 @@
 import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword'
+import ThirdParty from 'supertokens-web-js/recipe/thirdparty'
 import { SessionAuth } from 'app/utils/supertokens/SessionAuth'
 
 export const config = {
@@ -7,5 +8,5 @@ export const config = {
     apiDomain: process.env.NEXT_PUBLIC_API_URL!,
     apiBasePath: '/api/auth',
   },
-  recipeList: [SessionAuth.init({}), ThirdPartyEmailPassword.init()],
+  recipeList: [SessionAuth.init({}), ThirdPartyEmailPassword.init(), ThirdParty.init()],
 }

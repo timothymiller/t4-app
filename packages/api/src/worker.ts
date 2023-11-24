@@ -5,16 +5,26 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import supertokens from 'supertokens-node'
 import { middleware as superTokensMiddleware } from './supertokens/middleware'
-import { superTokensConfig } from './supertokens/config'
+import { getSuperTokensConfig } from './supertokens/config'
 
-supertokens.init(superTokensConfig)
-
-type Bindings = {
+export type Bindings = {
   DB: D1Database
   APP_URL: string
+  SUPERTOKENS_CONNECTION_URI: string
+  SUPERTOKENS_API_KEY: string
+  API_URL: string
+  DISCORD_CLIENT_ID: string
+  DISCORD_CLIENT_SECRET: string
+  GOOGLE_CLIENT_ID: string
+  GOOGLE_CLIENT_SECRET: string
 }
 
 const app = new Hono<{ Bindings: Bindings }>()
+
+app.use('*', async (c, next) => {
+  supertokens.init(getSuperTokensConfig(c.env))
+  await next()
+})
 
 // Setup CORS for the frontend
 app.use('*', async (c, next) => {

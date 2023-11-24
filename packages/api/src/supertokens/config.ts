@@ -2,52 +2,80 @@ import type { TypeInput } from 'supertokens-node/types'
 import SuperTokens from 'supertokens-node'
 import Session from 'supertokens-node/recipe/session'
 import ThirdPartyEmailPassword from 'supertokens-node/recipe/thirdpartyemailpassword'
+import ThirdParty from 'supertokens-node/recipe/thirdparty'
+import { Bindings } from '../worker'
 
-// https://try.supertokens.com is for demo purposes. Replace this with the address of your core instance (sign up on supertokens.com), or self host a core.
-const SUPERTOKENS_CONNECTION_URI = 'https://try.supertokens.com'
-const SUPERTOKENS_API_KEY = ''
-const API_DOMAIN = 'http://localhost:8787'
-const WEBSITE_DOMAIN = 'http://localhost:3000'
-
-export const superTokensConfig: TypeInput = {
-  framework: 'custom',
-  supertokens: {
-    connectionURI: SUPERTOKENS_CONNECTION_URI,
-    apiKey: SUPERTOKENS_API_KEY,
-  },
-  appInfo: {
-    appName: 'T4 App',
-    apiDomain: API_DOMAIN,
-    websiteDomain: WEBSITE_DOMAIN,
-    apiBasePath: '/api/auth',
-  },
-  recipeList: [
-    ThirdPartyEmailPassword.init({
-      emailDelivery: {
-        override: (originalImplementation) => {
-          return {
-            ...originalImplementation,
-            sendEmail: async function (input) {
-              const request = SuperTokens.getRequestFromUserContext(input.userContext)
-              const platform = request?.getHeaderValue('X-Platform') ?? 'web'
-              if (input.type === 'PASSWORD_RESET') {
-                return originalImplementation.sendEmail({
-                  ...input,
-                  passwordResetLink: input.passwordResetLink.replace(
-                    // This is: `${websiteDomain}/auth/reset-password`
-                    `${WEBSITE_DOMAIN}/auth/reset-password`,
-                    platform === 'web'
-                      ? `${WEBSITE_DOMAIN}/password-reset/update-password`
-                      : `t4://password-reset/update-password`
-                  ),
-                })
-              }
-              return originalImplementation.sendEmail(input)
+export function getSuperTokensConfig(env: Bindings): TypeInput {
+  return {
+    framework: 'custom',
+    supertokens: {
+      connectionURI: env.SUPERTOKENS_CONNECTION_URI,
+      apiKey: env.SUPERTOKENS_API_KEY,
+    },
+    appInfo: {
+      appName: 'T4 App',
+      apiDomain: env.API_URL,
+      websiteDomain: env.APP_URL,
+      apiBasePath: '/api/auth',
+    },
+    recipeList: [
+      ThirdParty.init({
+        signInAndUpFeature: {
+          // We have provided you with development keys which you can use for testing.
+          // IMPORTANT: Please replace them with your own OAuth keys for production use.
+          providers: [
+            {
+              config: {
+                thirdPartyId: 'discord',
+                clients: [
+                  {
+                    clientId: env.DISCORD_CLIENT_ID,
+                    clientSecret: env.DISCORD_CLIENT_SECRET,
+                  },
+                ],
+              },
             },
-          }
+            {
+              config: {
+                thirdPartyId: 'google',
+                clients: [
+                  {
+                    clientId: env.GOOGLE_CLIENT_ID,
+                    clientSecret: env.GOOGLE_CLIENT_SECRET,
+                  },
+                ],
+              },
+            },
+          ],
         },
-      },
-    }),
-    Session.init(), // initializes session features
-  ],
+      }),
+      ThirdPartyEmailPassword.init({
+        emailDelivery: {
+          override: (originalImplementation) => {
+            return {
+              ...originalImplementation,
+              sendEmail: async function (input) {
+                const request = SuperTokens.getRequestFromUserContext(input.userContext)
+                const platform = request?.getHeaderValue('X-Platform') ?? 'web'
+                if (input.type === 'PASSWORD_RESET') {
+                  return originalImplementation.sendEmail({
+                    ...input,
+                    passwordResetLink: input.passwordResetLink.replace(
+                      // This is: `${websiteDomain}/auth/reset-password`
+                      `${env.APP_URL}/auth/reset-password`,
+                      platform === 'web'
+                        ? `${env.APP_URL}/password-reset/update-password`
+                        : 't4://password-reset/update-password'
+                    ),
+                  })
+                }
+                return originalImplementation.sendEmail(input)
+              },
+            }
+          },
+        },
+      }),
+      Session.init(), // initializes session features
+    ],
+  }
 }
