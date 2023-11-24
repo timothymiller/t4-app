@@ -23,7 +23,7 @@
     <img src="https://img.shields.io/discord/1117289587472081016?color=%235865F2&label=Discord&logo=discord&logoColor=white&style=for-the-badge" alt="Join the T4 discord community">
   </a>&nbsp;
   <a href = "https://www.npmjs.com/package/create-t4-app">
-    <img src="https://img.shields.io/npm/dw/create-t4-app?logo=npm&style=for-the-badge&color=CC3534" alt="Weekly downloads for create-t4-app on npmjs.org">
+    <img src="https://img.shields.io/npm/dm/create-t4-app?logo=npm&style=for-the-badge&color=CC3534" alt="Weekly downloads for create-t4-app on npmjs.org">
   </a>&nbsp;
   <a href="https://marketplace.visualstudio.com/items?itemName=albbus.t4-app-tools">
     <img src="https://img.shields.io/visual-studio-marketplace/i/albbus.t4-app-tools?logo=visual-studio-code&style=for-the-badge&color=0078D7" alt="VSCode Extension Installs">
@@ -35,6 +35,8 @@
 The T4 Stack is a universal web and native stack made by [Tim Miller](https://twitter.com/ogtimothymiller) focused on **developer experience**, **rapid development**, and **performance**.
 
 Easy integration with **Cloudflare** services, such as R2 & D1 enable developers to build apps with **AI-powered features** at a **lower cost** compared to AWS.
+
+Ship it today and witness **6 second package install** times & **30 second backend deployments**.
 
 👉 Further documentation can be found on the [T4 Stack website](https://t4stack.com). 👈
 
@@ -107,7 +109,7 @@ Easy integration with **Cloudflare** services, such as R2 & D1 enable developers
 
 ## 📖 Background
 
-T4 is a project starter kit for building **type-safe**, **native** & **web** applications in TypeScript using Tamagui, tRPC, and Turborepo. Deploy to Cloudflare for a global edge network. All at a fraction of the cost of AWS, Vercel, or Azure.
+T4 is a project starter kit for building **type-safe**, **native** & **web** applications in TypeScript using Tamagui, tRPC, and Tauri. Deploy to Cloudflare for a global edge network. All at a fraction of the cost of AWS, Vercel, or Azure.
 
 It provides a unified, opinionated, & minimalistic setup for quickly getting started with building native & web apps, using the same code, without having to worry about the complexities of setting up a development environment.
 
