@@ -1,8 +1,8 @@
 import { type inferAsyncReturnType } from '@trpc/server'
 import { DrizzleD1Database } from 'drizzle-orm/d1'
-import { createDb } from './db/client'
 import { Context as HonoContext } from 'hono'
 import { SessionContainer } from 'supertokens-node/recipe/session'
+import { createDb } from './db/client'
 
 interface ApiContextProps {
   session?: SessionContainer

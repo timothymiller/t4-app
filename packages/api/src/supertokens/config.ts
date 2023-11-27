@@ -1,8 +1,8 @@
-import type { TypeInput } from 'supertokens-node/types'
 import SuperTokens from 'supertokens-node'
 import Session from 'supertokens-node/recipe/session'
-import ThirdPartyEmailPassword from 'supertokens-node/recipe/thirdpartyemailpassword'
 import ThirdParty from 'supertokens-node/recipe/thirdparty'
+import ThirdPartyEmailPassword from 'supertokens-node/recipe/thirdpartyemailpassword'
+import type { TypeInput } from 'supertokens-node/types'
 import { Bindings } from '../worker'
 
 export function getSuperTokensConfig(env: Bindings): TypeInput {
@@ -29,8 +29,8 @@ export function getSuperTokensConfig(env: Bindings): TypeInput {
                 thirdPartyId: 'discord',
                 clients: [
                   {
+                    // No clientSecret is needed for Discord as it uses PKCE
                     clientId: env.DISCORD_CLIENT_ID,
-                    clientSecret: env.DISCORD_CLIENT_SECRET,
                   },
                 ],
               },

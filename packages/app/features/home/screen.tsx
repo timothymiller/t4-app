@@ -13,14 +13,14 @@ import {
 } from '@t4/ui'
 import { ThemeToggle } from '@t4/ui/src/ThemeToggle'
 import { ChevronDown } from '@tamagui/lucide-icons'
+import { useSession } from 'app/utils/supertokens/hooks/useSession'
 import { trpc } from 'app/utils/trpc'
 import React, { useState } from 'react'
 import { Linking } from 'react-native'
 import { SolitoImage } from 'solito/image'
 import { useLink } from 'solito/link'
-import { useSheetOpen } from '../../atoms/sheet'
 import Session from 'supertokens-web-js/recipe/session'
-import { useSession } from 'app/utils/supertokens/hooks/useSession'
+import { useSheetOpen } from '../../atoms/sheet'
 
 export function HomeScreen() {
   const utils = trpc.useContext()

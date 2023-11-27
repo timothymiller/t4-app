@@ -1,8 +1,8 @@
-import './supertokens/superTokensPolyfill'
 import { HomeScreen } from 'app/features/home/screen'
 import { Stack } from 'expo-router'
 import SuperTokens from 'supertokens-web-js'
 import { config } from './supertokens/config'
+import './supertokens/superTokensPolyfill'
 
 SuperTokens.init(config)
 

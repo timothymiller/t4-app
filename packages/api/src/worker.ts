@@ -4,8 +4,8 @@ import { appRouter } from '@t4/api/src/router'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import supertokens from 'supertokens-node'
-import { middleware as superTokensMiddleware } from './supertokens/middleware'
 import { getSuperTokensConfig } from './supertokens/config'
+import { middleware as superTokensMiddleware } from './supertokens/middleware'
 
 export type Bindings = {
   DB: D1Database
@@ -14,7 +14,6 @@ export type Bindings = {
   SUPERTOKENS_API_KEY: string
   API_URL: string
   DISCORD_CLIENT_ID: string
-  DISCORD_CLIENT_SECRET: string
   GOOGLE_CLIENT_ID: string
   GOOGLE_CLIENT_SECRET: string
 }

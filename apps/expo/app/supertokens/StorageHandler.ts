@@ -3,7 +3,7 @@ import { MMKV } from 'react-native-mmkv'
 const localStorage = new MMKV()
 export class StorageHandler {
   async key(index: number): Promise<string | null> {
-    throw new Error(`key is not implemented`)
+    throw new Error('key is not implemented')
   }
 
   async getItem(key: string): Promise<string | null> {
@@ -23,7 +23,7 @@ export class StorageHandler {
   }
 
   keySync(index: number): string | null {
-    throw new Error(`keySync is not implemented`)
+    throw new Error('keySync is not implemented')
   }
 
   getItemSync(key: string): string | null {

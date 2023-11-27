@@ -1,8 +1,8 @@
 import { YStack, useToastController } from '@t4/ui'
 import { PasswordResetComponent } from '@t4/ui/src/PasswordReset'
-import { sendPasswordResetEmail } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
-import { isIos, isAndroid } from '@tamagui/core'
+import { isAndroid, isIos } from '@tamagui/core'
 import { useRouter } from 'solito/router'
+import { sendPasswordResetEmail } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 
 export function PasswordResetScreen() {
   const { push } = useRouter()
@@ -34,11 +34,11 @@ export function PasswordResetScreen() {
       })
 
       if (status === 'PASSWORD_RESET_NOT_ALLOWED') {
-        toast.show(`Password reset is not allowed for this email! Please contact support!`)
+        toast.show('Password reset is not allowed for this email! Please contact support!')
       } else if (status === 'FIELD_ERROR') {
-        toast.show(`No account exists with this email.`)
+        toast.show('No account exists with this email.')
       } else {
-        toast.show(`A password reset email has been sent to your email!`)
+        toast.show('A password reset email has been sent to your email!')
         push('/')
       }
     } catch (error) {

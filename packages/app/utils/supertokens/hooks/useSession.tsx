@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import Session from 'supertokens-web-js/recipe/session'
-import { SessionAuth } from '../SessionAuth'
+import { SessionWrapper } from '../SessionWrapper'
 
 type SessionContextValue = {
   isLoading: boolean
@@ -47,7 +47,7 @@ const SessionProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   useEffect(() => {
-    const removeListener = SessionAuth.getInstanceOrThrow().addEventListener((event) => {
+    const removeListener = SessionWrapper.getInstanceOrThrow().addEventListener((event) => {
       const sessionContextUpdate = event.sessionContext
       setSession({
         isLoading: false,

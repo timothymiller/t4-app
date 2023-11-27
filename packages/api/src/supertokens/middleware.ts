@@ -1,9 +1,9 @@
 import { Context, Next } from 'hono'
-import { STHonoRequest, STHonoResponse } from './hono'
-import { middleware as customMiddleware, PreParsedRequest } from 'supertokens-node/framework/custom'
-import { HTTPMethod } from 'supertokens-node/types'
-import Session from 'supertokens-node/recipe/session'
 import { getCookie } from 'hono/cookie'
+import { PreParsedRequest, middleware as customMiddleware } from 'supertokens-node/framework/custom'
+import Session from 'supertokens-node/recipe/session'
+import { HTTPMethod } from 'supertokens-node/types'
+import { STHonoRequest, STHonoResponse } from './hono'
 
 export const middleware = () => {
   return async function (c: Context, next: Next) {

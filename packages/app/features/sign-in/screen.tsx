@@ -1,8 +1,8 @@
 import { YStack, useToastController } from '@t4/ui'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import { useRouter } from 'solito/router'
-import { emailPasswordSignIn } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 import { getAuthorisationURLWithQueryParamsAndSetState } from 'supertokens-web-js/recipe/thirdparty'
+import { emailPasswordSignIn } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 
 export const SignInScreen = (): React.ReactNode => {
   const { replace } = useRouter()
@@ -17,7 +17,7 @@ export const SignInScreen = (): React.ReactNode => {
     try {
       const authUrl = await getAuthorisationURLWithQueryParamsAndSetState({
         thirdPartyId: provider,
-        frontendRedirectURI: `http://localhost:3000/oauth/${provider}`,
+        frontendRedirectURI: `${process.env.NEXT_PUBLIC_APP_URL}/oauth/${provider}`,
       })
 
       window.location.assign(authUrl)

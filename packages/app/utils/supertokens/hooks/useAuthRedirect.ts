@@ -1,15 +1,15 @@
 import { useEffect } from 'react'
 import { useRouter } from 'solito/router'
-import { SessionAuth } from '../SessionAuth'
+import { SessionWrapper } from '../SessionWrapper'
 
 export const useAuthRedirect = () => {
   const router = useRouter()
   useEffect(() => {
-    const removeListener = SessionAuth.getInstanceOrThrow().addEventListener((event) => {
+    const removeListener = SessionWrapper.getInstanceOrThrow().addEventListener((event) => {
       if (event.action === 'SIGN_OUT' || event.action === 'UNAUTHORISED') {
         router.replace('/')
       }
     })
     return removeListener
-  }, [])
+  }, [router])
 }

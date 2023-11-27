@@ -34,8 +34,8 @@ export class CookieHandler {
     const activeCookies = Object.fromEntries(
       Object.entries(data).filter(([key, value]) => {
         const expiresMatch = value.match(/expires=([^;]*)/)
-        if (expiresMatch) {
-          const expiresString = expiresMatch[1]!
+        const expiresString = expiresMatch?.[1]
+        if (expiresString) {
           return new Date(expiresString).getTime() > Date.now()
         }
         return true

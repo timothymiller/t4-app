@@ -1,14 +1,34 @@
 import { YStack, useToastController } from '@t4/ui'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import { useRouter } from 'solito/router'
+import { getAuthorisationURLWithQueryParamsAndSetState } from 'supertokens-web-js/recipe/thirdparty'
 import { emailPasswordSignUp } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 
 export const SignUpScreen = (): React.ReactNode => {
   const { push } = useRouter()
   const toast = useToastController()
 
-  const handleOAuthSignInWithPress = async (provider: string) => {
-    toast.show(`Sign in with ${provider} is not supported yet.`)
+  const handleOAuthSignInWithPress = async (provider: 'google' | 'apple' | 'discord') => {
+    if (provider === 'apple') {
+      toast.show('Apple OAuth is not supported yet.')
+      return
+    }
+
+    try {
+      const authUrl = await getAuthorisationURLWithQueryParamsAndSetState({
+        thirdPartyId: provider,
+        frontendRedirectURI: `${process.env.NEXT_PUBLIC_APP_URL}/oauth/${provider}`,
+      })
+
+      window.location.assign(authUrl)
+    } catch (err) {
+      console.log('err', err)
+      if (err.isSuperTokensGeneralError === true) {
+        toast.show(err.message)
+      } else {
+        toast.show('Oops! Something went wrong.')
+      }
+    }
   }
 
   const handleEmailSignUpWithPress = async (email: string, password: string) => {
@@ -28,9 +48,9 @@ export const SignUpScreen = (): React.ReactNode => {
 
       if (response.status === 'FIELD_ERROR') {
         // one of the input formFields failed validaiton
-        response.formFields.forEach((formField) => {
+        for (const formField of response.formFields) {
           toast.show(`${formField.id}:  ${formField.error}`)
-        })
+        }
       } else if (response.status === 'SIGN_UP_NOT_ALLOWED') {
         // this can happen during automatic account linking. Tell the user to use another
         // login method, or go through the password reset flow.

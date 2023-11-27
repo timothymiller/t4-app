@@ -6,8 +6,8 @@ import { createTRPCReact } from '@trpc/react-query'
  */
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink } from '@trpc/client'
-import superjson from 'superjson'
 import { useState } from 'react'
+import superjson from 'superjson'
 import { replaceLocalhost } from './localhost.native'
 
 /**
@@ -15,7 +15,7 @@ import { replaceLocalhost } from './localhost.native'
  */
 export const trpc = createTRPCReact<AppRouter>()
 
-const getApiUrl = () => {
+export const getApiUrl = () => {
   const apiUrl = `${process.env.EXPO_PUBLIC_API_URL}`
   return replaceLocalhost(apiUrl)
 }
