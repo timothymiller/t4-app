@@ -1,5 +1,6 @@
-import { SessionWrapper } from 'app/utils/supertokens/SessionWrapper'
+import { sessionEventManager } from 'app/utils/supertokens/SessionEventManager'
 import ThirdParty from 'supertokens-web-js/recipe/thirdparty'
+import Session from 'supertokens-web-js/recipe/session'
 import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 
 export const config = {
@@ -8,5 +9,13 @@ export const config = {
     apiDomain: `${process.env.NEXT_PUBLIC_API_URL}`,
     apiBasePath: '/api/auth',
   },
-  recipeList: [SessionWrapper.init({}), ThirdPartyEmailPassword.init(), ThirdParty.init()],
+  recipeList: [
+    Session.init({
+      onHandleEvent: (e) => {
+        sessionEventManager.notifyListeners(e)
+      },
+    }),
+    ThirdPartyEmailPassword.init(),
+    ThirdParty.init(),
+  ],
 }

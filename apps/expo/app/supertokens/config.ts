@@ -1,10 +1,11 @@
-import { SessionWrapper } from 'app/utils/supertokens/SessionWrapper'
 import { getApiUrl } from 'app/utils/trpc'
+import Session from 'supertokens-web-js/recipe/session'
 import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 import { SuperTokensConfig } from 'supertokens-web-js/types'
 import { CookieHandler } from './CookieHandler'
 import { LockFactory } from './LockFactory'
 import { windowHandler } from './WindowHandler'
+import { sessionEventManager } from 'app/utils/supertokens/SessionEventManager'
 
 export const config: SuperTokensConfig = {
   appInfo: {
@@ -13,9 +14,12 @@ export const config: SuperTokensConfig = {
     apiBasePath: '/api/auth',
   },
   recipeList: [
-    SessionWrapper.init({
+    Session.init({
       tokenTransferMethod: 'header',
       lockFactory: LockFactory,
+      onHandleEvent: (e) => {
+        sessionEventManager.notifyListeners(e)
+      },
       override: {
         functions(originalImplementation) {
           return {
