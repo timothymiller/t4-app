@@ -14,7 +14,7 @@ export function getCookieValue(cookieName: string): string | undefined {
     }
 
     if (cookie?.indexOf(cookieName) === 0) {
-      const cookieValue = cookie.substring(cookieNameLength + 1)
+      const cookieValue = cookie.replace('-code-verifier', '').substring(cookieNameLength + 1)
       return decodeURIComponent(cookieValue)
     }
   }

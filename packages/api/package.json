@@ -23,7 +23,7 @@
     "@lucia-auth/adapter-sqlite": "3.0.0-beta.1",
     "@trpc/server": "^10.43.2",
     "arctic": "0.3.1",
-    "drizzle-orm": "0.29.0",
+    "drizzle-orm": "^0.29.0",
     "drizzle-valibot": "beta",
     "hono": "^3.9.2",
     "lucia": "3.0.0-beta.6",

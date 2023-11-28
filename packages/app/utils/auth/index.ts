@@ -315,6 +315,4 @@ export function useSessionRedirect(props: SessionRedirectProps = { true: '/', fa
   }, [user, isLoadingSession, props, push])
 }
 
-export * from 'app/utils/auth/validation'
-
 export type { Session }
