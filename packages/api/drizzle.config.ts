@@ -1,13 +1,13 @@
-import { defineConfig } from 'drizzle-kit/utils'
+import type { Config } from 'drizzle-kit'
 
-export default defineConfig({
+export default {
+  schema: './src/db/schema.ts',
+  out: './migrations',
   driver: 'd1',
   dbCredentials: {
     wranglerConfigPath: 'wrangler.toml',
     dbName: 'production',
   },
-  schema: './src/db/schema.ts',
-  out: './migrations',
-  verbose: true,
+  verbose: false,
   strict: true,
-})
+} satisfies Config
