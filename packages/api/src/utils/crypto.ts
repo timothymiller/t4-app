@@ -17,7 +17,7 @@ function getTotpController({ seconds = 30 }: { seconds?: number } = {}) {
       period: new TimeSpan(seconds, 's'),
     })
   }
-  return totpControllers[seconds]
+  return totpControllers[seconds] as TOTPController
 }
 
 async function getTotpSecret(secret?: string) {
@@ -25,6 +25,7 @@ async function getTotpSecret(secret?: string) {
     totpSecret = decodeBase64(secret).buffer as ArrayBuffer
   }
   if (!totpSecret) {
+    // @ts-ignore TS1323 (fix needed for top-level tsc that runs without esnext module target)
     const { HMAC } = await import('oslo/crypto')
     totpSecret = await new HMAC('SHA-1').generateKey()
     console.log(

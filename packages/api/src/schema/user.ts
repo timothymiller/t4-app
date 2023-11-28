@@ -9,17 +9,7 @@ import {
   toLowerCase,
   toTrimmed,
 } from 'valibot'
-import type { User as SessionUser } from 'lucia'
-import type { User } from '../db/schema'
 import { AuthProviderName } from '../auth/providers'
-
-export function isSessionUser(user: User | SessionUser): user is SessionUser {
-  return !!(user as SessionUser).userId
-}
-
-export function isUser(user: User | SessionUser): user is User {
-  return !!(user as User).id
-}
 
 const email = string('Email address is required.', [
   toTrimmed(),
