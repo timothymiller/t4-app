@@ -64,9 +64,13 @@ export async function createJWT(
     payload.iat = Math.floor(Date.now() / 1000)
   }
   const textEncoder = new TextEncoder()
-  const headerPart = encodeBase64url(textEncoder.encode(JSON.stringify(header)))
-  const payloadPart = encodeBase64url(textEncoder.encode(JSON.stringify(payload)))
-  const data = textEncoder.encode([headerPart, payloadPart].join('.'))
+  const headerPart = encodeBase64url(
+    textEncoder.encode(JSON.stringify(header)).buffer as ArrayBuffer
+  )
+  const payloadPart = encodeBase64url(
+    textEncoder.encode(JSON.stringify(payload)).buffer as ArrayBuffer
+  )
+  const data = textEncoder.encode([headerPart, payloadPart].join('.')).buffer as ArrayBuffer
   const signature = await getAlgorithm(algorithm).sign(key, data)
   const signaturePart = encodeBase64url(signature)
   const value = [headerPart, payloadPart, signaturePart].join('.')
@@ -92,8 +96,13 @@ export async function validateJWT(
     throw new Error('Inactive JWT')
   }
   const signature = decodeBase64url(parsedJWT.parts[2])
-  const data = new TextEncoder().encode(parsedJWT.parts[0] + '.' + parsedJWT.parts[1])
-  const validSignature = await getAlgorithm(parsedJWT.algorithm).verify(key, signature, data)
+  const data = new TextEncoder().encode(`${parsedJWT.parts[0]}.${parsedJWT.parts[1]}`)
+    .buffer as ArrayBuffer
+  const validSignature = await getAlgorithm(parsedJWT.algorithm).verify(
+    key,
+    signature.buffer as ArrayBuffer,
+    data
+  )
   if (!validSignature) {
     throw new Error('Invalid signature')
   }
