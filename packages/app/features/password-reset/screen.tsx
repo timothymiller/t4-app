@@ -42,10 +42,13 @@ export function PasswordResetScreen() {
         toast.show('A password reset email has been sent to your email if it exists in our system!')
         push('/')
       }
-    } catch (error) {
-      toast.show('Password reset request failed', {
-        description: error.message,
-      })
+    } catch (err) {
+      if (err.isSuperTokensGeneralError === true) {
+        // this may be a custom error message sent from the API by you.
+        toast.show(err.message);
+      } else {
+        toast.show("Oops! Something went wrong.");
+      }
     }
   }
 

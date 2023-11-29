@@ -21,8 +21,8 @@ export function windowHandler(original) {
       getPathName() {
         throw new Error('getHash is not implemented')
       },
+      // The getHostName function, utilized by supertokens-website to obtain the defaultSessionScope for the sessionToken, returns 'localhost'. This is acceptable as cookies are stored using our own storageHandler.
       getHostName() {
-        // We are returning a dummy hostname to make supertokens happy
         return 'localhost'
       },
     },
