@@ -34,11 +34,12 @@ export function PasswordResetScreen() {
       })
 
       if (status === 'PASSWORD_RESET_NOT_ALLOWED') {
+        // this can happen due to automatic account linking. Please see - supertokens account linking docs
         toast.show('Password reset is not allowed for this email! Please contact support!')
       } else if (status === 'FIELD_ERROR') {
-        toast.show('No account exists with this email.')
+        toast.show('Invalid email!')
       } else {
-        toast.show('A password reset email has been sent to your email!')
+        toast.show('A password reset email has been sent to your email if it exists in our system!')
         push('/')
       }
     } catch (error) {

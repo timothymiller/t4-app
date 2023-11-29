@@ -9,7 +9,8 @@ class Lock {
         waitingPromises: [],
       }
     }
-    return this.lockStateMap[key] as LockState
+    // biome-ignore lint/style/noNonNullAssertion: ts isn't smart enough to infer that it can't be undefined
+    return this.lockStateMap[key]!
   }
 
   async acquireLock(key: string, timeout: number): Promise<boolean> {

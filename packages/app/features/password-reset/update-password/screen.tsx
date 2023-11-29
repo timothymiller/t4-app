@@ -23,7 +23,7 @@ export function UpdatePasswordScreen() {
       const res = (await fetch(`${API_URL}/api/auth/user/password/reset`, {
         method: 'POST',
         headers: {
-          rid: rid ?? 'thirdpartyemailpassword',
+          rid: 'thirdpartyemailpassword',
         },
         body: JSON.stringify({
           method: 'token',

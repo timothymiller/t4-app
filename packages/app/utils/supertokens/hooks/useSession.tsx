@@ -7,6 +7,7 @@ type SessionContextValue = {
   doesSessionExist: boolean
   userId?: string
   accessTokenPayload?: any
+  invalidClaims: Session.ClaimValidationError[]
 }
 
 const SessionContext = createContext<SessionContextValue | undefined>(undefined)
@@ -23,25 +24,26 @@ const SessionProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<SessionContextValue>({
     isLoading: true,
     doesSessionExist: false,
+    invalidClaims: []
   })
 
   useEffect(() => {
     Session.doesSessionExist().then(async (sessionExists) => {
       if (sessionExists) {
-        try {
-          const [userId, accessTokenPayload] = await Promise.all([
-            Session.getUserId(),
-            Session.getAccessTokenPayloadSecurely(),
-          ])
-          setSession({ isLoading: false, doesSessionExist: true, userId, accessTokenPayload })
-        } catch {
-          setSession({
-            isLoading: false,
-            doesSessionExist: false,
-            userId: undefined,
-            accessTokenPayload: undefined,
-          })
-        }
+        const [userId, accessTokenPayload] = await Promise.all([
+          Session.getUserId(),
+          Session.getAccessTokenPayloadSecurely(),
+        ])
+        const invalidClaims = await Session.validateClaims();
+        setSession({ isLoading: false, doesSessionExist: true, userId, accessTokenPayload, invalidClaims })
+      } else {
+        setSession({
+          isLoading: false,
+          doesSessionExist: false,
+          userId: undefined,
+          accessTokenPayload: undefined,
+          invalidClaims: []
+        })
       }
     })
   }, [])

@@ -4,11 +4,12 @@ import { appRouter } from '@t4/api/src/router'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import supertokens from 'supertokens-node'
-import { getSuperTokensConfig } from './supertokens/config'
+import { getSuperTokensConfig } from './supertokens/backendConfig'
 import { middleware as superTokensMiddleware } from './supertokens/middleware'
 
 export type Bindings = {
   DB: D1Database
+  APP_NAME: string
   APP_URL: string
   SUPERTOKENS_CONNECTION_URI: string
   SUPERTOKENS_API_KEY: string
@@ -28,13 +29,15 @@ app.use('*', async (c, next) => {
 // Setup CORS for the frontend
 app.use('*', async (c, next) => {
   if (c.env.APP_URL === undefined) {
-    console.log('APP_URL is not set. CORS errors may occur. Make sure the .dev.vars file is present at /packages/api/.dev.vars')
+    console.log(
+      'APP_URL is not set. CORS errors may occur. Make sure the .dev.vars file is present at /packages/api/.dev.vars'
+    )
   }
   return await cors({
     origin: [c.env.APP_URL],
     credentials: true,
     allowHeaders: ['Content-Type', ...supertokens.getAllCORSHeaders()],
-    allowMethods: ['POST', 'GET'],
+    allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   })(c, next)
 })
 

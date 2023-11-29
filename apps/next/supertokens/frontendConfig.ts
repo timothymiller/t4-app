@@ -1,11 +1,10 @@
 import { sessionEventManager } from 'app/utils/supertokens/SessionEventManager'
-import ThirdParty from 'supertokens-web-js/recipe/thirdparty'
 import Session from 'supertokens-web-js/recipe/session'
 import ThirdPartyEmailPassword from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 
 export const config = {
   appInfo: {
-    appName: 'T4 App',
+    appName: `${process.env.NEXT_PUBLIC_APP_NAME}`,
     apiDomain: `${process.env.NEXT_PUBLIC_API_URL}`,
     apiBasePath: '/api/auth',
   },
@@ -16,6 +15,5 @@ export const config = {
       },
     }),
     ThirdPartyEmailPassword.init(),
-    ThirdParty.init(),
   ],
 }

@@ -2,7 +2,7 @@ import { Paragraph, useToastController } from '@t4/ui'
 import { useEffect } from 'react'
 import { createParam } from 'solito'
 import { useRouter } from 'solito/router'
-import { signInAndUp } from 'supertokens-web-js/recipe/thirdparty'
+import { thirdPartySignInAndUp } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 
 const { useParam } = createParam<{ provider: string; redirectTo: string }>()
 
@@ -14,7 +14,7 @@ export const OAuthSignInScreen = (): React.ReactNode => {
 
   async function handleOAuthCallback() {
     try {
-      const response = await signInAndUp()
+      const response = await thirdPartySignInAndUp()
 
       if (response.status === 'OK') {
         if (response.createdNewRecipeUser && response.user.loginMethods.length === 1) {
@@ -25,6 +25,7 @@ export const OAuthSignInScreen = (): React.ReactNode => {
         router.replace(redirectTo ?? '/')
       } else if (response.status === 'SIGN_IN_UP_NOT_ALLOWED') {
         // this can happen due to automatic account linking. Please see - supertokens account linking docs
+        toast.show('Sign in unsuccessful.Please contact support.')
       } else {
         // SuperTokens requires that the third party provider
         // gives an email for the user. If that's not the case, sign up / in

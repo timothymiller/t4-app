@@ -9,7 +9,7 @@ import { sessionEventManager } from 'app/utils/supertokens/SessionEventManager'
 
 export const config: SuperTokensConfig = {
   appInfo: {
-    appName: 'T4 App',
+    appName: `${process.env.EXPO_PUBLIC_APP_NAME}`,
     apiDomain: getApiUrl(),
     apiBasePath: '/api/auth',
   },

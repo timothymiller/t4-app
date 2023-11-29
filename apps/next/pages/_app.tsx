@@ -11,7 +11,7 @@ import { DefaultSeo } from 'next-seo'
 import Head from 'next/head'
 import type { SolitoAppProps } from 'solito'
 import SuperTokens from 'supertokens-web-js'
-import { config } from '../supertokens/config'
+import { config } from '../supertokens/frontendConfig'
 
 if (process.env.NODE_ENV === 'production') {
   require('../public/tamagui.css')

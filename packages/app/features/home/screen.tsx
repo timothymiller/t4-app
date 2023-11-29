@@ -24,7 +24,7 @@ import { useSheetOpen } from '../../atoms/sheet'
 
 export function HomeScreen() {
   const utils = trpc.useContext()
-  const { doesSessionExist, accessTokenPayload, userId } = useSession()
+  const { isLoading, doesSessionExist } = useSession()
   const toast = useToastController()
 
   const signInLink = useLink({
@@ -104,7 +104,7 @@ export function HomeScreen() {
           </Button>
           <SheetDemo />
         </YStack>
-        {doesSessionExist ? (
+        {!isLoading && doesSessionExist ? (
           <Button
             onPress={async () => {
               await Session.signOut()

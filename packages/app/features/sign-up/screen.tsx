@@ -1,8 +1,10 @@
 import { YStack, useToastController } from '@t4/ui'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import { useRouter } from 'solito/router'
-import { getAuthorisationURLWithQueryParamsAndSetState } from 'supertokens-web-js/recipe/thirdparty'
-import { emailPasswordSignUp } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
+import {
+  emailPasswordSignUp,
+  getAuthorisationURLWithQueryParamsAndSetState,
+} from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 
 export const SignUpScreen = (): React.ReactNode => {
   const { push } = useRouter()
@@ -22,7 +24,6 @@ export const SignUpScreen = (): React.ReactNode => {
 
       window.location.assign(authUrl)
     } catch (err) {
-      console.log('err', err)
       if (err.isSuperTokensGeneralError === true) {
         toast.show(err.message)
       } else {
