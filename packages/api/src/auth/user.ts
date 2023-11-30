@@ -1,5 +1,5 @@
 import { ApiContextProps } from '../context'
-import { AuthMethodTable, SessionTable, User, UserTable, VerificationCodeTable } from '../db/schema'
+import { AuthMethodTable, SessionTable, User, UserTable } from '../db/schema'
 import { createId } from '../utils/id'
 import { hashPassword, verifyPassword } from '../utils/password'
 import { DEFAULT_HASH_METHOD } from '../utils/password/hash-methods'
@@ -7,7 +7,7 @@ import { TRPCError } from '@trpc/server'
 import { and, eq, lt } from 'drizzle-orm'
 import type { RegisteredLucia, Session } from 'lucia'
 import { isWithinExpirationDate } from 'oslo'
-import { createCode, verifyCode } from '../utils/crypto'
+import { createCode, createTotpSecret, verifyCode } from '../utils/crypto'
 import { AuthProviderName } from './providers'
 import { OAuth2RequestError } from 'arctic'
 import { getOAuthUser } from './shared'
@@ -175,28 +175,32 @@ export const signInWithEmail = async (
   return { session }
 }
 
-const passwordResetTimeoutSeconds = 300
+const passwordResetTimeoutSeconds = 300 // 5 minutes
 
 export const sendEmailSignIn = async (ctx: ApiContextProps, email: string) => {
   const authMethod = await getAuthMethod(ctx, createAuthMethodId('email', email))
   if (!authMethod) {
     throw new TRPCError({ message: 'No user found with that email', code: 'UNAUTHORIZED' })
   }
-  const props = {
-    code: await createCode({ seconds: passwordResetTimeoutSeconds, secret: ctx.env.TOTP_SECRET }),
-    expires: new Date(Date.now() + 1000 * passwordResetTimeoutSeconds), // 5 minutes
-  }
-  await ctx.db
-    .insert(VerificationCodeTable)
-    .values({
-      id: createId(),
-      userId: authMethod.userId,
-      ...props,
-    })
-    .onConflictDoUpdate({ target: VerificationCodeTable.userId, set: props })
+  // Generate a TOTP secret to verify codes
+  // While it could be possible to not generate a new secret every time,
+  // that opens some security risks if the database is compromised
+  // and the secret is leaked. D1 has encryption in rest and in transit,
+  // but it could be wise to encrypt the secret with a server-side RSA key
+  // so there is a second layer of security.
+  // The totpExpires field is only used to determine if validation fails
+  // due to an expired code or invalid code.
+  const secret = await createTotpSecret()
+  await ctx.db.update(AuthMethodTable).set({
+    totpExpires: new Date(Date.now() + 1000 * passwordResetTimeoutSeconds),
+    totpSecret: secret,
+    timeoutUntil: null,
+    timeoutSeconds: null,
+  })
+  const code = await createCode({ seconds: passwordResetTimeoutSeconds, secret })
   const resetLink =
     `${ctx.env.APP_URL}/password-reset/update-password` +
-    `?code=${encodeURIComponent(props.code)}&email=${encodeURIComponent(email)}`
+    `?code=${encodeURIComponent(code)}&email=${encodeURIComponent(email)}`
 
   if (ctx.env.RESEND_API_KEY) {
     // send email
@@ -212,7 +216,7 @@ export const sendEmailSignIn = async (ctx: ApiContextProps, email: string) => {
         subject: 'T4 App verification code',
         html: `<p>This email was used to sign in to ${ctx.env.APP_URL}.</p>
           <p><a href="${resetLink.replaceAll('&', '&amp;')}">Click here to continue to sign in.</a></p>
-          <p>Code: ${props.code}</p>
+          <p>Code: ${code}</p>
           <p>If you did not request this code, you can ignore this email or reply to let us know.</p>
         `,
       }),
@@ -221,7 +225,7 @@ export const sendEmailSignIn = async (ctx: ApiContextProps, email: string) => {
     return { codeSent: true }
   }
   throw new TRPCError({
-    message: `Sending the access code ${props.code} to ${email} has not been implemented. It should email a link to ${resetLink}.`,
+    message: `Sending the access code ${code} to ${email} has not been implemented. It should email a link to ${resetLink}.`,
     code: 'METHOD_NOT_SUPPORTED',
   })
 }
@@ -239,47 +243,53 @@ export const signInWithCode = async (
     // Note... you might want to create a user here
     // or throw a more generic error if you don't want
     // to expose that the user doesn't exist
-    throw new Error(`Unable to find account where ${providerId} is ${providerUserId}`)
+    throw new TRPCError({
+      message: `Unable to find account where ${providerId} is ${providerUserId}`,
+      code: 'NOT_FOUND',
+    })
   }
-  const verificationCode = (
-    await ctx.db
-      .select()
-      .from(VerificationCodeTable)
-      .where(and(eq(VerificationCodeTable.userId, authMethod.userId)))
-  )?.[0]
-
-  if (!verificationCode || !isWithinExpirationDate(verificationCode?.expires)) {
-    // optionally send a new code instead of an error
-    throw new TRPCError({ message: 'Expired verification code', code: 'UNAUTHORIZED' })
+  if (!authMethod.totpSecret) {
+    throw new TRPCError({
+      message: `There are no active verification codes where ${providerId} is ${providerUserId}`,
+      code: 'TIMEOUT',
+    })
+  }
+  if (authMethod.timeoutUntil && isWithinExpirationDate(authMethod.timeoutUntil)) {
+    throw new TRPCError({
+      message:
+        'Sorry, that was too many attempts to enter the verification code. Please wait a moment and try again.',
+      code: 'TOO_MANY_REQUESTS',
+    })
   }
 
-  if (verificationCode.timeoutUntil && !isWithinExpirationDate(verificationCode.timeoutUntil)) {
-    throw new TRPCError({ message: 'Too many requests', code: 'TOO_MANY_REQUESTS' })
-  }
-
-  if (verificationCode.code !== code) {
+  if (
+    !(await verifyCode(code, {
+      seconds: passwordResetTimeoutSeconds,
+      secret: authMethod.totpSecret,
+    }))
+  ) {
+    if (authMethod.totpExpires && !isWithinExpirationDate(authMethod.totpExpires)) {
+      throw new TRPCError({ message: 'This verification code has expired.', code: 'TIMEOUT' })
+    }
     // exponential backoff to prevent brute force
-    const timeoutSeconds = verificationCode?.timeoutSeconds
-      ? verificationCode.timeoutSeconds * 2
-      : 1
+    const timeoutSeconds = authMethod?.timeoutSeconds ? authMethod.timeoutSeconds * 2 : 1
     const timeoutUntil = new Date(Date.now() + timeoutSeconds * 1000)
     await ctx.db
-      .update(VerificationCodeTable)
+      .update(AuthMethodTable)
       .set({ timeoutUntil, timeoutSeconds })
-      .where(eq(VerificationCodeTable.id, verificationCode.id))
-    throw new TRPCError({ message: 'Expired verification code', code: 'UNAUTHORIZED' })
-  }
-
-  // Extra cryptographic verification
-  if (
-    !(await verifyCode(code, { seconds: passwordResetTimeoutSeconds, secret: ctx.env.TOTP_SECRET }))
-  ) {
-    throw new TRPCError({ message: 'Expired verification code', code: 'UNAUTHORIZED' })
+      .where(eq(AuthMethodTable.id, authMethod.id))
+    throw new TRPCError({ message: 'Invalid verification code', code: 'UNAUTHORIZED' })
   }
 
   await ctx.db
-    .delete(VerificationCodeTable)
-    .where(eq(VerificationCodeTable.id, verificationCode.id))
+    .update(AuthMethodTable)
+    .set({
+      totpSecret: null,
+      totpExpires: null,
+      timeoutUntil: null,
+      timeoutSeconds: null,
+    })
+    .where(eq(AuthMethodTable.id, authMethod.id))
 
   // You may want to sign the user out of other sessions here,
   // but for now, we only do it if the user is changing their password

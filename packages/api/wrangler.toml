@@ -31,7 +31,6 @@ migrations_dir = "migrations"
 # - PUBLIC_SUPPORT_EMAIL
 # - PUBLIC_API_URL
 # - PUBLIC_NATIVE_SCHEME
-# - TOTP_SECRET
 #
 # These can be set in the top level .env.local file followed by running `bun i`
 # which will then generate a .dev.vars file used for local cloudflare development.
