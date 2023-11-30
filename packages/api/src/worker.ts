@@ -15,7 +15,9 @@ const app = new Hono<{ Bindings: Bindings }>()
 // Setup CORS for the frontend
 app.use('/trpc/*', async (c, next) => {
   if (c.env.APP_URL === undefined) {
-    console.log('APP_URL is not set. CORS errors may occur. Make sure the .dev.vars file is present at /packages/api/.dev.vars')
+    console.log(
+      'APP_URL is not set. CORS errors may occur. Make sure the .dev.vars file is present at /packages/api/.dev.vars'
+    )
   }
   return await cors({
     origin: [c.env.APP_URL],
