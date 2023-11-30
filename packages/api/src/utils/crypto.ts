@@ -3,10 +3,9 @@ import { TOTPController } from 'oslo/otp'
 import { decodeBase64, encodeBase64, encodeHex } from 'oslo/encoding'
 import { type JWT, parseJWT, validateJWT } from './jwt'
 import { match, P } from 'ts-pattern'
-import { sha256 as sha256AB } from 'oslo/crypto'
+import { HMAC, sha256 as sha256AB } from 'oslo/crypto'
 
 const totpControllers: Record<number, TOTPController> = {}
-let totpSecret: ArrayBuffer | undefined = undefined
 
 function getTotpController({ seconds = 30 }: { seconds?: number } = {}) {
   if (!(seconds in totpControllers)) {
@@ -20,36 +19,27 @@ function getTotpController({ seconds = 30 }: { seconds?: number } = {}) {
   return totpControllers[seconds] as TOTPController
 }
 
-async function getTotpSecret(secret?: string) {
-  if (secret) {
-    totpSecret = decodeBase64(secret).buffer as ArrayBuffer
-  }
-  if (!totpSecret) {
-    // @ts-ignore TS1323 (fix needed for top-level tsc that runs without esnext module target)
-    const { HMAC } = await import('oslo/crypto')
-    totpSecret = await new HMAC('SHA-1').generateKey()
-    console.log(
-      `TOTP secret is being generated. Update TOTP_SECRET= in .env.local to TOTP_SECRET=${encodeBase64(
-        totpSecret
-      )}`
-    )
-  }
-  return totpSecret
+export async function createTotpSecret() {
+  return encodeBase64(await new HMAC('SHA-1').generateKey())
+}
+
+export function decodeTotpSecret(secret: string) {
+  return decodeBase64(secret).buffer as ArrayBuffer
 }
 
 export interface TotpOptions {
   seconds?: number
-  secret?: string
+  secret: string
 }
 
-export async function createCode({ seconds = 30, secret }: TotpOptions = {}) {
+export async function createCode({ seconds = 30, secret }: TotpOptions) {
   const totpController = getTotpController({ seconds })
-  return await totpController.generate(await getTotpSecret(secret))
+  return await totpController.generate(decodeTotpSecret(secret))
 }
 
-export async function verifyCode(code: string, totpOptions?: TotpOptions) {
+export async function verifyCode(code: string, totpOptions: TotpOptions) {
   const totpController = getTotpController(totpOptions)
-  return totpController.verify(code, await getTotpSecret(totpOptions?.secret))
+  return totpController.verify(code, decodeTotpSecret(totpOptions.secret))
 }
 
 /**

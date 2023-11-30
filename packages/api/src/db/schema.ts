@@ -1,7 +1,6 @@
 import { InferSelectModel, InferInsertModel, relations, sql } from 'drizzle-orm'
 import { sqliteTable, text, integer, real, index } from 'drizzle-orm/sqlite-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-valibot'
-import { createId } from '../utils/id'
 import { HASH_METHODS } from '../utils/password/hash-methods'
 
 // User
@@ -32,6 +31,12 @@ export const AuthMethodTable = sqliteTable(
     hashedPassword: text('hashed_password'),
     hashMethod: text('hash_method', { enum: HASH_METHODS }),
     createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
+    // The following could be used for password resets, one-time passwords or 2FA
+    totpSecret: text('totp_secret'),
+    totpExpires: integer('totp_expires', { mode: 'timestamp' }),
+    // This is used to prevent brute force attacks and rate limit invalid login attempts
+    timeoutUntil: integer('timeout_until', { mode: 'timestamp' }),
+    timeoutSeconds: integer('timeout_seconds'),
     // Depending on which providers you connect... you may want to store more data, i.e. username, profile pic, etc
     // Instead of creating separate fields for each, you could add a single field to store any additional data
     // data: text('data', { mode: 'json' })
@@ -72,29 +77,6 @@ export const sessionRelations = relations(SessionTable, ({ one }) => ({
 export type Session = InferSelectModel<typeof SessionTable>
 export type InsertSession = InferInsertModel<typeof SessionTable>
 export const SessionSchema = createInsertSchema(SessionTable)
-
-export const VerificationCodeTable = sqliteTable(
-  'VerificationCode',
-  {
-    id: text('id')
-      .primaryKey()
-      .$defaultFn(() => createId()),
-    userId: text('user_id')
-      .notNull()
-      .unique()
-      .references(() => UserTable.id),
-    code: text('code').notNull(),
-    expires: integer('expires', { mode: 'timestamp_ms' }).notNull(),
-    timeoutUntil: integer('timeout_until', { mode: 'timestamp_ms' }),
-    timeoutSeconds: integer('timeout_seconds').notNull().default(0),
-  },
-  (t) => ({
-    userIdIdx: index('idx_verificationCode_userId').on(t.userId),
-  })
-)
-export type VerificationCode = InferSelectModel<typeof VerificationCodeTable>
-export type InsertVerificationCode = InferInsertModel<typeof VerificationCodeTable>
-export const VerificationCodeSchema = createInsertSchema(VerificationCodeTable)
 
 // Car
 export const CarTable = sqliteTable('Car', {

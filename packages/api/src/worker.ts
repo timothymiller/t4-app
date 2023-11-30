@@ -22,7 +22,6 @@ export type Bindings = Env & {
   PUBLIC_SUPPORT_EMAIL: string
   PUBLIC_API_URL: string
   PUBLIC_NATIVE_SCHEME: string
-  TOTP_SECRET: string
   [k: string]: unknown
 }
 
