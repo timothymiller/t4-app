@@ -2,7 +2,7 @@ import { replaceLocalhost } from 'app/utils/trpc/localhost.native'
 import { SolitoImageProvider as SolitoImageProviderOG } from 'solito/image'
 
 export const getImageUrl = () => {
-  const imageUrl = `${process.env.NEXT_PUBLIC_APP_URL}`
+  const imageUrl = `${process.env.EXPO_PUBLIC_APP_URL}`
   return replaceLocalhost(imageUrl)
 }
 
