@@ -23,7 +23,7 @@
     "hono": "^3.9.2",
     "miniflare": "3.20231025.1",
     "superjson": "1.13.3",
-    "supertokens-node": "^16.4.0",
+    "supertokens-node": "^16.6.1",
     "valibot": "^0.20.1"
   },
   "devDependencies": {

@@ -44,6 +44,21 @@ export function getSuperTokensConfig(env: Bindings): TypeInput {
               ],
             },
           },
+          {
+            config: {
+              thirdPartyId: 'apple',
+              clients: [
+                {
+                  clientId: env.APPLE_CLIENT_ID,
+                  additionalConfig: {
+                    keyId: env.APPLE_KEY_ID,
+                    privateKey: env.APPLE_PRIVATE_KEY,
+                    teamId: env.APPLE_TEAM_ID,
+                  },
+                },
+              ],
+            },
+          },
         ],
         emailDelivery: {
           override: (originalImplementation) => {

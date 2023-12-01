@@ -32,7 +32,7 @@
       }
     },
     "owner": "timothymiller",
-    "plugins": ["expo-router"],
+    "plugins": ["@react-native-google-signin/google-signin", "expo-router"],
     "experiments": {
       "tsconfigPaths": true,
       "typedRoutes": true

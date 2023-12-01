@@ -25,6 +25,12 @@ function setCookiesInHeaders(headers: Headers, cookies: CollectingResponse['cook
   }
 }
 
+function copyHeaders(source: Headers, destination: Headers): void {
+  for (const [key, value] of source.entries()) {
+    destination.append(key, value)
+  }
+}
+
 export const middleware = () => {
   return async function (c: Context, next: Next) {
     const request = new PreParsedRequest({
@@ -38,9 +44,9 @@ export const middleware = () => {
     })
     const baseResponse = new CollectingResponse()
 
-    const stMiddleware = customMiddleware<Context>((c) => request)
+    const stMiddleware = customMiddleware(() => request)
 
-    const { handled, error } = await stMiddleware(c, baseResponse)
+    const { handled, error } = await stMiddleware(request, baseResponse)
 
     if (error) {
       throw error
@@ -62,8 +68,10 @@ export const middleware = () => {
 
       await next()
 
-      // Add cookies that were set set by `getSession` to response before returning
+      // Add cookies that were set by `getSession` to response
       setCookiesInHeaders(c.res.headers, baseResponse.cookies)
+      // Copy headers that were set by `getSession` to response
+      copyHeaders(baseResponse.headers, c.res.headers)
       return c.res
     } catch (err) {
       if (Session.Error.isErrorFromSuperTokens(err)) {

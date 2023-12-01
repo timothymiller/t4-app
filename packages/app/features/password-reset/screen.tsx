@@ -45,9 +45,9 @@ export function PasswordResetScreen() {
     } catch (err) {
       if (err.isSuperTokensGeneralError === true) {
         // this may be a custom error message sent from the API by you.
-        toast.show(err.message);
+        toast.show(err.message)
       } else {
-        toast.show("Oops! Something went wrong.");
+        toast.show('Oops! Something went wrong.')
       }
     }
   }

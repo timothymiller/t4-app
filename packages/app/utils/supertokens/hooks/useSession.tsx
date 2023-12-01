@@ -24,7 +24,7 @@ const SessionProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<SessionContextValue>({
     isLoading: true,
     doesSessionExist: false,
-    invalidClaims: []
+    invalidClaims: [],
   })
 
   useEffect(() => {
@@ -34,15 +34,21 @@ const SessionProvider = ({ children }: { children: React.ReactNode }) => {
           Session.getUserId(),
           Session.getAccessTokenPayloadSecurely(),
         ])
-        const invalidClaims = await Session.validateClaims();
-        setSession({ isLoading: false, doesSessionExist: true, userId, accessTokenPayload, invalidClaims })
+        const invalidClaims = await Session.validateClaims()
+        setSession({
+          isLoading: false,
+          doesSessionExist: true,
+          userId,
+          accessTokenPayload,
+          invalidClaims,
+        })
       } else {
         setSession({
           isLoading: false,
           doesSessionExist: false,
           userId: undefined,
           accessTokenPayload: undefined,
-          invalidClaims: []
+          invalidClaims: [],
         })
       }
     })

@@ -1,36 +1,13 @@
 import { YStack, useToastController } from '@t4/ui'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import { useRouter } from 'solito/router'
-import {
-  emailPasswordSignUp,
-  getAuthorisationURLWithQueryParamsAndSetState,
-} from 'supertokens-web-js/recipe/thirdpartyemailpassword'
+import { emailPasswordSignUp } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
+import { handleOAuthSignInWithPress } from '../oauth/utils.web'
+import { OAuthProvider } from '../oauth/type'
 
 export const SignUpScreen = (): React.ReactNode => {
   const { push } = useRouter()
   const toast = useToastController()
-
-  const handleOAuthSignInWithPress = async (provider: 'google' | 'apple' | 'discord') => {
-    if (provider === 'apple') {
-      toast.show('Apple OAuth is not supported yet.')
-      return
-    }
-
-    try {
-      const authUrl = await getAuthorisationURLWithQueryParamsAndSetState({
-        thirdPartyId: provider,
-        frontendRedirectURI: `${process.env.NEXT_PUBLIC_APP_URL}/oauth/${provider}`,
-      })
-
-      window.location.assign(authUrl)
-    } catch (err) {
-      if (err.isSuperTokensGeneralError === true) {
-        toast.show(err.message)
-      } else {
-        toast.show('Oops! Something went wrong.')
-      }
-    }
-  }
 
   const handleEmailSignUpWithPress = async (email: string, password: string) => {
     try {
@@ -75,7 +52,9 @@ export const SignUpScreen = (): React.ReactNode => {
     <YStack flex={1} justifyContent='center' alignItems='center' space>
       <SignUpSignInComponent
         type='sign-up'
-        handleOAuthWithPress={handleOAuthSignInWithPress}
+        handleOAuthWithPress={(provider: OAuthProvider) =>
+          handleOAuthSignInWithPress({ provider, toast })
+        }
         handleEmailWithPress={handleEmailSignUpWithPress}
       />
     </YStack>
