@@ -246,12 +246,15 @@ We welcome contributions from anyone and everyone. Please read our [contributing
 
 - [Nate Birdman](https://twitter.com/natebirdman) - Creator of Tamagui
 - [Aiden Bai](https://aiden.mov/) - Creator of Million.js and PattyCake
-- [Tanner Linsley](https://twitter.com/tannerlinsley) - Creator of TanStack
-- [Drizzle Developers](https://twitter.com/DrizzleOrm)
 - [Yusuke Wada](https://twitter.com/yusukebe) - Creator of Hono.js
-- [Fernando Rojo](https://twitter.com/fernandotherojo) - Creator of Solito
 - [Daishi Kato](https://twitter.com/dai_shi) Creator of Jotai
+- [Fernando Rojo](https://twitter.com/fernandotherojo) - Inspiration behind Solito
+- [Tanner Linsley](https://twitter.com/tannerlinsley) - Creator of TanStack
 - [Expo Developers](https://twitter.com/expo) - Insightful office hours
+
+## ™️ Disclaimer
+
+The T4 App is not affiliated with or endorsed by [EquipmentShare](https://www.equipmentshare.com/t3) or [T3 app](https://www.equipmentshare.com/t3#apps).
 
 ## ⚖️ License
 
