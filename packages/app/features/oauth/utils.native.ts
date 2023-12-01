@@ -39,10 +39,6 @@ export const handleOAuthLoginWithApple = async () => {
 }
 
 export const handleOAuthLoginWithGoogle = async () => {
-  console.log({
-    EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
-    EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID,
-  })
   if (
     !process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID ||
     !process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID
@@ -59,8 +55,6 @@ export const handleOAuthLoginWithGoogle = async () => {
   })
 
   const user = await GoogleSignin.signIn({})
-
-  console.log('user', user)
 
   if (!user.serverAuthCode) {
     throw new Error('Failed to get serverAuthCode in OAuth response')
