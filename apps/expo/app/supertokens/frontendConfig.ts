@@ -26,6 +26,7 @@ export const config: SuperTokensConfig = {
             ...originalImplementation,
             addXMLHttpRequestInterceptor(input) {
               // We are overriding the XMLHTTPRequest interceptor as it was causing issues and the fetch interceptor works fine
+              // If you want to use axios instead of fetch you can follow the instructions here - https://supertokens.com/docs/thirdpartyemailpassword/custom-ui/handling-session-tokens#for-react-native
             },
           }
         },

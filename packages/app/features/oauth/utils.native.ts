@@ -30,7 +30,12 @@ export const callSignInUpAPI = async ({
     }),
   })
 
-  const data = (await res.json()) as { status: string }
+  if (res.status !== 200) {
+    const errorMessage = await res.text()
+    throw new Error(`Failed to sign in with ${provider}: ${errorMessage}`)
+  }
+
+  const data = (await res.json()) as { status: string; createdNewRecipeUser: boolean; user: any }
   return data
 }
 
@@ -60,15 +65,7 @@ export const handleOAuthLoginWithGoogle = async () => {
     throw new Error('Failed to get serverAuthCode in OAuth response')
   }
 
-  const res = await callSignInUpAPI({
-    provider: 'google',
-    redirectUrl: '',
-    code: user.serverAuthCode,
-  })
-
-  if (res.status !== 'OK') {
-    throw new Error('Failed to sign in with Google')
-  }
+  return { redirectUrl: '', code: user.serverAuthCode }
 }
 
 export const handleOAuthLoginWithDiscord = async () => {
@@ -99,15 +96,10 @@ export const handleOAuthLoginWithDiscord = async () => {
       throw new Error("Couldn't find code in the OAuth response")
     }
 
-    const res = await callSignInUpAPI({
-      provider,
-      redirectUrl,
+    return {
+      redirectUrl: redirectUrl,
       code: params.queryParams.code,
       pkceCodeVerifier: authorizationUrlRes.pkceCodeVerifier,
-    })
-
-    if (res.status !== 'OK') {
-      throw new Error('Failed to sign in with Discord')
     }
   } finally {
     WebBrowser.maybeCompleteAuthSession()
@@ -123,22 +115,53 @@ export const handleOAuthSignInWithPress = async ({
   toast: ReturnType<typeof useToastController>
   router: ReturnType<typeof useRouter>
 }) => {
+  let response: {
+    redirectUrl: string
+    code: string
+    pkceCodeVerifier?: string
+  }
   try {
     switch (provider) {
       case 'apple':
-        await handleOAuthLoginWithApple()
+        response = await handleOAuthLoginWithApple()
         break
       case 'google':
-        await handleOAuthLoginWithGoogle()
+        response = await handleOAuthLoginWithGoogle()
         break
       case 'discord':
-        await handleOAuthLoginWithDiscord()
+        response = await handleOAuthLoginWithDiscord()
         break
       default:
         throw new Error(`Unsupported OAuth provider: ${provider}`)
     }
-    // if we reach here means the sign-in was successful
-    router.replace('/')
+
+    const res = await callSignInUpAPI({
+      provider,
+      redirectUrl: response.redirectUrl,
+      code: response.code,
+      pkceCodeVerifier: response.pkceCodeVerifier,
+    })
+
+    if (res.status === 'OK') {
+      if (res.createdNewRecipeUser && res.user.loginMethods.length === 1) {
+        // sign up successful
+      } else {
+        // sign in successful
+      }
+      router.replace('/')
+    } else if (res.status === 'SIGN_IN_UP_NOT_ALLOWED') {
+      // this can happen due to automatic account linking. Please see - supertokens account linking docs
+      toast.show('Sign in unsuccessful. Please contact support.')
+    } else {
+      // SuperTokens requires that the third party provider
+      // gives an email for the user. If that's not the case, sign up / in
+      // will fail.
+
+      // As a hack to solve this, you can override the backend functions to create a fake email for the user.
+
+      toast.show('No email provided by social login. Please use another form of login')
+      router.replace('/sign-in')
+    }
   } catch (error) {
     toast.show(error.message)
   }

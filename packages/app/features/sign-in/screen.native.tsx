@@ -32,7 +32,6 @@ export const SignInScreen = (): React.ReactNode => {
           }
         }
       } else if (response.status === 'WRONG_CREDENTIALS_ERROR') {
-        // window.alert("Email password combination is incorrect.")
         toast.show('Email password combination is incorrect.')
       } else if (response.status === 'SIGN_IN_NOT_ALLOWED') {
         // this can happen due to automatic account linking. Tell the user that their

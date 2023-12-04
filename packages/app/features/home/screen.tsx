@@ -23,17 +23,7 @@ import Session from 'supertokens-web-js/recipe/session'
 import { useSheetOpen } from '../../atoms/sheet'
 
 export function HomeScreen() {
-  const utils = trpc.useContext()
-  const { isLoading, doesSessionExist } = useSession()
   const toast = useToastController()
-
-  const signInLink = useLink({
-    href: '/sign-in',
-  })
-
-  const signUpLink = useLink({
-    href: '/sign-up',
-  })
 
   const dataFetchingLink = useLink({
     href: '/data-fetching',
@@ -104,27 +94,8 @@ export function HomeScreen() {
           </Button>
           <SheetDemo />
         </YStack>
-        {!isLoading && doesSessionExist ? (
-          <Button
-            onPress={async () => {
-              await Session.signOut()
-              // Clear tanstack query cache of authenticated routes
-              utils.auth.secretMessage.reset()
-            }}
-            space='$2'
-          >
-            Sign Out
-          </Button>
-        ) : (
-          <XStack space='$2'>
-            <Button {...signInLink} space='$2'>
-              Sign In
-            </Button>
-            <Button {...signUpLink} space='$2'>
-              Sign Up
-            </Button>
-          </XStack>
-        )}
+
+        <AuthFooter />
       </YStack>
     </ScrollView>
   )
@@ -162,5 +133,47 @@ const SheetDemo = (): React.ReactNode => {
         </Sheet.Frame>
       </Sheet>
     </>
+  )
+}
+
+
+const AuthFooter = (): React.ReactNode => {
+  const { isLoading, doesSessionExist } = useSession()
+  const utils = trpc.useContext()
+
+  const signInLink = useLink({
+    href: '/sign-in',
+  })
+
+  const signUpLink = useLink({
+    href: '/sign-up',
+  })
+
+  if (isLoading) return null
+
+  if (doesSessionExist) {
+    return (
+      <Button
+        onPress={async () => {
+          await Session.signOut()
+          // Clear tanstack query cache of authenticated routes
+          utils.auth.secretMessage.reset()
+        }}
+        space='$2'
+      >
+        Sign Out
+      </Button>
+    )
+  }
+
+  return (
+    <XStack space='$2'>
+      <Button {...signInLink} space='$2'>
+        Sign In
+      </Button>
+      <Button {...signUpLink} space='$2'>
+        Sign Up
+      </Button>
+    </XStack>
   )
 }
