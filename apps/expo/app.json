@@ -17,7 +17,8 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.t4.app"
+      "bundleIdentifier": "com.t4.app",
+      "usesAppleSignIn": true
     },
     "android": {
       "adaptiveIcon": {
@@ -32,7 +33,11 @@
       }
     },
     "owner": "timothymiller",
-    "plugins": ["@react-native-google-signin/google-signin", "expo-router"],
+    "plugins": [
+      "@react-native-google-signin/google-signin",
+      "expo-router",
+      "expo-apple-authentication"
+    ],
     "experiments": {
       "tsconfigPaths": true,
       "typedRoutes": true

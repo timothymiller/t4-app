@@ -1,12 +1,16 @@
 import { useToastController } from '@t4/ui/src'
+import { isIos } from '@tamagui/core'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import { OAuthProvider } from './type'
 import { getApiUrl } from 'app/utils/trpc'
 import * as Linking from 'expo-linking'
 import * as WebBrowser from 'expo-web-browser'
 import { useRouter } from 'solito/router'
+import * as AppleAuthentication from 'expo-apple-authentication'
 
-export const callSignInUpAPI = async ({
+const clientType = isIos ? 'ios' : 'web-and-android'
+
+const callSignInUpAPI = async ({
   provider,
   redirectUrl,
   code,
@@ -21,6 +25,7 @@ export const callSignInUpAPI = async ({
   const res = await fetch(`${getApiUrl()}/api/auth/signinup`, {
     method: 'POST',
     body: JSON.stringify({
+      clientType,
       thirdPartyId: provider,
       redirectURIInfo: {
         redirectURIOnProviderDashboard: redirectUrl,
@@ -39,8 +44,78 @@ export const callSignInUpAPI = async ({
   return data
 }
 
+const handleOAuthLoginUsingBrowser = async ({
+  redirectUrl,
+  provider,
+  state,
+  frontendRedirectURI,
+}: {
+  redirectUrl: string
+  provider: OAuthProvider
+  state?: string
+  frontendRedirectURI?: string
+}) => {
+  try {
+    // https://app.swaggerhub.com/apis/supertokens/FDI/1.18.0#/ThirdParty%20Recipe/authorisationUrl
+    const authorizationUrlRes: {
+      status: string
+      urlWithQueryParams: string
+      pkceCodeVerifier: string
+    } = await fetch(
+      `${getApiUrl()}/api/auth/authorisationurl?thirdPartyId=${provider}&redirectURIOnProviderDashboard=${redirectUrl}&clientType=${clientType}`
+    ).then((res) => res.json())
+
+    const urlWithState = `${authorizationUrlRes.urlWithQueryParams}${
+      state ? `&state=${state}` : ''
+    }`
+
+    const result = await WebBrowser.openAuthSessionAsync(
+      urlWithState,
+      frontendRedirectURI ?? redirectUrl
+    )
+
+    if (result.type !== 'success') {
+      throw new Error('Failed to get the authorizationUrl from the server')
+    }
+
+    const params = Linking.parse(result.url)
+
+    if (!params.queryParams?.code || typeof params.queryParams.code !== 'string') {
+      throw new Error("Couldn't find code in the OAuth response")
+    }
+
+    return {
+      redirectUrl: redirectUrl,
+      code: params.queryParams.code,
+      pkceCodeVerifier: authorizationUrlRes.pkceCodeVerifier,
+    }
+  } finally {
+    WebBrowser.maybeCompleteAuthSession()
+  }
+}
+
 export const handleOAuthLoginWithApple = async () => {
-  throw new Error('Apple OAuth is not supported yet.')
+  if (isIos) {
+    const credential = await AppleAuthentication.signInAsync({
+      requestedScopes: [
+        AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+        AppleAuthentication.AppleAuthenticationScope.EMAIL,
+      ],
+    })
+
+    if (!credential.authorizationCode)
+      throw new Error('Failed to get authorizationCode in OAuth response')
+
+    return { redirectUrl: '', code: credential.authorizationCode, clientType: 'ios' }
+  } else {
+    const frontendRedirectURI = Linking.createURL('/sign-in')
+    return await handleOAuthLoginUsingBrowser({
+      redirectUrl: `${getApiUrl()}/api/auth/callback/apple`,
+      provider: 'apple',
+      state: btoa(JSON.stringify({ frontendRedirectURI })),
+      frontendRedirectURI,
+    })
+  }
 }
 
 export const handleOAuthLoginWithGoogle = async () => {
@@ -68,44 +143,6 @@ export const handleOAuthLoginWithGoogle = async () => {
   return { redirectUrl: '', code: user.serverAuthCode }
 }
 
-export const handleOAuthLoginWithDiscord = async () => {
-  const redirectUrl = Linking.createURL('/sign-in')
-  const provider = 'discord'
-  try {
-    // https://app.swaggerhub.com/apis/supertokens/FDI/1.18.0#/ThirdParty%20Recipe/authorisationUrl
-    const authorizationUrlRes: {
-      status: string
-      urlWithQueryParams: string
-      pkceCodeVerifier: string
-    } = await fetch(
-      `${getApiUrl()}/api/auth/authorisationurl?thirdPartyId=${provider}&redirectURIOnProviderDashboard=${redirectUrl}`
-    ).then((res) => res.json())
-
-    const result = await WebBrowser.openAuthSessionAsync(
-      authorizationUrlRes.urlWithQueryParams,
-      redirectUrl
-    )
-
-    if (result.type !== 'success') {
-      throw new Error('Failed to get the authorizationUrl from the server')
-    }
-
-    const params = Linking.parse(result.url)
-
-    if (!params.queryParams?.code || typeof params.queryParams.code !== 'string') {
-      throw new Error("Couldn't find code in the OAuth response")
-    }
-
-    return {
-      redirectUrl: redirectUrl,
-      code: params.queryParams.code,
-      pkceCodeVerifier: authorizationUrlRes.pkceCodeVerifier,
-    }
-  } finally {
-    WebBrowser.maybeCompleteAuthSession()
-  }
-}
-
 export const handleOAuthSignInWithPress = async ({
   provider,
   toast,
@@ -129,7 +166,10 @@ export const handleOAuthSignInWithPress = async ({
         response = await handleOAuthLoginWithGoogle()
         break
       case 'discord':
-        response = await handleOAuthLoginWithDiscord()
+        response = await handleOAuthLoginUsingBrowser({
+          redirectUrl: Linking.createURL('sign-in'),
+          provider: 'discord',
+        })
         break
       default:
         throw new Error(`Unsupported OAuth provider: ${provider}`)

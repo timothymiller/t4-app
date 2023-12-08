@@ -17,6 +17,11 @@ export type Bindings = {
   DISCORD_CLIENT_ID: string
   GOOGLE_CLIENT_ID: string
   GOOGLE_CLIENT_SECRET: string
+  APPLE_CLIENT_ID: string
+  APPLE_CLIENT_ID_IOS: string
+  APPLE_KEY_ID: string
+  APPLE_TEAM_ID: string
+  APPLE_PRIVATE_KEY: string
 }
 
 const app = new Hono<{ Bindings: Bindings }>()
