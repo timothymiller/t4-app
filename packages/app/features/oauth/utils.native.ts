@@ -106,7 +106,7 @@ export const handleOAuthLoginWithApple = async () => {
     if (!credential.authorizationCode)
       throw new Error('Failed to get authorizationCode in OAuth response')
 
-    return { redirectUrl: '', code: credential.authorizationCode, clientType: 'ios' }
+    return { redirectUrl: '', code: credential.authorizationCode }
   } else {
     const frontendRedirectURI = Linking.createURL('/sign-in')
     return await handleOAuthLoginUsingBrowser({
