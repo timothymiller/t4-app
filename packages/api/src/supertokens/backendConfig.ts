@@ -6,6 +6,8 @@ import UserRoles from 'supertokens-node/recipe/userroles'
 import type { TypeInput } from 'supertokens-node/types'
 import { Bindings } from '../worker'
 
+// NOTE: Provider config must be duplicated for each clientType for Discord and Google, even though they share the config, due to a bug.
+// Refer to this link for more details: https://github.com/supertokens/supertokens-node/issues/757
 export function getSuperTokensConfig(env: Bindings): TypeInput {
   return {
     framework: 'custom',
@@ -27,6 +29,12 @@ export function getSuperTokensConfig(env: Bindings): TypeInput {
               thirdPartyId: 'discord',
               clients: [
                 {
+                  clientType: 'web-and-android',
+                  // No clientSecret is needed for Discord as it uses PKCE
+                  clientId: env.DISCORD_CLIENT_ID,
+                },
+                {
+                  clientType: 'ios',
                   // No clientSecret is needed for Discord as it uses PKCE
                   clientId: env.DISCORD_CLIENT_ID,
                 },
@@ -38,6 +46,12 @@ export function getSuperTokensConfig(env: Bindings): TypeInput {
               thirdPartyId: 'google',
               clients: [
                 {
+                  clientType: 'web-and-android',
+                  clientId: env.GOOGLE_CLIENT_ID,
+                  clientSecret: env.GOOGLE_CLIENT_SECRET,
+                },
+                {
+                  clientType: 'ios',
                   clientId: env.GOOGLE_CLIENT_ID,
                   clientSecret: env.GOOGLE_CLIENT_SECRET,
                 },
@@ -49,7 +63,17 @@ export function getSuperTokensConfig(env: Bindings): TypeInput {
               thirdPartyId: 'apple',
               clients: [
                 {
+                  clientType: 'web-and-android',
                   clientId: env.APPLE_CLIENT_ID,
+                  additionalConfig: {
+                    keyId: env.APPLE_KEY_ID,
+                    privateKey: env.APPLE_PRIVATE_KEY,
+                    teamId: env.APPLE_TEAM_ID,
+                  },
+                },
+                {
+                  clientType: 'ios',
+                  clientId: env.APPLE_CLIENT_ID_IOS,
                   additionalConfig: {
                     keyId: env.APPLE_KEY_ID,
                     privateKey: env.APPLE_PRIVATE_KEY,

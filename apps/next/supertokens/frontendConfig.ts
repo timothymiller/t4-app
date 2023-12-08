@@ -8,6 +8,7 @@ export const config = {
     apiDomain: `${process.env.NEXT_PUBLIC_API_URL}`,
     apiBasePath: '/api/auth',
   },
+  clientType: 'web-and-android',
   recipeList: [
     Session.init({
       onHandleEvent: (e) => {
