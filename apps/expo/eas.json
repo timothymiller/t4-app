@@ -23,10 +23,10 @@
       "distribution": "store",
       "android": {
         "buildType": "app-bundle",
-        "bun": "1.0.7"
+        "bun": "1.0.15"
       },
       "ios": {
-        "bun": "1.0.7"
+        "bun": "1.0.15"
       },
       "env": {
         "TAMAGUI_TARGET": "native"
