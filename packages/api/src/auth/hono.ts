@@ -1,26 +1,22 @@
-import { getAuthOptions } from './shared'
-import { D1Adapter } from '@lucia-auth/adapter-sqlite'
-import type { Context as HonoContext, HonoRequest } from 'hono'
-import { Lucia } from 'lucia'
-import type { Middleware } from 'lucia'
+import { getAllowedOriginHost } from './shared'
+import type { Context as HonoContext, Next } from 'hono'
+import { Bindings } from '../worker'
+import { verifyRequestOrigin } from 'oslo/request'
 
-export const hono = (): Middleware<[HonoContext]> => {
-  return ({ args }) => {
-    const [context] = args
-    return {
-      request: context.req,
-      setCookie: (cookie) => {
-        context.res.headers.append('set-cookie', cookie.serialize())
-      },
-    }
+export const csrfMiddleware = async (c: HonoContext<{ Bindings: Bindings }>, next: Next) => {
+  // CSRF middleware
+  if (c.req.method === 'GET') {
+    return next()
   }
+  const originHeader = c.req.header('origin')
+  const hostHeader = c.req.header('host')
+  const allowedOrigin = getAllowedOriginHost(c.env.APP_URL, c.req.raw)
+  if (
+    !originHeader ||
+    !hostHeader ||
+    !verifyRequestOrigin(originHeader, [hostHeader, ...(allowedOrigin ? [allowedOrigin] : [])])
+  ) {
+    return c.body(null, 403)
+  }
+  return next()
 }
-
-export const createHonoAuth = (db: D1Database, appUrl: string, request?: HonoRequest) => {
-  return new Lucia(new D1Adapter(db, { session: 'session', user: 'user' }), {
-    ...getAuthOptions(db, appUrl, request),
-    middleware: hono(),
-  })
-}
-
-export type HonoLucia = ReturnType<typeof createHonoAuth>

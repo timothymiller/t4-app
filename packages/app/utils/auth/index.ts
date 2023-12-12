@@ -129,6 +129,7 @@ export type SignInWithOAuth = {
   redirectTo?: string
   code?: string
   state?: string
+  appleUser?: { email?: string }
 }
 
 export type SignInProps =

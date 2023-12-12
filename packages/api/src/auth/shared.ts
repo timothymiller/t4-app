@@ -1,22 +1,50 @@
 import { ApiContextProps } from '../context'
-import { User } from '../db/schema'
+import { SessionTable, User, UserTable } from '../db/schema'
 import {
   Apple,
-  AppleIdTokenClaims,
+  AppleRefreshedTokens,
   AppleTokens,
   Discord,
   DiscordTokens,
   GitHub,
-  GitHubTokens,
   Google,
   GoogleTokens,
+  generateCodeVerifier,
+  generateState,
 } from 'arctic'
-import type { HonoRequest } from 'hono'
-import { DatabaseSessionAttributes, DatabaseUserAttributes, TimeSpan } from 'lucia'
-import { AuthProvider, AuthProviderName, AuthTokens, providers } from './providers'
+import { DatabaseSessionAttributes, DatabaseUserAttributes, Lucia, TimeSpan } from 'lucia'
+import {
+  AuthProvider,
+  AuthProviderName,
+  AuthTokens,
+  isOAuth2ProviderWithPKCE,
+  providers,
+} from './providers'
 import { isWithinExpirationDate } from 'oslo'
+import { parseJWT } from 'oslo/jwt'
 import { createAuthMethodId, createUser, getAuthMethod, getUserById } from './user'
-import type { HonoLucia } from './hono'
+import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle'
+
+import { P, match } from 'ts-pattern'
+import { getCookie } from 'hono/cookie'
+import { TRPCError } from '@trpc/server'
+import { BaseSQLiteDatabase } from 'drizzle-orm/sqlite-core'
+import { DB } from '../db/client'
+
+export interface AppleIdTokenClaims {
+  iss: 'https://appleid.apple.com'
+  sub: string
+  aud: string
+  iat: number
+  exp: number
+  email?: string
+  email_verified?: boolean
+  is_private_email?: boolean
+  nonce?: string
+  nonce_supported?: boolean
+  real_user_status: 0 | 1 | 2
+  transfer_sub?: string
+}
 
 export const getAuthProvider = (ctx: ApiContextProps, name: AuthProviderName): AuthProvider => {
   const origin = ctx.env.APP_URL ? new URL(ctx.env.APP_URL).origin : ''
@@ -29,37 +57,26 @@ export const getAuthProvider = (ctx: ApiContextProps, name: AuthProviderName): A
           keyId: ctx.env.APPLE_KEY_ID,
           teamId: ctx.env.APPLE_TEAM_ID,
         },
-        `${origin}/oauth/${name}`,
-        {
-          responseMode: 'form_post',
-          scope: ['email'],
-        }
+        `${origin}/oauth/${name}`
       )
     }
     if (name === 'discord') {
       providers[name] = new Discord(
         ctx.env.DISCORD_CLIENT_ID,
         ctx.env.DISCORD_CLIENT_SECRET,
-        `${origin}/oauth/${name}`,
-        {
-          scope: ['email'],
-        }
+        `${origin}/oauth/${name}`
       )
     }
     if (name === 'github') {
       providers[name] = new GitHub(ctx.env.GITHUB_CLIENT_ID, ctx.env.GITHUB_CLIENT_SECRET, {
         redirectURI: `${origin}/oauth/${name}`,
-        scope: ['email'],
       })
     }
     if (name === 'google') {
       providers[name] = new Google(
         ctx.env.GOOGLE_CLIENT_ID,
         ctx.env.GOOGLE_CLIENT_SECRET,
-        `${origin}/oauth/${name}`,
-        {
-          scope: ['https://www.googleapis.com/auth/userinfo.email'],
-        }
+        `${origin}/oauth/${name}`
       )
     }
   }
@@ -77,25 +94,26 @@ export const getAuthProvider = (ctx: ApiContextProps, name: AuthProviderName): A
  * if the request origin host matches the APP_URL host.
  * @link https://github.com/lucia-auth/lucia/blob/main/packages/lucia/src/utils/url.ts
  */
-export const getAllowedOriginHost = (app_url: string, request?: HonoRequest) => {
+export const getAllowedOriginHost = (app_url: string, request?: Request) => {
   if (!app_url || !request) return undefined
-  const requestOrigin = request.header('Origin')
+  const requestOrigin = request.headers.get('Origin')
   const requestHost = requestOrigin ? new URL(requestOrigin).host : undefined
   const appHost = new URL(app_url).host
   return requestHost === appHost ? appHost : undefined
 }
 
-export const getAuthOptions = (db: D1Database, appUrl: string, request?: HonoRequest) => {
+export const createAuth = (db: DB, appUrl: string) => {
+  // @ts-ignore Expect type errors because this is D1 and not SQLite... but it works
+  const adapter = new DrizzleSQLiteAdapter(db, SessionTable, UserTable)
+  return new Lucia(adapter, {
+    ...getAuthOptions(appUrl),
+  })
+}
+
+export const getAuthOptions = (appUrl: string) => {
   const env = !appUrl || appUrl.startsWith('http:') ? 'DEV' : 'PROD'
-  const allowedHost = getAllowedOriginHost(appUrl, request)
   return {
-    // Lucia's d1 adapter makes queries for sessions and users directly from the database
-    // Does drizzle provide a constructor we could use here to automatically perform the transforms?
     getUserAttributes: (data: DatabaseUserAttributes) => {
-      if ('attributes' in data) {
-        // biome-ignore lint/style/noParameterAssign: this will be fixed in the next lucia v3 beta
-        data = data.attributes as DatabaseUserAttributes
-      }
       return {
         email: data.email || '',
       }
@@ -115,12 +133,6 @@ export const getAuthOptions = (db: D1Database, appUrl: string, request?: HonoReq
       },
     },
 
-    // https://lucia-auth.com/basics/configuration/#csrfprotection
-    csrfProtection: {
-      allowedSubDomains: '*',
-      allowedDomains: allowedHost ? [allowedHost] : undefined,
-    },
-
     // If you want more debugging, uncomment this
     // experimental: {
     //   debugMode: true,
@@ -128,19 +140,68 @@ export const getAuthOptions = (db: D1Database, appUrl: string, request?: HonoReq
   }
 }
 
-export const getUserFromAuthProvider = async <_AuthTokens extends AuthTokens>(
-  ctx: ApiContextProps,
-  service: AuthProviderName,
-  authProvider: AuthProvider,
-  tokens: Partial<_AuthTokens>
-): Promise<User> => {
-  // ts-pattern would make this a little cleaner
+export function getAppleClaims(idToken?: string): AppleIdTokenClaims | undefined {
+  if (!idToken) return undefined
+  const payload = parseJWT(idToken)?.payload
+  return payload &&
+    'iss' in payload &&
+    payload.iss === 'https://appleid.apple.com' &&
+    'sub' in payload &&
+    'aud' in payload &&
+    'iat' in payload &&
+    'exp' in payload
+    ? (payload as AppleIdTokenClaims)
+    : undefined
+}
+
+export const getAuthorizationUrl = async (ctx: ApiContextProps, service: AuthProviderName) => {
+  const provider = getAuthProvider(ctx, service)
+  const secure = ctx.req?.url.startsWith('https:') ? 'Secure; ' : ''
+  const state = generateState()
+  ctx.setCookie(
+    `${service}_oauth_state=${state}; Path=/; ${secure}HttpOnly; SameSite=Lax; Max-Age=600`
+  )
+  return await match({ provider, service })
+    .with({ service: 'google', provider: P.instanceOf(Google) }, async ({ provider }) => {
+      // Google requires PKCE
+      const codeVerifier = generateCodeVerifier()
+      ctx.setCookie(
+        `${service}_oauth_verifier=${codeVerifier}; Path=/; ${secure}HttpOnly; SameSite=Lax; Max-Age=600`
+      )
+      const url = await provider.createAuthorizationURL(state, codeVerifier, {
+        scopes: ['https://www.googleapis.com/auth/userinfo.email'],
+      })
+      // Uncomment if you need to get and store a refresh token
+      // Currently, OAuth is only used for the initial sign in
+      // so we don't need to persist the access or refresh tokens
+      // url.searchParams.set('access_type', 'offline')
+      return url
+    })
+    .with({ service: 'apple', provider: P.instanceOf(Apple) }, async ({ provider }) => {
+      const url = await provider.createAuthorizationURL(state, { scopes: ['email'] })
+      url.searchParams.set('response_mode', 'form_post')
+      return url
+    })
+    .with({ service: 'discord', provider: P.instanceOf(Discord) }, async ({ provider }) => {
+      return await provider.createAuthorizationURL(state)
+    })
+    .with({ service: 'github', provider: P.instanceOf(GitHub) }, async ({ provider }) => {
+      return await provider.createAuthorizationURL(state, { scopes: ['email'] })
+    })
+    .otherwise(() => {
+      throw new Error('Unknown auth provider')
+    })
+}
+
+const checkAuthTokens = async (tokens: Partial<AuthTokens>, authProvider: AuthProvider) => {
   let accessToken: string | undefined = tokens.accessToken
   let accessTokenExpiresAt: Date | undefined
   let refreshToken: string | null | undefined
   let idTokenClaims: AppleIdTokenClaims | undefined
-  const isApple = authProvider instanceof Apple
 
+  if ('idToken' in tokens && authProvider instanceof Apple) {
+    idTokenClaims = getAppleClaims(tokens.idToken)
+  }
   if ('refreshToken' in tokens) {
     refreshToken = (tokens as Partial<AppleTokens | GoogleTokens | DiscordTokens>).refreshToken
   }
@@ -156,8 +217,8 @@ export const getUserFromAuthProvider = async <_AuthTokens extends AuthTokens>(
         if (refreshedTokens?.accessTokenExpiresAt) {
           accessTokenExpiresAt = refreshedTokens.accessTokenExpiresAt
         }
-        if (refreshedTokens as Partial<AppleTokens>) {
-          idTokenClaims = (refreshedTokens as Partial<AppleTokens>).idTokenClaims
+        if (refreshedTokens && 'idToken' in refreshedTokens) {
+          idTokenClaims = getAppleClaims((refreshedTokens as AppleRefreshedTokens).idToken)
         }
       }
     }
@@ -165,54 +226,130 @@ export const getUserFromAuthProvider = async <_AuthTokens extends AuthTokens>(
       throw new Error('Access token is expired')
     }
   }
-  if (isApple) {
-    idTokenClaims = (tokens as Partial<AppleTokens>).idTokenClaims
-    if (!idTokenClaims) {
-      throw new Error('Apple idToken is required')
-    }
+  return {
+    accessToken,
+    accessTokenExpiresAt,
+    refreshToken,
+    idTokenClaims,
   }
+}
 
-  let attributes: Partial<User> = {}
-  let providerUserId: string | undefined
-  let authMethodId: string | undefined
-  if (isApple) {
-    attributes = {
+type GetOAuthUserResult = {
+  attributes: Partial<User>
+  providerUserId: string
+  authMethodId: string
+}
+
+// https://arctic.pages.dev/providers/apple
+export async function getAppleUser({
+  idTokenClaims,
+}: { idTokenClaims: AppleIdTokenClaims }): Promise<GetOAuthUserResult> {
+  return {
+    attributes: {
       email: idTokenClaims?.email || undefined,
-    }
-    providerUserId = idTokenClaims?.sub
-    if (!providerUserId) {
-      throw new Error('Missing subject in Apple idToken')
-    }
-    authMethodId = createAuthMethodId('apple', providerUserId)
-  } else {
-    if (!accessToken) {
-      throw new Error('Access token is required')
-    }
-    if (authProvider instanceof Discord) {
-      const discordUser = await authProvider.getUser(accessToken)
-      providerUserId = discordUser.id
-      authMethodId = createAuthMethodId('discord', providerUserId)
-      attributes = {
-        email: discordUser.email || undefined,
-      }
-    }
-    if (authProvider instanceof GitHub) {
-      const githubUser = await (authProvider as GitHub).getUser(accessToken)
-      providerUserId = githubUser.id.toString()
-      authMethodId = createAuthMethodId('github', providerUserId)
-      attributes = {
-        email: githubUser.email || undefined,
-      }
-    }
-    if (authProvider instanceof Google) {
-      const googleUser = await authProvider.getUser(accessToken)
-      providerUserId = googleUser.sub
-      authMethodId = createAuthMethodId('google', googleUser.sub)
-      attributes = {
-        email: googleUser.email,
-      }
-    }
+    },
+    providerUserId: idTokenClaims.sub,
+    authMethodId: createAuthMethodId('apple', idTokenClaims.sub),
   }
+}
+
+// https://arctic.pages.dev/providers/discord
+// https://discord.com/developers/docs/resources/user#user-object
+export async function getDiscordUser({
+  accessToken,
+}: { accessToken: string }): Promise<GetOAuthUserResult> {
+  const res = await (
+    await fetch('https://discord.com/api/users/@me', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+  ).json()
+  return {
+    attributes: {
+      email: res.email,
+    },
+    authMethodId: res.id,
+    providerUserId: createAuthMethodId('discord', res.id),
+  }
+}
+
+export async function getGitHubUser({
+  accessToken,
+}: { accessToken: string }): Promise<GetOAuthUserResult> {
+  const user = await (
+    await fetch('https://api.github.com/user', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+  ).json()
+  const emails = await (
+    await fetch('https://api.github.com/user/emails', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+  ).json()
+  const primaryEmail = emails.find((e: { primary: boolean }) => e.primary)?.email
+  return {
+    attributes: {
+      email: user.email || primaryEmail,
+    },
+    providerUserId: user.id,
+    authMethodId: createAuthMethodId('github', user.id),
+  }
+}
+
+export async function getGoogleUser({
+  accessToken,
+}: { accessToken: string }): Promise<GetOAuthUserResult> {
+  const res = await (
+    await fetch('https://openidconnect.googleapis.com/v1/userinfo', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+  ).json()
+  return {
+    attributes: {
+      email: res.email || undefined,
+    },
+    providerUserId: res.sub,
+    authMethodId: createAuthMethodId('google', res.sub),
+  }
+}
+
+export const getUserFromAuthProvider = async <_AuthTokens extends AuthTokens>(
+  ctx: ApiContextProps,
+  service: AuthProviderName,
+  authProvider: AuthProvider,
+  tokens: Partial<_AuthTokens>,
+  userData: Partial<User> = {}
+): Promise<User> => {
+  const { accessToken, idTokenClaims } = await checkAuthTokens(tokens, authProvider)
+  const { authMethodId, providerUserId, attributes } = await match({
+    authProvider,
+    accessToken,
+    idTokenClaims,
+  })
+    .with({ authProvider: P.instanceOf(Apple), idTokenClaims: P.nullish }, async () => {
+      throw new Error('Apple idToken is required')
+    })
+    .with({ authProvider: P.instanceOf(Apple), idTokenClaims: { sub: P.nullish } }, async () => {
+      throw new Error('Missing subject in Apple idToken')
+    })
+    .with({ authProvider: P.instanceOf(Apple), idTokenClaims: P.not(P.nullish) }, getAppleUser)
+    .with({ accessToken: P.nullish }, async () => {
+      throw new Error('Access token is required')
+    })
+    .with({ authProvider: P.instanceOf(Discord), accessToken: P.not(P.nullish) }, getDiscordUser)
+    .with({ authProvider: P.instanceOf(GitHub), accessToken: P.not(P.nullish) }, getGitHubUser)
+    .with({ authProvider: P.instanceOf(Google), accessToken: P.not(P.nullish) }, getGoogleUser)
+    .otherwise(() => {
+      throw new Error('Unknown auth provider')
+    })
+
   if (!authMethodId || !providerUserId) {
     throw new Error('Unknown auth provider')
   }
@@ -230,23 +367,34 @@ export const getUserFromAuthProvider = async <_AuthTokens extends AuthTokens>(
   // and either return an error or automatically link the accounts.
   // See https://lucia-auth.com/guidebook/oauth-account-linking/ for an example on
   // how to automatically link the accounts.
-  const user = await createUser(ctx, service, providerUserId, null, attributes)
+  const user = await createUser(ctx, service, providerUserId, null, {
+    ...attributes,
+    ...userData,
+  })
   return user
 }
 
 export const getOAuthUser = async (
   service: AuthProviderName,
   ctx: ApiContextProps,
-  { code }: { code: string }
+  { code, userData }: { code: string; userData: Partial<User> }
 ): Promise<User> => {
   const authService = getAuthProvider(ctx, service)
+  if (isOAuth2ProviderWithPKCE(authService)) {
+    if (!ctx.c) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Missing context' })
+    const codeVerifier = getCookie(ctx.c, `${service}_oauth_verifier`)
+    if (!codeVerifier)
+      throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Missing code verifier' })
+    const validateResult = await authService.validateAuthorizationCode(code, codeVerifier)
+    return getUserFromAuthProvider(ctx, service, authService, validateResult, userData)
+  }
   const validateResult = await authService.validateAuthorizationCode(code)
   return getUserFromAuthProvider(ctx, service, authService, validateResult)
 }
 
 declare module 'lucia' {
   interface Register {
-    Lucia: HonoLucia
+    Lucia: ReturnType<typeof createAuth>
     DatabaseUserAttributes: {
       email: string | null
     }

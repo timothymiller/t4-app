@@ -1,5 +1,5 @@
 import { desc, eq } from 'drizzle-orm'
-import { UserTable, type User, SessionTable, AuthMethodTable } from '../db/schema'
+import { UserTable, SessionTable, AuthMethodTable } from '../db/schema'
 import { router, protectedProcedure, publicProcedure, valibotParser } from '../trpc'
 import { Input } from 'valibot'
 import { ApiContextProps } from '../context'
@@ -21,11 +21,15 @@ import {
 import { TRPCError } from '@trpc/server'
 import { GetByIdSchema, GetSessionsSchema } from '../schema/shared'
 import { CreateUserSchema, SignInSchema } from '../schema/user'
-import { AppleIdTokenClaims, generateCodeVerifier, generateState } from 'arctic'
-import { getAuthProvider, getUserFromAuthProvider } from '../auth/shared'
-import { verifyToken, isJWTExpired, sha256 } from '../utils/crypto'
+import {
+  AppleIdTokenClaims,
+  getAuthProvider,
+  getAuthorizationUrl,
+  getUserFromAuthProvider,
+} from '../auth/shared'
+import { isJWTExpired, sha256 } from '../utils/crypto'
 import { getCookie } from 'hono/cookie'
-import { JWT, parseJWT } from '../utils/jwt'
+import { parseJWT } from 'oslo/jwt'
 import { P, match } from 'ts-pattern'
 import { AuthProviderName } from '../auth/providers'
 
@@ -144,7 +148,7 @@ const signInWithAppleIdTokenHandler =
     //     throw new Error('Unable to fetch Apple public key')
     //   }
     //   return key
-    // })) as AppleIdTokenClaims & { nonce?: string; nonce_supported?: boolean }
+    // })) as unknown as AppleIdTokenClaims
     // Since we can't verify the JWT, check that it hasn't expired
     const parsedJWT = parseJWT(input.idToken)
     if (parsedJWT && isJWTExpired(parsedJWT)) {
@@ -153,10 +157,7 @@ const signInWithAppleIdTokenHandler =
         message: 'The Apple ID token has expired.',
       })
     }
-    const payload = parsedJWT?.payload as AppleIdTokenClaims & {
-      nonce?: string
-      nonce_supported?: boolean
-    }
+    const payload = parsedJWT?.payload as AppleIdTokenClaims
     if (!payload) {
       console.error('Apple ID token could not be verified.', {
         payload,
@@ -185,7 +186,9 @@ const signInWithAppleIdTokenHandler =
       idTokenClaims: payload,
     })
     const session = await createSession(ctx.auth, user.id)
-    ctx.authRequest?.setSessionCookie(session.id)
+    if (ctx.setCookie) {
+      ctx.setCookie(ctx.auth.createSessionCookie(session.id).serialize())
+    }
     return { session }
   }
 
@@ -201,6 +204,7 @@ const signInWithOAuthCodeHandler =
     }
 
     const storedState = getCookie(ctx.c, `${input.provider}_oauth_state`)
+    const storedVerifier = getCookie(ctx.c, `${input.provider}_oauth_verifier`)
     const storedRedirect = getCookie(ctx.c, `${input.provider}_oauth_redirect`)
     return await signInWithOAuthCode(
       ctx,
@@ -208,28 +212,26 @@ const signInWithOAuthCodeHandler =
       input.code,
       input.state,
       storedState,
-      storedRedirect
+      storedRedirect,
+      input.appleUser
     )
   }
 
 const authorizationUrlHandler =
   (ctx: ApiContextProps) =>
   async (input: Input<typeof SignInSchema> & { provider: AuthProviderName }) => {
-    // Get the authorization URL and store the state in a cookie
-    const provider = getAuthProvider(ctx, input.provider)
-    const state = generateState()
-    // TODO Mentioned in docs but seem to be used yet... circle back with future arctic release
-    // const codeVerifier = generateCodeVerifier()
-    const url = await provider.createAuthorizationURL(state)
-    ctx.setCookie(`${input.provider}_oauth_state=${state}; Path=/; HttpOnly; SameSite=Lax`)
+    const url = await getAuthorizationUrl(ctx, input.provider)
     if (!validateRedirectDomain(ctx, input.redirectTo)) {
       throw new TRPCError({
         code: 'FORBIDDEN',
         message: `The redirect URL is invalid: ${input.redirectTo}`,
       })
     }
+    const secure = ctx.req?.url.startsWith('https:') ? 'Secure; ' : ''
     ctx.setCookie(
-      `${input.provider}_oauth_redirect=${input.redirectTo || ''}; Path=/; HttpOnly; SameSite=Lax`
+      `${input.provider}_oauth_redirect=${
+        input.redirectTo || ''
+      }; Path=/; ${secure}HttpOnly; SameSite=Lax`
     )
     return { redirectTo: url.toString() }
   }
@@ -245,7 +247,9 @@ const signInWithEmailCodeHandler =
       console.log('calling update passing and invalidate sessions')
       await ctx.auth.invalidateUserSessions(res.session?.userId)
       const session = await createSession(ctx.auth, res.session?.userId)
-      ctx.authRequest?.setSessionCookie(session.id)
+      if (ctx.setCookie) {
+        ctx.setCookie(ctx.auth.createSessionCookie(session.id).serialize())
+      }
       res.session = session
     }
     return res
@@ -338,7 +342,9 @@ export const userRouter = router({
         email: input.email,
       })
       const session = await createSession(ctx.auth, user.id)
-      ctx.authRequest?.setSessionCookie(session.id)
+      if (ctx.setCookie) {
+        ctx.setCookie(ctx.auth.createSessionCookie(session.id).serialize())
+      }
       return { session }
     }),
 })

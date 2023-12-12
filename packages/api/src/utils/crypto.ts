@@ -1,7 +1,7 @@
 import { TimeSpan, isWithinExpirationDate } from 'oslo'
 import { TOTPController } from 'oslo/otp'
 import { decodeBase64, encodeBase64, encodeHex } from 'oslo/encoding'
-import { type JWT, parseJWT, validateJWT } from './jwt'
+import { type JWT, parseJWT, validateJWT } from 'oslo/jwt'
 import { match, P } from 'ts-pattern'
 import { HMAC, sha256 as sha256AB } from 'oslo/crypto'
 

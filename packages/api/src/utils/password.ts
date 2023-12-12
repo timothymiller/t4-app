@@ -1,6 +1,6 @@
 import { argon2Hash, argon2Verify } from './password/argon2'
 import { HashMethod } from './password/hash-methods'
-import { verifyLegacyLuciaPasswordHash } from 'lucia'
+import { LegacyScrypt } from 'lucia'
 
 export async function hashPassword(password: string) {
   const hashedPassword = await argon2Hash(password)
@@ -19,7 +19,7 @@ export async function verifyPassword(
     case 'scrypt':
     case null:
     case undefined:
-      return await verifyLegacyLuciaPasswordHash(password, hashedPassword)
+      return await new LegacyScrypt().verify(hashedPassword, password)
     case 'argon2':
       return await argon2Verify(password, hashedPassword)
     default:
