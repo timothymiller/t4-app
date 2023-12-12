@@ -32,13 +32,9 @@
     "deps:fix": "manypkg fix",
     "deps:update": "bun x npm-check-updates -ui -ws",
     "postinstall": "bun run build && bun ./.github/scripts/env.ts && bun check-deps && bun format",
-    "clean": "git clean -xdf node_modules && rm bun.lockb",
-    "clean:all": "npm-run-all clean"
+    "clean": "git clean -xdf node_modules && rm -f bun.lockb && rm -rf ./apps/next/.next && rm -rf ./apps/next/.tamagui && rm -rf ./apps/next/node_modules && rm -rf ./packages/ui/dist"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": ["apps/*", "packages/*"],
   "dependencies": {
     "@babel/runtime": "^7.23.2",
     "@biomejs/biome": "1.3.3",
