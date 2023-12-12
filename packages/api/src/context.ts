@@ -7,7 +7,7 @@ import type { inferAsyncReturnType } from '@trpc/server'
 import type { Context as HonoContext, HonoRequest } from 'hono'
 import type { Lucia } from 'lucia'
 import { verifyToken } from './utils/crypto'
-import { createAuth } from './auth/shared'
+import { createAuth } from './auth'
 import { getCookie } from 'hono/cookie'
 
 export interface ApiContextProps {

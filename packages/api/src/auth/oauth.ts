@@ -1,5 +1,5 @@
 import { ApiContextProps } from '../context'
-import { SessionTable, User, UserTable } from '../db/schema'
+import { User } from '../db/schema'
 import {
   Apple,
   AppleRefreshedTokens,
@@ -12,7 +12,6 @@ import {
   generateCodeVerifier,
   generateState,
 } from 'arctic'
-import { DatabaseSessionAttributes, DatabaseUserAttributes, Lucia, TimeSpan } from 'lucia'
 import {
   AuthProvider,
   AuthProviderName,
@@ -23,13 +22,10 @@ import {
 import { isWithinExpirationDate } from 'oslo'
 import { parseJWT } from 'oslo/jwt'
 import { createAuthMethodId, createUser, getAuthMethod, getUserById } from './user'
-import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle'
 
 import { P, match } from 'ts-pattern'
 import { getCookie } from 'hono/cookie'
 import { TRPCError } from '@trpc/server'
-import { BaseSQLiteDatabase } from 'drizzle-orm/sqlite-core'
-import { DB } from '../db/client'
 
 export interface AppleIdTokenClaims {
   iss: 'https://appleid.apple.com'
@@ -85,59 +81,6 @@ export const getAuthProvider = (ctx: ApiContextProps, name: AuthProviderName): A
     throw new Error(`Unable to configure oauth for ${name}`)
   }
   return service
-}
-
-/**
- * Lucia's isValidRequestOrigin method will compare the
- * origin of the request to the configured host.
- * We want to allow cross-domain requests from our APP_URL so return that
- * if the request origin host matches the APP_URL host.
- * @link https://github.com/lucia-auth/lucia/blob/main/packages/lucia/src/utils/url.ts
- */
-export const getAllowedOriginHost = (app_url: string, request?: Request) => {
-  if (!app_url || !request) return undefined
-  const requestOrigin = request.headers.get('Origin')
-  const requestHost = requestOrigin ? new URL(requestOrigin).host : undefined
-  const appHost = new URL(app_url).host
-  return requestHost === appHost ? appHost : undefined
-}
-
-export const createAuth = (db: DB, appUrl: string) => {
-  // @ts-ignore Expect type errors because this is D1 and not SQLite... but it works
-  const adapter = new DrizzleSQLiteAdapter(db, SessionTable, UserTable)
-  return new Lucia(adapter, {
-    ...getAuthOptions(appUrl),
-  })
-}
-
-export const getAuthOptions = (appUrl: string) => {
-  const env = !appUrl || appUrl.startsWith('http:') ? 'DEV' : 'PROD'
-  return {
-    getUserAttributes: (data: DatabaseUserAttributes) => {
-      return {
-        email: data.email || '',
-      }
-    },
-    // Optional additional session attributes to expose
-    // If updated, also update createSession() in packages/api/src/auth/user.ts
-    getSessionAttributes: (databaseSession: DatabaseSessionAttributes) => {
-      return {}
-    },
-    sessionExpiresIn: new TimeSpan(365, 'd'),
-    sessionCookie: {
-      name: 'auth_session',
-      expires: false,
-      attributes: {
-        secure: env === 'PROD',
-        sameSite: 'lax' as const,
-      },
-    },
-
-    // If you want more debugging, uncomment this
-    // experimental: {
-    //   debugMode: true,
-    // },
-  }
 }
 
 export function getAppleClaims(idToken?: string): AppleIdTokenClaims | undefined {
@@ -264,7 +207,7 @@ export async function getDiscordUser({
         Authorization: `Bearer ${accessToken}`,
       },
     })
-  ).json()
+  ).json<{ email: string; id: string }>()
   return {
     attributes: {
       email: res.email,
@@ -283,14 +226,14 @@ export async function getGitHubUser({
         Authorization: `Bearer ${accessToken}`,
       },
     })
-  ).json()
+  ).json<{ id: string; email: string }>()
   const emails = await (
     await fetch('https://api.github.com/user/emails', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
     })
-  ).json()
+  ).json<{ primary: boolean; email: string }[]>()
   const primaryEmail = emails.find((e: { primary: boolean }) => e.primary)?.email
   return {
     attributes: {
@@ -310,7 +253,7 @@ export async function getGoogleUser({
         Authorization: `Bearer ${accessToken}`,
       },
     })
-  ).json()
+  ).json<{ email: string; sub: string }>()
   return {
     attributes: {
       email: res.email || undefined,
@@ -377,7 +320,7 @@ export const getUserFromAuthProvider = async <_AuthTokens extends AuthTokens>(
 export const getOAuthUser = async (
   service: AuthProviderName,
   ctx: ApiContextProps,
-  { code, userData }: { code: string; userData: Partial<User> }
+  { code, userData }: { code: string; userData?: Partial<User> }
 ): Promise<User> => {
   const authService = getAuthProvider(ctx, service)
   if (isOAuth2ProviderWithPKCE(authService)) {
@@ -390,15 +333,4 @@ export const getOAuthUser = async (
   }
   const validateResult = await authService.validateAuthorizationCode(code)
   return getUserFromAuthProvider(ctx, service, authService, validateResult)
-}
-
-declare module 'lucia' {
-  interface Register {
-    Lucia: ReturnType<typeof createAuth>
-    DatabaseUserAttributes: {
-      email: string | null
-    }
-    // biome-ignore lint/complexity/noBannedTypes: Need to define this even if empty
-    DatabaseSessionAttributes: {}
-  }
 }

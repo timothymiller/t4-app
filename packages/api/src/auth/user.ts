@@ -10,7 +10,7 @@ import { isWithinExpirationDate } from 'oslo'
 import { createCode, createTotpSecret, verifyCode } from '../utils/crypto'
 import { AuthProviderName } from './providers'
 import { OAuth2RequestError } from 'arctic'
-import { getOAuthUser } from './shared'
+import { getOAuthUser } from './oauth'
 
 export const createAuthMethodId = (providerId: string, providerUserId: string) => {
   if (providerId.includes(':')) {

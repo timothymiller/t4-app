@@ -1,4 +1,4 @@
-import { getAllowedOriginHost } from './shared'
+import { getAllowedOriginHost } from '.'
 import type { Context as HonoContext, Next } from 'hono'
 import { Bindings } from '../worker'
 import { verifyRequestOrigin } from 'oslo/request'

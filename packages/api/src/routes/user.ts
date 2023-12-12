@@ -26,7 +26,7 @@ import {
   getAuthProvider,
   getAuthorizationUrl,
   getUserFromAuthProvider,
-} from '../auth/shared'
+} from '../auth/oauth'
 import { isJWTExpired, sha256 } from '../utils/crypto'
 import { getCookie } from 'hono/cookie'
 import { parseJWT } from 'oslo/jwt'

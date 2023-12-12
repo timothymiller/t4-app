@@ -26,7 +26,7 @@
     "drizzle-orm": "^0.29.0",
     "drizzle-valibot": "beta",
     "hono": "^3.9.2",
-    "lucia": "3.0.0-beta.11",
+    "lucia": "3.0.0-beta.12",
     "miniflare": "3.20231025.1",
     "oslo": "0.24.0",
     "superjson": "1.13.3",

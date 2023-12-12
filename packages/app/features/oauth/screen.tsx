@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from 'next'
 import type { AuthProviderName } from '@t4/api/src/auth/providers'
 import { Paragraph, isServer } from '@t4/ui'
-import { useSignIn } from 'app/utils/auth'
+import { type SignInWithOAuth, useSignIn } from 'app/utils/auth'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createParam } from 'solito'
 import { P, match } from 'ts-pattern'
@@ -35,8 +35,9 @@ export const getServerSideProps = (async (context) => {
 }) satisfies GetServerSideProps<OAuthSignInScreenProps>
 
 export interface OAuthSignInScreenProps {
-  appleUser: { email?: string | null } | null
+  appleUser?: { email?: string | null } | null
 }
+
 
 export const OAuthSignInScreen = ({ appleUser }: OAuthSignInScreenProps): React.ReactNode => {
   const sent = useRef(false)
@@ -48,7 +49,7 @@ export const OAuthSignInScreen = ({ appleUser }: OAuthSignInScreenProps): React.
   const [error, setError] = useState<string | undefined>(undefined)
 
   const sendApiRequestOnLoad = useCallback(
-    async (params: Params & OAuthSignInScreenProps) => {
+    async (params: SignInWithOAuth) => {
       if (sent.current) return
       sent.current = true
       try {
@@ -80,7 +81,11 @@ export const OAuthSignInScreen = ({ appleUser }: OAuthSignInScreenProps): React.
       redirectTo: redirectTo || '',
       state,
       code,
-      appleUser: appleUser || undefined,
+      // undefined vs null is a result of passing via JSON with getServerSideProps
+      // Maybe there's a superjson plugin or another way to handle it.
+      appleUser: appleUser ? {
+        email: appleUser.email || undefined,
+      } : undefined,
     })
   }, [provider, redirectTo, state, code, sendApiRequestOnLoad, appleUser])
 
