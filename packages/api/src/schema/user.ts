@@ -44,6 +44,7 @@ export const SignInSchema = object({
   idToken: optional(string()),
   refreshToken: optional(string()),
   nonce: optional(string()),
+  appleUser: optional(object({ email: optionalEmail })),
 })
 
 export type SignInInput = Input<typeof SignInSchema>

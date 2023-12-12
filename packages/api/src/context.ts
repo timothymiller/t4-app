@@ -1,4 +1,3 @@
-import { createHonoAuth, HonoLucia } from './auth/hono'
 import { type Session } from './auth/user'
 import { createDb } from './db/client'
 import type { DB } from './db/client'
@@ -6,14 +5,15 @@ import type { User } from './db/schema'
 import { Bindings } from './worker'
 import type { inferAsyncReturnType } from '@trpc/server'
 import type { Context as HonoContext, HonoRequest } from 'hono'
-import type { AuthRequest, Lucia } from 'lucia'
+import type { Lucia } from 'lucia'
 import { verifyToken } from './utils/crypto'
+import { createAuth } from './auth'
+import { getCookie } from 'hono/cookie'
 
 export interface ApiContextProps {
   session?: Session
   user?: User
-  auth: HonoLucia
-  authRequest?: AuthRequest<Lucia>
+  auth: Lucia
   req?: HonoRequest
   c?: HonoContext
   setCookie: (value: string) => void
@@ -62,37 +62,48 @@ export const createContext = async (
 
   // const user = await getUser()
 
-  const auth = createHonoAuth(env.DB, env.APP_URL, context.req)
+  const auth = createAuth(db, env.APP_URL)
 
   async function getSession() {
     let user: User | undefined
     let session: Session | undefined
-    let authRequest: AuthRequest<Lucia> | undefined
+    const res = {
+      user,
+      session,
+    }
 
-    if (context.req) {
-      authRequest = auth.handleRequest(context)
-      const authResult = await authRequest.validate()
-      if (authResult.session) {
-        session = authResult.session
-        user = authResult.user || undefined
+    if (!context.req) return res
+
+    const cookieSessionId = getCookie(context, auth.sessionCookieName)
+    const bearerSessionId =
+      !cookieSessionId &&
+      context.req.header('x-enable-tokens') &&
+      context.req.header('authorization')?.split(' ')[1]
+
+    if (!cookieSessionId && !bearerSessionId) return res
+
+    const authResult = await auth.validateSession(cookieSessionId || bearerSessionId || '')
+    if (cookieSessionId) {
+      if (authResult.session?.fresh) {
+        context.header('Set-Cookie', auth.createSessionCookie(authResult.session.id).serialize(), {
+          append: true,
+        })
       }
-      // console.log('cookie session and auth request', session, authRequest)
-      if (!session && context.req.header('x-enable-tokens')) {
-        const tokenAuthResult = await authRequest.validateBearerToken()
-        if (tokenAuthResult.session) {
-          session = tokenAuthResult.session
-          user = tokenAuthResult.user || undefined
-        }
+      if (!session) {
+        context.header('Set-Cookie', auth.createBlankSessionCookie().serialize(), {
+          append: true,
+        })
       }
     }
-    return { session, user, authRequest }
+    res.session = authResult.session || undefined
+    res.user = authResult.user || undefined
+    return res
   }
 
-  const { session, user, authRequest } = await getSession()
+  const { session, user } = await getSession()
   return {
     db,
     auth,
-    authRequest,
     req: context.req,
     c: context,
     session,

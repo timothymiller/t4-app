@@ -10,7 +10,7 @@ import { isWithinExpirationDate } from 'oslo'
 import { createCode, createTotpSecret, verifyCode } from '../utils/crypto'
 import { AuthProviderName } from './providers'
 import { OAuth2RequestError } from 'arctic'
-import { getOAuthUser } from './shared'
+import { getOAuthUser } from './oauth'
 
 export const createAuthMethodId = (providerId: string, providerUserId: string) => {
   if (providerId.includes(':')) {
@@ -315,17 +315,21 @@ export const signInWithOAuthCode = async (
   code: string,
   state?: string,
   storedState?: string,
-  redirectTo?: string
+  redirectTo?: string,
+  userData?: Partial<User>
 ) => {
   if (!storedState || !state || storedState !== state || typeof code !== 'string') {
     throw new TRPCError({ message: 'Invalid state', code: 'BAD_REQUEST' })
   }
   try {
-    const user = await getOAuthUser(service, ctx, { code })
+    const user = await getOAuthUser(service, ctx, { code, userData })
     const session = await createSession(ctx.auth, user.id)
-    ctx.authRequest?.setSessionCookie(session.id)
+    if (ctx.setCookie) {
+      ctx.setCookie(ctx.auth.createSessionCookie(session.id).serialize())
+    }
     return { redirectTo: `${redirectTo ? redirectTo : ctx.env.APP_URL}#token=${session.id}` }
   } catch (e) {
+    console.error(e)
     if (e instanceof OAuth2RequestError) {
       throw new TRPCError({ message: 'Invalid code', code: 'BAD_REQUEST' })
     }
@@ -382,7 +386,7 @@ export const cleanup = async (context: ApiContextProps, userId?: string) => {
     .where(
       and(
         userId ? eq(SessionTable.userId, userId) : undefined,
-        lt(SessionTable.expiresAt, new Date())
+        lt(SessionTable.expiresAt, new Date().getTime())
       )
     )
 }

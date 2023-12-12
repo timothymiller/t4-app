@@ -5,7 +5,7 @@ import { HASH_METHODS } from '../utils/password/hash-methods'
 
 // User
 export const UserTable = sqliteTable('User', {
-  id: text('id').primaryKey(),
+  id: text('id').notNull().primaryKey(),
   email: text('email').notNull(),
 })
 export const userRelations = relations(UserTable, ({ many }) => ({
@@ -58,11 +58,12 @@ export const AuthMethodSchema = createInsertSchema(AuthMethodTable)
 export const SessionTable = sqliteTable(
   'Session',
   {
-    id: text('id').primaryKey(),
+    id: text('id').notNull().primaryKey(),
     userId: text('user_id')
       .notNull()
       .references(() => UserTable.id),
-    expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
+    // DrizzleSQLiteAdapter currently expects this to be an integer and not use { mode: 'timestamp' }
+    expiresAt: integer('expires_at').notNull(),
   },
   (t) => ({
     userIdIdx: index('idx_session_userId').on(t.userId),
