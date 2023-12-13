@@ -1,4 +1,3 @@
-import { Session } from '@supabase/supabase-js'
 import { CustomToast, ToastProvider } from '@t4/ui'
 import { AuthProvider } from './auth'
 import { SafeAreaProvider } from './safe-area'
@@ -10,10 +9,8 @@ import { TRPCProvider } from './trpc'
 
 export function Provider({
   children,
-  initialSession,
 }: {
   children: React.ReactNode
-  initialSession: Session | null
 }) {
   return (
     <TamaguiThemeProvider>
@@ -21,7 +18,7 @@ export function Provider({
         <SafeAreaProvider>
           <SolitoImageProvider>
             <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
-              <AuthProvider initialSession={initialSession}>
+              <AuthProvider>
                 <TRPCProvider>{children}</TRPCProvider>
                 <CustomToast />
                 <ToastViewport />

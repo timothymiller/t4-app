@@ -20,6 +20,7 @@
     "@trpc/client": "^10.43.2",
     "@trpc/next": "^10.43.2",
     "@trpc/react-query": "^10.43.2",
+    "base-64": "^1.0.0",
     "burnt": "^0.12.1",
     "expo-constants": "~14.4.2",
     "expo-linking": "5.0.2",
@@ -30,6 +31,7 @@
     "ts-pattern": "^5.0.5"
   },
   "devDependencies": {
+    "@types/base-64": "^1.0.2",
     "@types/react": "^18.2.37"
   }
 }

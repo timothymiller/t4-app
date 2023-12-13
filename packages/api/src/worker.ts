@@ -3,17 +3,36 @@ import { createContext } from '@t4/api/src/context'
 import { appRouter } from '@t4/api/src/router'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import supertokens from 'supertokens-node'
+import { getSuperTokensConfig } from './supertokens/backendConfig'
+import { middleware as superTokensMiddleware } from './supertokens/middleware'
 
-type Bindings = {
+export type Bindings = {
   DB: D1Database
-  JWT_VERIFICATION_KEY: string
+  APP_NAME: string
   APP_URL: string
+  SUPERTOKENS_CONNECTION_URI: string
+  SUPERTOKENS_API_KEY: string
+  API_URL: string
+  DISCORD_CLIENT_ID: string
+  GOOGLE_CLIENT_ID: string
+  GOOGLE_CLIENT_SECRET: string
+  APPLE_CLIENT_ID: string
+  APPLE_CLIENT_ID_IOS: string
+  APPLE_KEY_ID: string
+  APPLE_TEAM_ID: string
+  APPLE_PRIVATE_KEY: string
 }
 
 const app = new Hono<{ Bindings: Bindings }>()
 
+app.use('*', async (c, next) => {
+  supertokens.init(getSuperTokensConfig(c.env))
+  await next()
+})
+
 // Setup CORS for the frontend
-app.use('/trpc/*', async (c, next) => {
+app.use('*', async (c, next) => {
   if (c.env.APP_URL === undefined) {
     console.log(
       'APP_URL is not set. CORS errors may occur. Make sure the .dev.vars file is present at /packages/api/.dev.vars'
@@ -21,16 +40,21 @@ app.use('/trpc/*', async (c, next) => {
   }
   return await cors({
     origin: [c.env.APP_URL],
-    allowMethods: ['POST', 'GET'],
+    credentials: true,
+    allowHeaders: ['Content-Type', ...supertokens.getAllCORSHeaders()],
+    allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   })(c, next)
 })
+
+// Setup SuperTokens middleware for handling auth routes
+app.use('*', superTokensMiddleware())
 
 // Setup TRPC server with context
 app.use('/trpc/*', async (c, next) => {
   return await trpcServer({
     router: appRouter,
-    createContext: async (opts) => {
-      return await createContext(c.env.DB, c.env.JWT_VERIFICATION_KEY, opts)
+    createContext: async () => {
+      return await createContext(c, c.env.DB)
     },
   })(c, next)
 })

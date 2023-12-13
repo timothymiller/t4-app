@@ -1,25 +1,55 @@
 import { YStack, useToastController } from '@t4/ui'
 import { PasswordResetComponent } from '@t4/ui/src/PasswordReset'
-import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
+import { isAndroid, isIos } from '@tamagui/core'
 import { useRouter } from 'solito/router'
+import { sendPasswordResetEmail } from 'supertokens-web-js/recipe/thirdpartyemailpassword'
 
 export function PasswordResetScreen() {
   const { push } = useRouter()
   const toast = useToastController()
-  const supabase = useSupabase()
 
   const handleEmailWithPress = async (email) => {
-    // Send email with the password reset link
-    const { error } = await supabase.auth.resetPasswordForEmail(email)
-    if (error) {
-      toast.show('Password reset request failed', {
-        description: error.message,
+    try {
+      const { status } = await sendPasswordResetEmail({
+        formFields: [
+          {
+            id: 'email',
+            value: email,
+          },
+        ],
+        options: {
+          async preAPIHook(input) {
+            return {
+              ...input,
+              requestInit: {
+                ...input.requestInit,
+                headers: {
+                  ...input.requestInit.headers,
+                  'X-Platform': isAndroid ? 'android' : isIos ? 'ios' : 'web',
+                },
+              },
+            }
+          },
+        },
       })
-      console.log('Password reset request failed', error)
-      return
-    }
 
-    push('/')
+      if (status === 'PASSWORD_RESET_NOT_ALLOWED') {
+        // this can happen due to automatic account linking. Please see - supertokens account linking docs
+        toast.show('Password reset is not allowed for this email! Please contact support!')
+      } else if (status === 'FIELD_ERROR') {
+        toast.show('Invalid email!')
+      } else {
+        toast.show('A password reset email has been sent to your email if it exists in our system!')
+        push('/')
+      }
+    } catch (err) {
+      if (err.isSuperTokensGeneralError === true) {
+        // this may be a custom error message sent from the API by you.
+        toast.show(err.message)
+      } else {
+        toast.show('Oops! Something went wrong.')
+      }
+    }
   }
 
   return (

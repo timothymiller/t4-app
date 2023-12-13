@@ -44,10 +44,8 @@ jobs:
           packageManager: bun
           secrets: |
             APP_URL
-            JWT_VERIFICATION_KEY
             CI
         env:
           APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
-          JWT_VERIFICATION_KEY: ${{ secrets.JWT_VERIFICATION_KEY }}
           CI: true
           NO_D1_WARNING: true

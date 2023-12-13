@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
+    "@react-native-google-signin/google-signin": "^10.1.1",
     "@shopify/flash-list": "^1.6.3",
     "@t4/ui": "workspace:*",
     "app": "workspace:*",

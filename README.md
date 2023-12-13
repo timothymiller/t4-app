@@ -105,7 +105,7 @@ Ship it today and witness **6 second package install** times & **30 second backe
 
 ### 🔒 Authentication
 
-- 🔑 [Supabase](https://supabase.com/auth)
+- 🔑 [Supertokens](https://supertokens.com/)
 
 ## 📖 Background
 
@@ -182,7 +182,7 @@ Whether you're developing a mobile app with React Native or a web app using Reac
 - Universal across **React Native** & **React Web**
   - [Data fetching](https://tanstack.com/query/latest)
   - [Styling](https://tamagui.dev)
-  - [Authentication](https://supabase.com)
+  - [Authentication](https://supertokens.com/)
   - [Navigation](https://solito.dev)
   - [Type Safety](https://valibot.dev)
 - High code re-use
@@ -214,7 +214,7 @@ The VSCode extension is optional but highly recommended. It provides a better de
 - ✅ PattyCake Support
 - ✅ Valibot Support
 - ✅ Generate Valibot Type Guards from your Drizzle Schema
-- ✅ Supabase Auth
+- ✅ Supertokens Auth
 - ✅ Uses Next.js for building web apps.
 - ✅ Uses Expo for building native mobile apps.
 - ✅ PWA by default for native desktop support. No Electron required.
@@ -259,3 +259,29 @@ The T4 App is not affiliated with or endorsed by [EquipmentShare](https://www.eq
 ## ⚖️ License
 
 **Create T4 App** is licensed under the [MIT License](https://github.com/timothymiller/t4-app/blob/master/LICENSE).
+
+## 📄 Getting Google OAuth keys for the Expo App
+
+1. Run `npx expo prebuild`.
+
+2. Create an OAuth Client ID for "Android" in Google Cloud Platform. Obtain the correct SHA1 fingerprint for development using:
+
+    ```sh
+    cd android
+    keytool -keystore app/debug.keystore -list -v -storepass android
+    ```
+
+3. Create a new OAuth Client ID for "Web" in Google Cloud Platform. Use this clientId for environment values `PUBLIC_GOOGLE_WEB_CLIENT_ID` and `GOOGLE_CLIENT_ID`. Utilize the clientSecret for the environment value `GOOGLE_CLIENT_SECRET`.
+
+4. Create another OAuth Client ID for "iOS" in Google Cloud Platform. Use this clientId for the environment value `PUBLIC_GOOGLE_IOS_CLIENT_ID`. Download the `.plist` configuration file from the console, rename it to `GoogleService-Info.plist`, and place it in `apps/expo`.
+
+5. Add the follwoing in `apps/expo/app.json`
+   ```json
+    "ios": {
+      "googleServicesFile": "./GoogleService-Info.plist"
+    },
+   ```
+
+6. Run `npx expo prebuild` again.
+
+7. Run `npx expo run:android` for Android and `npx expo run:ios` for iOS.

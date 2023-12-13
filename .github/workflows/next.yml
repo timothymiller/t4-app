@@ -39,8 +39,6 @@ jobs:
           export TAMAGUI_TARGET=web
           export NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
           export NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}
-          export NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          export NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
           bunx @cloudflare/next-on-pages
 
       - name: Publish to Cloudflare Pages

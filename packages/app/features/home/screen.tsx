@@ -13,28 +13,17 @@ import {
 } from '@t4/ui'
 import { ThemeToggle } from '@t4/ui/src/ThemeToggle'
 import { ChevronDown } from '@tamagui/lucide-icons'
-import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
-import { useUser } from 'app/utils/supabase/hooks/useUser'
+import { useSession } from 'app/utils/supertokens/hooks/useSession'
 import { trpc } from 'app/utils/trpc'
 import React, { useState } from 'react'
 import { Linking } from 'react-native'
 import { SolitoImage } from 'solito/image'
 import { useLink } from 'solito/link'
+import Session from 'supertokens-web-js/recipe/session'
 import { useSheetOpen } from '../../atoms/sheet'
 
 export function HomeScreen() {
-  const utils = trpc.useContext()
-  const supabase = useSupabase()
-  const { user } = useUser()
   const toast = useToastController()
-
-  const signInLink = useLink({
-    href: '/sign-in',
-  })
-
-  const signUpLink = useLink({
-    href: '/sign-up',
-  })
 
   const dataFetchingLink = useLink({
     href: '/data-fetching',
@@ -105,27 +94,8 @@ export function HomeScreen() {
           </Button>
           <SheetDemo />
         </YStack>
-        {user ? (
-          <Button
-            onPress={async () => {
-              supabase.auth.signOut()
-              // Clear tanstack query cache of authenticated routes
-              utils.auth.secretMessage.reset()
-            }}
-            space='$2'
-          >
-            Sign Out
-          </Button>
-        ) : (
-          <XStack space='$2'>
-            <Button {...signInLink} space='$2'>
-              Sign In
-            </Button>
-            <Button {...signUpLink} space='$2'>
-              Sign Up
-            </Button>
-          </XStack>
-        )}
+
+        <AuthFooter />
       </YStack>
     </ScrollView>
   )
@@ -163,5 +133,47 @@ const SheetDemo = (): React.ReactNode => {
         </Sheet.Frame>
       </Sheet>
     </>
+  )
+}
+
+
+const AuthFooter = (): React.ReactNode => {
+  const { isLoading, doesSessionExist } = useSession()
+  const utils = trpc.useContext()
+
+  const signInLink = useLink({
+    href: '/sign-in',
+  })
+
+  const signUpLink = useLink({
+    href: '/sign-up',
+  })
+
+  if (isLoading) return null
+
+  if (doesSessionExist) {
+    return (
+      <Button
+        onPress={async () => {
+          await Session.signOut()
+          // Clear tanstack query cache of authenticated routes
+          utils.auth.secretMessage.reset()
+        }}
+        space='$2'
+      >
+        Sign Out
+      </Button>
+    )
+  }
+
+  return (
+    <XStack space='$2'>
+      <Button {...signInLink} space='$2'>
+        Sign In
+      </Button>
+      <Button {...signUpLink} space='$2'>
+        Sign Up
+      </Button>
+    </XStack>
   )
 }

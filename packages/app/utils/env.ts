@@ -11,9 +11,11 @@ const envSchema = object({
   NEXT_PUBLIC_API_URL: string(),
   NEXT_PUBLIC_APP_URL: string(),
   // Authentication
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: string(),
-  NEXT_PUBLIC_SUPABASE_URL: string(),
-  JWT_VERIFICATION_KEY: string(),
+  APP_NAME: string(),
+  APP_URL: string(),
+  API_URL: string(),
+  SUPERTOKENS_CONNECTION_URI: string(),
+  SUPERTOKENS_API_KEY: string(),
   // Customer Support
   NEXT_PUBLIC_SUPPORT_EMAIL: string(),
   // Tamagui Debug

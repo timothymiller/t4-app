@@ -1,4 +1,3 @@
-import { type Provider } from '@supabase/supabase-js'
 import { Button, Input, Paragraph, Stack, XStack, YStack } from '@t4/ui'
 import { useState } from 'react'
 import { SolitoImage } from 'solito/image'
@@ -6,7 +5,7 @@ import { Link } from 'solito/link'
 
 interface Props {
   type: 'sign-up' | 'sign-in'
-  handleOAuthWithPress: (provider: Provider) => void
+  handleOAuthWithPress: (provider: string) => void
   handleEmailWithPress: (email, password) => void
 }
 

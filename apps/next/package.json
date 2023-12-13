@@ -11,11 +11,8 @@
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^9.7.2",
-    "@supabase/auth-helpers-nextjs": "^0.7.4",
-    "@supabase/auth-helpers-react": "^0.4.2",
     "@t4/ui": "workspace:*",
     "@tamagui/next-theme": "1.75.9",
-    "@tsndr/cloudflare-worker-jwt": "2.2.7",
     "app": "workspace:*",
     "million": "2.6.4",
     "next": "14.0.1",
