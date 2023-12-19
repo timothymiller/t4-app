@@ -181,18 +181,14 @@ export function isSignInWithOAuth(props: SignInProps): props is SignInWithOAuth 
 }
 
 export function useSignIn() {
-  // TODO ^ maybe accept props for what to do after sign in?
+  // TODO ^ maybe accept props for what to do after sign in
 
   const mutation = trpc.user.signIn.useMutation()
   const utils = trpc.useUtils()
   const postLogin = (res: SignInResult) => {
-    // We _could_ call setSessionAtom here and store the session ID for native...
-    // but it's a bit simpler to centralize all of the session
-    // logic around the user.session trpc query (see useSessionContext() above).
-    // It causes a redundant db queries and API roundtrip though...
-    // It might be possible to update the trpc user.session cache manually
-    // so we can keep the logic centralized around the user.session query while
-    // avoiding the additional request.
+    if (!isWeb) {
+      storeSessionToken(res.session?.id)
+    }
     utils.user.invalidate()
     utils.auth.invalidate()
   }
@@ -245,6 +241,9 @@ export function useSignUp() {
   const mutation = trpc.user.create.useMutation()
   const utils = trpc.useUtils()
   const postLogin = (res: SignInResult) => {
+    if (!isWeb) {
+      storeSessionToken(res.session?.id)
+    }
     utils.user.invalidate()
     utils.auth.invalidate()
   }

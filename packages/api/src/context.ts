@@ -5,9 +5,9 @@ import type { User } from './db/schema'
 import { Bindings } from './worker'
 import type { inferAsyncReturnType } from '@trpc/server'
 import type { Context as HonoContext, HonoRequest } from 'hono'
-import type { Lucia } from 'lucia'
+import { verifyRequestOrigin, type Lucia } from 'lucia'
 import { verifyToken } from './utils/crypto'
-import { createAuth } from './auth'
+import { createAuth, getAllowedOriginHost } from './auth'
 import { getCookie } from 'hono/cookie'
 
 export interface ApiContextProps {
@@ -16,6 +16,7 @@ export interface ApiContextProps {
   auth: Lucia
   req?: HonoRequest
   c?: HonoContext
+  enableTokens: boolean
   setCookie: (value: string) => void
   db: DB
   env: Bindings
@@ -63,6 +64,7 @@ export const createContext = async (
   // const user = await getUser()
 
   const auth = createAuth(db, env.APP_URL)
+  const enableTokens = Boolean(context.req.header('x-enable-tokens'))
 
   async function getSession() {
     let user: User | undefined
@@ -75,28 +77,44 @@ export const createContext = async (
     if (!context.req) return res
 
     const cookieSessionId = getCookie(context, auth.sessionCookieName)
-    const bearerSessionId =
-      !cookieSessionId &&
-      context.req.header('x-enable-tokens') &&
-      context.req.header('authorization')?.split(' ')[1]
+    const bearerSessionId = enableTokens && context.req.header('authorization')?.split(' ')[1]
 
     if (!cookieSessionId && !bearerSessionId) return res
 
-    const authResult = await auth.validateSession(cookieSessionId || bearerSessionId || '')
-    if (cookieSessionId) {
-      if (authResult.session?.fresh) {
-        context.header('Set-Cookie', auth.createSessionCookie(authResult.session.id).serialize(), {
-          append: true,
-        })
-      }
-      if (!session) {
-        context.header('Set-Cookie', auth.createBlankSessionCookie().serialize(), {
-          append: true,
-        })
+    let authResult: Awaited<ReturnType<typeof auth.validateSession>> | undefined
+    if (cookieSessionId && !enableTokens) {
+      const originHeader = context.req.header('origin')
+      const hostHeader = context.req.header('host')
+      const allowedOrigin = getAllowedOriginHost(context.env.APP_URL, context.req.raw)
+      if (
+        originHeader &&
+        hostHeader &&
+        verifyRequestOrigin(originHeader, [hostHeader, ...(allowedOrigin ? [allowedOrigin] : [])])
+      ) {
+        authResult = await auth.validateSession(cookieSessionId)
+        if (authResult.session?.fresh) {
+          context.header(
+            'Set-Cookie',
+            auth.createSessionCookie(authResult.session.id).serialize(),
+            {
+              append: true,
+            }
+          )
+        }
+        if (!authResult?.session) {
+          context.header('Set-Cookie', auth.createBlankSessionCookie().serialize(), {
+            append: true,
+          })
+        }
+      } else {
+        console.log('CSRF failed', { cookieSessionId, originHeader, hostHeader, allowedOrigin })
       }
     }
-    res.session = authResult.session || undefined
-    res.user = authResult.user || undefined
+    if (bearerSessionId) {
+      authResult = await auth.validateSession(bearerSessionId)
+    }
+    res.session = authResult?.session || undefined
+    res.user = authResult?.user || undefined
     return res
   }
 
@@ -108,6 +126,7 @@ export const createContext = async (
     c: context,
     session,
     user,
+    enableTokens,
     setCookie: (value) => {
       resHeaders.append('set-cookie', value)
     },
