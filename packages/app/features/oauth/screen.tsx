@@ -38,7 +38,6 @@ export interface OAuthSignInScreenProps {
   appleUser?: { email?: string | null } | null
 }
 
-
 export const OAuthSignInScreen = ({ appleUser }: OAuthSignInScreenProps): React.ReactNode => {
   const sent = useRef(false)
   const { signIn } = useSignIn()
@@ -83,9 +82,11 @@ export const OAuthSignInScreen = ({ appleUser }: OAuthSignInScreenProps): React.
       code,
       // undefined vs null is a result of passing via JSON with getServerSideProps
       // Maybe there's a superjson plugin or another way to handle it.
-      appleUser: appleUser ? {
-        email: appleUser.email || undefined,
-      } : undefined,
+      appleUser: appleUser
+        ? {
+            email: appleUser.email || undefined,
+          }
+        : undefined,
     })
   }, [provider, redirectTo, state, code, sendApiRequestOnLoad, appleUser])
 

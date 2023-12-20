@@ -3,7 +3,6 @@ import { appRouter } from '@t4/api/src/router'
 import { cors } from 'hono/cors'
 import { createContext } from '@t4/api/src/context'
 import { trpcServer } from '@hono/trpc-server'
-import { csrfMiddleware } from './auth/hono'
 
 export type Bindings = Env & {
   JWT_VERIFICATION_KEY: string
@@ -41,8 +40,6 @@ const corsHandler = async (c: Context<{ Bindings: Bindings }>, next: Next) => {
     // https://hono.dev/middleware/builtin/cors#options
   })(c, next)
 }
-
-app.use('*', csrfMiddleware)
 
 // Setup CORS for the frontend
 app.use('/trpc/*', corsHandler)
