@@ -186,7 +186,7 @@ const signInWithAppleIdTokenHandler =
       idTokenClaims: payload,
     })
     const session = await createSession(ctx.auth, user.id)
-    if (ctx.enableTokens && ctx.setCookie) {
+    if (!ctx.enableTokens && ctx.setCookie) {
       ctx.setCookie(ctx.auth.createSessionCookie(session.id).serialize())
     }
     return { session }
@@ -247,7 +247,7 @@ const signInWithEmailCodeHandler =
       console.log('calling update passing and invalidate sessions')
       await ctx.auth.invalidateUserSessions(res.session?.userId)
       const session = await createSession(ctx.auth, res.session?.userId)
-      if (ctx.enableTokens && ctx.setCookie) {
+      if (!ctx.enableTokens && ctx.setCookie) {
         ctx.setCookie(ctx.auth.createSessionCookie(session.id).serialize())
       }
       res.session = session
@@ -342,7 +342,7 @@ export const userRouter = router({
         email: input.email,
       })
       const session = await createSession(ctx.auth, user.id)
-      if (ctx.enableTokens && ctx.setCookie) {
+      if (!ctx.enableTokens && ctx.setCookie) {
         ctx.setCookie(ctx.auth.createSessionCookie(session.id).serialize())
       }
       return { session }

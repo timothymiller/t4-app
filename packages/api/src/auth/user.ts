@@ -168,7 +168,7 @@ export const signInWithEmail = async (
     await updatePassword(ctx, email, password)
   }
   const session = await createSession(ctx.auth, authMethod.userId)
-  if (setCookie) {
+  if (!ctx.enableTokens && setCookie) {
     const cookie = ctx.auth.createSessionCookie(session.id)
     setCookie(cookie.serialize())
   }
