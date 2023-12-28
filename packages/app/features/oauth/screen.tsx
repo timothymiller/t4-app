@@ -15,7 +15,8 @@ type Params = {
 
 const { useParam } = createParam<Params>()
 
-// Apple will POST form data to the redirect URI
+// Apple will POST form data to the redirect URI when scopes have been requested
+// @link https://developer.apple.com/documentation/sign_in_with_apple/request_an_authorization_to_the_sign_in_with_apple_server
 export const getServerSideProps = (async (context) => {
   // Fetch data from external API
   let appleUser = null
@@ -84,8 +85,8 @@ export const OAuthSignInScreen = ({ appleUser }: OAuthSignInScreenProps): React.
       // Maybe there's a superjson plugin or another way to handle it.
       appleUser: appleUser
         ? {
-            email: appleUser.email || undefined,
-          }
+          email: appleUser.email || undefined,
+        }
         : undefined,
     })
   }, [provider, redirectTo, state, code, sendApiRequestOnLoad, appleUser])
