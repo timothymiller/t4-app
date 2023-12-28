@@ -292,7 +292,7 @@ export type SessionRedirectProps = {
  * Examples:
  * ```
  * useSessionRedirect({ true: '/' }})
- * useSessionRedirect({ false: '/login' }})
+ * useSessionRedirect({ false: '/sign-in' }})
  * ```
  */
 export function useSessionRedirect(props: SessionRedirectProps = { true: '/', false: '/' }) {
