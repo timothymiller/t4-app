@@ -15,7 +15,7 @@ export function PasswordResetScreen() {
       // Send email with the password reset link
       const res = await signIn({ email })
       toast.show('Password reset email sent')
-      push('/login')
+      push('/sign-in')
     } catch (error) {
       if (error) {
         if (
