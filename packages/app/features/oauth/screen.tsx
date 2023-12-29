@@ -85,8 +85,8 @@ export const OAuthSignInScreen = ({ appleUser }: OAuthSignInScreenProps): React.
       // Maybe there's a superjson plugin or another way to handle it.
       appleUser: appleUser
         ? {
-          email: appleUser.email || undefined,
-        }
+            email: appleUser.email || undefined,
+          }
         : undefined,
     })
   }, [provider, redirectTo, state, code, sendApiRequestOnLoad, appleUser])
