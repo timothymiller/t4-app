@@ -1,3 +1,9 @@
+// This is currently being archived while we rethink how to handle
+// Apple OAuth form post data being sent to the app domain.
+// This middleware deployed to cloudflare without issue, but the
+// getServerSideProps edge function could not deploy to due unrelated
+// SSR issues.
+
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 

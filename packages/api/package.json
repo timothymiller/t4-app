@@ -28,7 +28,7 @@
     "hono": "^3.9.2",
     "lucia": "3.0.0-beta.12",
     "miniflare": "3.20231025.1",
-    "oslo": "0.26.1",
+    "oslo": "0.25.0",
     "superjson": "1.13.3",
     "ts-pattern": "^5.0.5",
     "valibot": "^0.20.1"
