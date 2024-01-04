@@ -1,3 +1,5 @@
+'use client'
+
 import { CustomToast, ToastProvider } from '@t4/ui'
 import { SafeAreaProvider } from './safe-area'
 import { SolitoImageProvider } from './solito-image'

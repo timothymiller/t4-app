@@ -34,6 +34,7 @@ const optimizeCss = false
 const plugins = [
   withPWA,
   withTamagui({
+    appDir: true,
     config: './tamagui.config.ts',
     components: ['tamagui', '@t4/ui'],
     importsWhitelist: ['constants.js', 'colors.js'],
@@ -48,6 +49,25 @@ const plugins = [
     },
   }),
 ]
+
+// If using nextjs edge runtime and need cloudflare bindings:
+// if (process.env.NODE_ENV === 'development') {
+// 	// we import the utility from the next-dev submodule
+// 	const { setupDevBindings } = require('@cloudflare/next-on-pages/next-dev');
+
+// 	// we call the utility with the bindings we want to have access to
+// 	setupDevBindings({
+// 		kvNamespaces: ['MY_KV_1', 'MY_KV_2'],
+// 		r2Buckets: ['MY_R2'],
+// 		durableObjects: {
+// 			MY_DO: {
+// 				scriptName: 'do-worker',
+// 				className: 'DurableObjectClass',
+// 			},
+// 		},
+// 		// ...
+// 	});
+// }
 
 module.exports = function () {
   /** @type {import('next').NextConfig} */
@@ -79,14 +99,6 @@ module.exports = function () {
       'react-native-gesture-handler',
     ],
     experimental: {
-      /*
-       A few notes before enabling app directory:
-
-       - App dir is not yet stable - Usage of this for production apps is discouraged.
-       - Tamagui doesn't support usage in React Server Components yet (usage with 'use client' is supported).
-       - Solito doesn't support app dir at the moment - You'll have to remove Solito.
-       - The `/app` in this starter has the same routes as the `/pages` directory. You should probably remove `/pages` after enabling this.
-      */
       optimizeCss,
       webpackBuildWorker: true,
       forceSwcTransforms: true,

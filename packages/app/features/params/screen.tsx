@@ -1,12 +1,11 @@
+'use client'
+
 import { Button, H2, Paragraph, YStack } from '@t4/ui'
 import { ChevronLeft } from '@tamagui/lucide-icons'
-import { createParam } from 'solito'
-import { useLink } from 'solito/link'
-
-const { useParam } = createParam<{ id: string }>()
+import { useLink, useParams } from 'solito/navigation'
 
 export const ParamsScreen = (): React.ReactNode => {
-  const [id] = useParam('id')
+  const { id } = useParams<{ id: string }>()
   const link = useLink({
     href: '/',
   })

@@ -1,6 +1,8 @@
+'use client'
+
 import { YStack, useToastController } from '@t4/ui'
 import { PasswordResetComponent } from '@t4/ui/src/PasswordReset'
-import { useRouter } from 'solito/router'
+import { useRouter, useSearchParams } from 'solito/navigation'
 import { createParam } from 'solito'
 import { useSessionRedirect, useSignIn } from 'app/utils/auth'
 import { TRPCClientError } from '@trpc/client'
@@ -10,18 +12,16 @@ type Params = {
   email?: string
 }
 
-const { useParams } = createParam<Params>()
-
 export function UpdatePasswordScreen() {
   const toast = useToastController()
-  const { params } = useParams()
+  const params = useSearchParams<Params>()
   const { push } = useRouter()
   const { signIn } = useSignIn()
   useSessionRedirect({ true: '/' })
 
   const handlePasswordUpdateWithPress = async (password) => {
-    const email = params.email
-    const code = params.code
+    const email = params?.get('email')
+    const code = params?.get('code')
     if (!email || !code) {
       toast.show(
         'Sorry, the update password link is missing params. Try resetting your password again.'

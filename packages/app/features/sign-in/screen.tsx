@@ -1,3 +1,5 @@
+'use client'
+
 import type { AuthProviderName } from '@t4/api/src/auth/providers'
 import { YStack, useToastController } from '@t4/ui'
 import { capitalizeWord } from '@t4/ui/src/libs/string'
@@ -5,7 +7,7 @@ import { TRPCClientError } from '@trpc/client'
 import { SignUpSignInComponent } from 'app/features/sign-in/SignUpSignIn'
 import { useSessionRedirect, useSignIn } from 'app/utils/auth'
 import React from 'react'
-import { useRouter } from 'solito/router'
+import { useRouter } from 'solito/navigation'
 
 export const SignInScreen = (): React.ReactNode => {
   const toast = useToastController()
