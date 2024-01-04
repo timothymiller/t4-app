@@ -64,7 +64,7 @@ export const createContext = async (
 
   // const user = await getUser()
 
-  const auth = createAuth(db, env.APP_URL)
+  const auth = createAuth(db, env.APP_URL, env.PUBLIC_API_URL)
   const enableTokens = Boolean(context.req.header('x-enable-tokens'))
 
   async function getSession() {

@@ -26,6 +26,7 @@ import { createAuthMethodId, createUser, getAuthMethod, getUserById } from './us
 import { P, match } from 'ts-pattern'
 import { getCookie } from 'hono/cookie'
 import { TRPCError } from '@trpc/server'
+import { getCookieOptions, isCrossDomain } from '.'
 
 export interface AppleIdTokenClaims {
   iss: 'https://appleid.apple.com'
@@ -101,15 +102,13 @@ export const getAuthorizationUrl = async (ctx: ApiContextProps, service: AuthPro
   const provider = getAuthProvider(ctx, service)
   const secure = ctx.req?.url.startsWith('https:') ? 'Secure; ' : ''
   const state = generateState()
-  ctx.setCookie(
-    `${service}_oauth_state=${state}; Path=/; ${secure}HttpOnly; SameSite=Lax; Max-Age=600`
-  )
+  ctx.setCookie(`${service}_oauth_state=${state}; Path=/; ${getCookieOptions(ctx)} Max-Age=600`)
   return await match({ provider, service })
     .with({ service: 'google', provider: P.instanceOf(Google) }, async ({ provider }) => {
       // Google requires PKCE
       const codeVerifier = generateCodeVerifier()
       ctx.setCookie(
-        `${service}_oauth_verifier=${codeVerifier}; Path=/; ${secure}HttpOnly; SameSite=Lax; Max-Age=600`
+        `${service}_oauth_verifier=${codeVerifier}; Path=/; ${getCookieOptions(ctx)} Max-Age=600`
       )
       const url = await provider.createAuthorizationURL(state, codeVerifier, {
         scopes: ['https://www.googleapis.com/auth/userinfo.email'],

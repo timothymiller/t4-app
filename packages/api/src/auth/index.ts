@@ -2,6 +2,7 @@ import { Adapter, DatabaseSessionAttributes, DatabaseUserAttributes, Lucia, Time
 import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle'
 import { SessionTable, UserTable } from '../db/schema'
 import { DB } from '../db/client'
+import type { ApiContextProps } from '../context'
 
 /**
  * Lucia's isValidRequestOrigin method will compare the
@@ -18,17 +19,30 @@ export const getAllowedOriginHost = (app_url: string, request?: Request) => {
   return requestHost === appHost ? appHost : undefined
 }
 
-export const createAuth = (db: DB, appUrl: string) => {
+export const isCrossDomain = (appUrl?: string, apiUrl?: string) => {
+  if (!appUrl || !apiUrl) return true
+  const appHost = new URL(appUrl).host
+  const apiHost = new URL(apiUrl).host
+  return !apiHost.endsWith(appHost)
+}
+
+export function getCookieOptions(ctx: ApiContextProps) {
+  return isCrossDomain(ctx.env.APP_URL, ctx.env.PUBLIC_API_URL)
+    ? 'HttpOnly; SameSite=None; Secure;'
+    : 'HttpOnly; SameSite=Lax; Secure;'
+}
+
+export const createAuth = (db: DB, appUrl: string, apiUrl: string) => {
   // @ts-ignore Expect type errors because this is D1 and not SQLite... but it works
   const adapter = new DrizzleSQLiteAdapter(db, SessionTable, UserTable)
   // cast probably only needed until adapter-drizzle is updated
+  // @ts-ignore the "none" option for sameSite works... but https://github.com/lucia-auth/lucia/issues/1320
   return new Lucia(adapter as Adapter, {
-    ...getAuthOptions(appUrl),
+    ...getAuthOptions(appUrl, apiUrl),
   })
 }
 
-export const getAuthOptions = (appUrl: string) => {
-  const env = !appUrl || appUrl.startsWith('http:') ? 'DEV' : 'PROD'
+export const getAuthOptions = (appUrl: string, apiUrl: string) => {
   return {
     getUserAttributes: (data: DatabaseUserAttributes) => {
       return {
@@ -45,8 +59,9 @@ export const getAuthOptions = (appUrl: string) => {
       name: 'auth_session',
       expires: false,
       attributes: {
-        secure: env === 'PROD',
-        sameSite: 'lax' as const,
+        secure: true,
+        // This might not work forever https://github.com/lucia-auth/lucia/issues/1320
+        sameSite: isCrossDomain(appUrl, apiUrl) ? ('none' as const) : ('lax' as const),
       },
     },
 
