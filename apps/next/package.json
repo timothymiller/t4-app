@@ -4,12 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "local-build": "TAMAGUI_TARGET=web bun x @cloudflare/next-on-pages --disable-worker-minification",
+    "local-serve": "bun x wrangler pages dev .vercel/output/static --port 3000 --compatibility-date 2023-10-30 --compatibility-flag=nodejs_compat",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "clean": "git clean -xdf .next node_modules .tamagui"
   },
   "dependencies": {
+    "@cloudflare/next-on-pages": "1.8.3",
     "@ducanh2912/next-pwa": "^9.7.2",
     "@supabase/auth-helpers-nextjs": "^0.7.4",
     "@supabase/auth-helpers-react": "^0.4.2",
@@ -31,6 +34,7 @@
   "devDependencies": {
     "@tamagui/next-plugin": "1.75.9",
     "@types/react": "^18.2.37",
-    "vercel": "32.5.3"
+    "vercel": "33.0.2",
+    "wrangler": "3.22.3"
   }
 }

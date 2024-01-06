@@ -20,8 +20,10 @@ app.use('/trpc/*', async (c, next) => {
     )
   }
   return await cors({
-    origin: [c.env.APP_URL],
-    allowMethods: ['POST', 'GET'],
+    origin: (origin) => (origin.endsWith(new URL(c.env.APP_URL).host) ? origin : c.env.APP_URL),
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
+    // https://hono.dev/middleware/builtin/cors#options
   })(c, next)
 })
 

@@ -1,8 +1,10 @@
+name = "t4-stack"
+compatibility_date = "2023-10-30"
+send_metrics = false
+node_compat = true
+route = "app.t4stack.com/*"
+workers_dev = false
+
 [env.preview]
 name = "t4-stack-preview"
 workers_dev = true
-
-[env.production]
-name = "t4-stack"
-route = "app.t4stack.com/*"
-workers_dev = false

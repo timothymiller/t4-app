@@ -1,5 +1,13 @@
 if (typeof requestAnimationFrame === 'undefined') {
-  globalThis.requestAnimationFrame = setImmediate
+  if (typeof setImmediate !== 'undefined') {
+    globalThis.requestAnimationFrame = setImmediate
+  } else {
+    globalThis.requestAnimationFrame = (callback) => {
+      const now = Date.now()
+      callback(now)
+      return now
+    }
+  }
 }
 import '@tamagui/core/reset.css'
 import '@tamagui/font-inter/css/400.css'
