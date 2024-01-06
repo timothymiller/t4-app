@@ -9,6 +9,7 @@ import { ToastViewport } from './toast-viewport'
 import { TRPCProvider } from './trpc'
 import { Session } from 'app/utils/auth'
 import { LuciaAuthProvider as AuthProvider } from './auth'
+import { Provider as JotaiProvider } from 'jotai'
 
 export function Provider({
   children,
@@ -18,22 +19,24 @@ export function Provider({
   initialSession: Session | null
 }) {
   return (
-    <TamaguiThemeProvider>
-      <SafeAreaProvider>
-        <SolitoImageProvider>
-          <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
-            <TRPCProvider>
-              <AuthProvider initialSession={initialSession}>
-                <TamaguiProvider>
-                  {children}
-                  <CustomToast />
-                  <ToastViewport />
-                </TamaguiProvider>
-              </AuthProvider>
-            </TRPCProvider>
-          </ToastProvider>
-        </SolitoImageProvider>
-      </SafeAreaProvider>
-    </TamaguiThemeProvider>
+    <JotaiProvider>
+      <TamaguiThemeProvider>
+        <SafeAreaProvider>
+          <SolitoImageProvider>
+            <ToastProvider swipeDirection='horizontal' duration={6000} native={['mobile']}>
+              <TRPCProvider>
+                <AuthProvider initialSession={initialSession}>
+                  <TamaguiProvider>
+                    {children}
+                    <CustomToast />
+                    <ToastViewport />
+                  </TamaguiProvider>
+                </AuthProvider>
+              </TRPCProvider>
+            </ToastProvider>
+          </SolitoImageProvider>
+        </SafeAreaProvider>
+      </TamaguiThemeProvider>
+    </JotaiProvider>
   )
 }
