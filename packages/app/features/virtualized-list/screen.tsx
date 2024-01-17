@@ -1,3 +1,5 @@
+'use client'
+
 import { Paragraph, Spinner, VirtualList, YStack } from '@t4/ui'
 import { CarListError } from '@t4/ui/src/cars/CarListError'
 import { CarListItem } from '@t4/ui/src/cars/CarListItem'

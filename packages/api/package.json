@@ -17,6 +17,7 @@
     "clean": "rm -rf .turbo node_modules"
   },
   "dependencies": {
+    "@cloudflare/next-on-pages": "1.8.3",
     "@cloudflare/workers-wasi": "^0.0.5",
     "@hono/trpc-server": "^0.1.0",
     "@libsql/client": "^0.3.5",
@@ -27,17 +28,18 @@
     "drizzle-valibot": "beta",
     "hono": "^3.9.2",
     "lucia": "3.0.0-beta.12",
-    "miniflare": "3.20231025.1",
+    "miniflare": "3.20231218.1",
     "oslo": "0.25.0",
     "superjson": "1.13.3",
     "ts-pattern": "^5.0.5",
     "valibot": "^0.20.1"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20231025.0",
+    "@cloudflare/next-on-pages": "1.8.3",
+    "@cloudflare/workers-types": "^4.20231218.0",
     "bun-types": "^1.0.11",
     "drizzle-kit": "^0.20.1",
     "typescript": "^5.2.2",
-    "wrangler": "^3.15.0"
+    "wrangler": "3.22.3"
   }
 }

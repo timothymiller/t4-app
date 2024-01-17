@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Anchor,
   Button,
@@ -15,7 +17,7 @@ import { ThemeToggle } from '@t4/ui/src/ThemeToggle'
 import { ChevronDown } from '@tamagui/lucide-icons'
 import React, { useState } from 'react'
 import { Linking } from 'react-native'
-import { useLink } from 'solito/link'
+import { useLink } from 'solito/navigation'
 import { useSheetOpen } from '../../atoms/sheet'
 import { SolitoImage } from 'solito/image'
 import { useUser } from 'app/utils/auth/useUser'
