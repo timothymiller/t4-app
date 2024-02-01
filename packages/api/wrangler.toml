@@ -11,6 +11,18 @@ database_name = "production"
 database_id = "aa5e3923-0f1b-469a-8bb8-d10fb866efe0"
 migrations_dir = "migrations"
 
+[triggers]
+# Schedule cron triggers:
+# examples:
+# - At every 3rd minute
+# - At 3PM on first day of the month
+# - At 11:59PM on the last weekday of the month
+# crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
+# For now, we're using "15 2 * * sat" to delete expired sessions from the database weekly
+# Test locally with "http://localhost:8787/__scheduled?cron=15+2+*+*+sat"
+crons = [ "15 2 * * sat" ]
+
+
 # The necessary secrets are:
 # - APP_URL - for preventing CORS errors
 # - JWT_VERIFICATION_KEY - for Supabase @link https://supabase.com

@@ -25,8 +25,8 @@ export interface ApiContextProps {
 
 export const createContext = async (
   env: Bindings,
-  context: HonoContext,
-  resHeaders: Headers
+  context?: HonoContext,
+  resHeaders?: Headers
 ): Promise<ApiContextProps> => {
   if (!env.DB) {
     throw new Error('Database binding is undefined')
@@ -36,6 +36,7 @@ export const createContext = async (
   // This was used with supabase auth,
   // For lucia, we pass just the session ID rather than a JWT
   async function getUser() {
+    if (!context) return null
     const sessionToken = context.req.header('Authorization')?.split(' ')[1]
 
     if (sessionToken !== undefined && sessionToken !== 'undefined') {
@@ -65,7 +66,7 @@ export const createContext = async (
   // const user = await getUser()
 
   const auth = createAuth(db, env.APP_URL)
-  const enableTokens = Boolean(context.req.header('x-enable-tokens'))
+  const enableTokens = Boolean(context?.req.header('x-enable-tokens'))
 
   async function getSession() {
     let user: User | undefined
@@ -75,7 +76,7 @@ export const createContext = async (
       session,
     }
 
-    if (!context.req) return res
+    if (!context?.req) return res
 
     const cookieSessionId = getCookie(context, auth.sessionCookieName)
     const bearerSessionId = enableTokens && context.req.header('authorization')?.split(' ')[1]
@@ -123,13 +124,13 @@ export const createContext = async (
   return {
     db,
     auth,
-    req: context.req,
+    req: context?.req,
     c: context,
     session,
     user,
     enableTokens,
     setCookie: (value) => {
-      resHeaders.append('set-cookie', value)
+      resHeaders?.append('set-cookie', value)
     },
     env,
   }

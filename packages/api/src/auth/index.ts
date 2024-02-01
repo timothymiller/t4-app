@@ -1,4 +1,4 @@
-import { Adapter, DatabaseSessionAttributes, DatabaseUserAttributes, Lucia, TimeSpan } from 'lucia'
+import { Adapter, Lucia, TimeSpan } from 'lucia'
 import { DrizzleSQLiteAdapter } from '@lucia-auth/adapter-drizzle'
 import { SessionTable, UserTable } from '../db/schema'
 import { DB } from '../db/client'
@@ -21,15 +21,8 @@ export const getAllowedOriginHost = (app_url: string, request?: Request) => {
 export const createAuth = (db: DB, appUrl: string) => {
   // @ts-ignore Expect type errors because this is D1 and not SQLite... but it works
   const adapter = new DrizzleSQLiteAdapter(db, SessionTable, UserTable)
-  // cast probably only needed until adapter-drizzle is updated
-  return new Lucia(adapter as Adapter, {
-    ...getAuthOptions(appUrl),
-  })
-}
-
-export const getAuthOptions = (appUrl: string) => {
   const env = !appUrl || appUrl.startsWith('http:') ? 'DEV' : 'PROD'
-  return {
+  return new Lucia(adapter as Adapter, {
     getUserAttributes: (data: DatabaseUserAttributes) => {
       return {
         email: data.email || '',
@@ -54,15 +47,17 @@ export const getAuthOptions = (appUrl: string) => {
     // experimental: {
     //   debugMode: true,
     // },
-  }
+  })
 }
 
 declare module 'lucia' {
   interface Register {
     Lucia: ReturnType<typeof createAuth>
+    DatabaseSessionAttributes: DatabaseSessionAttributes
+    DatabaseUserAttributes: DatabaseUserAttributes
   }
-  interface DatabaseSessionAttributes {}
-  interface DatabaseUserAttributes {
-    email: string | null
-  }
+}
+interface DatabaseSessionAttributes {}
+interface DatabaseUserAttributes {
+  email: string | null
 }
