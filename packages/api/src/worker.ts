@@ -3,6 +3,7 @@ import { appRouter } from '@t4/api/src/router'
 import { cors } from 'hono/cors'
 import { createContext } from '@t4/api/src/context'
 import { trpcServer } from '@hono/trpc-server'
+import scheduled from './scheduled'
 
 export type Bindings = Env & {
   JWT_VERIFICATION_KEY: string
@@ -57,4 +58,7 @@ app.use('/trpc/*', async (c, next) => {
   })(c, next)
 })
 
-export default app
+export default {
+  ...app,
+  scheduled,
+}

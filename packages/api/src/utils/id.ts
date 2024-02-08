@@ -1,4 +1,4 @@
-import { generateRandomString, alphabet } from 'oslo/random'
+import { generateRandomString, alphabet } from 'oslo/crypto'
 
 export const idAlphabet = alphabet('a-z', '0-9')
 export const codeAlphabet = '0123456789'
