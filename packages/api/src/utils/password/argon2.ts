@@ -15,14 +15,15 @@ export async function invoke(args: string[]) {
   const instance = new WebAssembly.Instance(argon2, {
     wasi_snapshot_preview1: wasi.wasiImport,
   })
-  await wasi.start(instance)
-  const errors = await stderr.readable.getReader().read()
-  const errorsValue = new TextDecoder().decode(errors.value)
+  const promise = wasi.start(instance)
+  const errors = stderr.readable.getReader().read()
+  const ret = stdout.readable.getReader().read()
+  const [errorsStream, resultStream, _] = await Promise.all([errors, ret, promise])
+  const errorsValue = new TextDecoder().decode(errorsStream.value)
   if (errorsValue) {
     throw new Error(errorsValue)
   }
-  const ret = await stdout.readable.getReader().read()
-  const retValue = new TextDecoder().decode(ret.value)
+  const retValue = new TextDecoder().decode(resultStream.value)
   return retValue.trim()
 }
 
