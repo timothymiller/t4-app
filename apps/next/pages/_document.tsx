@@ -6,8 +6,7 @@ import NextDocument, {
   Main,
   NextScript,
 } from 'next/document'
-import { Children } from 'react'
-import { AppRegistry } from 'react-native'
+import { AppRegistry, StyleSheet } from 'react-native'
 
 import Tamagui from '../tamagui.config'
 
@@ -16,26 +15,25 @@ export default class Document extends NextDocument {
     AppRegistry.registerComponent('Main', () => Main)
     const page = await ctx.renderPage()
 
-    // @ts-ignore
-    const { getStyleElement } = AppRegistry.getApplication('Main')
+    // @ts-ignore RN doesn't have this type
+    const rnwStyle = StyleSheet.getSheet()
 
-    /**
-     * Note: be sure to keep tamagui styles after react-native-web styles like it is here!
-     * So Tamagui styles can override the react-native-web styles.
-     */
-    const styles = [
-      getStyleElement(),
-      <style
-        key='tamagui-css'
-        dangerouslySetInnerHTML={{
-          __html: Tamagui.getCSS({
-            exclude: process.env.NODE_ENV === 'development' ? null : 'design-system',
-          }),
-        }}
-      />,
-    ]
-
-    return { ...page, styles: Children.toArray(styles) }
+    return {
+      ...page,
+      styles: (
+        <>
+          <style id={rnwStyle.id} dangerouslySetInnerHTML={{ __html: rnwStyle.textContent }} />
+          <style
+            key='tamagui-css'
+            dangerouslySetInnerHTML={{
+              __html: Tamagui.getCSS({
+                exclude: process.env.NODE_ENV === 'production' ? 'design-system' : null,
+              }),
+            }}
+          />
+        </>
+      ),
+    }
   }
 
   render() {

@@ -10,8 +10,8 @@ if (typeof requestAnimationFrame === 'undefined') {
   }
 }
 import '@tamagui/core/reset.css'
-import '@tamagui/font-inter/css/400.css'
-import '@tamagui/font-inter/css/700.css'
+// import '@tamagui/font-inter/css/400.css'
+// import '@tamagui/font-inter/css/700.css'
 
 import type { Session } from '@supabase/supabase-js'
 import { Provider } from 'app/provider'
@@ -52,6 +52,12 @@ const Metadata = () => (
         }
       `}
     </style>
+    <script
+      dangerouslySetInnerHTML={{
+        // avoid flash of entered elements before enter animations run:
+        __html: `document.documentElement.classList.add('t_unmounted')`,
+      }}
+    />
     {/* Favicons */}
     <link rel='icon' href='/pwa/icons/favicon.ico' />
     <link rel='shortcut icon' href='/pwa/icons/favicon.ico' />
