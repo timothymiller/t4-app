@@ -32,6 +32,7 @@ import { getCookie } from 'hono/cookie'
 import { parseJWT } from 'oslo/jwt'
 import { P, match } from 'ts-pattern'
 import { AuthProviderName } from '../auth/providers'
+import { getCookieOptions } from '../auth'
 
 export function sanitizeUserIdInput<K extends keyof T, T>({
   ctx,
@@ -229,9 +230,7 @@ const authorizationUrlHandler =
     }
     const secure = ctx.req?.url.startsWith('https:') ? 'Secure; ' : ''
     ctx.setCookie(
-      `${input.provider}_oauth_redirect=${
-        input.redirectTo || ''
-      }; Path=/; ${secure}HttpOnly; SameSite=Lax`
+      `${input.provider}_oauth_redirect=${input.redirectTo || ''}; Path=/; ${getCookieOptions(ctx)}`
     )
     return { redirectTo: url.toString() }
   }

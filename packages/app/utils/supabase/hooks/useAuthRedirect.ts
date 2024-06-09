@@ -1,7 +1,7 @@
 import { AuthChangeEvent, Session } from '@supabase/supabase-js'
 import { useSupabase } from 'app/utils/supabase/hooks/useSupabase'
 import { useEffect } from 'react'
-import { useRouter } from 'solito/router'
+import { useRouter } from 'solito/navigation'
 import { useIsLoadingSession, useSession } from './useSessionContext.native'
 
 export const useAuthRedirect = () => {

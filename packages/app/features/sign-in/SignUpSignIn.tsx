@@ -1,3 +1,5 @@
+'use client'
+
 import { type Provider } from '@supabase/supabase-js'
 import { Button, Input, Paragraph, Stack, XStack, YStack } from '@t4/ui'
 import { useState } from 'react'

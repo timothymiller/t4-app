@@ -1,3 +1,5 @@
+'use client'
+
 import { H1, H2, Paragraph, YStack } from '@t4/ui'
 import { trpc } from 'app/utils/trpc'
 import React from 'react'

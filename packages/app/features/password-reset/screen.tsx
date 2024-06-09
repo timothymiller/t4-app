@@ -1,8 +1,10 @@
+'use client'
+
 import { YStack, useToastController } from '@t4/ui'
 import { PasswordResetComponent } from '@t4/ui/src/PasswordReset'
 import { useSessionRedirect, useSignIn } from 'app/utils/auth'
 import { TRPCClientError } from '@trpc/client'
-import { useRouter } from 'solito/router'
+import { useRouter } from 'solito/navigation'
 
 export function PasswordResetScreen() {
   const { push } = useRouter()
