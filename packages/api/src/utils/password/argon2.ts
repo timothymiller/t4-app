@@ -1,5 +1,5 @@
-// From https://github.com/auth70/argon2-wasi/blob/292a030/bin/argon2-wasi.wasm
-// Uses rust package argon2 v0.5.1
+// From https://github.com/rmarscher/argon2-wasi/blob/1.0.0-0.5.3-optimized/bin/argon2-wasi.wasm
+// Uses rust package argon2 v0.5.3
 // @ts-ignore TS2307: Cannot find module './argon2-wasi.wasm'
 import argon2 from './argon2-wasi.wasm'
 import { WASI } from '@cloudflare/workers-wasi'
