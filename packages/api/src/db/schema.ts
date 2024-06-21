@@ -1,7 +1,9 @@
-import { InferSelectModel, InferInsertModel, relations, sql } from 'drizzle-orm'
-import { sqliteTable, text, integer, real, index } from 'drizzle-orm/sqlite-core'
+import { type InferInsertModel, type InferSelectModel, relations, sql } from 'drizzle-orm'
+import { index, integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-valibot'
 import { HASH_METHODS } from '../utils/password/hash-methods'
+import { createId } from '@paralleldrive/cuid2'
+import { date } from 'valibot'
 
 // User
 export const UserTable = sqliteTable('User', {
@@ -90,8 +92,13 @@ export const CarTable = sqliteTable('Car', {
   mileage: integer('mileage').notNull(),
   fuelType: text('fuelType').notNull(),
   transmission: text('transmission').notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp_ms' }),
+  updatedAt: integer('updated_at', { mode: 'timestamp_ms' }),
 })
 export type Car = InferSelectModel<typeof CarTable>
 export type InsertCar = InferInsertModel<typeof CarTable>
-export const insertCarSchema = createInsertSchema(CarTable)
+export const insertCarSchema = createInsertSchema(CarTable, {
+  // createdAt: date(),
+  // updatedAt: date(),
+})
 export const selectCarSchema = createSelectSchema(CarTable)

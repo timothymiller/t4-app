@@ -1,7 +1,7 @@
 import { Toast, useToastState } from '@tamagui/toast'
 import { YStack } from 'tamagui'
 
-export const NativeToast = (): React.ReactNode => {
+export const NativeToast = () => {
   const currentToast = useToastState()
 
   if (!currentToast || currentToast.isHandledNatively) {
@@ -20,8 +20,8 @@ export const NativeToast = (): React.ReactNode => {
       scale={1}
       animation='quick'
     >
-      <YStack>
-        <Toast.Title>{currentToast.title}</Toast.Title>
+      <YStack py='$1.5' px='$2'>
+        <Toast.Title lh='$1'>{currentToast.title}</Toast.Title>
         {!!currentToast.message && <Toast.Description>{currentToast.message}</Toast.Description>}
       </YStack>
     </Toast>

@@ -42,6 +42,10 @@ export function HomeScreen() {
     href: '/virtualized-list',
   })
 
+  const legendOfflineFirstLink = useLink({
+    href: '/legend-offline-first',
+  })
+
   const paramsLink = useLink({
     href: '/params/tim',
   })
@@ -83,6 +87,9 @@ export function HomeScreen() {
 
         <H3>🦮🐴 App Demos</H3>
         <YStack space='$2'>
+          <Button {...legendOfflineFirstLink} space='$2'>
+            Legend State, Offline First
+          </Button>
           <Button {...virtualizedListLink} space='$2'>
             Virtualized List
           </Button>

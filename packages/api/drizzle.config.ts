@@ -1,13 +1,23 @@
-import type { Config } from 'drizzle-kit'
+import { defineConfig } from 'drizzle-kit'
+import { config as loadEnv } from 'dotenv'
 
-export default {
+// Load environment variables from .dev.vars
+loadEnv({ path: '.dev.vars' })
+
+export default defineConfig({
+  dialect: 'sqlite',
+  driver: 'd1-http',
   schema: './src/db/schema.ts',
-  out: './migrations',
-  driver: 'd1',
   dbCredentials: {
-    wranglerConfigPath: 'wrangler.toml',
-    dbName: 'production',
+    accountId: process.env.ACCOUNT_ID || '',
+    databaseId: process.env.DATABASE_ID || '',
+    token: process.env.TOKEN || '',
   },
-  verbose: false,
+  out: './migrations',
+  migrations: {
+    table: 'migrations',
+    //schema: 'public',
+  },
+  verbose: true,
   strict: true,
-} satisfies Config
+})

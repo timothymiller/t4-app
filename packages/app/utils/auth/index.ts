@@ -1,4 +1,4 @@
-import { Input } from 'valibot'
+import { InferInput } from 'valibot'
 import { trpc } from '../trpc'
 import { storeSessionToken } from './credentials'
 import type { Session, SignInResult } from '@t4/api/src/auth/user'
@@ -248,7 +248,7 @@ export function useSignUp() {
     utils.auth.invalidate()
   }
 
-  const signUp = async (props: Input<typeof CreateUserSchema>) => {
+  const signUp = async (props: InferInput<typeof CreateUserSchema>) => {
     const res = await mutation.mutateAsync(props)
     postLogin(res)
     return res

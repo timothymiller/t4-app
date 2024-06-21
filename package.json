@@ -35,16 +35,24 @@
     "clean": "git clean -xdf node_modules && rm -f bun.lockb && rm -rf ./apps/next/.next && rm -rf ./apps/next/.tamagui && rm -rf ./apps/next/node_modules && rm -rf ./packages/ui/dist"
   },
   "workspaces": ["apps/*", "packages/*"],
+  "resolutions": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-refresh": "^0.14.0",
+    "react-native-svg": "15.3.0",
+    "react-native-web": "~0.19.12"
+  },
   "dependencies": {
-    "@babel/runtime": "^7.23.2",
+    "@babel/runtime": "^7.24.7",
     "@biomejs/biome": "1.3.3",
-    "@manypkg/cli": "^0.21.0",
+    "@manypkg/cli": "^0.21.4",
     "@nderscore/tamagui-typescript-plugin": "^0.6.0",
-    "@supabase/supabase-js": "^2.38.4",
+    "@supabase/supabase-js": "^2.43.5",
     "check-dependency-version-consistency": "^4.1.0",
     "npm-run-all": "^4.1.5",
     "react-native-url-polyfill": "^2.0.0",
-    "typescript": "^5.2.2",
+    "typescript": "^5.5.2",
     "workerd": "1.20231030.0"
-  }
+  },
+  "trustedDependencies": ["@biomejs/biome", "@swc/core", "@t4/api", "es5-ext", "esbuild", "workerd"]
 }

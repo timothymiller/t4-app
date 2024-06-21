@@ -1,7 +1,7 @@
 import { desc, eq } from 'drizzle-orm'
 import { UserTable, SessionTable, AuthMethodTable } from '../db/schema'
 import { router, protectedProcedure, publicProcedure, valibotParser } from '../trpc'
-import { Input } from 'valibot'
+import { InferInput } from 'valibot'
 import { ApiContextProps } from '../context'
 import {
   SignInResult,
@@ -77,7 +77,7 @@ async function getSessions({
   input,
 }: {
   ctx: ApiContextProps
-  input?: Input<typeof GetSessionsSchema>
+  input?: InferInput<typeof GetSessionsSchema>
 }) {
   const userId = sanitizeUserIdInput({ ctx, input, idField: 'userId' })
   return (
@@ -96,7 +96,7 @@ async function getUser({
   input,
 }: {
   ctx: ApiContextProps
-  input?: Input<typeof GetByIdSchema>
+  input?: InferInput<typeof GetByIdSchema>
 }) {
   const userId = sanitizeUserIdInput({ ctx, input, idField: 'id' })
   const authMethods = ctx.db
@@ -123,7 +123,9 @@ const validateRedirectDomain = (ctx: ApiContextProps, redirectTo?: string) => {
 
 const signInWithAppleIdTokenHandler =
   (ctx: ApiContextProps) =>
-  async (input: Input<typeof SignInSchema> & { provider: AuthProviderName; idToken: string }) => {
+  async (
+    input: InferInput<typeof SignInSchema> & { provider: AuthProviderName; idToken: string }
+  ) => {
     // This supports native sign-in with apple
     //
     // It could be possible to fetch the Apple public RSA key and verify the JWT.
@@ -194,7 +196,7 @@ const signInWithAppleIdTokenHandler =
 
 const signInWithOAuthCodeHandler =
   (ctx: ApiContextProps) =>
-  async (input: Input<typeof SignInSchema> & { provider: AuthProviderName; code: string }) => {
+  async (input: InferInput<typeof SignInSchema> & { provider: AuthProviderName; code: string }) => {
     // Handling OAuth callback after user has authenticated with provider
     if (!ctx.c) {
       throw new TRPCError({
@@ -219,7 +221,7 @@ const signInWithOAuthCodeHandler =
 
 const authorizationUrlHandler =
   (ctx: ApiContextProps) =>
-  async (input: Input<typeof SignInSchema> & { provider: AuthProviderName }) => {
+  async (input: InferInput<typeof SignInSchema> & { provider: AuthProviderName }) => {
     const url = await getAuthorizationUrl(ctx, input.provider)
     if (!validateRedirectDomain(ctx, input.redirectTo)) {
       throw new TRPCError({
@@ -238,7 +240,7 @@ const authorizationUrlHandler =
 
 const signInWithEmailCodeHandler =
   (ctx: ApiContextProps) =>
-  async (input: Input<typeof SignInSchema> & { email: string; code: string }) => {
+  async (input: InferInput<typeof SignInSchema> & { email: string; code: string }) => {
     const res = await signInWithCode(ctx, 'email', input.email, input.code, ctx.setCookie)
     if (res.session?.userId && input.password) {
       // If the user is also resetting their password,
@@ -260,7 +262,7 @@ const signIn = async ({
   input,
 }: {
   ctx: ApiContextProps
-  input: Input<typeof SignInSchema>
+  input: InferInput<typeof SignInSchema>
 }) => {
   return await match(input)
     .returnType<Promise<SignInResult>>()

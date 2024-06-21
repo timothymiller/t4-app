@@ -21,7 +21,7 @@ export function VirtualList<T>({ data, renderItem, itemHeight }: Props): React.R
   return (
     <FlashList
       data={data}
-      contentContainerStyle={{
+      contentformContainerStyle={{
         paddingBottom: bottom + 8,
       }}
       renderItem={render}

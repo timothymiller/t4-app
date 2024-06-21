@@ -8,6 +8,7 @@ import {
   object,
   optional,
   string,
+  pipe,
 } from 'valibot'
 
 export const ActivationSchema = object({
@@ -24,6 +25,6 @@ export const GetSessionsSchema = object({
 })
 
 export const InfiniteScrollSchema = object({
-  cursor: optional(string([minLength(1)])),
-  limit: optional(number([integer(), minValue(1), maxValue(500)])),
+  cursor: optional(pipe(string(), minLength(1))),
+  limit: optional(pipe(number(), integer(), minValue(1), maxValue(500))),
 })

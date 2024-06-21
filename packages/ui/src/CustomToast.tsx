@@ -1,5 +1,12 @@
+import Constants, { ExecutionEnvironment } from 'expo-constants'
 import { NativeToast as Toast } from './NativeToast'
 
-export const CustomToast = (): React.ReactNode => {
-  return <Toast />
+const isExpo = Constants.executionEnvironment === ExecutionEnvironment.StoreClient
+
+export const CustomToast = () => {
+  if (isExpo) {
+    return null
+  } else {
+    return <Toast />
+  }
 }

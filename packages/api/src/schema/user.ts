@@ -1,5 +1,5 @@
 import {
-  Input,
+  InferInput,
   email as emailValidator,
   picklist,
   minLength,
@@ -7,25 +7,28 @@ import {
   optional,
   string,
   toLowerCase,
-  toTrimmed,
+  trim,
+  pipe,
 } from 'valibot'
 import { AuthProviderName } from '../auth/providers'
 
-const email = string('Email address is required.', [
-  toTrimmed(),
+const email = pipe(
+  string('Email address is required.'),
+  trim(),
   minLength(1, 'Email address is required.'),
   toLowerCase(),
-  emailValidator('The email address is invalid.'),
-])
+  emailValidator('The email address is invalid.')
+)
 const optionalEmail = optional(
-  string('The email address is invalid.', [
-    toTrimmed(),
+  pipe(
+    string('The email address is invalid.'),
+    trim(),
     toLowerCase(),
-    emailValidator('The email address is invalid.'),
-  ])
+    emailValidator('The email address is invalid.')
+  )
 )
 
-const password = optional(string([minLength(1, 'Password is required.')]))
+const password = optional(pipe(string(), minLength(1, 'Password is required.')))
 const optionalPassword = optional(string())
 
 const authProviders: [AuthProviderName, ...AuthProviderName[]] = ['apple', 'discord', 'google']
@@ -47,7 +50,7 @@ export const SignInSchema = object({
   appleUser: optional(object({ email: optionalEmail })),
 })
 
-export type SignInInput = Input<typeof SignInSchema>
+export type InferInput = InferInput<typeof SignInSchema>
 
 export const CreateUserSchema = object({
   email,

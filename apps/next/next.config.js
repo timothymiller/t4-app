@@ -40,16 +40,17 @@ const plugins = [
     outputCSS: process.env.NODE_ENV === 'production' ? './public/tamagui.css' : null,
     logTimings: true,
     disableExtraction,
-    useReactNativeWebLite: true,
+    // useReactNativeWebLite: true,
     shouldExtract: (path) => {
       if (path.includes(join('packages', 'app'))) {
         return true
       }
     },
+    excludeReactNativeWebExports: ['Switch', 'ProgressBar', 'Picker', 'CheckBox', 'Touchable'],
   }),
 ]
 
-module.exports = function () {
+module.exports = () => {
   /** @type {import('next').NextConfig} */
   let config = {
     // Uncomment if you want to use Cloudflare's Paid Image Resizing w/ Next/Image
@@ -77,6 +78,7 @@ module.exports = function () {
       'react-native-safe-area-context',
       'react-native-reanimated',
       'react-native-gesture-handler',
+      'expo-linear-gradient',
     ],
     experimental: {
       /*

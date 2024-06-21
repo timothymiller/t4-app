@@ -8,6 +8,8 @@ CREATE TABLE `Car` (
 	`mileage` integer NOT NULL,
 	`fuelType` text NOT NULL,
 	`transmission` text NOT NULL
+	`created_at` integer NOT NULL,
+	`updated_at` integer
 );
 --> statement-breakpoint
 CREATE TABLE `User` (

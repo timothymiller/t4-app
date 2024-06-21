@@ -1,8 +1,6 @@
 {
-  "version": "5",
+  "version": "6",
   "dialect": "sqlite",
-  "id": "19d05176-7733-4654-b24f-799d3fddc19c",
-  "prevId": "b4ee64d5-7b72-4828-8645-33c41f0af619",
   "tables": {
     "Car": {
       "name": "Car",
@@ -125,8 +123,9 @@
   },
   "enums": {},
   "_meta": {
-    "schemas": {},
     "tables": {},
     "columns": {}
-  }
+  },
+  "id": "19d05176-7733-4654-b24f-799d3fddc19c",
+  "prevId": "b4ee64d5-7b72-4828-8645-33c41f0af619"
 }

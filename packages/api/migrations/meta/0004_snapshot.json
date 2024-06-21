@@ -1,8 +1,6 @@
 {
-  "version": "5",
+  "version": "6",
   "dialect": "sqlite",
-  "id": "4bdd4936-1570-4942-875c-602bc76ea02f",
-  "prevId": "48283c30-3c21-4114-9533-2235c17d08b9",
   "tables": {
     "AuthMethod": {
       "name": "AuthMethod",
@@ -83,11 +81,11 @@
         "AuthMethod_user_id_User_id_fk": {
           "name": "AuthMethod_user_id_User_id_fk",
           "tableFrom": "AuthMethod",
-          "tableTo": "User",
           "columnsFrom": ["user_id"],
+          "tableTo": "User",
           "columnsTo": ["id"],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -201,11 +199,11 @@
         "Session_user_id_User_id_fk": {
           "name": "Session_user_id_User_id_fk",
           "tableFrom": "Session",
-          "tableTo": "User",
           "columnsFrom": ["user_id"],
+          "tableTo": "User",
           "columnsTo": ["id"],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -237,8 +235,9 @@
   },
   "enums": {},
   "_meta": {
-    "schemas": {},
     "tables": {},
     "columns": {}
-  }
+  },
+  "id": "4bdd4936-1570-4942-875c-602bc76ea02f",
+  "prevId": "48283c30-3c21-4114-9533-2235c17d08b9"
 }
